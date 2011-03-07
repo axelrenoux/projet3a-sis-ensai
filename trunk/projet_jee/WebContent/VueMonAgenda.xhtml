@@ -1,0 +1,81 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.prime.com.tr/ui">
+
+
+<ui:composition template="/modele.xhtml">
+	<h:messages/>
+	<ui:define name="contenu">
+		<p:panel header="Consultation de votre agenda" toggleable="true"  style="height: 600px;">
+			<table style="height: 100%; width: 100%" >
+				<tr style="height: 40px;"  valign="top">
+					<td>
+						<h:form>
+							<h:outputLabel style="color:#245F86; font-size: 18;" >
+								Vos groupes : 
+							</h:outputLabel>
+							<p:dataList value="#{vueAccueil.groupesPersonne}" var="groupe" itemType="square">  
+								<h:outputLabel style="font-size: 14; ">
+									#{groupe.nom}
+								</h:outputLabel> 
+							</p:dataList> 
+							<h:outputLabel style="color:#245F86; font-size: 18;" rendered="#{!empty vueAccueil.matieresProfesseur}">
+								Vos matieres : 
+							</h:outputLabel>
+							<p:dataList value="#{vueAccueil.matieresProfesseur}" rendered="#{!empty vueAccueil.matieresProfesseur}"
+								var="matiere" itemType="square">  
+								<h:outputLabel style="font-size: 14; ">
+									#{matiere.intitule}
+								</h:outputLabel> 
+							</p:dataList> 	 
+						</h:form> 	
+					</td>
+					<td>
+						<p:panel toggleable="true"  >
+							<h:form> 
+								<p:panel visible="true"  >  
+									<h:panelGrid columns="1" >
+										<p:schedule value="#{vueMonAgenda.emploiDuTemps}"  
+							                 editable="true" widgetVar="myschedule"  
+							                 eventSelectListener="#{vueMonAgenda.onEventSelect}"  
+							                 dateSelectListener="#{vueMonAgenda.onDateSelect}"  
+							                 onEventSelectUpdate="eventDetails" onEventSelectComplete="eventDialog.show()"
+						                     firstHour="8"
+						                     maxTime="23"
+						                     minTime="6"
+						                     allDaySlot="true"
+						                     startWeekday="1"
+		                        			 slotMinutes="15"
+		                        			 aspectRatio="1.5" >       
+										</p:schedule>  
+							 		</h:panelGrid>
+							    	<p:dialog widgetVar="eventDialog" header="Details du cours" >  
+										<h:panelGrid id="eventDetails" columns="2">  
+											<h:outputLabel for="matiere" value="Matiere:" />  
+											<h:outputLabel  id="matiere" value="#{vueMonAgenda.evenementCourant.data.matiere.intitule}" />
+											<h:outputLabel for="groupe" value="Groupe:" />
+											<h:outputLabel id="groupe" value="#{vueMonAgenda.evenementCourant.data.groupe.nom}" />
+											  
+											<h:outputLabel for="from" value="De: " />  
+											<h:outputLabel id="from" value="#{vueMonAgenda.evenementCourant.data.dateDebut}">  
+												<f:convertDateTime pattern="dd/MM/yyyy kk:mm" timeZone="Europe/Paris" locale="fr-Fr"/>  
+											</h:outputLabel>
+											
+											<h:outputLabel for="to" value="A: " />  
+											<h:outputLabel id="to" value="#{vueMonAgenda.evenementCourant.data.dateFin}" >
+												<f:convertDateTime pattern="dd/MM/yyyy kk:mm" timeZone="Europe/Paris" locale="fr-Fr"/>    
+											</h:outputLabel>
+										</h:panelGrid>  
+									</p:dialog>
+								</p:panel>     
+							</h:form>  
+		  				</p:panel>
+		  			</td>
+		  		</tr>
+		  	</table>
+		</p:panel>
+	</ui:define>
+</ui:composition>
+</html>

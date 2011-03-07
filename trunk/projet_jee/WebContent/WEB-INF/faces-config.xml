@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<faces-config
+    xmlns="http://java.sun.com/xml/ns/javaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd"
+    version="2.0">
+
+   <navigation-rule>
+   		<from-view-id>/VueAccueil.xhtml</from-view-id>
+   		<navigation-case>
+   			<from-action>#{vueAccueil.allerSurGererMatiere}</from-action>
+   			<from-outcome>success</from-outcome>
+   			<to-view-id>/VueGererMatieres.xhtml</to-view-id>
+   		</navigation-case>
+   		<navigation-case>
+   			<from-action>#{vueAccueil.allerSurMonAgenda}</from-action>
+   			<from-outcome>success</from-outcome>
+   			<to-view-id>/VueMonAgenda.xhtml</to-view-id>
+   		</navigation-case>
+   		<navigation-case>
+   			<from-action>#{vueAccueil.allerSurAgendaGroupe}</from-action>
+   			<from-outcome>success</from-outcome>
+   			<to-view-id>/VueAgendaGroupe.xhtml</to-view-id>
+   		</navigation-case>
+   		<navigation-case>
+   			<from-action>#{vueAccueil.allerSurAgendaMatiere}</from-action>
+   			<from-outcome>success</from-outcome>
+   			<to-view-id>/VueAgendaMatiere.xhtml</to-view-id>
+   		</navigation-case>
+   		<navigation-case>
+   			<from-action>#{vueAccueil.allerSurTrombiGroupe}</from-action>
+   			<from-outcome>success</from-outcome>
+   			<to-view-id>/VueTrombiGroupe.xhtml</to-view-id>
+   		</navigation-case>
+   		
+   </navigation-rule>
+ 
+  
+   
+   
+   
+   
+   <navigation-rule>
+   		<navigation-case>
+   			<from-outcome>allerSurGererMatiere</from-outcome>
+   			<to-view-id>/VueGererMatieres.xhtml</to-view-id>
+   		</navigation-case>
+   </navigation-rule>
+   <navigation-rule>
+   		<navigation-case>
+   			<from-outcome>allerSurMonAgenda</from-outcome>
+   			<to-view-id>/VueMonAgenda.xhtml</to-view-id>
+   		</navigation-case>
+   </navigation-rule>
+   <navigation-rule>
+   		<navigation-case>
+   			<from-outcome>allerSurAgendaGroupe</from-outcome>
+   			<to-view-id>/VueAgendaGroupe.xhtml</to-view-id>
+   		</navigation-case>
+   </navigation-rule>
+   <navigation-rule>
+   		<navigation-case>
+   			<from-outcome>allerSurAgendaMatiere</from-outcome>
+   			<to-view-id>/VueAgendaMatiere.xhtml</to-view-id>
+   		</navigation-case>
+   </navigation-rule>   
+   <navigation-rule>
+   		<navigation-case>
+   			<from-outcome>allerSurTrombiGroupe</from-outcome>
+   			<to-view-id>/VueTrombiGroupe.xhtml</to-view-id>
+   		</navigation-case>
+   </navigation-rule>     
+   <navigation-rule>
+   		<navigation-case>
+   			<from-outcome>allerSurAccueil</from-outcome>
+   			<to-view-id>/VueAccueil.xhtml</to-view-id>
+   		</navigation-case>
+   </navigation-rule> 
+   <navigation-rule>
+   		<navigation-case>
+   			<from-outcome>seDeconnecter</from-outcome>
+   			<to-view-id>/VueSeLogger.xhtml</to-view-id>
+   		</navigation-case>
+   </navigation-rule>        
+   
+   
+   
+    <navigation-rule>
+   		<from-view-id>/VueSeLogger.xhtml</from-view-id>
+   		<navigation-case>
+   			<from-action>#{vueSeLogger.accederAccueil}</from-action>
+   			<from-outcome>success</from-outcome>
+   			<to-view-id>/VueAccueil.xhtml</to-view-id>
+   		</navigation-case>
+   </navigation-rule>
+   
+   
+</faces-config>
