@@ -1,0 +1,27 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:p="http://primefaces.prime.com.tr/ui">
+        
+        
+<ui:composition template="/modeleSimple.xhtml">
+	<ui:define name="contenu">
+        <h:form>
+        	<p:panel header="Sidentifier" toggleable="true">
+        		<h:panelGrid columns="2">
+	        		<h:outputLabel style="color:#245F86;"  value = "saisir login" />
+	        		<h:inputText value="#{vueSeLogger.login}"/>      		  
+	        		<h:outputLabel style="color:#245F86;" value = "saisir mot de passe" />
+	 				<h:inputSecret value="#{vueSeLogger.mdp}"/>
+					<h:outputLabel value=""></h:outputLabel>
+					<p:messages id="msgs" showDetail="true"/> 
+					<h:outputLabel value=""></h:outputLabel>
+					<p:commandButton value ="valider" action="#{vueSeLogger.accederAccueil}" 
+						update="msgs" ajax="false"/> 
+				</h:panelGrid>
+			</p:panel>			
+ 		</h:form> 
+	</ui:define>
+</ui:composition>
+</html>

@@ -1,0 +1,101 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.prime.com.tr/ui">
+
+
+<ui:composition template="/modele.xhtml">
+	<h:messages/>
+	<ui:define name="contenu">
+		<p:panel header="Consultation des agendas des matieres"   style="height: 600px;">			 
+			<table style="height: 100%; width: 100%" >
+				<tr style="height: 40px;"  valign="top">
+					<td>
+						<h:form>
+							<h:panelGrid cellspacing="20" >
+								<h:outputLabel  style="color:#245F86; font-size: 18;">Choix de la matiere</h:outputLabel>
+								<h:selectOneMenu style="with: 155px; " 
+									value="#{vueAgendaMatiere.matiereChoisie}">
+									<f:selectItems value="#{vueAgendaMatiere.listeMatieres}"
+										var="matiere" itemLabel="#{matiere.intitule}" />
+								</h:selectOneMenu>
+								<p:commandButton value="valider" 
+										action="#{vueAgendaMatiere.validerRechercheMatiere}"
+										update="PanelAfficherMatiere"
+										style="width: 100%"/>
+							</h:panelGrid>		 
+						</h:form>
+					</td>
+					<td>
+						<p:panel id="PanelAfficherMatiere" toggleable="true"  >
+							<h:form> 
+								<p:panel rendered="#{!empty vueAgendaMatiere.matiereChoisie}"  visible="true"  >  
+									<h:panelGrid columns="1" >
+										<p:schedule id="agenda" value="#{vueAgendaMatiere.emploiDuTemps}" 
+								            editable="true" widgetVar="myschedule"  
+								            eventSelectListener="#{vueAgendaMatiere.onEventSelect}"  
+								            dateSelectListener="#{vueAgendaMatiere.onDateSelect}"  
+								            onEventMoveUpdate="messages" onEventResizeUpdate="messages"  
+								            onDateSelectUpdate="eventDetails" onDateSelectComplete="eventDialog.show()"  
+							                firstHour="8"
+								            onEventSelectUpdate="eventDetails" onEventSelectComplete="eventDialog.show()"
+							                maxTime="23"
+							                minTime="6"
+							                allDaySlot="true"
+							                startWeekday="1"
+			                        		slotMinutes="15"
+			                        		aspectRatio="1.5"
+			                        		resizable="true">       
+										</p:schedule>  
+								 	</h:panelGrid>
+									<p:dialog widgetVar="eventDialog" header="Details du cours" >  
+										<h:panelGrid id="eventDetails" columns="2">  
+											<h:outputLabel for="matiere" value="Matiere:" />  
+											<p:inplace editor="#{vueAccueil.personneConnectee.autorisee}"> 
+												<h:selectOneMenu id="matiere" value="#{vueAgendaMatiere.evenementCourant.data.matiere}" >
+													<f:selectItems value="#{vueAgendaMatiere.listeMatieres}"
+														var="matiere" itemLabel="#{matiere.intitule}" />
+												</h:selectOneMenu>
+											</p:inplace >
+											<h:outputLabel for="groupe" value="Groupe:" />
+											<p:inplace editor="#{vueAccueil.personneConnectee.autorisee}"> 
+												<h:selectOneMenu id="groupe" value="#{vueAgendaMatiere.evenementCourant.data.groupe}" >
+													<f:selectItems value="#{vueAgendaMatiere.listeGroupes}"
+														var="groupe" itemLabel="#{groupe.nom}" />
+												</h:selectOneMenu>
+											</p:inplace>
+											<h:outputLabel for="from" value="De: " />  
+											<p:inplace editor="#{vueAccueil.personneConnectee.autorisee}"> 
+												<p:inputMask id="from" mask="99/99/9999 99:99"   
+											          value="#{vueAgendaMatiere.evenementCourant.data.dateDebut}" >  
+													<f:convertDateTime pattern="dd/MM/yyyy kk:mm" timeZone="Europe/Paris" locale="fr-Fr"/>  
+												</p:inputMask>  
+											</p:inplace>
+											<h:outputLabel for="to" value="A: " />  
+											<p:inplace editor="#{vueAccueil.personneConnectee.autorisee}"> 
+												<p:inputMask id="to" mask="99/99/9999 99:99"  
+									             	value="#{vueAgendaMatiere.evenementCourant.data.dateFin}" >  
+													<f:convertDateTime pattern="dd/MM/yyyy kk:mm" timeZone="Europe/Paris" locale="fr-Fr"/>  
+												</p:inputMask>  
+									 		</p:inplace>
+											<p:commandButton type="reset" value="Annuler" rendered="#{vueAccueil.personneConnectee.autorisee}"/>  
+											<p:commandButton value="Sauvegarder"  image="ui-icon ui-icon-disk" 
+												oncomplete="myschedule.update();eventDialog.hide();"  
+												actionListener="#{vueAgendaMatiere.addEvent}" rendered="#{vueAccueil.personneConnectee.autorisee}"/>  
+										</h:panelGrid>  
+									</p:dialog>
+								</p:panel>     
+							</h:form> 
+						<p:messages id="msgs" showDetail="true" rendered="#{!vueAccueil.personneConnectee.autorisee}"/> 		
+						</p:panel>
+					</td>
+				</tr>
+			</table>
+		</p:panel>
+	</ui:define>
+</ui:composition>
+</html>
+
+
+

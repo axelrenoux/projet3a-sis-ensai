@@ -1,0 +1,66 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:p="http://primefaces.prime.com.tr/ui">
+        
+        
+<ui:composition template="/modeleSimpleAccueil.xhtml">
+	<ui:define name="contenu">
+		<h:form>
+	       	<table style="height: 100%; width: 100%" >
+				<tr>
+					<td style="width: 215px">
+						<p:panel  style="height: 450px;" styleClass="center">
+				        	<h:panelGrid cellspacing="5">
+						        <h:outputLabel style="color:#0000A0; font-size: 14; " >
+							       Bonjour
+							       #{vueAccueil.personneConnectee.nom}
+							       #{vueAccueil.personneConnectee.prenom}
+							    </h:outputLabel>
+					        	<p:graphicImage width="150px" height="150px" value ="#{vueAccueil.personneConnectee.photo}" />
+					        </h:panelGrid>
+				        	<h:panelGrid>
+					        	<h:outputLabel style="color:#0000A0; font-size: 14; " >
+								   Vos informations : 
+								</h:outputLabel>
+								<p:panel>
+									<h:outputLabel style="font-size: 14; " >
+									            Login : #{vueAccueil.personneConnectee.login}
+									        </h:outputLabel>  
+									        <h:outputLabel style="font-size: 14; " >
+									            Prenom : #{vueAccueil.personneConnectee.prenom}
+									        </h:outputLabel>
+									        <h:outputLabel style="font-size: 14; " >
+									           	Nom : #{vueAccueil.personneConnectee.nom}
+									</h:outputLabel>
+							    </p:panel>
+								<h:outputLabel style="color:#0000A0; font-size: 14; " >
+							    	Vos groupes : 
+							    </h:outputLabel>
+								<p:dataList value="#{vueAccueil.groupesPersonne}" var="groupe" itemType="square">  
+									<h:outputLabel style="font-size: 14; ">
+										#{groupe.nom}
+									</h:outputLabel> 
+								</p:dataList> 
+			        		</h:panelGrid>
+			        	</p:panel>
+					</td>
+	                    
+	                <td width="100%" >
+						<p:menu > 
+							<p:submenu label="Menu principal"> 
+					        	<p:menuitem value = "Gestion des matieres" action="#{vueAccueil.allerSurGererMatiere}" ajax="false"/>
+					        	<p:menuitem value = "Consulter mon agenda" action="#{vueAccueil.allerSurMonAgenda}" ajax="false"/>   
+							    <p:menuitem value = "Consulter l'agenda des groupes" action="#{vueAccueil.allerSurAgendaGroupe}" ajax="false"/>
+							    <p:menuitem value = "Consulter l'agenda des matieres" action="#{vueAccueil.allerSurAgendaMatiere}" ajax="false"/>
+							    <p:menuitem value = "Consulter le trombinoscope des groupes" action="#{vueAccueil.allerSurTrombiGroupe}" ajax="false"/>
+							</p:submenu>
+				        </p:menu>
+					</td>
+				</tr>
+			</table>
+		</h:form>
+	</ui:define>       
+</ui:composition>
+</html>

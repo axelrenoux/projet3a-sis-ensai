@@ -1,0 +1,26 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+         xmlns:ui="http://java.sun.com/jsf/facelets"
+         xmlns:h="http://java.sun.com/jsf/html"
+         xmlns:p="http://primefaces.prime.com.tr/ui">
+	<h:head>
+         <title><ui:insert name="title">Accueil</ui:insert></title>
+         <link type = "text/css" rel="stylesheet" href="/projet_jee/css/cupertino/skin.css"/>
+	</h:head>
+	<h:body>
+		<table style="height: 100%; width: 100%" >
+			<tr>
+				<td  style = "height:80px;">
+					<h:panelGrid columns="2" width="100%"> 
+						<p:graphicImage styleClass="left" width="120px" weight="120px" value = "/logoEnsai.jpg"/>
+						<h:outputLabel style="color:#38ACEC; font-size: 24; text-align:center"> Application de gestion d'emploi du temps</h:outputLabel>  
+					</h:panelGrid>
+ 				</td>
+			</tr>
+			<tr>
+				<td width="100%">
+					<ui:insert name="contenu"/>
+				</td>
+			</tr>
+		</table>
+	</h:body>
+</html>
