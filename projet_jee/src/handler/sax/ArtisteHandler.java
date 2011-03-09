@@ -1,7 +1,7 @@
 /**
  * 
  */
-package parsing.sax;
+package handler.sax;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -10,15 +10,15 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import metier.Album;
 import metier.Artiste;
-import metier.Chanson;
  
 
 /**
  * @author Administrateur
  *
  */
-public class ChansonHandler extends DefaultHandler{
+public class ArtisteHandler extends DefaultHandler{
 
 
 
@@ -29,25 +29,26 @@ public class ChansonHandler extends DefaultHandler{
 	/********************************************************************/
 	
 	//résultats de notre parsing
-	private List<Chanson> lstChanson;
+	private List<Artiste> lstArtistes;
+
 	   
 	// personne courante pour chaque nouvelle balise Personne
-	private Chanson currentChanson;
-	private Artiste currentArtiste;
+	private Artiste currentArtist;
+	//private Album currentAlbum;
 	
 	//flags nous indiquant la position du parseur
-	private boolean inTrack;
-	private boolean inName;
+	private boolean inArtistmatches;
 	private boolean inArtiste;
-	private boolean inURL;
+	private boolean inName;
 	private boolean inListeners;
+	private boolean inURL;
 	private boolean inImageSmall;
 	private boolean inImageMedium;
 	private boolean inImageLarge;
 	private boolean inImageExtraLarge;
 	private boolean inImageMega;
 	
-	
+	  
 	/********************************************************************/
 	/**********************      constructeurs      *********************/
 	/********************************************************************/
@@ -55,7 +56,7 @@ public class ChansonHandler extends DefaultHandler{
 	/**
 	 * constructeur vide
 	 */
-	public ChansonHandler(){
+	public ArtisteHandler(){
 		super();
 	}
 
@@ -74,20 +75,17 @@ public class ChansonHandler extends DefaultHandler{
 			String qName,
 			Attributes attributes)
 	throws SAXException{
-		if(qName.equals("trackmatches")){
-			lstChanson = new LinkedList<Chanson>();
-		}else if(qName.equals("track")){
-			currentChanson = new Chanson();
-			inTrack = true;	
+		if(qName.equals("artistmatches")){
+			lstArtistes = new LinkedList<Artiste>();
+		}else if(qName.equals("artist")){
+			currentArtist = new Artiste();
+			inArtiste = true;	
 		}else if(qName.equals("name")){
 			inName = true;	
-		}else if(qName.equals("artist")){
-			currentArtiste = new Artiste();
-			inArtiste = true;	
-		}else if(qName.equals("url")){
-			inURL = true;	
 		}else if(qName.equals("listeners")){
 			inListeners = true;	
+		}else if(qName.equals("url")){
+			inURL = true;	
 		}else if(qName.equals("image")){
 			if(attributes.getValue(0).equals("small")){
 				inImageSmall = true;
@@ -114,17 +112,15 @@ public class ChansonHandler extends DefaultHandler{
 			String localName,
 			String qName)
 	throws SAXException{
-		if(qName.equals("track")){
-			lstChanson.add(currentChanson);
-			inTrack = false;	
+		if(qName.equals("artist")){
+			lstArtistes.add(currentArtist);
+			inArtiste = false;	
 		}else if(qName.equals("name")){
 			inName = false;	
-		}else if(qName.equals("artist")){
-			inArtiste = false;	
-		}else if(qName.equals("url")){
-			inURL = false;	
 		}else if(qName.equals("listeners")){
 			inListeners = false;	
+		}else if(qName.equals("url")){
+			inURL = false;	
 		}else if(qName.equals("image")){
 			inImageSmall = false;
 			inImageMedium = false;
@@ -145,24 +141,21 @@ public class ChansonHandler extends DefaultHandler{
 	throws SAXException{
 		String lecture = new String(ch,start,length);
 		if(inName){
-			currentChanson.setName(lecture);
-		}else if(inArtiste){
-			currentArtiste.setName(lecture);
-			currentChanson.setArtiste(currentArtiste);
-		}else if(inURL){
-			currentChanson.setUrl(lecture);
+			currentArtist.setName(lecture);
 		}else if(inListeners){
-			currentChanson.setListeners(Double.parseDouble(lecture));
+			currentArtist.setListeners(Double.parseDouble(lecture));
+		}else if(inURL){
+			currentArtist.setUrl(lecture);
 		}else if(inImageSmall){
-			currentChanson.setImageSmall(lecture);
+			currentArtist.setImageSmall(lecture);
 		}else if(inImageMedium){
-			currentChanson.setImageMedium(lecture);
+			currentArtist.setImageMedium(lecture);
 		}else if(inImageLarge){
-			currentChanson.setImageLarge(lecture);
+			currentArtist.setImageLarge(lecture);
 		}else if(inImageExtraLarge){
-			currentChanson.setImageExtraLarge(lecture);
+			currentArtist.setImageExtraLarge(lecture);
 		}else if(inImageMega){
-			currentChanson.setImageMega(lecture);
+			currentArtist.setImageMega(lecture);
 		}
 	}
 
@@ -196,8 +189,8 @@ public class ChansonHandler extends DefaultHandler{
 	/********************************************************************/
 	
 
-	public List<Chanson> getLstChanson() {
-		return lstChanson;
+	public List<Artiste> getLstArtistes() {
+		return lstArtistes;
 	}
 
 }

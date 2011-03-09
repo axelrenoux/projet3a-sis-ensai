@@ -1,5 +1,7 @@
 package parsing.sax;
 
+import handler.sax.ChansonHandler;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Iterator;
@@ -9,11 +11,12 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
+import metier.Chanson;
+
 import org.apache.http.client.methods.HttpGet;
 import org.xml.sax.SAXException;
 
 import appelHttp.AppelHTTP;
-import metier.Chanson;
 
 
 public class ParsingChanson implements IParsing{
@@ -41,16 +44,16 @@ public class ParsingChanson implements IParsing{
 			//on veut récuperer les infos sur une chanson: http://ws.audioscrobbler.com/2.0/?method=track.getinfo&api_key=ca33590ba46941a9186c4777b5046445&artist=cher&track=believe
 
 		
+			
 
-
-			HttpGet requeteGet = new HttpGet("http://ws.audioscrobbler.com/2.0/?method=track.search&track=Believe&api_key=ca33590ba46941a9186c4777b5046445"); 
+			HttpGet requeteGet = new HttpGet("http://ws.audioscrobbler.com/2.0/?method=track.search&track=Believe&api_key=ca33590ba46941a9186c4777b5046445&limit=100"); 
 
 			InputStream fichier = AppelHTTP.recupererDonnees(requeteGet);
 
 
 			ChansonHandler gestionnaire = new ChansonHandler();
 			parseur.parse(fichier, gestionnaire);
-
+			
 
 
 			List<Chanson> lstChanson = gestionnaire.getLstChanson();
@@ -59,6 +62,8 @@ public class ParsingChanson implements IParsing{
 				Chanson chanson = (Chanson) iterator.next();
 				System.out.println(chanson);
 			}
+			
+			System.out.println("fini");
 
 		}catch(ParserConfigurationException pce){
 			System.out.println("Erreur de configuration du parseur");

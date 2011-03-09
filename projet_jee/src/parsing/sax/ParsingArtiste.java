@@ -1,5 +1,7 @@
 package parsing.sax;
 
+import handler.sax.ArtisteHandler;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Iterator;
@@ -9,11 +11,12 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
+import metier.Artiste;
+
 import org.apache.http.client.methods.HttpGet;
 import org.xml.sax.SAXException;
 
 import appelHttp.AppelHTTP;
-import metier.Artiste;
  
 public class ParsingArtiste implements IParsing {
 

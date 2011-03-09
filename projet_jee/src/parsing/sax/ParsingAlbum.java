@@ -1,5 +1,7 @@
 package parsing.sax;
 
+import handler.sax.AlbumSearchHandler;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Iterator;
@@ -41,25 +43,30 @@ public class ParsingAlbum implements IParsing {
 	       
 
 	        	  
-
-	         HttpGet requeteGet = new HttpGet("http://ws.audioscrobbler.com/2.0/?method=album.search&album=believe&api_key=ca33590ba46941a9186c4777b5046445"); 
-	 		
 	         
-	         InputStream fichier = AppelHTTP.recupererDonnees(requeteGet);
+	        	 
 	         
+		         HttpGet requeteGet = new HttpGet("http://ws.audioscrobbler.com/2.0/?method=album.search&album=believe&api_key=ca33590ba46941a9186c4777b5046445"); 
+		 		
+		         
+		         InputStream fichier = AppelHTTP.recupererDonnees(requeteGet);
+		         
+		         
+		         AlbumSearchHandler gestionnaire = new AlbumSearchHandler();
+		         
+		         parseur.parse(fichier, gestionnaire);
+		         
+		         
+				
+		         List<Album> lstAlbum = gestionnaire.getLstAlbums();
+		         for (Iterator iterator = lstAlbum.iterator(); iterator
+						.hasNext();) {
+					Album album = (Album) iterator.next();
+					System.out.println(album);
+				}
 	         
-	         AlbumHandler gestionnaire = new AlbumHandler();
+	        
 	         
-	         parseur.parse(fichier, gestionnaire);
-	         
-	         
-			
-	         List<Album> lstAlbum = gestionnaire.getLstAlbums();
-	         for (Iterator iterator = lstAlbum.iterator(); iterator
-					.hasNext();) {
-				Album album = (Album) iterator.next();
-				System.out.println(album);
-			}
 	         
 	      }catch(ParserConfigurationException pce){
 	         System.out.println("Erreur de configuration du parseur");

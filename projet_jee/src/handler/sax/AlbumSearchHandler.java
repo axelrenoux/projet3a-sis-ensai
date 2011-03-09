@@ -1,7 +1,7 @@
 /**
  * 
  */
-package parsing.sax;
+package handler.sax;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -18,7 +18,7 @@ import metier.Artiste;
  * @author Administrateur
  *
  */
-public class AlbumHandler extends DefaultHandler{
+public class AlbumSearchHandler extends DefaultHandler{
 
 
 
@@ -55,7 +55,7 @@ public class AlbumHandler extends DefaultHandler{
 	/**
 	 * constructeur vide
 	 */
-	public AlbumHandler(){
+	public AlbumSearchHandler(){
 		super();
 	}
 
