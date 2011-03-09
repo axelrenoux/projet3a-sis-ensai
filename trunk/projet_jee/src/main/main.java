@@ -1,5 +1,6 @@
 package main;
 
+import parsing.sax.ParsingAlbum;
 import parsing.sax.ParsingChanson;
 import parsing.sax.ParsingArtiste;
 import parsing.sax.ParsingChanson;
