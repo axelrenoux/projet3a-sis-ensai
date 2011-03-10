@@ -1,10 +1,8 @@
 package formulaire.recherches.vue;
-	import java.awt.event.ActionEvent;
-
 	import javax.faces.application.FacesMessage;
-	import javax.faces.bean.ManagedBean;
-	import javax.faces.bean.ManagedProperty;
-	import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
 import formulaire.reponses.gestion.GestionFormulaire;

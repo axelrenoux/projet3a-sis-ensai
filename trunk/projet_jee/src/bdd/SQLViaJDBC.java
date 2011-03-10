@@ -13,7 +13,6 @@ package bdd;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -36,9 +35,7 @@ public class SQLViaJDBC{
 	//attributs
 	private static Connection connection;
 	private static Statement instruction;
-	@SuppressWarnings("unused")
 	private static String userIDAcessBDD;
-	@SuppressWarnings("unused")
 	private static String passWordAccess;
 	private static Map<String,Statement> listeCanaux;
 	
