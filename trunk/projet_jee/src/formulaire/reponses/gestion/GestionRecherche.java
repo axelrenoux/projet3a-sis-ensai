@@ -7,18 +7,21 @@ public abstract class GestionRecherche {
 
 	public void addTrack(String track, boolean aVerifier) {
 		this.track=track;
+		//TODO
 	}
 
 	public void addArtist(String artist, boolean aVerifier) {
 		this.artist=artist;
+		//TODO
 	}
 
 	public void addAlbum(String album, boolean aVerifier) {
 		this.album=album;
+		//TODO
 	}
 
 	public void lancerRecherche() {
-		
+		//TODO
 	}
 	
 }
