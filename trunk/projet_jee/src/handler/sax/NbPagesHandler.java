@@ -18,7 +18,7 @@ import metier.Artiste;
  * @author Administrateur
  *
  */
-public class AlbumSearchHandler extends DefaultHandler{
+public class NbPagesHandler extends DefaultHandler{
 
 
 
@@ -29,25 +29,17 @@ public class AlbumSearchHandler extends DefaultHandler{
 	/********************************************************************/
 	
 	//résultats de notre parsing
-	private List<Album> lstAlbums;
+	private int nbPagesMax;
+	private int nbResultatsTotal;
+	private int nbItemsParPage;
 	   
-	// personne courante pour chaque nouvelle balise Personne
-	private Album currentAlbum;
-	private Artiste currentArtist;
 	
 	//flags nous indiquant la position du parseur
-	private boolean inAlbummatches;
-	private boolean inAlbum;
-	private boolean inName;
-	private boolean inArtiste;
-	private boolean inURL;
-	private boolean inImageSmall;
-	private boolean inImageMedium;
-	private boolean inImageLarge;
-	private boolean inImageExtraLarge;
-	private boolean inImageMega;
+	private boolean inTotalResults;
+	private boolean inItemsPerPage;
 	
-	  
+	
+	
 	/********************************************************************/
 	/**********************      constructeurs      *********************/
 	/********************************************************************/
@@ -55,7 +47,7 @@ public class AlbumSearchHandler extends DefaultHandler{
 	/**
 	 * constructeur vide
 	 */
-	public AlbumSearchHandler(){
+	public NbPagesHandler(){
 		super();
 	}
 
@@ -74,30 +66,10 @@ public class AlbumSearchHandler extends DefaultHandler{
 			String qName,
 			Attributes attributes)
 	throws SAXException{
-		if(qName.equals("albummatches")){
-			lstAlbums = new LinkedList<Album>();
-		}else if(qName.equals("album")){
-			currentAlbum = new Album();
-			inAlbum = true;	
-		}else if(qName.equals("name")){
-			inName = true;	
-		}else if(qName.equals("artist")){
-			currentArtist = new Artiste();
-			inArtiste = true;	
-		}else if(qName.equals("url")){
-			inURL = true;	
-		}else if(qName.equals("image")){
-			if(attributes.getValue(0).equals("small")){
-				inImageSmall = true;
-			}else if (attributes.getValue(0).equals("medium")){
-				inImageMedium = true;
-			}else if (attributes.getValue(0).equals("large")){
-				inImageLarge = true;
-			}else if (attributes.getValue(0).equals("extralarge")){
-				inImageExtraLarge = true;
-			}else if (attributes.getValue(0).equals("mega")){
-				inImageMega = true;
-			}
+		if(qName.equals("opensearch:totalResults")){
+			inTotalResults = true;
+		}else if(qName.equals("opensearch:itemsPerPage")){
+			inItemsPerPage = true;
 		}else{
 	    	  //System.out.println("Balise non traitee pour le moment : " + qName);
 		}
@@ -112,21 +84,10 @@ public class AlbumSearchHandler extends DefaultHandler{
 			String localName,
 			String qName)
 	throws SAXException{
-		if(qName.equals("album")){
-			lstAlbums.add(currentAlbum);
-			inAlbum = false;	
-		}else if(qName.equals("name")){
-			inName = false;	
-		}else if(qName.equals("artist")){
-			inArtiste = false;	
-		}else if(qName.equals("url")){
-			inURL = false;	
-		}else if(qName.equals("image")){
-			inImageSmall = false;
-			inImageMedium = false;
-			inImageLarge = false;
-			inImageExtraLarge = false;
-			inImageMega = false;
+		if(qName.equals("opensearch:totalResults")){
+			inTotalResults = false;	
+		}else if(qName.equals("opensearch:itemsPerPage")){
+			inItemsPerPage = false;	
 		}
 	}
 
@@ -140,23 +101,10 @@ public class AlbumSearchHandler extends DefaultHandler{
 			int length)
 	throws SAXException{
 		String lecture = new String(ch,start,length);
-		if(inName){
-			currentAlbum.setName(lecture);
-		}else if(inArtiste){
-			currentArtist.setName(lecture);
-			currentAlbum.setArtiste(currentArtist);
-		}else if(inURL){
-			currentAlbum.setUrl(lecture);
-		}else if(inImageSmall){
-			currentAlbum.setImageSmall(lecture);
-		}else if(inImageMedium){
-			currentAlbum.setImageMedium(lecture);
-		}else if(inImageLarge){
-			currentAlbum.setImageLarge(lecture);
-		}else if(inImageExtraLarge){
-			currentAlbum.setImageExtraLarge(lecture);
-		}else if(inImageMega){
-			currentAlbum.setImageMega(lecture);
+		if(inTotalResults){
+			 nbResultatsTotal = Integer.parseInt(lecture);
+		}else if(inItemsPerPage){
+			nbItemsParPage = Integer.parseInt(lecture);
 		}
 	}
 
@@ -177,21 +125,30 @@ public class AlbumSearchHandler extends DefaultHandler{
 	public void endDocument() throws SAXException {
 		System.out.println("Fin du parsing");
 		System.out.println("Resultats du parsing");
-
-		/*for (Film monFilm : lstFilm) {
-			System.out.println(monFilm);
-	   	  }*/
-
 	}
+
+
+
 	
 	
 	/********************************************************************/
 	/******************      getters / setters       ********************/
 	/********************************************************************/
 	
-
-	public List<Album> getLstAlbums() {
-		return lstAlbums;
+	/**
+	 * methode qui retourne le nombre de pages de résultats "completes"
+	 * @return
+	 */
+	public int getNbPagesMax() {
+		if(nbItemsParPage!=0){
+			nbPagesMax = (int) Math.ceil((float)nbResultatsTotal/nbItemsParPage);
+		}
+		else{
+			nbPagesMax = 0;
+		}
+		return nbPagesMax;
 	}
+
+ 
 
 }
