@@ -99,7 +99,7 @@ public class ArtisteHandler extends DefaultHandler{
 				inImageMega = true;
 			}
 		}else{
-	    	  System.out.println("Balise non traitee pour le moment : " + qName);
+	    	  //System.out.println("Balise non traitee pour le moment : " + qName);
 		}
 	}
 
