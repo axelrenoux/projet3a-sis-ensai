@@ -37,6 +37,7 @@ public class SQLViaJDBC{
 	private static Statement instruction;
 	private static String userIDAcessBDD;
 	private static String passWordAccess;
+	private static String serveurBDD="jdbc:oracle:thin:@localhost:1521:orcl";
 	private static Map<String,Statement> listeCanaux;
 	
 	//Constructeur
@@ -60,7 +61,7 @@ public class SQLViaJDBC{
 		try {
 			//connection = DriverManager.getConnection("jdbc:mysql://localhost/test?user=root&password=");
 			//connection = DriverManager.getConnection("jdbc:oracle:thin:id2954/id2954@//localhost:1521/XE");
-			connection = DriverManager.getConnection("jdbc:oracle:thin:@oraens10g:1521:ORAENS",userIDAcessBDD,passWordAccess);
+			connection = DriverManager.getConnection(serveurBDD,userIDAcessBDD,passWordAccess);
 		} catch (SQLException e) {
 			throw new ConnectionException(e);
 		}
@@ -86,9 +87,7 @@ public class SQLViaJDBC{
 			throw new ConnectionException(e);
 		}
 		try {
-			//connection = DriverManager.getConnection("jdbc:mysql://localhost/test?user=root&password=");
-			//connection = DriverManager.getConnection("jdbc:oracle:thin:id2954/id2954@//localhost:1521/XE");
-			connection = DriverManager.getConnection("jdbc:oracle:thin:@oraens10g:1521:ORAENS",id,mdp);
+			connection = DriverManager.getConnection(serveurBDD,id,mdp);
 		} catch (SQLException e) {
 			throw new ConnectionException(e);
 		}
