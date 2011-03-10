@@ -4,6 +4,7 @@ import parsing.sax.ParsingAlbum;
 import parsing.sax.ParsingChanson;
 import parsing.sax.ParsingArtiste;
 import parsing.sax.ParsingChanson;
+import recuperationDonnees.RecupDonnees;
 
 public class main {
 
@@ -14,8 +15,9 @@ public class main {
 		// TODO Auto-generated method stub
 		//ParsingAlbum parsing = new ParsingAlbum();
 		//ParsingArtiste parsing = new ParsingArtiste();
-		ParsingChanson parsing = new ParsingChanson();
-		parsing.parser();
+		RecupDonnees recup = new RecupDonnees();
+		
+		recup.recupererDonnees();
 	}
 
 }
