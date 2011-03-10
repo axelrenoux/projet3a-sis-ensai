@@ -1,14 +1,7 @@
 package formulaire.recherches.vue;
 
-import java.util.ArrayList;
-
- 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 /**
  * on ajoute ces 2 lignes afin que la classe soit instanciee automatiquement (managedBean)
