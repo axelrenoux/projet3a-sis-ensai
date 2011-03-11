@@ -15,8 +15,7 @@ public class main {
 		// TODO Auto-generated method stub
 		//ParsingAlbum parsing = new ParsingAlbum();
 		//ParsingArtiste parsing = new ParsingArtiste();
-		RecupDonnees recup = new RecupDonnees();
-		
+		RecupDonnees recup = new RecupDonnees();		
 		recup.recupererDonnees();
 	}
 
