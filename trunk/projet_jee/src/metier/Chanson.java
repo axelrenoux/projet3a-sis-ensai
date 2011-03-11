@@ -54,7 +54,7 @@ public class Chanson {
 	 * @param toptags
 	 * @param wiki
 	 */
-	public Chanson(String name, Double duree,String url,
+	public Chanson(String name, Double duree, String url,
 			Artiste artiste,double listeners,double playcount,
 			HashMap<String,Album> albums,
 			ArrayList<Tag> toptags,Wiki wiki) {
@@ -346,6 +346,12 @@ public class Chanson {
 	public void setImageMega(String imageMega) {
 		this.imageMega = imageMega;
 	}
+
+
+
+
+
+
 
 
 

@@ -40,6 +40,7 @@ public class AlbumSearchHandler extends DefaultHandler{
 	private boolean inAlbum;
 	private boolean inName;
 	private boolean inArtiste;
+	private boolean inID;
 	private boolean inURL;
 	private boolean inImageSmall;
 	private boolean inImageMedium;
@@ -86,6 +87,8 @@ public class AlbumSearchHandler extends DefaultHandler{
 			inArtiste = true;	
 		}else if(qName.equals("url")){
 			inURL = true;	
+		}else if(qName.equals("ID")){
+			inID = true;	
 		}else if(qName.equals("image")){
 			if(attributes.getValue(0).equals("small")){
 				inImageSmall = true;
@@ -121,6 +124,8 @@ public class AlbumSearchHandler extends DefaultHandler{
 			inArtiste = false;	
 		}else if(qName.equals("url")){
 			inURL = false;	
+		}else if(qName.equals("ID")){
+			inID = false;	
 		}else if(qName.equals("image")){
 			inImageSmall = false;
 			inImageMedium = false;
@@ -147,6 +152,8 @@ public class AlbumSearchHandler extends DefaultHandler{
 			currentAlbum.setArtiste(currentArtist);
 		}else if(inURL){
 			currentAlbum.setUrl(lecture);
+		}else if(inID){
+			currentAlbum.setID(lecture);
 		}else if(inImageSmall){
 			currentAlbum.setImageSmall(lecture);
 		}else if(inImageMedium){

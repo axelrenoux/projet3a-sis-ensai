@@ -13,6 +13,7 @@ public class Album {
 	
 	private String name;
 	private Artiste artiste;
+	private String ID;
 	private String url;
 	private Date date;
 	private String imageSmall;
@@ -23,7 +24,7 @@ public class Album {
 	private double listeners;//nb de personnes ayant écouté l'album
 	private double playcount;//nb de fois où l'album a été écouté
 	private HashMap<String,Chanson> chansons;//contient chaque chanson et son rang
-	private ArrayList<Tag> toptags;
+	//private ArrayList<Tag> toptags;
 	private Wiki wiki;
 	
 	/********************************************************************/
@@ -44,6 +45,7 @@ public class Album {
 	 * constructeur avec les parametres
 	 * @param name
 	 * @param artiste
+	 * @param ID
 	 * @param url
 	 * @param date
 	 * @param imageSmall
@@ -57,7 +59,7 @@ public class Album {
 	 * @param toptags
 	 * @param wiki
 	 */
-	public Album(String name, Artiste artiste, String url,Date date,
+	public Album(String name, Artiste artiste, String ID, String url,Date date,
 			String imageSmall,String imageMedium,String imageLarge,
 			String imageExtraLarge,String imageMega,double listeners,
 			double playcount,HashMap<String,Chanson> chansons,
@@ -65,6 +67,7 @@ public class Album {
 		super();
 		this.name = name;
 		this.artiste=artiste;
+		this.ID = ID;
 		this.url=url;
 		this.date=date;
 		this.imageSmall=imageSmall;
@@ -75,7 +78,7 @@ public class Album {
 		this.listeners=listeners; 
 		this.playcount=playcount; 
 		this.chansons=chansons; 
-		this.toptags=toptags;
+		//this.toptags=toptags;
 		this.wiki=wiki; 
 	}
 
@@ -95,7 +98,7 @@ public class Album {
 				+ ", imageMedium=" + imageMedium + ", imageLarge=" + imageLarge
 				+ ", imageExtraLarge=" + imageExtraLarge + ", imageMega="
 				+ imageMega + ", listeners=" + listeners + ", playcount="
-				+ playcount + ", chansons=" + chansons + ", toptags=" + toptags
+				+ playcount + ", chansons=" + chansons 
 				+ ", wiki=" + wiki + "]";
 	}
 
@@ -249,7 +252,7 @@ public class Album {
 
 
 	 
-
+/*
 
 
 	public ArrayList<Tag> getToptags() {
@@ -266,7 +269,7 @@ public class Album {
 	}
 
 
-
+*/
 
 
 
@@ -278,6 +281,18 @@ public class Album {
 
 	public void setWiki(Wiki wiki) {
 		this.wiki = wiki;
+	}
+
+
+
+	public String getID() {
+		return ID;
+	}
+
+
+
+	public void setID(String iD) {
+		ID = iD;
 	}
 	
 	

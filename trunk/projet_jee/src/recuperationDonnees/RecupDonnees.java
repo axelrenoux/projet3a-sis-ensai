@@ -23,7 +23,7 @@ public class RecupDonnees {
 	
 	public void initialisation(){
 		motsCleChansons.add("ordinateur");
-		motsCleAlbums.add("believe");
+		motsCleAlbums.add("ordinateur");
 		motsCleArtistes.add("cher");
 	}
 	
@@ -32,22 +32,31 @@ public class RecupDonnees {
 		initialisation();
 		
 		/************ recuperation de chansons ***********************/
-		ParsingChanson parsingChanson = new ParsingChanson();
+		/*ParsingChanson parsingChanson = new ParsingChanson();
 		
 		for(String chanson : motsCleChansons){
 			listeChansons.addAll(parsingChanson.parser(chanson));
 		}
 		System.out.println(listeChansons.toString());
-		
+		*/
 		
 		/************ recuperation d'albums    ***********************/
-		/*ParsingAlbum parsingAlbum = new ParsingAlbum();
+		ParsingAlbum parsingAlbum = new ParsingAlbum();
 		
 		for(String album : motsCleAlbums){
 			listeAlbums.addAll(parsingAlbum.parser(album));
 		}
 		System.out.println(listeAlbums.toString());
-		*/
+		
+		
+		Album a = listeAlbums.get(3);
+		System.out.println(" album avant "+ a);
+		a = parsingAlbum.parserInfos(a);
+		System.out.println(" album complete "+ a);
+		
+		
+		
+		
 		/************ recuperation d'artistes  ***********************/
 		/*ParsingArtiste parsingArtiste = new ParsingArtiste();
 		
@@ -57,6 +66,21 @@ public class RecupDonnees {
 		System.out.println(listeArtistes.toString());
 		*/
 	
+		
+		/********************** test get info album ******************/
+		/*Album albumCompletExemple = new Album();
+		Artiste artiste = new Artiste();
+		artiste.setName("cher");
+		albumCompletExemple.setName("ordinateur");
+		albumCompletExemple.setArtiste(artiste);
+		
+		System.out.println(" album avant" + albumCompletExemple.toString());
+		//essai de recuperation d'infos complémentaires sur un album 
+		
+		albumCompletExemple = parsingAlbum.parserInfos(albumCompletExemple);
+		
+		System.out.println(" album apres" + albumCompletExemple.toString());
+		*/
 	}
 
 }
