@@ -67,8 +67,14 @@ public class Wiki {
 		return datePublication;
 	}
 
-	public void setDatePublication(Date datePublication) {
-		this.datePublication = datePublication;
+	/**
+	 * TODO à coder
+	 * @param datePublication
+	 */
+	public void setDatePublication(String datePublication) {
+		//transformer en date
+		//Date d = new Date(datePublication);
+		//this.datePublication = d;
 	}
 
 	public String getResume() {
