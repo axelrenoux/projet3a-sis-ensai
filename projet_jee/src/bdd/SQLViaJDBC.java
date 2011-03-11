@@ -37,7 +37,7 @@ public class SQLViaJDBC{
 	private static Statement instruction;
 	private static String userIDAcessBDD;
 	private static String passWordAccess;
-	private static String serveurBDD="jdbc:oracle:thin:@localhost:1521:orcl";
+	private static String serveurBDD="http://127.0.0.1:8080/apex";
 	private static Map<String,Statement> listeCanaux;
 	
 	//Constructeur
