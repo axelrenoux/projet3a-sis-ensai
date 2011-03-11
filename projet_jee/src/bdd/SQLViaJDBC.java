@@ -37,7 +37,7 @@ public class SQLViaJDBC{
 	private static Statement instruction;
 	private static String userIDAcessBDD;
 	private static String passWordAccess;
-	private static String serveurBDD="http://127.0.0.1:8080/apex";
+	private static String serveurBDD="jdbc:oracle:thin:@localhost:1521:XE";
 	private static Map<String,Statement> listeCanaux;
 	
 	//Constructeur
@@ -81,7 +81,6 @@ public class SQLViaJDBC{
 	 */
 	public static void connecter(String id, String mdp) throws ConnectionException {
 		try {
-			//Class.forName("com.mysql.jdbc.Driver").newInstance();
 			DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
 		} catch (SQLException e) {
 			throw new ConnectionException(e);
