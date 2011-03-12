@@ -27,8 +27,44 @@ import metier.Wiki;
  */
 public class AlbumInfoHandler extends DefaultHandler{
 
-
-
+/*
+	  <album>
+	  		<name>Believe</name> 
+	  		<artist>Cher</artist> 
+	  		<id>2026126</id> 
+	  		<url>http://www.last.fm/music/Cher/Believe</url> 
+	  		<releasedate>6 Apr 1999, 00:00</releasedate> 
+	  		<image size="small">http://userserve-ak.last.fm/serve/34s/42806845.png</image> 
+	  		<image size="medium">http://userserve-ak.last.fm/serve/64s/42806845.png</image> 
+			<image size="large">http://userserve-ak.last.fm/serve/174s/42806845.png</image> 
+			<image size="extralarge">http://userserve-ak.last.fm/serve/300x300/42806845.png</image> 
+			<image size="mega">http://userserve-ak.last.fm/serve/_/42806845/Believe++600++600+PNG.png</image> 
+			<listeners>175689</listeners> 
+			<playcount>793010</playcount> 
+			<tracks>
+				<track rank="1">
+					<name>Believe</name> 
+				    <duration>239</duration> 
+				    <url>http://www.last.fm/music/Cher/_/Believe</url> 
+				    <artist>
+					    <name>Cher</name> 
+					    <url>http://www.last.fm/music/Cher</url> 
+					</artist>
+			    </track>
+		    </tracks>
+	        <toptags>
+			  <tag>
+				  <name>pop</name> 
+				  <url>http://www.last.fm/tag/pop</url> 
+			  </tag>
+			</toptags>
+			<wiki>
+				  <published>Sat, 6 Mar 2010 16:48:03 +0000</published> 
+				  <summary></summary>
+				  <content></content>
+		    </wiki>
+		</album>
+*/
 
 	
 	/********************************************************************/
@@ -38,7 +74,7 @@ public class AlbumInfoHandler extends DefaultHandler{
 	//résultats de notre parsing
 	private Album album;
 	   
-	// objets courants pour chaque nouvelle balise "Objet"
+	// objets courants  
 	private Chanson currentChanson;
 	private HashMap<String,Chanson> listeChansons;
 	private String rangCurrentChanson;
@@ -49,8 +85,6 @@ public class AlbumInfoHandler extends DefaultHandler{
 	
 	//flags nous indiquant la position du parseur
 	private boolean inAlbum;
-	private boolean inNameAlbum;
-	private boolean inArtisteAlbum;
 	private boolean inListeners;
 	private boolean inPlaycount;
 	private boolean inTracks;
@@ -188,9 +222,9 @@ public class AlbumInfoHandler extends DefaultHandler{
 			inNameArtisteChanson = false;
 		}else if(qName.equals("url") && inArtisteChanson){
 			inURLArtisteChason = false;	
-		/*}else if(qName.equals("toptags")){
+		}else if(qName.equals("toptags")){
 			inTopTags = false;
-			album.setToptags(listeTags);*/
+			album.setToptags(listeTags);
 		}else if(qName.equals("tag")){
 			inTag = false;	
 			listeTags.add(currentTag);
@@ -201,7 +235,6 @@ public class AlbumInfoHandler extends DefaultHandler{
 		}else if(qName.equals("wiki")){
 			inWiki = false;
 			album.setWiki(currentWiki);
-			System.out.println("album fin wiki " +album);
 		}else if(qName.equals("published")){
 			inPublished = false;	
 		}else if(qName.equals("summary")){
