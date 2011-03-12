@@ -11,6 +11,7 @@ public class Artiste {
 	/*************************      attributs       *********************/
 	/********************************************************************/
 	
+	private String ID;
 	private String name;
 	private String url;
 	private String imageSmall;
@@ -85,16 +86,40 @@ public class Artiste {
 	/************************      methodes      ************************/
 	/********************************************************************/
 	
-	@Override
+	
+	/**
+	 * methode qui propose un artiste, pour mettre à jour si besoin
+	 * @param artistePropose
+	 */
+	public void mettreAjour(Artiste artistePropose){
+		//TODO
+	}
+	
+	
 	public String toString() {
-		return "Artiste [name=" + name + ", url=" + url + ", imageSmall="
+		String descrip;
+		descrip = "\n " + "name " + name + "\n " 
+		+ " url " +  url+ "\n "
+		+ "listeners "+ listeners+ "\n "
+		+ "playcount " + playcount + "\n ";
+		
+		try{
+				descrip+="nb artistes sim "+ artistesSimilaires.size()+ "\n ";
+				descrip+="nb tags "+ toptags.size()+ "\n ";
+				descrip+="resume wiki "+ wiki.getResume()+ "\n ";
+		}
+		catch (NullPointerException e){
+		}
+		return descrip;	
+	}
+/*"Artiste [name=" + name + ", url=" + url + ", imageSmall="
 				+ imageSmall + ", imageMedium=" + imageMedium + ", imageLarge="
 				+ imageLarge + ", imageExtraLarge=" + imageExtraLarge
 				+ ", imageMega=" + imageMega + ", listeners=" + listeners
 				+ ", playcount=" + playcount + ", artistesSimilaires="
 				+ artistesSimilaires + ", toptags=" + toptags + ", wiki=" + wiki
 				+ "]";
-	}
+	}*/
 
 
 	/********************************************************************/
@@ -316,5 +341,18 @@ public class Artiste {
 	}
 
 
+
+	public String getID() {
+		return ID;
+	}
+
+
+
+
+
+
+	public void setID(String iD) {
+		ID = iD;
+	}
 
 }
