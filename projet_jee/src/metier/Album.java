@@ -24,7 +24,7 @@ public class Album {
 	private double listeners;//nb de personnes ayant écouté l'album
 	private double playcount;//nb de fois où l'album a été écouté
 	private HashMap<String,Chanson> chansons;//contient chaque chanson et son rang
-	//private ArrayList<Tag> toptags;
+	private ArrayList<Tag> toptags;
 	private Wiki wiki;
 	
 	/********************************************************************/
@@ -91,7 +91,6 @@ public class Album {
 	/************************      methodes      ************************/
 	/********************************************************************/
 	
-	@Override
 	public String toString() {
 		String descrip;
 		descrip = "\n " + "name " + name + "\n " 
@@ -99,31 +98,26 @@ public class Album {
 		+ "url " + url + "\n "
 		+ "listeners "+ listeners+ "\n "
 		+ "playcount " + playcount + "\n ";
-		
 		try{
-			
 				descrip+="nb chansons "+ chansons.size()+ "\n ";
-			
 				descrip+="nom artiste "+ artiste.getName()+ "\n ";
-			
-			
+				descrip+="nb tags "+ toptags.size()+ "\n ";
 				descrip+="resume wiki "+ wiki.getResume()+ "\n ";
-			
 		}
 		catch (NullPointerException e){
-			
 		}
 		return descrip;
-		
-		/*"Album [name=" + name + ", artiste=" + artiste + ", url=" + url
-				+ ", date=" + date + ", imageSmall=" + imageSmall
-				+ ", imageMedium=" + imageMedium + ", imageLarge=" + imageLarge
-				+ ", imageExtraLarge=" + imageExtraLarge + ", imageMega="
-				+ imageMega + ", listeners=" + listeners + ", playcount="
-				+ playcount + ", chansons=" + chansons 
-				+ ", wiki=" + wiki + "]";*/
 	}
 
+	/*"Album [name=" + name + ", artiste=" + artiste + ", url=" + url
+	+ ", date=" + date + ", imageSmall=" + imageSmall
+	+ ", imageMedium=" + imageMedium + ", imageLarge=" + imageLarge
+	+ ", imageExtraLarge=" + imageExtraLarge + ", imageMega="
+	+ imageMega + ", listeners=" + listeners + ", playcount="
+	+ playcount + ", chansons=" + chansons 
+	+ ", wiki=" + wiki + "]";*/
+
+	
 	/********************************************************************/
 	/******************      getters / setters       ********************/
 	/********************************************************************/
@@ -274,7 +268,7 @@ public class Album {
 
 
 	 
-/*
+
 
 
 	public ArrayList<Tag> getToptags() {
@@ -291,7 +285,7 @@ public class Album {
 	}
 
 
-*/
+
 
 
 
