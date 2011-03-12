@@ -8,7 +8,8 @@ package bdd;
  * 			creer les tables, 
  * 			les supprimer, 
  * 			récupérer les noms de colonne
- * -Oracle MySQL€
+ * -Oracle 10g
+ * Cf fichier de documentation dans les download du google code
  */
 
 import java.sql.Connection;
