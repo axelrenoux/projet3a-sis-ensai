@@ -43,16 +43,19 @@ public class RecupDonnees {
 		/************ recuperation d'albums    ***********************/
 		ParsingAlbum parsingAlbum = new ParsingAlbum();
 		
-		for(String album : motsCleAlbums){
-			listeAlbums.addAll(parsingAlbum.parser(album));
+		//pour chaque mot cle, on recupere les albums associes
+		for(String motclealbum : motsCleAlbums){
+			listeAlbums.addAll(parsingAlbum.parser(motclealbum));
 		}
 		System.out.println(listeAlbums.toString());
 		
-		
-		Album a = listeAlbums.get(3);
-		System.out.println(" album avant "+ a);
-		a = parsingAlbum.parserInfos(a);
-		System.out.println(" album complete "+ a);
+		//pour chaque album, on recupere les infos complementaires
+		for(Album album: listeAlbums){
+			album = parsingAlbum.parserInfos(album);
+		}
+		for(Album album: listeAlbums){
+			System.out.println(" album complete "+ album);	
+		}
 		
 		
 		
@@ -66,21 +69,7 @@ public class RecupDonnees {
 		System.out.println(listeArtistes.toString());
 		*/
 	
-		
-		/********************** test get info album ******************/
-		/*Album albumCompletExemple = new Album();
-		Artiste artiste = new Artiste();
-		artiste.setName("cher");
-		albumCompletExemple.setName("ordinateur");
-		albumCompletExemple.setArtiste(artiste);
-		
-		System.out.println(" album avant" + albumCompletExemple.toString());
-		//essai de recuperation d'infos complémentaires sur un album 
-		
-		albumCompletExemple = parsingAlbum.parserInfos(albumCompletExemple);
-		
-		System.out.println(" album apres" + albumCompletExemple.toString());
-		*/
+
 	}
 
 }
