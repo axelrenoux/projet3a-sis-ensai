@@ -30,21 +30,21 @@ import appelHttp.AppelHTTP;
  *
  */
 public abstract class Parsing {
-	
+
 	/********************************************************************/
 	/*************************      attributs       *********************/
 	/********************************************************************/
-	
+
 
 	//on souhaite recuperer au maximum 1000 pages lors de nos requetes
 	private static final int nbpagesMax = 1000;
-	
-	
+
+
 	/********************************************************************/
 	/************************      methodes      ************************/
 	/********************************************************************/
-	
-	
+
+
 	/**
 	 * methode qui calcule le nombre total de pages
 	 * de résultat d'une requete
@@ -54,22 +54,22 @@ public abstract class Parsing {
 	public int calculerNbPages(HttpGet requeteGet){
 		int nbpages =0;
 		try{
-		// création d'une fabrique de parseurs SAX
-		SAXParserFactory fabrique = SAXParserFactory.newInstance();
+			// création d'une fabrique de parseurs SAX
+			SAXParserFactory fabrique = SAXParserFactory.newInstance();
 
-		// création d'un parseur SAX
-		SAXParser parseur = fabrique.newSAXParser();
-		
-		//on recupere sous forme d'input stream le resultat de la requete
-		InputStream input = AppelHTTP.recupererDonnees(requeteGet);
-		
-		//on cree un gestionnaire pour parser le resultat de la requete
-		NbPagesHandler gestionnaire = new NbPagesHandler();
-		parseur.parse(input, gestionnaire);
+			// création d'un parseur SAX
+			SAXParser parseur = fabrique.newSAXParser();
 
-		//on récupère le nombre de pages
-		nbpages = gestionnaire.getNbPagesMax();
-		
+			//on recupere sous forme d'input stream le resultat de la requete
+			InputStream input = AppelHTTP.recupererDonnees(requeteGet);
+
+			//on cree un gestionnaire pour parser le resultat de la requete
+			NbPagesHandler gestionnaire = new NbPagesHandler();
+			parseur.parse(input, gestionnaire);
+
+			//on récupère le nombre de pages
+			nbpages = gestionnaire.getNbPagesMax();
+
 		}catch(ParserConfigurationException pce){
 			System.out.println("Erreur de configuration du parseur");
 			System.out.println("Lors de l'appel à SAXParser.newSAXParser()");
@@ -85,26 +85,36 @@ public abstract class Parsing {
 	}
 
 
-	
-	 //album
-    //on veut rechercher un album:              http://ws.audioscrobbler.com/2.0/?method=album.search&album=believe&api_key=ca33590ba46941a9186c4777b5046445
-    //on veut récuperer les infos sur un album: http://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key=ca33590ba46941a9186c4777b5046445&artist=Cher&album=Believe
-    
-    //chanson
-    //on veut rechercher une chanson: 				http://ws.audioscrobbler.com/2.0/?method=track.search&track=Believe&api_key=ca33590ba46941a9186c4777b5046445
-    //on veut récuperer les infos sur une chanson: http://ws.audioscrobbler.com/2.0/?method=track.getinfo&api_key=ca33590ba46941a9186c4777b5046445&artist=cher&track=believe
-    
-    //artiste
-    //on veut rechercher un artiste:              http://ws.audioscrobbler.com/2.0/?method=artist.search&artist=cher&api_key=ca33590ba46941a9186c4777b5046445
-    //on veut récuperer les infos sur un artiste: http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist=Cher&api_key=ca33590ba46941a9186c4777b5046445
+	/**
+	 * @param str
+	 * @return
+	 */
+	public String transformationURL(String str) {
+		String newstr; 
+		newstr = str.replaceAll(" ", "+");
+		return str;
+	}
+
+
+	//album
+	//on veut rechercher un album:              http://ws.audioscrobbler.com/2.0/?method=album.search&album=believe&api_key=ca33590ba46941a9186c4777b5046445
+	//on veut récuperer les infos sur un album: http://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key=ca33590ba46941a9186c4777b5046445&artist=Cher&album=Believe
+
+	//chanson
+	//on veut rechercher une chanson: 				http://ws.audioscrobbler.com/2.0/?method=track.search&track=Believe&api_key=ca33590ba46941a9186c4777b5046445
+	//on veut récuperer les infos sur une chanson: http://ws.audioscrobbler.com/2.0/?method=track.getinfo&api_key=ca33590ba46941a9186c4777b5046445&artist=cher&track=believe
+
+	//artiste
+	//on veut rechercher un artiste:              http://ws.audioscrobbler.com/2.0/?method=artist.search&artist=cher&api_key=ca33590ba46941a9186c4777b5046445
+	//on veut récuperer les infos sur un artiste: http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist=Cher&api_key=ca33590ba46941a9186c4777b5046445
 
 	/********************************************************************/
 	/******************      getters / setters       ********************/
 	/********************************************************************/
-	
-	
+
+
 	public static int getNbpagesmax() {
 		return nbpagesMax;
 	}
-	
+
 }

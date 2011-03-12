@@ -1,6 +1,8 @@
 package parsing.sax;
 
-import handler.sax.ArtisteHandler;
+import handler.sax.AlbumInfoHandler;
+import handler.sax.ArtisteSearchHandler;
+import handler.sax.ArtisteInfoHandler;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -12,6 +14,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
+import metier.Album;
 import metier.Artiste;
 
 import org.apache.http.client.methods.HttpGet;
@@ -62,7 +65,7 @@ public class ParsingArtiste extends Parsing {
 				InputStream input = AppelHTTP.recupererDonnees(requeteGet);
 
 				//on cree un gestionnaire d'artistes pour parser le resultat de la requete
-				ArtisteHandler gestionnaireArtiste = new ArtisteHandler();
+				ArtisteSearchHandler gestionnaireArtiste = new ArtisteSearchHandler();
 				parseur.parse(input, gestionnaireArtiste);
 
 
@@ -100,5 +103,71 @@ public class ParsingArtiste extends Parsing {
 		}
 		return lstArtiste;
 	}
+
+	
+	public Artiste parserInfos(Artiste artiste) {
+
+
+		try{
+			// création d'une fabrique de parseurs SAX
+			SAXParserFactory fabrique = SAXParserFactory.newInstance();
+
+			// création d'un parseur SAX
+			SAXParser parseur = fabrique.newSAXParser();
+
+			//artiste
+			//on veut rechercher un artiste:              http://ws.audioscrobbler.com/2.0/?method=artist.search&artist=cher&api_key=ca33590ba46941a9186c4777b5046445
+			//on veut récuperer les infos sur un artiste: http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist=Cher&api_key=ca33590ba46941a9186c4777b5046445
+
+
+
+			//on crée la requete avec le nom de l'artiste
+			System.out.println("ma requete pour le get info");
+			String marequete = "http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist="+ artiste.getName()+"&api_key=ca33590ba46941a9186c4777b5046445";
+			
+			marequete = marequete.replaceAll(" ", "+");
+			
+				
+			
+			System.out.println(marequete);
+			
+			HttpGet requeteGet = new HttpGet(marequete);
+
+
+			//on recupere sous forme d'input stream le resultat de la requete
+			InputStream input = AppelHTTP.recupererDonnees(requeteGet);
+
+			//on cree un gestionnaire d'albums pour parser le resultat de la requete
+			ArtisteInfoHandler gestionnaireArtiste = new ArtisteInfoHandler(artiste);
+			parseur.parse(input, gestionnaireArtiste);
+
+
+			//TODO semble pas très propre de recupérer ainsi l'album...
+			//on récupère l'artiste mis à jour après avoir parsé les infos complémentaires
+			artiste = gestionnaireArtiste.getArtiste();
+
+
+			System.out.println("fin du traitement");
+						
+
+
+		}catch(ParserConfigurationException pce){
+			System.out.println("Erreur de configuration du parseur");
+			System.out.println("Lors de l'appel à SAXParser.newSAXParser()");
+		}catch(SAXException se){
+			System.out.println("Erreur de parsing");
+			System.out.println("Lors de l'appel à parse()");
+			se.printStackTrace();
+		}catch(IOException ioe){
+			System.out.println("Erreur d'entrée/sortie");
+			System.out.println("Lors de l'appel à parse()");
+		}catch(IllegalArgumentException iae){
+			System.out.println("Erreur dans l'expression de la requete");
+			System.out.println("Lors de l'appel à httpGet");
+		}
+
+		return artiste;
+	}
+
 
 }
