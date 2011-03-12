@@ -153,12 +153,7 @@ public class ParsingAlbum extends Parsing {
 			
 			//affichage pour vérif
 			System.out.println("album mis à jour "  + album.toString());
-
-
-
-
-
-
+			
 
 
 		}catch(ParserConfigurationException pce){
