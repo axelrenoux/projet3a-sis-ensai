@@ -10,6 +10,7 @@ public class Chanson {
 	/*************************      attributs       *********************/
 	/********************************************************************/
 	
+	private String ID;
 	private String name;
 	private Double duree;
 	private String url;
@@ -84,14 +85,32 @@ public class Chanson {
 	/********************************************************************/
 	
 	 
-	@Override
-	public String toString() {
-		return "Chanson [name=" + name + ", duree=" + duree + ", url=" + url
+	
+	/*"Chanson [name=" + name + ", duree=" + duree + ", url=" + url
 				+ ", artiste=" + artiste + ", listeners=" + listeners
 				+ ", playcount=" + playcount + ", albums=" + albums
-				+ ", toptags=" + toptags + ", wiki=" + wiki + "]";
-	}
+				+ ", toptags=" + toptags + ", wiki=" + wiki + "]";*/
 
+	
+	public String toString() {
+		String descrip;
+		descrip = "\n " + "name " + name + "\n " 
+		+ " DUREE " +  duree + "\n "
+		+ " url " +  url+ "\n "
+		+ "listeners "+ listeners+ "\n "
+		+ "playcount " + playcount + "\n ";
+		
+		try{
+				descrip+="artiste "+ artiste.getName()+ "\n ";
+				descrip+="nb albums "+ albums.size()+ "\n ";
+				descrip+="nb tags "+ toptags.size()+ "\n ";
+				descrip+="resume wiki "+ wiki.getResume()+ "\n ";
+		}
+		catch (NullPointerException e){
+		}
+		return descrip;	
+	}
+	
 	/********************************************************************/
 	/******************      getters / setters       ********************/
 	/********************************************************************/
@@ -345,6 +364,24 @@ public class Chanson {
 
 	public void setImageMega(String imageMega) {
 		this.imageMega = imageMega;
+	}
+
+
+
+
+
+
+	public String getID() {
+		return ID;
+	}
+
+
+
+
+
+
+	public void setID(String iD) {
+		ID = iD;
 	}
 
 
