@@ -123,7 +123,7 @@ public class ParsingAlbum extends Parsing {
 
 
 
-			//on crée la requete avec le mot clé album
+			//on crée la requete avec le nom de l'album et le nom de l'artiste
 			System.out.println("ma requete pour le get info");
 			String marequete = "http://ws.audioscrobbler.com/2.0/?method=album.getInfo&album="+ album.getName() + "&artist="+ album.getArtiste().getName()+"&api_key=ca33590ba46941a9186c4777b5046445"; 
 			
@@ -166,6 +166,9 @@ public class ParsingAlbum extends Parsing {
 		}catch(IOException ioe){
 			System.out.println("Erreur d'entrée/sortie");
 			System.out.println("Lors de l'appel à parse()");
+		}catch(IllegalArgumentException iae){
+			System.out.println("Erreur dans l'expression de la requete");
+			System.out.println("Lors de l'appel à httpGet");
 		}
 
 		return album;

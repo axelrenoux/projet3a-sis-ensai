@@ -1,6 +1,8 @@
 package parsing.sax;
 
-import handler.sax.ChansonHandler;
+import handler.sax.ArtisteInfoHandler;
+import handler.sax.ChansonSearchHandler;
+import handler.sax.ChansonInfoHandler;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -12,6 +14,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
+import metier.Artiste;
 import metier.Chanson;
 
 import org.apache.http.client.methods.HttpGet;
@@ -63,7 +66,7 @@ public class ParsingChanson extends Parsing{
 				InputStream input = AppelHTTP.recupererDonnees(requeteGet);
 	
 				//on cree un gestionnaire de chansons pour parser le resultat de la requete
-				ChansonHandler gestionnaire = new ChansonHandler();
+				ChansonSearchHandler gestionnaire = new ChansonSearchHandler();
 				parseur.parse(input, gestionnaire);
 				
 	
@@ -98,5 +101,79 @@ public class ParsingChanson extends Parsing{
 		
 		return lstChanson;
 	}
+
+	
+	
+	public Chanson parserInfos(Chanson chanson) {
+
+
+		try{
+			// création d'une fabrique de parseurs SAX
+			SAXParserFactory fabrique = SAXParserFactory.newInstance();
+
+			// création d'un parseur SAX
+			SAXParser parseur = fabrique.newSAXParser();
+
+			//chanson
+			//on veut rechercher une chanson: 				http://ws.audioscrobbler.com/2.0/?method=track.search&track=Believe&api_key=ca33590ba46941a9186c4777b5046445
+			//on veut récuperer les infos sur une chanson: http://ws.audioscrobbler.com/2.0/?method=track.getinfo&api_key=ca33590ba46941a9186c4777b5046445&artist=cher&track=believe
+
+
+
+			//on crée la requete avec le nom de la chanson et le nom de l'artiste
+			//System.out.println("ma requete pour le get info");
+			String marequete = "http://ws.audioscrobbler.com/2.0/?method=track.getinfo&api_key=ca33590ba46941a9186c4777b5046445&artist="+ chanson.getArtiste().getName()+"&track="+chanson.getName();
+
+			
+			
+			marequete = transformationURL(marequete);
+			
+			
+			System.out.println(chanson.getName());
+			System.out.println(chanson.getArtiste().getName());
+				
+			
+			
+			
+			
+			HttpGet requeteGet = new HttpGet(marequete);
+
+
+			//on recupere sous forme d'input stream le resultat de la requete
+			InputStream input = AppelHTTP.recupererDonnees(requeteGet);
+
+			//on cree un gestionnaire d'albums pour parser le resultat de la requete
+			ChansonInfoHandler gestionnaireChanson = new ChansonInfoHandler(chanson);
+			parseur.parse(input, gestionnaireChanson);
+
+
+			//TODO semble pas très propre de recupérer ainsi l'album...
+			//on récupère l'artiste mis à jour après avoir parsé les infos complémentaires
+			chanson = gestionnaireChanson.getChanson();
+
+
+			System.out.println("fin du traitement");
+						
+
+
+		}catch(ParserConfigurationException pce){
+			System.out.println("Erreur de configuration du parseur");
+			System.out.println("Lors de l'appel à SAXParser.newSAXParser()");
+		}catch(SAXException se){
+			System.out.println("Erreur de parsing");
+			System.out.println("Lors de l'appel à parse()");
+			se.printStackTrace();
+		}catch(IOException ioe){
+			System.out.println("Erreur d'entrée/sortie");
+			System.out.println("Lors de l'appel à parse()");
+		}catch(IllegalArgumentException iae){
+			System.out.println("Erreur dans l'expression de la requete");
+			System.out.println("Lors de l'appel à httpGet");
+		}
+
+
+		return chanson;
+	}
+
 
 }
