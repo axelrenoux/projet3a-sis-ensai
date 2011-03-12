@@ -93,13 +93,35 @@ public class Album {
 	
 	@Override
 	public String toString() {
-		return "Album [name=" + name + ", artiste=" + artiste + ", url=" + url
+		String descrip;
+		descrip = "\n " + "name " + name + "\n " 
+		+ " date " + date + "\n "
+		+ "url " + url + "\n "
+		+ "listeners "+ listeners+ "\n "
+		+ "playcount " + playcount + "\n ";
+		
+		try{
+			
+				descrip+="nb chansons "+ chansons.size()+ "\n ";
+			
+				descrip+="nom artiste "+ artiste.getName()+ "\n ";
+			
+			
+				descrip+="resume wiki "+ wiki.getResume()+ "\n ";
+			
+		}
+		catch (NullPointerException e){
+			
+		}
+		return descrip;
+		
+		/*"Album [name=" + name + ", artiste=" + artiste + ", url=" + url
 				+ ", date=" + date + ", imageSmall=" + imageSmall
 				+ ", imageMedium=" + imageMedium + ", imageLarge=" + imageLarge
 				+ ", imageExtraLarge=" + imageExtraLarge + ", imageMega="
 				+ imageMega + ", listeners=" + listeners + ", playcount="
 				+ playcount + ", chansons=" + chansons 
-				+ ", wiki=" + wiki + "]";
+				+ ", wiki=" + wiki + "]";*/
 	}
 
 	/********************************************************************/
