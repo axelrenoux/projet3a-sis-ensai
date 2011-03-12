@@ -171,6 +171,7 @@ public class AlbumInfoHandler extends DefaultHandler{
 		}else if(qName.equals("tracks")){
 			inTracks = false;	
 			album.setChansons(listeChansons);
+			System.out.println("fin tracks " +album);
 		}else if(qName.equals("track")){
 			inTrack = false;	
 			listeChansons.put(rangCurrentChanson,currentChanson);
@@ -200,6 +201,7 @@ public class AlbumInfoHandler extends DefaultHandler{
 		}else if(qName.equals("wiki")){
 			inWiki = false;
 			album.setWiki(currentWiki);
+			System.out.println("album fin wiki " +album);
 		}else if(qName.equals("published")){
 			inPublished = false;	
 		}else if(qName.equals("summary")){
@@ -221,8 +223,10 @@ public class AlbumInfoHandler extends DefaultHandler{
 		String lecture = new String(ch,start,length);
 		if(inListeners){
 			album.setListeners(Double.parseDouble(lecture));
+			System.out.println("album in listeners " +album);
 		}else if(inPlaycount){
-			album.setPlaycount(Double.parseDouble(lecture)); 	 
+			album.setPlaycount(Double.parseDouble(lecture)); 
+			System.out.println("album in playcount " +album);
 		}else if(inNameChanson){
 			currentChanson.setName(lecture);
 		}else if(inDuration){
@@ -252,7 +256,7 @@ public class AlbumInfoHandler extends DefaultHandler{
 	 * methode appellee au debut du parsing du fichier
 	 */
 	public void startDocument() throws SAXException {
-		System.out.println("Début du parsing");
+		System.out.println("Début du parsing get info");
 	}
 
 
@@ -261,13 +265,7 @@ public class AlbumInfoHandler extends DefaultHandler{
 	 * methode appellee a la fin du parsing du fichier
 	 */
 	public void endDocument() throws SAXException {
-		System.out.println("Fin du parsing");
-		System.out.println("Resultats du parsing");
-
-		/*for (Film monFilm : lstFilm) {
-			System.out.println(monFilm);
-	   	  }*/
-
+		System.out.println("Fin du parsing get info");
 	}
 
 	
