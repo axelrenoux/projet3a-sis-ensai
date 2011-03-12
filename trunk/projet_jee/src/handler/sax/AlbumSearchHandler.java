@@ -173,7 +173,7 @@ public class AlbumSearchHandler extends DefaultHandler{
 	 * methode appellee au debut du parsing du fichier
 	 */
 	public void startDocument() throws SAXException {
-		System.out.println("Début du parsing");
+		System.out.println("Début du parsing search");
 	}
 
 
@@ -182,13 +182,8 @@ public class AlbumSearchHandler extends DefaultHandler{
 	 * methode appellee a la fin du parsing du fichier
 	 */
 	public void endDocument() throws SAXException {
-		System.out.println("Fin du parsing");
-		System.out.println("Resultats du parsing");
-
-		/*for (Film monFilm : lstFilm) {
-			System.out.println(monFilm);
-	   	  }*/
-
+		System.out.println("Fin du parsing search");
+		
 	}
 	
 	
