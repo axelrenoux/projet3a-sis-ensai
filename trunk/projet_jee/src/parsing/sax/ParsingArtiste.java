@@ -87,9 +87,9 @@ public class ParsingArtiste extends Parsing {
 
 			}
 
-			System.out.println("fin du traitement");
-			System.out.println("taille liste artistes " + lstArtiste.size());
-			System.out.println("nb de pages artistes lues " + nbPagesResultats);
+			//System.out.println("fin du traitement");
+			//System.out.println("taille liste artistes " + lstArtiste.size());
+			//System.out.println("nb de pages artistes lues " + nbPagesResultats);
 			
 
 		}catch(ParserConfigurationException pce){
@@ -124,14 +124,14 @@ public class ParsingArtiste extends Parsing {
 
 
 			//on crée la requete avec le nom de l'artiste
-			System.out.println("ma requete pour le get info");
+			//System.out.println("ma requete pour le get info");
 			marequete = "http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist="+ artiste.getName()+"&api_key=ca33590ba46941a9186c4777b5046445";
 			
 			marequete = marequete.replaceAll(" ", "+");
 			
 				
 			
-			System.out.println(marequete);
+			//System.out.println(marequete);
 			
 			HttpGet requeteGet = new HttpGet(marequete);
 
@@ -149,7 +149,7 @@ public class ParsingArtiste extends Parsing {
 			artiste = gestionnaireArtiste.getArtiste();
 
 
-			System.out.println("fin du traitement");
+			//System.out.println("fin du traitement");
 						
 
 
