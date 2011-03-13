@@ -20,6 +20,8 @@ import metier.Artiste;
 import org.apache.http.client.methods.HttpGet;
 import org.xml.sax.SAXException;
 
+import controleur.Controleur;
+
 import appelHttp.AppelHTTP;
 
 public class ParsingArtiste extends Parsing {
@@ -106,7 +108,7 @@ public class ParsingArtiste extends Parsing {
 
 	
 	public Artiste parserInfos(Artiste artiste) {
-
+		String marequete = "";
 
 		try{
 			// création d'une fabrique de parseurs SAX
@@ -123,7 +125,7 @@ public class ParsingArtiste extends Parsing {
 
 			//on crée la requete avec le nom de l'artiste
 			System.out.println("ma requete pour le get info");
-			String marequete = "http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist="+ artiste.getName()+"&api_key=ca33590ba46941a9186c4777b5046445";
+			marequete = "http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist="+ artiste.getName()+"&api_key=ca33590ba46941a9186c4777b5046445";
 			
 			marequete = marequete.replaceAll(" ", "+");
 			
@@ -164,6 +166,11 @@ public class ParsingArtiste extends Parsing {
 		}catch(IllegalArgumentException iae){
 			System.out.println("Erreur dans l'expression de la requete");
 			System.out.println("Lors de l'appel à httpGet");
+			Controleur.getInstanceuniquecontroleur().
+			ajouterProbleme("Probleme " + + Controleur.getInstanceuniquecontroleur().getListeProblemesRencontres().size(),
+					"Erreur dans l'expression de la requete lors de l'appel à httpGet " + "\n " +
+					"pb requete: " + marequete + "\n " +
+					"pb artiste: " + artiste.getName()+"\n ");
 		}
 
 		return artiste;

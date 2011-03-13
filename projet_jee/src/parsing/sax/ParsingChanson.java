@@ -20,6 +20,8 @@ import metier.Chanson;
 import org.apache.http.client.methods.HttpGet;
 import org.xml.sax.SAXException;
 
+import controleur.Controleur;
+
 import appelHttp.AppelHTTP;
 
 
@@ -106,7 +108,7 @@ public class ParsingChanson extends Parsing{
 	
 	public Chanson parserInfos(Chanson chanson) {
 
-
+		String marequete="";
 		try{
 			// création d'une fabrique de parseurs SAX
 			SAXParserFactory fabrique = SAXParserFactory.newInstance();
@@ -122,15 +124,13 @@ public class ParsingChanson extends Parsing{
 
 			//on crée la requete avec le nom de la chanson et le nom de l'artiste
 			//System.out.println("ma requete pour le get info");
-			String marequete = "http://ws.audioscrobbler.com/2.0/?method=track.getinfo&api_key=ca33590ba46941a9186c4777b5046445&artist="+ chanson.getArtiste().getName()+"&track="+chanson.getName();
+			marequete = "http://ws.audioscrobbler.com/2.0/?method=track.getinfo&api_key=ca33590ba46941a9186c4777b5046445&artist="+ chanson.getArtiste().getName()+"&track="+chanson.getName();
 
 			
 			
 			marequete = transformationURL(marequete);
 			
 			
-			System.out.println(chanson.getName());
-			System.out.println(chanson.getArtiste().getName());
 				
 			
 			
@@ -169,6 +169,12 @@ public class ParsingChanson extends Parsing{
 		}catch(IllegalArgumentException iae){
 			System.out.println("Erreur dans l'expression de la requete");
 			System.out.println("Lors de l'appel à httpGet");
+			Controleur.getInstanceuniquecontroleur().
+			ajouterProbleme("Probleme " + + Controleur.getInstanceuniquecontroleur().getListeProblemesRencontres().size(),
+					"Erreur dans l'expression de la requete lors de l'appel à httpGet " + "\n " +
+					"pb requete: " + marequete + "\n " +
+					"pb chanson: " + chanson.getName()+"\n " +
+					"pb artiste: " + chanson.getArtiste() +"\n ");			
 		}
 
 
