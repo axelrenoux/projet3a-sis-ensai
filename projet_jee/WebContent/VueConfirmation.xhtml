@@ -7,7 +7,11 @@
         
 <ui:composition template="/modeleFormulaire.xhtml">
 	<ui:define name="contenu">
-		<h:outputLabel style="color:#245F86;"  value = "{vueConfirmation.compteRendu}" />
+		<h:form >
+        	<p:panel style="color:#245F86;"  header="Confirmation de votre requête">
+				<h:outputLabel style="color:#245F86;"  value = "#{vueConfirmation.compteRendu}" />
+			</p:panel>
+		</h:form>
 	</ui:define>
 </ui:composition>
 </html>

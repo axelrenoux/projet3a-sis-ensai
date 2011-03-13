@@ -15,7 +15,7 @@ public class VueConfirmation {
 	/*************************      attributs       *********************/
 	/********************************************************************/
 	
-	private String compteRendu="Votre requete est :"+"/n";
+	private String compteRendu="Votre requete est :"+"\n ";
 
 	/********************************************************************/
 	/************************      methodes      ************************/
