@@ -1,4 +1,4 @@
-package formulaire.recherches.vue;
+package formulaire.recherches.vueOLD;
 	import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -6,6 +6,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
 import formulaire.reponses.gestion.GestionFormulaire;
+import formulaire.reponses.gestionOld.GestionFormulaireOld;
 
 	/**
 	 * on ajoute ces 2 lignes afin que la classe soit instanciee automatiquement (managedBean)
@@ -14,63 +15,50 @@ import formulaire.reponses.gestion.GestionFormulaire;
 	 */
 	@ManagedBean
 	@SessionScoped
-	public class VueFormulaire {
+	public class VueFormulaireOld {
 		
-		/********************************************************************/
-		/*************************      attributs       *********************/
-		/********************************************************************/
-		
+		/**************************   attributs  **************************/
+
 		@ManagedProperty(value="#{vueConfirmation}")
-		private VueConfirmation vueConfirmation;
-		@ManagedProperty(value="#{gestionFormulaire}")
-		private GestionFormulaire gestionFormulaire;
+		private VueConfirmationOld vueConfirmation;
+		@ManagedProperty(value="#{gestionRecherche}")
+		private GestionFormulaireOld gestionFormulaire;
 		private String artist;
+		private boolean orthoArtist;
 		private String album;
+		private boolean orthoAlbum;
 		private String track;
+		private boolean orthoTrack;
+		private int ceQueRecherche;
 		private String tag;
 		private String motcle;
-		private int ceQueRecherche;
 		
-		/********************************************************************/
-		/************************      methodes      ************************/
-		/********************************************************************/
-
+		/************************** methodes    **************************/
 
 		/**
 		 * 
 		 */
 		public String lancerRecherche(){
-			boolean success = false;
-			gestionFormulaire.setObjectif(ceQueRecherche);
-			
+			boolean succes=false;
+			int saitCeQuIlVeut=gestionFormulaire.setObjectif(ceQueRecherche);
+			//item1Chanson item2Artiste item3Album
 			if(!track.isEmpty()){
 				vueConfirmation.setCompteRendu(vueConfirmation.getCompteRendu()+"Chanson : "+track+"/n");
-				gestionFormulaire.addTrack(track);
-				success = true;
+				gestionFormulaire.addTrack(track,orthoTrack);
+				succes=true;
 			}
 			if(!artist.isEmpty()){
 				vueConfirmation.setCompteRendu(vueConfirmation.getCompteRendu()+"Groupe : "+artist+"/n");
-				gestionFormulaire.addArtist(artist);
-				success = true;
+				gestionFormulaire.addArtist(artist,orthoArtist);
+				succes=true;
 			}
 			if(!album.isEmpty()){
 				vueConfirmation.setCompteRendu(vueConfirmation.getCompteRendu()+"Album : "+album+"/n");
-				gestionFormulaire.addAlbum(album);
-				success = true;
+				gestionFormulaire.addAlbum(album,orthoAlbum);
+				succes=true;
 			}
-			if(!motcle.isEmpty()){
-				vueConfirmation.setCompteRendu(vueConfirmation.getCompteRendu()+"Album : "+album+"/n");
-				gestionFormulaire.addMotCle(motcle);
-				success = true;
-			}
-			if(!tag.isEmpty()){
-				vueConfirmation.setCompteRendu(vueConfirmation.getCompteRendu()+"Album : "+album+"/n");
-				gestionFormulaire.addTag(tag);
-			}
-			//if(saitCeQuIlVeut==0) succes=false;
-			
-			
-			if(success){
+			if(saitCeQuIlVeut==0) succes=false;
+			if(succes){
 				gestionFormulaire.lancerRecherche();
 				return "success";
 			}
@@ -93,10 +81,7 @@ import formulaire.reponses.gestion.GestionFormulaire;
 
 		
 		
-		/********************************************************************/
-		/******************      getters / setters       ********************/
-		/********************************************************************/
-
+		/************************** getters/setters **************************/
 		public String getArtist() {
 			return artist;
 		}
@@ -106,6 +91,15 @@ import formulaire.reponses.gestion.GestionFormulaire;
 			this.artist = artist;
 		}
 
+
+		public boolean isOrthoArtist() {
+			return orthoArtist;
+		}
+
+
+		public void setOrthoArtist(boolean orthoArtist) {
+			this.orthoArtist = orthoArtist;
+		}
 
 
 		public String getAlbum() {
@@ -118,6 +112,15 @@ import formulaire.reponses.gestion.GestionFormulaire;
 		}
 
 
+		public boolean isOrthoAlbum() {
+			return orthoAlbum;
+		}
+
+
+		public void setOrthoAlbum(boolean orthoAlbum) {
+			this.orthoAlbum = orthoAlbum;
+		}
+
 
 		public String getTrack() {
 			return track;
@@ -126,6 +129,16 @@ import formulaire.reponses.gestion.GestionFormulaire;
 
 		public void setTrack(String track) {
 			this.track = track;
+		}
+
+
+		public boolean isOrthoTrack() {
+			return orthoTrack;
+		}
+
+
+		public void setOrthoTrack(boolean orthoTrack) {
+			this.orthoTrack = orthoTrack;
 		}
 
 
@@ -139,22 +152,22 @@ import formulaire.reponses.gestion.GestionFormulaire;
 		}
 
 
-		public VueConfirmation getVueConfirmation() {
+		public VueConfirmationOld getVueConfirmation() {
 			return vueConfirmation;
 		}
 
 
-		public void setVueConfirmation(VueConfirmation vueConfirmation) {
+		public void setVueConfirmation(VueConfirmationOld vueConfirmation) {
 			this.vueConfirmation = vueConfirmation;
 		}
 
 
-		public GestionFormulaire getGestionFormulaire() {
+		public GestionFormulaireOld getGestionFormulaire() {
 			return gestionFormulaire;
 		}
 
 
-		public void setGestionFormulaire(GestionFormulaire gestionFormulaire) {
+		public void setGestionFormulaire(GestionFormulaireOld gestionFormulaire) {
 			this.gestionFormulaire = gestionFormulaire;
 		}
 
