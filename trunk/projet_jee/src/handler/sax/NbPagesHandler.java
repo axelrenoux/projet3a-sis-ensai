@@ -124,7 +124,6 @@ public class NbPagesHandler extends DefaultHandler{
 	 */
 	public void endDocument() throws SAXException {
 		System.out.println("Fin du parsing");
-		System.out.println("Resultats du parsing");
 	}
 
 
