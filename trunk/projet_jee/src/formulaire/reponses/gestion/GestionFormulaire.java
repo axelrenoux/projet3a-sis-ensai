@@ -16,7 +16,7 @@ public class GestionFormulaire {
 	/*************************      attributs       *********************/
 	/********************************************************************/
 	
-	private GestionRecherche gestion;
+	private Recherche recherche;
 
 
 	/********************************************************************/
@@ -27,54 +27,41 @@ public class GestionFormulaire {
 	public void setObjectif(int ceQueRecherche) {
 		//item1Chanson item2Artiste item3Album
 		if(ceQueRecherche==1){
-			gestion=new GestionRechercheTrack();
+			recherche=new RechercheTrack();
 		}
 		else if(ceQueRecherche==2){
-			gestion=new GestionRechercheArtist();
+			recherche=new RechercheArtist();
 		}
 		else if(ceQueRecherche==3){
-			gestion=new GestionRechercheAlbum();
+			recherche=new RechercheAlbum();
 		}
 	}
 	
-	public void addTrack(String search){
-		gestion.addTrack(search);
-	}
 	
-	public void addAlbum(String search){
-		gestion.addAlbum(search);
-	}
-	
-	public void addArtist(String search){
-		gestion.addArtist(search);
-	}
-
-	public void addMotCle(String search){
-		gestion.addMotCle(search);
-	}
-	
-	public void addTag(String search){
-		gestion.addTag(search);
-	}
 	
 	public void lancerRecherche() {
-		gestion.lancerRecherche();
+		recherche.lancerRecherche();
 	}
+
+
+
 	
 	/********************************************************************/
 	/******************      getters / setters       ********************/
 	/********************************************************************/
 
 	
-
-	public GestionRecherche getGestion() {
-		return gestion;
+	public Recherche getRecherche() {
+		return recherche;
 	}
 
-	public void setGestion(GestionRecherche gestion) {
-		this.gestion = gestion;
+
+
+	public void setRecherche(Recherche recherche) {
+		this.recherche = recherche;
 	}
 	
+	 
 	
 
 }
