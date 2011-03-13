@@ -1,58 +1,119 @@
 package bdd;
 
+import java.util.LinkedList;
+import java.util.List;
+
+import bdd.exceptions.ConnectionException;
 import bdd.exceptions.UpdateException;
 
 public class InitialiserBddOracle {
-	public static void init() throws UpdateException{
-		String requeteCreationTables=
-		"create table AUDIMAT(id_audimat INTEGER PRIMARY KEY,"+
-		"				listeners DOUBLE,"+
-		"				playcount DOUBLE);"+
-		"create table IMAGES(id_images INTEGER PRIMARY KEY,"+
-		"				imageSmall VARCHAR2,"+
-		"				imageMedium VARCHAR2,"+
-		"				imageLarge VARCHAR2,"+
-		"				imageExtraLarge VARCHAR2,"+
-		"				imageMega VARCHAR2);"+
-		"create table WIKI(id_wiki VARCHAR2 PRIMARY KEY,"+
-		"				datePublication DATE,"+
-		"				resume VARCHAR2,"+
-		"				contenu VARCHAR2);"+
-		"create table CHANSON(id_chanson VARCHAR2 PRIMARY KEY,"+
-		"					name VARCHAR2,"+
-		"					url VARCHAR2,"+
-		"					duree DOUBLE,"+
-		"					id_images INTEGER references IMAGES(id_images),"+
-		"					id_audimat INTEGER references AUDIMAT(id_audimat),"+
-		"					idWiki VARCHAR2 references WIKI(id_wiki));"+
-		"create table ALBUM(id_album VARCHAR2 PRIMARY KEY,"+
-		"					name VARCHAR2,"+
-		"					url VARCHAR2,"+
-		"					date DATE,"+
-		"					id_images INTEGER references IMAGES(id_images),"+
-		"					id_audimat INTEGER references AUDIMAT(id_audimat),"+
-		"					id_wiki VARCHAR2 references WIKI(id_wiki));"+
-		"create table TAG(id_tag VARCHAR2 PRIMARY KEY,"+
-		"					name VARCHAR2,"+
-		"					url VARCHAR2,"+
-		"					reach DOUBLE,"+
-		"					taggings DOUBLE);"+
-		"create table ARTISTE(id_artiste VARCHAR2 PRIMARY KEY,"+
-		"					name VARCHAR2,"+
-		"					url VARCHAR2,"+
-		"					id_images INTEGER references IMAGES(id_images),"+
-		"					id_audimat INTEGER references AUDIMAT(id_audimat),"+
-		"					id_wiki STRING references WIKI(id_wiki));"+
-		"create table ARTISTES_SIMILAIRES(id_artiste1 VARCHAR2 references ARTISTE(id_artiste),"+
-		"								id_artiste2 VARCHAR2 references ARTISTE(id_artiste));"+
-		"create table CORRESP_ARTISTE_TAG(id_artiste VARCHAR2 references ARTISTE(id_artiste),"+
-		"								id_tag VARCHAR2 references TAG(id_tag));"+
-		"create table CORRESP_CHANSON_TAG(id_chanson VARCHAR2 references CHANSON(id_chanson),"+
-		"								id_tag VARCHAR2 references TAG(id_tag));"+
-		"create table CORRESP_ALBUM_TAG(id_tag VARCHAR2 references TAG(id_tag),"+
-		"								id_album VARCHAR2 references ALBUM(id_album));"+
-		"create table CORRESP_CHANSON_ALBUM(id_album VARCHAR2 references ALBUM(id_album),"+
-		"								id_chanson VARCHAR2 references CHANSON(id_chanson));";
-		SQLViaJDBC.executerRequeteSansRetour(requeteCreationTables);
+	//Oracle n'accepte pas des string comme primary key
+	public static void creerTables(){
+		List<String> requetes=new LinkedList<String>();
+		requetes.add("drop table ARTISTES_SIMILAIRES");
+		requetes.add("drop table CORRESP_ARTISTE_TAG");
+		requetes.add("drop table CORRESP_CHANSON_TAG");
+		requetes.add("drop table CORRESP_ALBUM_TAG");
+		requetes.add("drop table CORRESP_CHANSON_ALBUM");
+		
+		requetes.add("drop table CHANSON");
+		requetes.add("drop table ALBUM");
+		requetes.add("drop table TAG");
+		
+		requetes.add("drop table ARTISTE");
+		
+		requetes.add("drop table AUDIMAT");
+		requetes.add("drop table IMAGES");
+		requetes.add("drop table WIKI");
+		requetes.add("drop table ID_NAME_URL");
+		
+		requetes.add(
+		"create table ID_NAME_URL(cle_primaire INTEGER,"+
+						"id VARCHAR2(256),"+
+						"name VARCHAR2(128),"+
+						"url VARCHAR2(256),"+
+						"PRIMARY KEY(cle_primaire))");
+		
+		requetes.add(
+		"create table AUDIMAT(cle_primaire INTEGER,"+
+						"listeners INTEGER,"+
+						"playcount INTEGER," +
+						"PRIMARY KEY(cle_primaire))");
+		requetes.add(
+		"create table IMAGES(cle_primaire INTEGER,"+
+						"imageSmall VARCHAR2(256),"+
+						"imageMedium VARCHAR2(256),"+
+						"imageLarge VARCHAR2(256),"+
+						"imageExtraLarge VARCHAR2(256),"+
+						"imageMega VARCHAR2(256)," +
+						"PRIMARY KEY(cle_primaire))");
+		requetes.add(
+		"create table WIKI(cle_primaire INTEGER,"+
+						"id_wiki VARCHAR2(256),"+
+						"datePublication date,"+
+						"resume VARCHAR2(512),"+
+						"contenu VARCHAR2(2048)," +
+						"PRIMARY KEY(cle_primaire))");
+		requetes.add(
+		"create table ARTISTE(cle_primaire INTEGER,"+
+							"id_name_url INTEGER references ID_NAME_URL(cle_primaire)," +
+							"images INTEGER references IMAGES(cle_primaire),"+
+							"audimat INTEGER references AUDIMAT(cle_primaire),"+
+							"wiki INTEGER references WIKI(cle_primaire)," +
+							"PRIMARY KEY(cle_primaire))");
+		requetes.add(
+		"create table CHANSON(cle_primaire INTEGER,"+
+							"id_name_url INTEGER references ID_NAME_URL(cle_primaire)," +
+							"duree FLOAT,"+
+							"images INTEGER references IMAGES(cle_primaire),"+
+							"audimat INTEGER references AUDIMAT(cle_primaire),"+
+							"wiki INTEGER references WIKI(cle_primaire),"+
+							"artiste INTEGER references ARTISTE(cle_primaire),"+
+							"PRIMARY KEY(cle_primaire))");
+		requetes.add(
+		"create table ALBUM(cle_primaire INTEGER,"+
+							"id_name_url INTEGER references ID_NAME_URL(cle_primaire)," +
+							"date_sortie date,"+//le mot-clé 'date' étant réservé, notre colonne ne peut pas s'appeler ainsi
+							"images INTEGER references IMAGES(cle_primaire),"+
+							"audimat INTEGER references AUDIMAT(cle_primaire),"+
+							"wiki INTEGER references WIKI(cle_primaire)," +
+							"artiste INTEGER references ARTISTE(cle_primaire),"+
+							"PRIMARY KEY(cle_primaire))");
+		requetes.add(
+		"create table TAG(cle_primaire INTEGER,"+
+							"id_name_url INTEGER references ID_NAME_URL(cle_primaire)," +
+							"reach FLOAT,"+
+							"taggings FLOAT," +
+							"wiki INTEGER references WIKI(cle_primaire),"+
+							"PRIMARY KEY(cle_primaire))");
+		requetes.add(
+		"create table ARTISTES_SIMILAIRES(artiste1 INTEGER references ARTISTE(cle_primaire),"+
+										"artiste2 INTEGER references ARTISTE(cle_primaire))");
+		requetes.add(
+		"create table CORRESP_ARTISTE_TAG(artiste INTEGER references ARTISTE(cle_primaire),"+
+										"tag INTEGER references TAG(cle_primaire))");
+		requetes.add(
+		"create table CORRESP_CHANSON_TAG(chanson INTEGER references CHANSON(cle_primaire),"+
+										"tag INTEGER references TAG(cle_primaire))");
+		requetes.add(
+		"create table CORRESP_ALBUM_TAG(tag INTEGER references TAG(cle_primaire),"+
+										"album INTEGER references ALBUM(cle_primaire))");
+		requetes.add(
+		"create table CORRESP_CHANSON_ALBUM(album INTEGER references ALBUM(cle_primaire),"+
+										"chanson INTEGER references CHANSON(cle_primaire))");
+		try{
+			SQLViaJDBC.connecter();
+			for(String requeteCourante:requetes){
+				try {
+					SQLViaJDBC.executerRequeteSansRetour(requeteCourante);
+					System.out.println("Requête executée : "+requeteCourante);
+				} catch (UpdateException e) {
+					System.out.println("Echec de la requête : "+requeteCourante);
+				}
+			}
+			SQLViaJDBC.fermerBDD();	
+		} catch (ConnectionException e) {
+			e.printStackTrace();
+		}
 	}	
 }
