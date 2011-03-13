@@ -32,7 +32,7 @@ public class main {
 		} catch (ExceptionMiseAjour e) {}
 		
 		System.out.println(" a : "+ a);
-		System.out.println(" b : "+ b);*/
+		System.out.println(" b : "+ b);
 		
 		Album ab = new Album();
 		
@@ -41,18 +41,27 @@ public class main {
 		c.setImageMega("ca marche 2");
 		
 		Artiste a = new Artiste();
-		a.setName("Gringo Rodriguez");
+		a.setName("Slipknot");
 		a.setImageMega("ca marche aaaaaa");
 		Controleur.getInstanceuniquecontroleur().ajouter(c);
 		Controleur.getInstanceuniquecontroleur().ajouter(a);
 		Tag t = new Tag();
 		t.setName("iiiiiiiiiiiiiiii");
 		t.setUrl("http://www.last.fm/tag/post-industrial");
-		Controleur.getInstanceuniquecontroleur().ajouter(t);
+		Controleur.getInstanceuniquecontroleur().ajouter(t);*/
 		
 		RecupDonnees recup = new RecupDonnees();		
 		recup.recupererDonneesChansons();
+		recup.recupererDonneesArtistes();
+		recup.recupererInfosComplementairesPlus();
+		recup.recupererDonneesAlbums();
+		recup.recupererDonneesComplementairesTags();
+		recup.recupererListesDesTags();
 		recup.affichageDonneesRecuperees();
+		
+		//attention à l'ordre TODO
+		
+		
 		
 		
 	}
