@@ -5,6 +5,7 @@ import exceptions.ExceptionMiseAjour;
 import metier.Album;
 import metier.Artiste;
 import metier.Chanson;
+import metier.Tag;
 import parsing.sax.ParsingAlbum;
 import parsing.sax.ParsingChanson;
 import parsing.sax.ParsingArtiste;
@@ -33,19 +34,27 @@ public class main {
 		System.out.println(" a : "+ a);
 		System.out.println(" b : "+ b);*/
 		
-		/*Artiste a  = new Artiste();
-		a.setName("Dorothée1");
-		a.setImageMega("ca marche");
+		Album ab = new Album();
 		
-		Controleur.getInstanceuniquecontroleur().ajouterArtiste(a);
+		Chanson c  = new Chanson();
+		c.setUrl("http://www.last.fm/music/Sophie+Meriem+Rockwell/_/Mon+ami+l%27ordinateur");
+		c.setImageMega("ca marche 2");
 		
-		System.out.println(Controleur.getInstanceuniquecontroleur().getListeArtistes());
-		*/
+		Artiste a = new Artiste();
+		a.setName("Gringo Rodriguez");
+		a.setImageMega("ca marche aaaaaa");
+		Controleur.getInstanceuniquecontroleur().ajouter(c);
+		Controleur.getInstanceuniquecontroleur().ajouter(a);
+		Tag t = new Tag();
+		t.setName("iiiiiiiiiiiiiiii");
+		t.setUrl("http://www.last.fm/tag/post-industrial");
+		Controleur.getInstanceuniquecontroleur().ajouter(t);
 		
 		RecupDonnees recup = new RecupDonnees();		
-		recup.recupererDonnees();
-	
-
+		recup.recupererDonneesChansons();
+		recup.affichageDonneesRecuperees();
+		
+		
 	}
 
 }
