@@ -7,31 +7,11 @@
     version="2.0">
 
    <navigation-rule>
-   		<from-view-id>/VueAccueil.xhtml</from-view-id>
+   		<from-view-id>/VueFormulaire.xhtml</from-view-id>
    		<navigation-case>
-   			<from-action>#{vueAccueil.allerSurGererMatiere}</from-action>
+   			<from-action>#{vueFormulaire.lancerRecherche}</from-action>
    			<from-outcome>success</from-outcome>
-   			<to-view-id>/VueGererMatieres.xhtml</to-view-id>
-   		</navigation-case>
-   		<navigation-case>
-   			<from-action>#{vueAccueil.allerSurMonAgenda}</from-action>
-   			<from-outcome>success</from-outcome>
-   			<to-view-id>/VueMonAgenda.xhtml</to-view-id>
-   		</navigation-case>
-   		<navigation-case>
-   			<from-action>#{vueAccueil.allerSurAgendaGroupe}</from-action>
-   			<from-outcome>success</from-outcome>
-   			<to-view-id>/VueAgendaGroupe.xhtml</to-view-id>
-   		</navigation-case>
-   		<navigation-case>
-   			<from-action>#{vueAccueil.allerSurAgendaMatiere}</from-action>
-   			<from-outcome>success</from-outcome>
-   			<to-view-id>/VueAgendaMatiere.xhtml</to-view-id>
-   		</navigation-case>
-   		<navigation-case>
-   			<from-action>#{vueAccueil.allerSurTrombiGroupe}</from-action>
-   			<from-outcome>success</from-outcome>
-   			<to-view-id>/VueTrombiGroupe.xhtml</to-view-id>
+   			<to-view-id>/VueConfirmation.xhtml</to-view-id>
    		</navigation-case>
    		
    </navigation-rule>

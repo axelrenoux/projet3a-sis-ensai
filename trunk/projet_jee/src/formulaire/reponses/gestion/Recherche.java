@@ -1,5 +1,7 @@
 package formulaire.reponses.gestion;
 
+import java.util.ArrayList;
+
 public abstract class Recherche {
 	
 	/********************************************************************/
@@ -16,8 +18,8 @@ public abstract class Recherche {
 	/************************      methodes      ************************/
 	/********************************************************************/
 
-	public void lancerRecherche() {
-		//TODO
+	public ArrayList lancerRecherche() {
+		return null;
 	}
 
 

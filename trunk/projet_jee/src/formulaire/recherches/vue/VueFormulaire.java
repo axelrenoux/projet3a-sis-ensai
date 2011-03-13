@@ -24,6 +24,9 @@ import formulaire.reponses.gestion.GestionFormulaire;
 		private VueConfirmation vueConfirmation;
 		@ManagedProperty(value="#{gestionFormulaire}")
 		private GestionFormulaire gestionFormulaire;
+		@ManagedProperty(value="#{vueAffichageResultat}")
+		private VueAffichageResultat vueAffichageResultat;
+		
 		private String artist;
 		private String album;
 		private String track;
@@ -44,34 +47,36 @@ import formulaire.reponses.gestion.GestionFormulaire;
 			gestionFormulaire.setObjectif(ceQueRecherche);
 			
 			if(!track.isEmpty()){
-				vueConfirmation.setCompteRendu(vueConfirmation.getCompteRendu()+"Chanson : "+track+"/n");
-				gestionFormulaire.addTrack(track);
+				vueConfirmation.setCompteRendu(vueConfirmation.getCompteRendu()+"Chanson : "+track+"\n ");
+				gestionFormulaire.getRecherche().setTrack(track);
 				success = true;
 			}
 			if(!artist.isEmpty()){
-				vueConfirmation.setCompteRendu(vueConfirmation.getCompteRendu()+"Groupe : "+artist+"/n");
-				gestionFormulaire.addArtist(artist);
+				vueConfirmation.setCompteRendu(vueConfirmation.getCompteRendu()+"Groupe : "+artist+"\n ");
+				gestionFormulaire.getRecherche().setArtist(artist);
 				success = true;
 			}
 			if(!album.isEmpty()){
-				vueConfirmation.setCompteRendu(vueConfirmation.getCompteRendu()+"Album : "+album+"/n");
-				gestionFormulaire.addAlbum(album);
+				vueConfirmation.setCompteRendu(vueConfirmation.getCompteRendu()+"Album : "+album+"\n ");
+				gestionFormulaire.getRecherche().setAlbum(album);
 				success = true;
 			}
 			if(!motcle.isEmpty()){
-				vueConfirmation.setCompteRendu(vueConfirmation.getCompteRendu()+"Album : "+album+"/n");
-				gestionFormulaire.addMotCle(motcle);
+				vueConfirmation.setCompteRendu(vueConfirmation.getCompteRendu()+"Album : "+album+"\n ");
+				gestionFormulaire.getRecherche().setMotCle(motcle);
 				success = true;
 			}
 			if(!tag.isEmpty()){
-				vueConfirmation.setCompteRendu(vueConfirmation.getCompteRendu()+"Album : "+album+"/n");
-				gestionFormulaire.addTag(tag);
+				vueConfirmation.setCompteRendu(vueConfirmation.getCompteRendu()+"Album : "+album+"\n ");
+				gestionFormulaire.getRecherche().setTag(tag);
 			}
-			//if(saitCeQuIlVeut==0) succes=false;
+			
 			
 			
 			if(success){
-				gestionFormulaire.lancerRecherche();
+				//on attribue les resultats à la page de resultats
+				vueAffichageResultat.setResultats(gestionFormulaire.lancerRecherche());
+				//return "confirmation";
 				return "success";
 			}
 			else{
@@ -176,6 +181,16 @@ import formulaire.reponses.gestion.GestionFormulaire;
 
 		public void setMotcle(String motcle) {
 			this.motcle = motcle;
+		}
+
+
+		public VueAffichageResultat getVueAffichageResultat() {
+			return vueAffichageResultat;
+		}
+
+
+		public void setVueAffichageResultat(VueAffichageResultat vueAffichageResultat) {
+			this.vueAffichageResultat = vueAffichageResultat;
 		}
 		
 		
