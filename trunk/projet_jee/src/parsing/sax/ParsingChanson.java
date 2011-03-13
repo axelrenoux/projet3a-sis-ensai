@@ -83,9 +83,9 @@ public class ParsingChanson extends Parsing{
 				}*/
 			}
 			
-			System.out.println("fin du traitement");
-			System.out.println("taille liste chanson " + lstChanson.size());
-			System.out.println("nb de pages chanson lues " + nbPagesResultats);
+			//System.out.println("fin du traitement");
+			//System.out.println("taille liste chanson " + lstChanson.size());
+			//System.out.println("nb de pages chanson lues " + nbPagesResultats);
 			
 			 
 
@@ -126,33 +126,25 @@ public class ParsingChanson extends Parsing{
 			//System.out.println("ma requete pour le get info");
 			marequete = "http://ws.audioscrobbler.com/2.0/?method=track.getinfo&api_key=ca33590ba46941a9186c4777b5046445&artist="+ chanson.getArtiste().getName()+"&track="+chanson.getName();
 
-			
-			
 			marequete = transformationURL(marequete);
-			
-			
-				
-			
-			
-			
-			
+
 			HttpGet requeteGet = new HttpGet(marequete);
 
 
 			//on recupere sous forme d'input stream le resultat de la requete
 			InputStream input = AppelHTTP.recupererDonnees(requeteGet);
 
-			//on cree un gestionnaire d'albums pour parser le resultat de la requete
+			//on cree un gestionnaire de chansons pour parser le resultat de la requete
 			ChansonInfoHandler gestionnaireChanson = new ChansonInfoHandler(chanson);
 			parseur.parse(input, gestionnaireChanson);
 
 
 			//TODO semble pas très propre de recupérer ainsi l'album...
-			//on récupère l'artiste mis à jour après avoir parsé les infos complémentaires
+			//on récupère la chanson mise à jour après avoir parsé les infos complémentaires
 			chanson = gestionnaireChanson.getChanson();
 
 
-			System.out.println("fin du traitement");
+			//System.out.println("fin du traitement");
 						
 
 
