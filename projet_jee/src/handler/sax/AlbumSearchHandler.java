@@ -10,6 +10,9 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import controleur.Controleur;
+import exceptions.ExceptionMiseAjour;
+
 import metier.Album;
 import metier.Artiste;
  
@@ -87,7 +90,7 @@ public class AlbumSearchHandler extends DefaultHandler{
 			inArtiste = true;	
 		}else if(qName.equals("url")){
 			inURL = true;	
-		}else if(qName.equals("ID")){
+		}else if(qName.equals("id")){
 			inID = true;	
 		}else if(qName.equals("image")){
 			if(attributes.getValue(0).equals("small")){
@@ -124,7 +127,7 @@ public class AlbumSearchHandler extends DefaultHandler{
 			inArtiste = false;	
 		}else if(qName.equals("url")){
 			inURL = false;	
-		}else if(qName.equals("ID")){
+		}else if(qName.equals("id")){
 			inID = false;	
 		}else if(qName.equals("image")){
 			inImageSmall = false;
@@ -149,7 +152,31 @@ public class AlbumSearchHandler extends DefaultHandler{
 			currentAlbum.setName(lecture);
 		}else if(inArtiste){
 			currentArtist.setName(lecture);
+			//on veut ajouter l'artiste א l'album, 
+			//on verifie que l'artiste n'existe pas deja:
+			if(Controleur.getInstanceuniquecontroleur().existeDeja(currentArtist)){
+				//on propose une mise a jour de l'artiste deja existant א partir de l'artiste courant
+				System.out.println("שששששש 1"+ Controleur.getInstanceuniquecontroleur().
+					getListeArtistes().get(currentArtist.getName()));
+				try {
+					Controleur.getInstanceuniquecontroleur().
+					getListeArtistes().get(currentArtist.getName()).
+					mettreAjour(currentArtist);
+				} catch (ExceptionMiseAjour e) {}
+				//on ajoute l'artiste deja existant, א l'album
+				System.out.println("שששששש 2"+ Controleur.getInstanceuniquecontroleur().
+						getListeArtistes().get(currentArtist.getName()));
+				currentAlbum.setArtiste(Controleur.getInstanceuniquecontroleur().
+				getListeArtistes().get(currentArtist.getName()));//TODO
+				
+				System.out.println("שששששש 3"+ currentAlbum.getArtiste());
+			}
+			//si l'artiste n'existait pas deja, on ajoute celui que l'on vient de creer
+			else {
 			currentAlbum.setArtiste(currentArtist);
+			//et on ajoute l'artiste א la liste des artistes du controleur
+			Controleur.getInstanceuniquecontroleur().ajouterArtiste(currentArtist);
+			}	
 		}else if(inURL){
 			currentAlbum.setUrl(lecture);
 		}else if(inID){
@@ -185,6 +212,9 @@ public class AlbumSearchHandler extends DefaultHandler{
 		System.out.println("Fin du parsing search");
 		
 	}
+	
+	
+	
 	
 	
 	/********************************************************************/
