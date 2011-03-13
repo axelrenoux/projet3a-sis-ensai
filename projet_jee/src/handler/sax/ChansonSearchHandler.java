@@ -10,6 +10,9 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import controleur.Controleur;
+import exceptions.ExceptionMiseAjour;
+
 import metier.Artiste;
 import metier.Chanson;
  
@@ -121,6 +124,7 @@ public class ChansonSearchHandler extends DefaultHandler{
 			inName = false;	
 		}else if(qName.equals("artist")){
 			inArtiste = false;	
+			gererAjoutArtiste();
 		}else if(qName.equals("url")){
 			inURL = false;	
 		}else if(qName.equals("listeners")){
@@ -148,7 +152,7 @@ public class ChansonSearchHandler extends DefaultHandler{
 			currentChanson.setName(lecture);
 		}else if(inArtiste){
 			currentArtiste.setName(lecture);
-			currentChanson.setArtiste(currentArtiste);
+			//currentChanson.setArtiste(currentArtiste);
 		}else if(inURL){
 			currentChanson.setUrl(lecture);
 		}else if(inListeners){
@@ -189,6 +193,39 @@ public class ChansonSearchHandler extends DefaultHandler{
 	   	  }*/
 
 	}
+	
+	/**
+	 * Methode qui gere l'ajout d'un nouvel artiste dans une chanson
+	 * il faut verifier que l'artiste n'existe pas deja dans le controleur
+	 * et si c'est le cas, on propose une mise a jour de l'artiste
+	 * dans le cas contraire, on doit ajouter l'artiste à la liste d'artistes
+	 * du controleur
+	 */
+	public void gererAjoutArtiste(){
+		//on veut ajouter un artiste à la chanson courante, 
+		//on verifie que l'artiste n'existe pas deja:
+		if(Controleur.getInstanceuniquecontroleur().existeDeja(currentArtiste)){
+			//on propose une mise a jour de l'artiste deja existant à partir de l'artiste courant
+			try {
+				Controleur.getInstanceuniquecontroleur().
+				getListeArtistes().get(currentArtiste.getName()).
+				mettreAjour(currentArtiste);
+			} catch (ExceptionMiseAjour e) {}
+			//on ajoute l'artiste deja existant, à la chanson
+			currentChanson.setArtiste(Controleur.getInstanceuniquecontroleur().
+					getListeArtistes().get(currentArtiste.getName()));
+		}
+		//si l'artiste n'existait pas deja, on ajoute à la chanson
+		//celui que l'on vient de creer
+		else {
+			currentChanson.setArtiste(currentArtiste);
+			//et on ajoute l'artiste à la liste des artistes du controleur
+			Controleur.getInstanceuniquecontroleur().ajouter(currentArtiste);
+		}
+	}
+
+	
+	 
 	
 	
 	/********************************************************************/
