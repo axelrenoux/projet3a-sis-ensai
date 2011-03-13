@@ -2,6 +2,8 @@ package controleur;
 
 import java.util.HashMap;
 
+import exceptions.ExceptionMiseAjour;
+
 import metier.Album;
 import metier.Artiste;
 import metier.Chanson;
@@ -32,21 +34,68 @@ public class  Controleur {
 	/************************      methodes      ************************/
 	/********************************************************************/
 	
-	//methodes qui ajoutent des objets
+	/****************methodes qui ajoutent des objets********************/
+	/**
+	 * il faut verifier que l'album/chanson/artiste n'existe pas deja
+	 * si oui: on propose une mise a jour de l'album/chanson/artiste  existant
+	 * sinon: on l'ajoute dans la liste des albums/chansons/artistes 
+	 * @param newalbum
+	 */
 	
-	public void ajouterAlbum(Album album){
-		listeAlbums.put(album.getUrl(), album);
+	/**
+	 * @param newalbum
+	 */
+	public void ajouter(Album newalbum){
+		if(listeAlbums.containsKey(newalbum.getUrl())){
+			try {
+				listeAlbums.get(newalbum.getUrl()).mettreAjour(newalbum);
+			} catch (ExceptionMiseAjour e) {}
+		}else{
+			listeAlbums.put(newalbum.getUrl(), newalbum);	
+		}
 	}
 	
-	public void ajouterArtiste(Artiste artiste){
-		listeArtistes.put(artiste.getName(), artiste);
+
+	/**
+	 * @param newartiste
+	 */
+	public void ajouter(Artiste newartiste){
+		if(listeArtistes.containsKey(newartiste.getName())){
+			try {
+				listeArtistes.get(newartiste.getName()).mettreAjour(newartiste);
+			} catch (ExceptionMiseAjour e) {}
+		}else{
+			listeArtistes.put(newartiste.getName(), newartiste);	
+		}
 	}
 
-	public void ajouterChanson(Chanson chanson){
-		listeChansons.put(chanson.getUrl(), chanson);
+	/**
+	 * @param newchanson
+	 */
+	public void ajouter(Chanson newchanson){
+		if(listeChansons.containsKey(newchanson.getUrl())){
+			try {
+				listeChansons.get(newchanson.getUrl()).mettreAjour(newchanson);
+			} catch (ExceptionMiseAjour e) {}
+		}
+		else{
+			listeChansons.put(newchanson.getUrl(), newchanson);			
+		}
 	}
 
-	//methodes qui verifient l'existence d'objets 
+	
+	/**
+	 * @param newtag
+	 */
+	public void ajouter(Tag newtag){
+		if(!listeTags.containsKey(newtag.getUrl())){
+			listeTags.put(newtag.getUrl(), newtag);
+		}
+	}
+	
+	
+	/***********methodes qui verifient l'existence d'objets**************/
+	
 	public boolean existeDeja(Album album){
 		if(listeAlbums.containsKey(album.getUrl()))return true;
 		else return false;
@@ -62,8 +111,18 @@ public class  Controleur {
 		else return false;
 	}
 	
+	public boolean existeDeja(Tag tag){
+		if(listeTags.containsKey(tag.getUrl()))return true;
+		else return false;
+	}
 	
-	//methode qui recupere les differents problemes recontres pendant une recuperation de donnees
+	/**********methode qui recupere les differents problemes*************/
+	/**********recontres pendant une recuperation de donnees*************/
+	
+	/**
+	 * @param titre
+	 * @param probleme
+	 */
 	public void ajouterProbleme(String titre, String probleme){
 		listeProblemesRencontres.put(titre, probleme);
 	}
