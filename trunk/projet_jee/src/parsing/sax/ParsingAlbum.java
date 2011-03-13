@@ -82,7 +82,7 @@ public class ParsingAlbum extends Parsing {
 				}*/
 
 			}
-			System.out.println("fin du traitement");
+			//System.out.println("fin du traitement");
 		
 
 
@@ -123,14 +123,14 @@ public class ParsingAlbum extends Parsing {
 
 
 			//on crée la requete avec le nom de l'album et le nom de l'artiste
-			System.out.println("ma requete pour le get info");
+			//System.out.println("ma requete pour le get info");
 			marequete = "http://ws.audioscrobbler.com/2.0/?method=album.getInfo&album="+ album.getName() + "&artist="+ album.getArtiste().getName()+"&api_key=ca33590ba46941a9186c4777b5046445"; 
 			
 			marequete = marequete.replaceAll(" ", "+");
 			
 				
 			
-			System.out.println(marequete);
+			//System.out.println(marequete);
 			
 			HttpGet requeteGet = new HttpGet(marequete);
 
