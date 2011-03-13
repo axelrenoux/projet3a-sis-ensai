@@ -16,6 +16,10 @@ public class Tag {
 	private Double reach;//nombre de recherche de ce tag effectuees
 	private Double tagging;//nombre d'objets ayant ce tag
 	private Wiki wiki;
+	private ArrayList<Artiste> listeArtistes;
+	private ArrayList<Album> listeAlbums;
+	private ArrayList<Chanson> listeChansons;
+	
 	
 	/********************************************************************/
 	/**********************      constructeurs      *********************/
@@ -26,7 +30,9 @@ public class Tag {
 	 */
 	public Tag() {
 		super();
-		// TODO Auto-generated constructor stub
+		listeArtistes = new ArrayList<Artiste>();
+		listeAlbums = new ArrayList<Album>();
+		listeChansons = new ArrayList<Chanson>();
 	}
 	
 	
@@ -68,6 +74,10 @@ public class Tag {
 		+ "tagging " + tagging + "\n ";
 		try{
 				descrip+="resume wiki "+ wiki.getResume()+ "\n ";
+				descrip+="LISTE artistes taille "+ listeArtistes.size() + "\n ";
+				descrip+="LISTE chansons taille "+ listeChansons.size() + "\n ";
+				descrip+="LISTE albums taille "+ listeAlbums.size() + "\n ";
+				
 		}
 		catch (NullPointerException e){
 		}
@@ -146,6 +156,48 @@ public class Tag {
 
 	public void setWiki(Wiki wiki) {
 		this.wiki = wiki;
+	}
+
+
+
+
+	public ArrayList<Artiste> getListeArtistes() {
+		return listeArtistes;
+	}
+
+
+
+
+	public void setListeArtistes(ArrayList<Artiste> listeArtistes) {
+		this.listeArtistes = listeArtistes;
+	}
+
+
+
+
+	public ArrayList<Album> getListeAlbums() {
+		return listeAlbums;
+	}
+
+
+
+
+	public void setListeAlbums(ArrayList<Album> listeAlbums) {
+		this.listeAlbums = listeAlbums;
+	}
+
+
+
+
+	public ArrayList<Chanson> getListeChansons() {
+		return listeChansons;
+	}
+
+
+
+
+	public void setListeChansons(ArrayList<Chanson> listeChansons) {
+		this.listeChansons = listeChansons;
 	}
 	
 	
