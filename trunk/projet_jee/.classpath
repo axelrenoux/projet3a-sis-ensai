@@ -19,5 +19,7 @@
 	<classpathentry kind="lib" path="librairies/httpclient-cache-4.1.jar"/>
 	<classpathentry kind="lib" path="librairies/httpcore-4.1.jar"/>
 	<classpathentry kind="lib" path="librairies/httpmime-4.1.jar"/>
+	<classpathentry kind="lib" path="librairies/mysql-jdbc.jar"/>
+	<classpathentry kind="lib" path="librairies/ojdbc14_g.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
