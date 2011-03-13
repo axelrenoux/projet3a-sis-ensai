@@ -2,6 +2,8 @@
 
 import java.util.ArrayList;
 
+import exceptions.ExceptionMiseAjour;
+
 
 
 public class Artiste {
@@ -87,12 +89,53 @@ public class Artiste {
 	/********************************************************************/
 	
 	
+	
 	/**
-	 * methode qui propose un artiste, pour mettre à jour si besoin
-	 * @param artistePropose
+	 * methode qui met a jour un artiste à partir d'un autre pour completer
+	 * @param albumPropose
+	 * @throws ExceptionMiseAjour
 	 */
-	public void mettreAjour(Artiste artistePropose){
-		//TODO
+	public void mettreAjour(Artiste artistePropose) throws ExceptionMiseAjour{
+		//on commence par verifier la coherence de la mise a jour: 
+		if(!verifierCoherence(this, artistePropose))throw new ExceptionMiseAjour(this,artistePropose);
+				
+		if(this.name==null) this.name = artistePropose.getName();
+		if(this.ID==null)this.ID = artistePropose.getID();  
+		if(this.url==null)this.url = artistePropose.getUrl();
+		if(this.imageSmall==null) this.imageSmall = artistePropose.getImageSmall();
+		if(this.imageMedium==null) this.imageMedium=artistePropose.getImageMedium();
+		if(this.imageLarge==null) this.imageLarge=artistePropose.getImageLarge();
+		if(this.imageExtraLarge==null)this.imageExtraLarge=artistePropose.getImageExtraLarge();
+		if(this.imageMega==null) this.imageMega=artistePropose.getImageMega();
+		if(this.listeners==0.0)this.listeners = artistePropose.getListeners();
+		if(this.playcount==0.0)this.playcount = artistePropose.getPlaycount();
+		if(this.artistesSimilaires ==null) this.artistesSimilaires = artistePropose.getArtistesSimilaires();
+		if(this.toptags==null)this.toptags = artistePropose.getToptags();
+		if(this.wiki==null)this.wiki = artistePropose.getWiki();
+		
+	}
+	
+	/**
+	 * methode qui verifie la concordance entre 2 artistes:
+	 * si les url ne sont pas nulles, elles doivent correspondre,
+	 * sinon ce sont les noms qui doivent correspondre
+	 * @param a1
+	 * @param a2
+	 * @return
+	 */
+	private boolean verifierCoherence(Artiste a1, Artiste a2){
+		boolean retour=false;
+		if(a1.getUrl()!=null && a2.getUrl()!=null){
+			if (a1.getUrl().equals(a2.getUrl())){
+				retour=true;
+			}else retour= false;
+		}
+		else if(a1.getName()!=null && a2.getName()!=null){
+			if(a1.getName().equals(a2.getName())){
+				retour=true;
+			}else retour= false;
+		}
+		return retour;
 	}
 	
 	
@@ -101,7 +144,8 @@ public class Artiste {
 		descrip = "\n " + "name " + name + "\n " 
 		+ " url " +  url+ "\n "
 		+ "listeners "+ listeners+ "\n "
-		+ "playcount " + playcount + "\n ";
+		+ "playcount " + playcount + "\n "
+		+ "image mega " + imageMega + "\n ";
 		
 		try{
 				descrip+="nb artistes sim "+ artistesSimilaires.size()+ "\n ";

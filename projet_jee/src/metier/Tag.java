@@ -58,13 +58,22 @@ public class Tag {
 	/********************************************************************/
 	
  
+ 
 
-	@Override
 	public String toString() {
-		return "Tag [name=" + name + ", url=" + url + ", reach=" + reach
-				+ ", tagging=" + tagging + ", wiki=" + wiki + "]";
+		String descrip;
+		descrip = "\n " + "name " + name + "\n " 
+		+ " url " +  url+ "\n "
+		+ "reach "+ reach+ "\n "
+		+ "tagging " + tagging + "\n ";
+		try{
+				descrip+="resume wiki "+ wiki.getResume()+ "\n ";
+		}
+		catch (NullPointerException e){
+		}
+		return descrip;	
 	}
-
+	
 
 
 

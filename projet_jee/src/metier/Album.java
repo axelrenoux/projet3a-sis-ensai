@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
+import exceptions.ExceptionMiseAjour;
+
 public class Album {
 
 
@@ -11,21 +13,21 @@ public class Album {
 	/*************************      attributs       *********************/
 	/********************************************************************/
 	
-	private String name;
-	private Artiste artiste;
-	private String ID;
-	private String url;
-	private Date date;
-	private String imageSmall;
-	private String imageMedium;
-	private String imageLarge;
-	private String imageExtraLarge;
-	private String imageMega;
+	private String name=null;
+	private Artiste artiste=null;
+	private String ID=null;
+	private String url=null;
+	private Date date=null;
+	private String imageSmall=null;
+	private String imageMedium=null;
+	private String imageLarge=null;
+	private String imageExtraLarge=null;
+	private String imageMega=null;
 	private double listeners;//nb de personnes ayant écouté l'album
 	private double playcount;//nb de fois où l'album a été écouté
-	private HashMap<String,Chanson> chansons;//contient chaque chanson et son rang
-	private ArrayList<Tag> toptags;
-	private Wiki wiki;
+	private ArrayList<Chanson> chansons = null;
+	private ArrayList<Tag> toptags=null;
+	private Wiki wiki=null;
 	
 	/********************************************************************/
 	/**********************      constructeurs      *********************/
@@ -62,7 +64,7 @@ public class Album {
 	public Album(String name, Artiste artiste, String ID, String url,Date date,
 			String imageSmall,String imageMedium,String imageLarge,
 			String imageExtraLarge,String imageMega,double listeners,
-			double playcount,HashMap<String,Chanson> chansons,
+			double playcount,ArrayList<Chanson> chansons,
 			ArrayList<Tag> toptags,Wiki wiki) {
 		super();
 		this.name = name;
@@ -78,7 +80,7 @@ public class Album {
 		this.listeners=listeners; 
 		this.playcount=playcount; 
 		this.chansons=chansons; 
-		//this.toptags=toptags;
+		this.toptags=toptags;
 		this.wiki=wiki; 
 	}
 
@@ -91,13 +93,66 @@ public class Album {
 	/************************      methodes      ************************/
 	/********************************************************************/
 	
+	
+	/**
+	 * methode qui met a jour un album à partir d'un autre pour completer
+	 * d'eventuels attributs nuls
+	 * @param albumPropose
+	 * @throws ExceptionMiseAjour 
+	 */
+	public void mettreAjour(Album albumPropose) throws ExceptionMiseAjour{
+		//on commence par verifier la coherence de la mise a jour: 
+		if(!verifierCoherence(this, albumPropose))throw new ExceptionMiseAjour(this,albumPropose);
+				
+		if(this.name==null) this.name = albumPropose.getName();
+		if(this.artiste==null) this.artiste = albumPropose.getArtiste(); 
+		if(this.ID==null)this.ID = albumPropose.getID();  
+		if(this.url==null)this.url = albumPropose.getUrl();
+		if(this.date==null)this.date = albumPropose.getDate();
+		if(this.imageSmall==null) this.imageSmall = albumPropose.getImageSmall();
+		if(this.imageMedium==null) this.imageMedium=albumPropose.getImageMedium();
+		if(this.imageLarge==null) this.imageLarge=albumPropose.getImageLarge();
+		if(this.imageExtraLarge==null)this.imageExtraLarge=albumPropose.getImageExtraLarge();
+		if(this.imageMega==null) this.imageMega=albumPropose.getImageMega();
+		if(this.listeners==0.0)this.listeners = albumPropose.getListeners();
+		if(this.playcount==0.0)this.playcount = albumPropose.getPlaycount();
+		if(this.chansons==null)this.chansons = albumPropose.getChansons();
+		if(this.toptags==null)this.toptags = albumPropose.getToptags();
+		if(this.wiki==null)this.wiki = albumPropose.getWiki();
+		
+	}
+	
+	/**
+	 * methode qui verifie la concordance entre 2 albums:
+	 * si les url ne sont pas nulles, elles doivent correspondre,
+	 * sinon ce sont les noms qui doivent correspondre
+	 * @param a1
+	 * @param a2
+	 * @return
+	 */
+	private boolean verifierCoherence(Album a1, Album a2){
+		boolean retour=false;
+		if(a1.getUrl()!=null && a2.getUrl()!=null){
+			if (a1.getUrl().equals(a2.getUrl())){
+				retour=true;
+			}else retour= false;
+		}
+		else if(a1.getName()!=null && a2.getName()!=null){
+			if(a1.getName().equals(a2.getName())){
+				retour=true;
+			}else retour= false;
+		}
+		return retour;
+	}
+	
 	public String toString() {
 		String descrip;
 		descrip = "\n " + "name " + name + "\n " 
 		+ " date " + date + "\n "
 		+ "url " + url + "\n "
 		+ "listeners "+ listeners+ "\n "
-		+ "playcount " + playcount + "\n ";
+		+ "playcount " + playcount + "\n "
+		+ "id " + ID +"\n ";
 		try{
 				descrip+="nb chansons "+ chansons.size()+ "\n ";
 				descrip+="nom artiste "+ artiste.getName()+ "\n ";
@@ -255,19 +310,21 @@ public class Album {
 
 
 
-	public HashMap<String, Chanson> getChansons() {
+	 
+
+	 
+
+
+
+	public ArrayList<Chanson> getChansons() {
 		return chansons;
 	}
 
 
 
-	public void setChansons(HashMap<String, Chanson> chansons) {
+	public void setChansons(ArrayList<Chanson> chansons) {
 		this.chansons = chansons;
 	}
-
-
-
-	 
 
 
 
