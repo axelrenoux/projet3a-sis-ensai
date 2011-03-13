@@ -2,6 +2,8 @@
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import exceptions.ExceptionMiseAjour;
  
 public class Chanson {
 
@@ -86,11 +88,56 @@ public class Chanson {
 	
 	 
 	
-	/*"Chanson [name=" + name + ", duree=" + duree + ", url=" + url
-				+ ", artiste=" + artiste + ", listeners=" + listeners
-				+ ", playcount=" + playcount + ", albums=" + albums
-				+ ", toptags=" + toptags + ", wiki=" + wiki + "]";*/
-
+	/**
+	 * methode qui met a jour une chanson à partir d'une autre pour la completer
+	 * @param chansonProposee
+	 * @throws ExceptionMiseAjour
+	 */
+	public void mettreAjour(Chanson chansonProposee) throws ExceptionMiseAjour{
+		//on commence par verifier la coherence de la mise a jour: 
+		if(!verifierCoherence(this, chansonProposee))throw new ExceptionMiseAjour(this,chansonProposee);
+				
+		if(this.name==null) this.name = chansonProposee.getName();
+		if(this.ID==null)this.ID = chansonProposee.getID();  
+		if(this.duree==null)this.duree = chansonProposee.getDuree();  
+		if(this.url==null)this.url = chansonProposee.getUrl();
+		if(this.artiste==null)this.artiste = chansonProposee.getArtiste();
+		if(this.imageSmall==null) this.imageSmall = chansonProposee.getImageSmall();
+		if(this.imageMedium==null) this.imageMedium=chansonProposee.getImageMedium();
+		if(this.imageLarge==null) this.imageLarge=chansonProposee.getImageLarge();
+		if(this.imageExtraLarge==null)this.imageExtraLarge=chansonProposee.getImageExtraLarge();
+		if(this.imageMega==null) this.imageMega=chansonProposee.getImageMega();
+		if(this.listeners==0.0)this.listeners = chansonProposee.getListeners();
+		if(this.playcount==0.0)this.playcount = chansonProposee.getPlaycount();
+		if(this.albums ==null) this.albums= chansonProposee.getAlbums();
+		if(this.toptags==null)this.toptags = chansonProposee.getToptags();
+		if(this.wiki==null)this.wiki = chansonProposee.getWiki();
+		
+	}
+	
+	/**
+	 * methode qui verifie la concordance entre 2 artistes:
+	 * si les url ne sont pas nulles, elles doivent correspondre,
+	 * sinon ce sont les noms qui doivent correspondre
+	 * @param a1
+	 * @param a2
+	 * @return
+	 */
+	private boolean verifierCoherence(Chanson c1, Chanson c2){
+		boolean retour=false;
+		if(c1.getUrl()!=null && c2.getUrl()!=null){
+			if (c1.getUrl().equals(c2.getUrl())){
+				retour=true;
+			}else retour= false;
+		}
+		else if(c1.getName()!=null && c2.getName()!=null){
+			if(c1.getName().equals(c2.getName())){
+				retour=true;
+			}else retour= false;
+		}
+		return retour;
+	}
+	
 	
 	public String toString() {
 		String descrip;
@@ -98,7 +145,9 @@ public class Chanson {
 		+ " DUREE " +  duree + "\n "
 		+ " url " +  url+ "\n "
 		+ "listeners "+ listeners+ "\n "
-		+ "playcount " + playcount + "\n ";
+		+ "playcount " + playcount + "\n "
+		+ "image mega " + imageMega + "\n ";
+		
 		
 		try{
 				descrip+="artiste "+ artiste.getName()+ "\n ";
