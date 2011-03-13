@@ -8,6 +8,7 @@ import controleur.Controleur;
 import metier.Album;
 import metier.Artiste;
 import metier.Chanson;
+import metier.Tag;
 
 import parsing.sax.ParsingAlbum;
 import parsing.sax.ParsingArtiste;
@@ -30,7 +31,7 @@ public class RecupDonnees {
 		motsCleArtistes.add("ordinateur");
 	}
 	
-	public void recupererDonnees(){
+	public void recupererDonneesChansons(){
 		
 		initialisation();
 		
@@ -45,12 +46,14 @@ public class RecupDonnees {
 		//pour chaque chanson, on recupere les infos complementaires
 		for(Chanson chanson: listeChansons){
 			chanson = parsingChanson.parserInfos(chanson);
-			Controleur.getInstanceuniquecontroleur().ajouterChanson(chanson);
+			Controleur.getInstanceuniquecontroleur().ajouter(chanson);
 		}
 		
-		
-		
+	}
 	
+	public void recupererDonneesAlbums(){
+	
+		initialisation();
 		
 		/************ recuperation d'albums    ***********************/
 		ParsingAlbum parsingAlbum = new ParsingAlbum();
@@ -64,13 +67,14 @@ public class RecupDonnees {
 		//pour chaque album, on recupere les infos complementaires
 		for(Album album: listeAlbums){
 			album = parsingAlbum.parserInfos(album);
-			Controleur.getInstanceuniquecontroleur().ajouterAlbum(album);
+			Controleur.getInstanceuniquecontroleur().ajouter(album);
 		}
+	}	
 		
+	
+	public void recupererDonneesArtistes(){
 		
-		
-		
-		
+		initialisation();
 		
 		/************ recuperation d'artistes  ***********************/
 		ParsingArtiste parsingArtiste = new ParsingArtiste();
@@ -83,27 +87,56 @@ public class RecupDonnees {
 		//pour chaque artiste, on recupere les infos complementaires
 		for(Artiste artiste: listeArtistes){
 			artiste = parsingArtiste.parserInfos(artiste);
-			Controleur.getInstanceuniquecontroleur().ajouterArtiste(artiste);
+			Controleur.getInstanceuniquecontroleur().ajouter(artiste);
 		}
-		
-		
+	}
+	
+	
 		/************** affichage des données recuperees*************/
+	
+	public void affichageDonneesRecuperees(){
 		
 		System.out.println("***********************************************");
 		System.out.println("************* affichage des albums ************");
 		System.out.println("***********************************************");
 		
-		//affichage des albums
 		for(Entry<String, Album> currentEntry : Controleur.getInstanceuniquecontroleur().getListeAlbums().entrySet()){
-			System.out.println(currentEntry.getKey() + " " + currentEntry.getValue());
+			System.out.println("key " + currentEntry.getKey() + " " + currentEntry.getValue());
 		}
-		//affichage des artistes
+		
+		System.out.println("***********************************************");
+		System.out.println("*********** affichage des artistes ************");
+		System.out.println("***********************************************");
+		
 		
 		for(Entry<String, Artiste> currentEntry : Controleur.getInstanceuniquecontroleur().getListeArtistes().entrySet()){
 			System.out.println(currentEntry.getKey() + " " + currentEntry.getValue());
 		}
-		//affichage des chansons
+		
+		System.out.println("***********************************************");
+		System.out.println("************ affichage des chansons ***********");
+		System.out.println("***********************************************");
+		
+		
 		for(Entry<String, Chanson> currentEntry : Controleur.getInstanceuniquecontroleur().getListeChansons().entrySet()){
+			System.out.println(currentEntry.getKey() + " " + currentEntry.getValue());
+		}
+		
+		System.out.println("***********************************************");
+		System.out.println("************** affichage des tags *************");
+		System.out.println("***********************************************");
+		
+		
+		for(Entry<String, Tag> currentEntry : Controleur.getInstanceuniquecontroleur().getListeTags().entrySet()){
+			System.out.println(currentEntry.getKey() + " " + currentEntry.getValue());
+		}
+		
+		System.out.println("***********************************************");
+		System.out.println("***** affichage des problemes rencontres ******");
+		System.out.println("***********************************************");
+		
+		
+		for(Entry<String, String> currentEntry : Controleur.getInstanceuniquecontroleur().getListeProblemesRencontres().entrySet()){
 			System.out.println(currentEntry.getKey() + " " + currentEntry.getValue());
 		}
 		
