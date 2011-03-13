@@ -26,18 +26,26 @@ public class GestionFormulaire {
 		}
 	}
 	
-	public void addTrack(String search, boolean aVerifier){
-		gestion.addTrack(search,aVerifier);
+	public void addTrack(String search){
+		gestion.addTrack(search);
 	}
 	
-	public void addAlbum(String search, boolean aVerifier){
-		gestion.addAlbum(search,aVerifier);
+	public void addAlbum(String search){
+		gestion.addAlbum(search);
 	}
 	
-	public void addArtist(String search, boolean aVerifier){
-		gestion.addArtist(search,aVerifier);
+	public void addArtist(String search){
+		gestion.addArtist(search);
 	}
 
+	public void addMotCle(String search){
+		gestion.addMotCle(search);
+	}
+	
+	public void addTag(String search){
+		gestion.addTag(search);
+	}
+	
 	public void lancerRecherche() {
 		gestion.lancerRecherche();
 	}
