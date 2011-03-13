@@ -14,6 +14,9 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import controleur.Controleur;
+import exceptions.ExceptionMiseAjour;
+
 import metier.Album;
 import metier.Artiste;
 import metier.Chanson;
@@ -76,8 +79,7 @@ public class AlbumInfoHandler extends DefaultHandler{
 	   
 	// objets courants  
 	private Chanson currentChanson;
-	private HashMap<String,Chanson> listeChansons;
-	private String rangCurrentChanson;
+	private ArrayList<Chanson> listeChansons;
 	private Artiste currentArtisteChanson;
 	private Tag currentTag;
 	private ArrayList<Tag> listeTags;
@@ -105,7 +107,7 @@ public class AlbumInfoHandler extends DefaultHandler{
 	private boolean inContent;
 	
 	
-	  
+		
 	
 	
 	  
@@ -143,20 +145,19 @@ public class AlbumInfoHandler extends DefaultHandler{
 		}else if(qName.equals("playcount")){
 			inPlaycount = true;	
 		}else if(qName.equals("tracks")){
-			listeChansons = new HashMap<String,Chanson>();
+			listeChansons = new ArrayList<Chanson>();
 			inTracks = true;	
 		}else if(qName.equals("track")){
 			inTrack = true;	
 			currentChanson = new Chanson();
-			rangCurrentChanson = attributes.getValue(0);
-		}else if(qName.equals("name") && inTrack){
+		}else if(qName.equals("name") && inTrack && !inArtisteChanson){
 			inNameChanson = true;
 		}else if(qName.equals("duration")){
 			inDuration = true;
 		}else if(qName.equals("url") && inTrack){
 			inUrlChanson = true;
 		}else if(qName.equals("artist") && inTrack){
-			inArtisteChanson = true;	
+			inArtisteChanson = true;
 			currentArtisteChanson = new Artiste();
 		}else if(qName.equals("name") && inArtisteChanson){
 			inNameArtisteChanson = true;
@@ -181,8 +182,9 @@ public class AlbumInfoHandler extends DefaultHandler{
 			inSummary = true;
 		}else if(qName.equals("content")){
 			inContent = true;
+		}else if(qName.equals("name")){
 		}else{
-	    	  System.out.println("Balise non traitee pour le moment : " + qName);
+	    	  //System.out.println("Balise non traitee pour le moment : " + qName);
 		}
 	}
 
@@ -205,11 +207,11 @@ public class AlbumInfoHandler extends DefaultHandler{
 		}else if(qName.equals("tracks")){
 			inTracks = false;	
 			album.setChansons(listeChansons);
-			System.out.println("fin tracks " +album);
 		}else if(qName.equals("track")){
 			inTrack = false;	
-			listeChansons.put(rangCurrentChanson,currentChanson);
-		}else if(qName.equals("name") && inTrack){
+			gererAjoutChanson();
+			//listeChansons.add(currentChanson);//TODO
+		}else if(qName.equals("name") && inTrack && !inArtisteChanson){
 			inNameChanson = false;
 		}else if(qName.equals("duration")){
 			inDuration = false;
@@ -217,7 +219,9 @@ public class AlbumInfoHandler extends DefaultHandler{
 			inUrlChanson = false;
 		}else if(qName.equals("artist") && inTrack){
 			inArtisteChanson = false;
-			currentChanson.setArtiste(currentArtisteChanson);
+			
+			gererAjoutArtisteChanson();
+			//currentChanson.setArtiste(currentArtisteChanson);
 		}else if(qName.equals("name") && inArtisteChanson){
 			inNameArtisteChanson = false;
 		}else if(qName.equals("url") && inArtisteChanson){
@@ -227,7 +231,8 @@ public class AlbumInfoHandler extends DefaultHandler{
 			album.setToptags(listeTags);
 		}else if(qName.equals("tag")){
 			inTag = false;	
-			listeTags.add(currentTag);
+			gererAjoutTag();
+			//listeTags.add(currentTag);
 		}else if(qName.equals("name") && inTag){
 			inNameTag = false;	
 		}else if(qName.equals("url") && inTag){
@@ -256,10 +261,8 @@ public class AlbumInfoHandler extends DefaultHandler{
 		String lecture = new String(ch,start,length);
 		if(inListeners){
 			album.setListeners(Double.parseDouble(lecture));
-			System.out.println("album in listeners " +album);
 		}else if(inPlaycount){
 			album.setPlaycount(Double.parseDouble(lecture)); 
-			System.out.println("album in playcount " +album);
 		}else if(inNameChanson){
 			currentChanson.setName(lecture);
 		}else if(inDuration){
@@ -302,6 +305,96 @@ public class AlbumInfoHandler extends DefaultHandler{
 	}
 
 	
+	
+	/**
+	 * Methode qui gere l'ajout d'un nouvel artiste dans une chanson d'album
+	 * il faut verifier que l'artiste n'existe pas deja dans le controleur
+	 * et si c'est le cas, on propose une mise a jour de l'artiste
+	 * dans le cas contraire, on doit ajouter l'artiste à la liste d'artistes
+	 * du controleur
+	 */
+	public void gererAjoutArtisteChanson(){
+		//on veut ajouter un artiste à une chanson de l'album courant, 
+		//on verifie que l'artiste n'existe pas deja:
+		if(Controleur.getInstanceuniquecontroleur().existeDeja(currentArtisteChanson)){
+			//on propose une mise a jour de l'artiste deja existant à partir de l'artiste courant
+			try {
+				Controleur.getInstanceuniquecontroleur().
+				getListeArtistes().get(currentArtisteChanson.getName()).
+				mettreAjour(currentArtisteChanson);
+			} catch (ExceptionMiseAjour e) {}
+			//on ajoute l'artiste deja existant, à la chanson de l'album
+			currentChanson.setArtiste(Controleur.getInstanceuniquecontroleur().
+					getListeArtistes().get(currentArtisteChanson.getName()));
+		}
+		//si l'artiste n'existait pas deja, on ajoute à 
+		//la chanson de l'album celui que l'on vient de creer
+		else {
+			currentChanson.setArtiste(currentArtisteChanson);
+			//et on ajoute l'artiste à la liste des artistes du controleur
+			Controleur.getInstanceuniquecontroleur().ajouter(currentArtisteChanson);
+		}
+	}
+	
+	
+	/**
+	 * Methode qui gere l'ajout d'une nouvelle chanson dans la
+	 * liste de chansons de l'album courant
+	 * il faut verifier que la chanson n'existe pas deja dans le controleur
+	 * et si c'est le cas, on propose une mise a jour de la chanson
+	 * dans le cas contraire, on doit ajouter la chanson à la liste de chansons
+	 * du controleur
+	 */
+	public void gererAjoutChanson(){
+		//on veut ajouter une chanson à la liste de chansons de l'album courant, 
+		//on verifie que la chanson n'existe pas deja:
+		if(Controleur.getInstanceuniquecontroleur().existeDeja(currentChanson)){
+			//on propose une mise a jour de la chanson deja existante
+			// à partir de la chanson courante
+			try {
+				Controleur.getInstanceuniquecontroleur().
+				getListeChansons().get(currentChanson.getUrl()).
+				mettreAjour(currentChanson);
+			} catch (ExceptionMiseAjour e) {}
+			//on ajoute la chanson deja existante à la liste 
+			//de chansons de l'album
+			listeChansons.add(Controleur.getInstanceuniquecontroleur().
+					getListeChansons().get(currentChanson.getUrl()));
+		}
+		//si la chanson n'existait pas deja, on ajoute à la liste de
+		//chansons de l'album la chanson que l'on vient de creer
+		else {
+			listeChansons.add(currentChanson);
+			//et on ajoute la chanson à la liste de chansons du controleur
+			Controleur.getInstanceuniquecontroleur().ajouter(currentChanson);
+		}
+	}
+
+	
+	
+	/**
+	 * Methode qui gere l'ajout d'un nouveau tag dans la liste de tags
+	 * de l'album courant
+	 * il faut verifier que le tag n'existe pas deja dans le controleur
+	 * dans le cas contraire, on doit ajouter le tag à la liste de tags
+	 * du controleur
+	 */
+	public void gererAjoutTag(){
+		//on veut ajouter un tag à la liste de tags de l'album courant, 
+		//on verifie que le tag n'existe pas deja:
+		if(Controleur.getInstanceuniquecontroleur().existeDeja(currentTag)){
+			listeTags.add(Controleur.getInstanceuniquecontroleur().
+					getListeTags().get(currentTag.getUrl()));
+		}
+		//si le tag n'existait pas deja, on ajoute à la liste de
+		//tags de l'album celui que l'on vient de creer
+		else {
+			listeTags.add(currentTag);
+			//et on ajoute le tag à la liste des tags du controleur
+			Controleur.getInstanceuniquecontroleur().ajouter(currentTag);
+		}
+	}
+
 	
 	/********************************************************************/
 	/******************      getters / setters       ********************/
