@@ -92,7 +92,9 @@ public abstract class Parsing {
 	public String transformationURL(String str) {
 		String newstr; 
 		newstr = str.replaceAll(" ", "+");
-		return str;
+		newstr = newstr.replaceAll("'", "%27");
+		
+		return newstr;
 	}
 
 

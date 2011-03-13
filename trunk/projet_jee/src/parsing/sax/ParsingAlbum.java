@@ -19,6 +19,8 @@ import org.xml.sax.SAXException;
 
 import com.sun.jndi.toolkit.url.Uri;
 
+import controleur.Controleur;
+
 import appelHttp.AppelHTTP;
 import metier.Album;
 
@@ -81,10 +83,7 @@ public class ParsingAlbum extends Parsing {
 
 			}
 			System.out.println("fin du traitement");
-			System.out.println("taille liste albums "  + lstAlbum.size());
-			System.out.println("nb de pages albums lues " + nbPagesResultats);
-
-
+		
 
 
 
@@ -109,7 +108,7 @@ public class ParsingAlbum extends Parsing {
 
 	public Album parserInfos(Album album) {
 
-
+		String marequete = "";
 		try{
 			// création d'une fabrique de parseurs SAX
 			SAXParserFactory fabrique = SAXParserFactory.newInstance();
@@ -125,7 +124,7 @@ public class ParsingAlbum extends Parsing {
 
 			//on crée la requete avec le nom de l'album et le nom de l'artiste
 			System.out.println("ma requete pour le get info");
-			String marequete = "http://ws.audioscrobbler.com/2.0/?method=album.getInfo&album="+ album.getName() + "&artist="+ album.getArtiste().getName()+"&api_key=ca33590ba46941a9186c4777b5046445"; 
+			marequete = "http://ws.audioscrobbler.com/2.0/?method=album.getInfo&album="+ album.getName() + "&artist="+ album.getArtiste().getName()+"&api_key=ca33590ba46941a9186c4777b5046445"; 
 			
 			marequete = marequete.replaceAll(" ", "+");
 			
@@ -149,13 +148,6 @@ public class ParsingAlbum extends Parsing {
 			album = gestionnaireAlbum.getAlbum();
 
 
-			System.out.println("fin du traitement");
-			
-			//affichage pour vérif
-			System.out.println("album mis à jour "  + album.toString());
-			
-
-
 		}catch(ParserConfigurationException pce){
 			System.out.println("Erreur de configuration du parseur");
 			System.out.println("Lors de l'appel à SAXParser.newSAXParser()");
@@ -169,6 +161,12 @@ public class ParsingAlbum extends Parsing {
 		}catch(IllegalArgumentException iae){
 			System.out.println("Erreur dans l'expression de la requete");
 			System.out.println("Lors de l'appel à httpGet");
+			Controleur.getInstanceuniquecontroleur().
+			ajouterProbleme("Probleme " + + Controleur.getInstanceuniquecontroleur().getListeProblemesRencontres().size(),
+					"Erreur dans l'expression de la requete lors de l'appel à httpGet " + "\n " +
+					"pb requete: " + marequete + "\n " +
+					"pb album: " + album.getName()+"\n " +
+					"pb artiste: " + album.getArtiste() +"\n ");
 		}
 
 		return album;
