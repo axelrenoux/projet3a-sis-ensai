@@ -306,6 +306,7 @@ public class AlbumInfoHandler extends DefaultHandler{
 
 	
 	
+	
 	/**
 	 * Methode qui gere l'ajout d'un nouvel artiste dans une chanson d'album
 	 * il faut verifier que l'artiste n'existe pas deja dans le controleur
