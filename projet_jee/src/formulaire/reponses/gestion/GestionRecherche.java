@@ -1,12 +1,26 @@
 package formulaire.reponses.gestion;
 
 public abstract class GestionRecherche {
-	String artist=null;
-	String album=null;
-	String track=null;
-	String tag=null;
-	String motCle=null;
+	
+	/********************************************************************/
+	/*************************      attributs       *********************/
+	/********************************************************************/
+	
+	private String artist=null;
+	private String album=null;
+	private String track=null;
+	private String tag=null;
+	private String motCle=null;
 
+	/********************************************************************/
+	/************************      methodes      ************************/
+	/********************************************************************/
+
+	public void lancerRecherche() {
+		//TODO
+	}
+	
+	
 	public void addTrack(String track) {
 		this.track=track;
 		//TODO
@@ -31,8 +45,12 @@ public abstract class GestionRecherche {
 		//TODO
 	}
 	
-	public void lancerRecherche() {
-		//TODO
-	}
+
+	
+
+	/********************************************************************/
+	/******************      getters / setters       ********************/
+	/********************************************************************/
+
 	
 }

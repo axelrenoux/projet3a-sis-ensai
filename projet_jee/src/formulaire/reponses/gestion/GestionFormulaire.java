@@ -11,8 +11,19 @@ import javax.faces.bean.SessionScoped;
 @ManagedBean
 @SessionScoped
 public class GestionFormulaire {
+	
+	/********************************************************************/
+	/*************************      attributs       *********************/
+	/********************************************************************/
+	
 	private GestionRecherche gestion;
 
+
+	/********************************************************************/
+	/************************      methodes      ************************/
+	/********************************************************************/
+
+	
 	public void setObjectif(int ceQueRecherche) {
 		//item1Chanson item2Artiste item3Album
 		if(ceQueRecherche==1){
@@ -49,6 +60,12 @@ public class GestionFormulaire {
 	public void lancerRecherche() {
 		gestion.lancerRecherche();
 	}
+	
+	/********************************************************************/
+	/******************      getters / setters       ********************/
+	/********************************************************************/
+
+	
 
 	public GestionRecherche getGestion() {
 		return gestion;
