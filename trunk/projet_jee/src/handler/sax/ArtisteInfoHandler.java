@@ -178,7 +178,7 @@ public class ArtisteInfoHandler extends DefaultHandler{
 		}else if(qName.equals("content")){
 			inContent = true;
 		}else{
-			System.out.println("Balise non traitee pour le moment : " + qName);
+			//System.out.println("Balise non traitee pour le moment : " + qName);
 		}
 	}
 
