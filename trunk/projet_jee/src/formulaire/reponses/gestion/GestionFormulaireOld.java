@@ -10,10 +10,10 @@ import javax.faces.bean.SessionScoped;
  */
 @ManagedBean
 @SessionScoped
-public class GestionFormulaire {
+public class GestionFormulaireOld {
 	private GestionRecherche gestion;
 
-	public void setObjectif(int ceQueRecherche) {
+	public int setObjectif(int ceQueRecherche) {
 		//item1Chanson item2Artiste item3Album
 		if(ceQueRecherche==1){
 			gestion=new GestionRechercheTrack();
@@ -24,6 +24,8 @@ public class GestionFormulaire {
 		else if(ceQueRecherche==3){
 			gestion=new GestionRechercheAlbum();
 		}
+		else return 0;
+		return ceQueRecherche;
 	}
 	
 	public void addTrack(String search, boolean aVerifier){
@@ -41,15 +43,5 @@ public class GestionFormulaire {
 	public void lancerRecherche() {
 		gestion.lancerRecherche();
 	}
-
-	public GestionRecherche getGestion() {
-		return gestion;
-	}
-
-	public void setGestion(GestionRecherche gestion) {
-		this.gestion = gestion;
-	}
-	
-	
 
 }
