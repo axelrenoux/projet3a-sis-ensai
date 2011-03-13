@@ -12,6 +12,8 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import controleur.Controleur;
+
 import metier.Album;
 import metier.Artiste;
 import metier.Chanson;
@@ -329,7 +331,28 @@ public void endDocument() throws SAXException {
 }
 
 
-
+/**
+ * Methode qui gere l'ajout d'un nouveau tag dans la liste de tags
+ * de la chanson courante
+ * il faut verifier que le tag n'existe pas deja dans le controleur
+ * dans le cas contraire, on doit ajouter le tag à la liste de tags
+ * du controleur
+ */
+public void gererAjoutTag(){
+	//on veut ajouter un tag à la liste de tags de la chanson courante, 
+	//on verifie que le tag n'existe pas deja:
+	if(Controleur.getInstanceuniquecontroleur().existeDeja(currentTag)){
+		listeTags.add(Controleur.getInstanceuniquecontroleur().
+				getListeTags().get(currentTag.getUrl()));
+	}
+	//si le tag n'existait pas deja, on ajoute à la liste de
+	//tags de l'album celui que l'on vient de creer
+	else {
+		listeTags.add(currentTag);
+		//et on ajoute le tag à la liste des tags du controleur
+		Controleur.getInstanceuniquecontroleur().ajouter(currentTag);
+	}
+}
 
 /********************************************************************/
 /******************      getters / setters       ********************/
