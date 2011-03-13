@@ -12,6 +12,9 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import controleur.Controleur;
+import exceptions.ExceptionMiseAjour;
+
 import metier.Album;
 import metier.Artiste;
 import metier.Chanson;
@@ -175,130 +178,186 @@ public class ArtisteInfoHandler extends DefaultHandler{
 		}else if(qName.equals("content")){
 			inContent = true;
 		}else{
-		System.out.println("Balise non traitee pour le moment : " + qName);
+			System.out.println("Balise non traitee pour le moment : " + qName);
+		}
 	}
-}
 
 
-/* (non-Javadoc)
- * @see org.xml.sax.helpers.DefaultHandler#endElement(java.lang.String, java.lang.String, java.lang.String)
- * methode appellee a la fermeture d une balise
- */
-public void endElement(String uri,
-		String localName,
-		String qName)
-throws SAXException{
-	if(qName.equals("listeners")){
-		inListeners = false;	
-	}else if(qName.equals("playcount")){
-		inPlaycount = false;	
-	}else if(qName.equals("similar")){
-		inSimilar = false;
-		artiste.setArtistesSimilaires(listeArtistesSimilaires);
-	}else if(qName.equals("artist") && inSimilar){
-		inArtisteSimilaire = false;
-		listeArtistesSimilaires.add(currentArtistSimilaire);
-	}else if(qName.equals("name") && inArtisteSimilaire){
-		inNameArtisteSimilaire = false;
-	}else if(qName.equals("url") && inArtisteSimilaire){
-		inURLArtisteSimilaire = false;
-	}else if(qName.equals("image") && inArtisteSimilaire){
-		inImageSmallArtisteSim = false;
-		inImageMediumArtisteSim = false;
-		inImageLargeArtisteSim = false;
-		inImageExtraLargeArtisteSim = false;
-		inImageMegaArtisteSim = false;
-	}else if(qName.equals("tags")){
-		inTags = false;
-		artiste.setToptags(listeTags);
-	}else if(qName.equals("tag")){
-		inTag = false;	
-		listeTags.add(currentTag);
-	}else if(qName.equals("name") && inTag){
-		inNameTag = false;	
-	}else if(qName.equals("url") && inTag){
-		inUrlTag = false;
-	}else if(qName.equals("bio")){
-		inWiki = false;
-		artiste.setWiki(currentWiki);
-	}else if(qName.equals("published")){
-		inPublished = false;	
-	}else if(qName.equals("summary")){
-		inSummary = false;
-	}else if(qName.equals("content")){
-		inContent = false;
+	/* (non-Javadoc)
+	 * @see org.xml.sax.helpers.DefaultHandler#endElement(java.lang.String, java.lang.String, java.lang.String)
+	 * methode appellee a la fermeture d une balise
+	 */
+	public void endElement(String uri,
+			String localName,
+			String qName)
+	throws SAXException{
+		if(qName.equals("listeners")){
+			inListeners = false;	
+		}else if(qName.equals("playcount")){
+			inPlaycount = false;	
+		}else if(qName.equals("similar")){
+			inSimilar = false;
+			artiste.setArtistesSimilaires(listeArtistesSimilaires);
+		}else if(qName.equals("artist") && inSimilar){
+			inArtisteSimilaire = false;
+			gererAjoutArtisteSimilaire();
+			//listeArtistesSimilaires.add(currentArtistSimilaire);
+		}else if(qName.equals("name") && inArtisteSimilaire){
+			inNameArtisteSimilaire = false;
+		}else if(qName.equals("url") && inArtisteSimilaire){
+			inURLArtisteSimilaire = false;
+		}else if(qName.equals("image") && inArtisteSimilaire){
+			inImageSmallArtisteSim = false;
+			inImageMediumArtisteSim = false;
+			inImageLargeArtisteSim = false;
+			inImageExtraLargeArtisteSim = false;
+			inImageMegaArtisteSim = false;
+		}else if(qName.equals("tags")){
+			inTags = false;
+			artiste.setToptags(listeTags);
+		}else if(qName.equals("tag")){
+			inTag = false;	
+			//listeTags.add(currentTag);
+			gererAjoutTag();
+		}else if(qName.equals("name") && inTag){
+			inNameTag = false;	
+		}else if(qName.equals("url") && inTag){
+			inUrlTag = false;
+		}else if(qName.equals("bio")){
+			inWiki = false;
+			artiste.setWiki(currentWiki);
+		}else if(qName.equals("published")){
+			inPublished = false;	
+		}else if(qName.equals("summary")){
+			inSummary = false;
+		}else if(qName.equals("content")){
+			inContent = false;
+		}
 	}
-}
 
 
-/* (non-Javadoc)
- * @see org.xml.sax.helpers.DefaultHandler#characters(char[], int, int)
- * detection de caracteres
- */
-public void characters(char[] ch,
-		int start,
-		int length)
-throws SAXException{
-	String lecture = new String(ch,start,length);
-	if(inListeners){
-		artiste.setListeners(Double.parseDouble(lecture));
-	}else if(inPlaycount){
-		artiste.setPlaycount(Double.parseDouble(lecture));
-	}else if(inNameArtisteSimilaire){
-		currentArtistSimilaire.setName(lecture);
-	}else if(inURLArtisteSimilaire){
-		currentArtistSimilaire.setUrl(lecture);
-	}else if(inImageSmallArtisteSim){
-		currentArtistSimilaire.setImageSmall(lecture);
-	}else if(inImageMediumArtisteSim){
-		currentArtistSimilaire.setImageMedium(lecture);
-	}else if(inImageLargeArtisteSim){
-		currentArtistSimilaire.setImageLarge(lecture);
-	}else if(inImageExtraLargeArtisteSim){
-		currentArtistSimilaire.setImageExtraLarge(lecture);
-	}else if(inImageMegaArtisteSim){
-		currentArtistSimilaire.setImageMega(lecture);
-	}else if(inNameTag){
-		currentTag.setName(lecture);
-	}else if(inUrlTag){
-		  currentTag.setUrl(lecture);
-	}else if(inPublished){
-		currentWiki.setDatePublication(lecture);	 	
-	}else if(inSummary){
-		 currentWiki.setResume(lecture);
-	}else if(inContent){
-		 currentWiki.setContenu(lecture);
+	/* (non-Javadoc)
+	 * @see org.xml.sax.helpers.DefaultHandler#characters(char[], int, int)
+	 * detection de caracteres
+	 */
+	public void characters(char[] ch,
+			int start,
+			int length)
+	throws SAXException{
+		String lecture = new String(ch,start,length);
+		if(inListeners){
+			artiste.setListeners(Double.parseDouble(lecture));
+		}else if(inPlaycount){
+			artiste.setPlaycount(Double.parseDouble(lecture));
+		}else if(inNameArtisteSimilaire){
+			currentArtistSimilaire.setName(lecture);
+		}else if(inURLArtisteSimilaire){
+			currentArtistSimilaire.setUrl(lecture);
+		}else if(inImageSmallArtisteSim){
+			currentArtistSimilaire.setImageSmall(lecture);
+		}else if(inImageMediumArtisteSim){
+			currentArtistSimilaire.setImageMedium(lecture);
+		}else if(inImageLargeArtisteSim){
+			currentArtistSimilaire.setImageLarge(lecture);
+		}else if(inImageExtraLargeArtisteSim){
+			currentArtistSimilaire.setImageExtraLarge(lecture);
+		}else if(inImageMegaArtisteSim){
+			currentArtistSimilaire.setImageMega(lecture);
+		}else if(inNameTag){
+			currentTag.setName(lecture);
+		}else if(inUrlTag){
+			currentTag.setUrl(lecture);
+		}else if(inPublished){
+			currentWiki.setDatePublication(lecture);	 	
+		}else if(inSummary){
+			currentWiki.setResume(lecture);
+		}else if(inContent){
+			currentWiki.setContenu(lecture);
+		}
 	}
-}
 
 
-/* (non-Javadoc)
- * @see org.xml.sax.helpers.DefaultHandler#startDocument()
- * methode appellee au debut du parsing du fichier
- */
-public void startDocument() throws SAXException {
-	System.out.println("Début du parsing get info artiste");
-}
+	/* (non-Javadoc)
+	 * @see org.xml.sax.helpers.DefaultHandler#startDocument()
+	 * methode appellee au debut du parsing du fichier
+	 */
+	public void startDocument() throws SAXException {
+		System.out.println("Début du parsing get info artiste");
+	}
 
 
-/* (non-Javadoc)
- * @see org.xml.sax.helpers.DefaultHandler#endDocument()
- * methode appellee a la fin du parsing du fichier
- */
-public void endDocument() throws SAXException {
-	System.out.println("Fin du parsing get info artiste");
-}
+	/* (non-Javadoc)
+	 * @see org.xml.sax.helpers.DefaultHandler#endDocument()
+	 * methode appellee a la fin du parsing du fichier
+	 */
+	public void endDocument() throws SAXException {
+		System.out.println("Fin du parsing get info artiste");
+	}
 
+	
+	
+	/**
+	 * Methode qui gere l'ajout d'un nouvel artiste dans la liste des
+	 * artistes similaires de l'artiste
+	 * il faut verifier que l'artiste similaire n'existe pas deja dans 
+	 * le controleur et si c'est le cas, on propose une mise a jour de l'artiste
+	 * dans le cas contraire, on doit ajouter l'artiste à la liste d'artistes
+	 * du controleur
+	 */
+	public void gererAjoutArtisteSimilaire(){
+		//on veut ajouter un artiste similaire à la liste d'artistes similaires
+		//de l'artiste courant
+		//on verifie que l'artiste n'existe pas deja:
+		if(Controleur.getInstanceuniquecontroleur().existeDeja(currentArtistSimilaire)){
+			//on propose une mise a jour de l'artiste deja existant à partir de l'artiste courant
+			try {
+				Controleur.getInstanceuniquecontroleur().
+				getListeArtistes().get(currentArtistSimilaire.getName()).
+				mettreAjour(currentArtistSimilaire);
+			} catch (ExceptionMiseAjour e) {}
+			//on ajoute l'artiste deja existant dans la liste d'artistes similaires
+			listeArtistesSimilaires.add(Controleur.getInstanceuniquecontroleur().
+					getListeArtistes().get(currentArtistSimilaire.getName()));
+		}
+		//si l'artiste n'existait pas deja, on ajoute dans la liste d'artistes sim
+		//celui que l'on vient de creer
+		else {
+			listeArtistesSimilaires.add(currentArtistSimilaire);
+			//et on ajoute l'artiste à la liste des artistes du controleur
+			Controleur.getInstanceuniquecontroleur().ajouter(currentArtistSimilaire);
+		}
+	}
 
+	/**
+	 * Methode qui gere l'ajout d'un nouveau tag dans la liste de tags
+	 * de l'artiste courant
+	 * il faut verifier que le tag n'existe pas deja dans le controleur
+	 * dans le cas contraire, on doit ajouter le tag à la liste de tags
+	 * du controleur
+	 */
+	public void gererAjoutTag(){
+		//on veut ajouter un tag à la liste de tags de l'artiste courant, 
+		//on verifie que le tag n'existe pas deja:
+		if(Controleur.getInstanceuniquecontroleur().existeDeja(currentTag)){
+			listeTags.add(Controleur.getInstanceuniquecontroleur().
+					getListeTags().get(currentTag.getUrl()));
+		}
+		//si le tag n'existait pas deja, on ajoute à la liste de
+		//tags de l'album celui que l'on vient de creer
+		else {
+			listeTags.add(currentTag);
+			//et on ajoute le tag à la liste des tags du controleur
+			Controleur.getInstanceuniquecontroleur().ajouter(currentTag);
+		}
+	}
 
+	/********************************************************************/
+	/******************      getters / setters       ********************/
+	/********************************************************************/
 
-/********************************************************************/
-/******************      getters / setters       ********************/
-/********************************************************************/
-
-public Artiste getArtiste() {
-	return artiste;
-}
+	public Artiste getArtiste() {
+		return artiste;
+	}
 
 
 
