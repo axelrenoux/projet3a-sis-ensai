@@ -16,11 +16,13 @@ import formulaire.reponses.gestion.GestionFormulaire;
 	@SessionScoped
 	public class VueFormulaire {
 		
-		/**************************   attributs  **************************/
-
+		/********************************************************************/
+		/*************************      attributs       *********************/
+		/********************************************************************/
+		
 		@ManagedProperty(value="#{vueConfirmation}")
 		private VueConfirmation vueConfirmation;
-		@ManagedProperty(value="#{gestionRecherche}")
+		@ManagedProperty(value="#{gestionFormulaire}")
 		private GestionFormulaire gestionFormulaire;
 		private String artist;
 		private boolean orthoArtist;
@@ -29,33 +31,49 @@ import formulaire.reponses.gestion.GestionFormulaire;
 		private String track;
 		private boolean orthoTrack;
 		private int ceQueRecherche;
+		private String tag;
+		private String motcle;
 		
-		/************************** methodes    **************************/
+		/********************************************************************/
+		/************************      methodes      ************************/
+		/********************************************************************/
+
 
 		/**
 		 * 
 		 */
 		public String lancerRecherche(){
-			boolean succes=false;
-			int saitCeQuIlVeut=gestionFormulaire.setObjectif(ceQueRecherche);
-			//item1Chanson item2Artiste item3Album
+			boolean success = false;
+			gestionFormulaire.setObjectif(ceQueRecherche);
+			
 			if(!track.isEmpty()){
 				vueConfirmation.setCompteRendu(vueConfirmation.getCompteRendu()+"Chanson : "+track+"/n");
-				gestionFormulaire.addTrack(track,orthoTrack);
-				succes=true;
+				gestionFormulaire.addTrack(track);
+				success = true;
 			}
 			if(!artist.isEmpty()){
 				vueConfirmation.setCompteRendu(vueConfirmation.getCompteRendu()+"Groupe : "+artist+"/n");
-				gestionFormulaire.addArtist(artist,orthoArtist);
-				succes=true;
+				gestionFormulaire.addArtist(artist);
+				success = true;
 			}
 			if(!album.isEmpty()){
 				vueConfirmation.setCompteRendu(vueConfirmation.getCompteRendu()+"Album : "+album+"/n");
-				gestionFormulaire.addAlbum(album,orthoAlbum);
-				succes=true;
+				gestionFormulaire.addAlbum(album);
+				success = true;
 			}
-			if(saitCeQuIlVeut==0) succes=false;
-			if(succes){
+			if(!motcle.isEmpty()){
+				vueConfirmation.setCompteRendu(vueConfirmation.getCompteRendu()+"Album : "+album+"/n");
+				gestionFormulaire.addMotCle(motcle);
+				success = true;
+			}
+			if(!tag.isEmpty()){
+				vueConfirmation.setCompteRendu(vueConfirmation.getCompteRendu()+"Album : "+album+"/n");
+				gestionFormulaire.addTag(tag);
+			}
+			//if(saitCeQuIlVeut==0) succes=false;
+			
+			
+			if(success){
 				gestionFormulaire.lancerRecherche();
 				return "success";
 			}
@@ -78,7 +96,10 @@ import formulaire.reponses.gestion.GestionFormulaire;
 
 		
 		
-		/************************** getters/setters **************************/
+		/********************************************************************/
+		/******************      getters / setters       ********************/
+		/********************************************************************/
+
 		public String getArtist() {
 			return artist;
 		}
@@ -147,4 +168,47 @@ import formulaire.reponses.gestion.GestionFormulaire;
 		public void setCeQueRecherche(int ceQueRecherche) {
 			this.ceQueRecherche = ceQueRecherche;
 		}
+
+
+		public VueConfirmation getVueConfirmation() {
+			return vueConfirmation;
+		}
+
+
+		public void setVueConfirmation(VueConfirmation vueConfirmation) {
+			this.vueConfirmation = vueConfirmation;
+		}
+
+
+		public GestionFormulaire getGestionFormulaire() {
+			return gestionFormulaire;
+		}
+
+
+		public void setGestionFormulaire(GestionFormulaire gestionFormulaire) {
+			this.gestionFormulaire = gestionFormulaire;
+		}
+
+
+		public String getTag() {
+			return tag;
+		}
+
+
+		public void setTag(String tag) {
+			this.tag = tag;
+		}
+
+
+		public String getMotcle() {
+			return motcle;
+		}
+
+
+		public void setMotcle(String motcle) {
+			this.motcle = motcle;
+		}
+		
+		
+		
 }
