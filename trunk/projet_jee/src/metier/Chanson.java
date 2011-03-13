@@ -24,7 +24,7 @@ public class Chanson {
 	private String imageMega;
 	private double listeners;//nb de personnes ayant écouté la chanson
 	private double playcount;//nb de fois où la chanson a été écoutée
-	private HashMap<String,Album> albums;//contient chaque album contenant la chanson, et son rang
+	private ArrayList<Album> albums;
 	private ArrayList<Tag> toptags;
 	private Wiki wiki;
 	
@@ -59,7 +59,7 @@ public class Chanson {
 	 */
 	public Chanson(String name, Double duree, String url,
 			Artiste artiste,double listeners,double playcount,
-			HashMap<String,Album> albums,
+			ArrayList<Album> albums,
 			ArrayList<Tag> toptags,Wiki wiki) {
 		super();
 		this.name = name;
@@ -275,8 +275,12 @@ public class Chanson {
 
 
 
+ 
 
-	public HashMap<String, Album> getAlbums() {
+
+
+
+	public ArrayList<Album> getAlbums() {
 		return albums;
 	}
 
@@ -285,7 +289,7 @@ public class Chanson {
 
 
 
-	public void setAlbums(HashMap<String, Album> albums) {
+	public void setAlbums(ArrayList<Album> albums) {
 		this.albums = albums;
 	}
 
