@@ -15,7 +15,7 @@ import exceptions.ExceptionMiseAjour;
 
 import metier.Album;
 import metier.Artiste;
- 
+
 
 /**
  * @author Administrateur
@@ -26,18 +26,18 @@ public class AlbumSearchHandler extends DefaultHandler{
 
 
 
-	
+
 	/********************************************************************/
 	/*************************      attributs       *********************/
 	/********************************************************************/
-	
+
 	//rיsultats de notre parsing
 	private List<Album> lstAlbums;
-	   
+
 	// personne courante pour chaque nouvelle balise Personne
 	private Album currentAlbum;
 	private Artiste currentArtist;
-	
+
 	//flags nous indiquant la position du parseur
 	private boolean inAlbummatches;
 	private boolean inAlbum;
@@ -50,8 +50,8 @@ public class AlbumSearchHandler extends DefaultHandler{
 	private boolean inImageLarge;
 	private boolean inImageExtraLarge;
 	private boolean inImageMega;
-	
-	  
+
+
 	/********************************************************************/
 	/**********************      constructeurs      *********************/
 	/********************************************************************/
@@ -67,8 +67,8 @@ public class AlbumSearchHandler extends DefaultHandler{
 	/********************************************************************/
 	/************************      methodes      ************************/
 	/********************************************************************/
-	
-	
+
+
 	/* (non-Javadoc)
 	 * @see org.xml.sax.helpers.DefaultHandler#startElement(java.lang.String, java.lang.String, java.lang.String, org.xml.sax.Attributes)
 	 * methode appellee pour chaque nouvelle balise xml
@@ -105,7 +105,7 @@ public class AlbumSearchHandler extends DefaultHandler{
 				inImageMega = true;
 			}
 		}else{
-	    	  //System.out.println("Balise non traitee pour le moment : " + qName);
+			//System.out.println("Balise non traitee pour le moment : " + qName);
 		}
 	}
 
@@ -152,31 +152,7 @@ public class AlbumSearchHandler extends DefaultHandler{
 			currentAlbum.setName(lecture);
 		}else if(inArtiste){
 			currentArtist.setName(lecture);
-			//on veut ajouter l'artiste א l'album, 
-			//on verifie que l'artiste n'existe pas deja:
-			if(Controleur.getInstanceuniquecontroleur().existeDeja(currentArtist)){
-				//on propose une mise a jour de l'artiste deja existant א partir de l'artiste courant
-				System.out.println("שששששש 1"+ Controleur.getInstanceuniquecontroleur().
-					getListeArtistes().get(currentArtist.getName()));
-				try {
-					Controleur.getInstanceuniquecontroleur().
-					getListeArtistes().get(currentArtist.getName()).
-					mettreAjour(currentArtist);
-				} catch (ExceptionMiseAjour e) {}
-				//on ajoute l'artiste deja existant, א l'album
-				System.out.println("שששששש 2"+ Controleur.getInstanceuniquecontroleur().
-						getListeArtistes().get(currentArtist.getName()));
-				currentAlbum.setArtiste(Controleur.getInstanceuniquecontroleur().
-				getListeArtistes().get(currentArtist.getName()));//TODO
-				
-				System.out.println("שששששש 3"+ currentAlbum.getArtiste());
-			}
-			//si l'artiste n'existait pas deja, on ajoute celui que l'on vient de creer
-			else {
-			currentAlbum.setArtiste(currentArtist);
-			//et on ajoute l'artiste א la liste des artistes du controleur
-			Controleur.getInstanceuniquecontroleur().ajouterArtiste(currentArtist);
-			}	
+			gererAjoutArtiste();
 		}else if(inURL){
 			currentAlbum.setUrl(lecture);
 		}else if(inID){
@@ -210,20 +186,50 @@ public class AlbumSearchHandler extends DefaultHandler{
 	 */
 	public void endDocument() throws SAXException {
 		System.out.println("Fin du parsing search");
-		
-	}
-	
-	
-	
-	
-	
-	/********************************************************************/
-	/******************      getters / setters       ********************/
-	/********************************************************************/
-	
 
-	public List<Album> getLstAlbums() {
-		return lstAlbums;
 	}
 
-}
+
+	/**
+	 * Methode qui gere l'ajout d'un nouvel artiste dans un album
+	 * il faut verifier que l'artiste n'existe pas deja dans le controleur
+	 * et si c'est le cas, on propose une mise a jour de l'artiste
+	 * dans le cas contraire, on doit ajouter l'artiste א la liste d'artistes
+	 * du controleur
+	 */
+	public void gererAjoutArtiste(){
+		//on veut ajouter un artiste א l'album courant, 
+		//on verifie que l'artiste n'existe pas deja:
+		if(Controleur.getInstanceuniquecontroleur().existeDeja(currentArtist)){
+			//on propose une mise a jour de l'artiste deja existant א partir de l'artiste courant
+			try {
+				Controleur.getInstanceuniquecontroleur().
+				getListeArtistes().get(currentArtist.getName()).
+				mettreAjour(currentArtist);
+			} catch (ExceptionMiseAjour e) {}
+			//on ajoute l'artiste deja existant, א l'album
+			currentAlbum.setArtiste(Controleur.getInstanceuniquecontroleur().
+					getListeArtistes().get(currentArtist.getName()));
+		}
+		//si l'artiste n'existait pas deja, on ajoute א l'album celui que l'on vient de creer
+		else {
+			currentAlbum.setArtiste(currentArtist);
+			//et on ajoute l'artiste א la liste des artistes du controleur
+			Controleur.getInstanceuniquecontroleur().ajouterArtiste(currentArtist);
+		}
+	}
+
+
+
+
+
+		/********************************************************************/
+		/******************      getters / setters       ********************/
+		/********************************************************************/
+
+
+		public List<Album> getLstAlbums() {
+			return lstAlbums;
+		}
+
+	}
