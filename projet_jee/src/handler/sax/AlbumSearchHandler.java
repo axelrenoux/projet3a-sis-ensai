@@ -215,7 +215,7 @@ public class AlbumSearchHandler extends DefaultHandler{
 		else {
 			currentAlbum.setArtiste(currentArtist);
 			//et on ajoute l'artiste à la liste des artistes du controleur
-			Controleur.getInstanceuniquecontroleur().ajouterArtiste(currentArtist);
+			Controleur.getInstanceuniquecontroleur().ajouter(currentArtist);
 		}
 	}
 
