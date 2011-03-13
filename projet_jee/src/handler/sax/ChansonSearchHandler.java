@@ -186,11 +186,7 @@ public class ChansonSearchHandler extends DefaultHandler{
 	 */
 	public void endDocument() throws SAXException {
 		System.out.println("Fin du parsing");
-		System.out.println("Resultats du parsing");
-
-		/*for (Film monFilm : lstFilm) {
-			System.out.println(monFilm);
-	   	  }*/
+		 
 
 	}
 	
