@@ -17,6 +17,7 @@ public class  Controleur {
 	private HashMap<String,Artiste> listeArtistes = new HashMap<String, Artiste>();
 	private HashMap<String,Chanson> listeChansons = new HashMap<String, Chanson>();
 	private HashMap<String,Tag> listeTags = new HashMap<String, Tag>();
+	private HashMap<String,String> listeProblemesRencontres = new HashMap<String, String>();
 	
 	private static final Controleur instanceUniqueControleur = new Controleur();
 	
@@ -34,7 +35,7 @@ public class  Controleur {
 	//methodes qui ajoutent des objets
 	
 	public void ajouterAlbum(Album album){
-		listeAlbums.put(album.getID(), album);
+		listeAlbums.put(album.getUrl(), album);
 	}
 	
 	public void ajouterArtiste(Artiste artiste){
@@ -47,19 +48,26 @@ public class  Controleur {
 
 	//methodes qui verifient l'existence d'objets 
 	public boolean existeDeja(Album album){
-		if(listeAlbums.containsKey(album.getID()))return true;
+		if(listeAlbums.containsKey(album.getUrl()))return true;
 		else return false;
 	}
 	
 	public boolean existeDeja(Artiste artiste){
-		if(listeAlbums.containsKey(artiste.getID()))return true;
+		if(listeArtistes.containsKey(artiste.getName()))return true;
 		else return false;
 	}
 	
 	public boolean existeDeja(Chanson chanson){
-		if(listeAlbums.containsKey(chanson.getID()))return true;
+		if(listeChansons.containsKey(chanson.getUrl()))return true;
 		else return false;
 	}
+	
+	
+	//methode qui recupere les differents problemes recontres pendant une recuperation de donnees
+	public void ajouterProbleme(String titre, String probleme){
+		listeProblemesRencontres.put(titre, probleme);
+	}
+	
 	
 	/********************************************************************/
 	/******************      getters / setters       ********************/
@@ -83,6 +91,10 @@ public class  Controleur {
 
 	public HashMap<String, Tag> getListeTags() {
 		return listeTags;
+	}
+
+	public HashMap<String, String> getListeProblemesRencontres() {
+		return listeProblemesRencontres;
 	}
 	
 	
