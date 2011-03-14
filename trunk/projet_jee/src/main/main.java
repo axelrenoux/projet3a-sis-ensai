@@ -1,10 +1,14 @@
 package main;
 
+import java.sql.Date;
+
 import bdd.ChargementBDDOracleDepuisTxt;
 import bdd.ChargementBDDdepuisOracle;
 import bdd.GestionBddJavaPourSauvegarde;
 import bdd.SauvegardeBddFormatOracle;
 import controleur.Controleur;
+import controleur.Utilitaire;
+import exceptions.ExceptionDate;
 import exceptions.ExceptionMiseAjour;
 import metier.Album;
 import metier.Artiste;
@@ -56,12 +60,12 @@ public class main {
 		
 		
 		RecupDonnees recup = new RecupDonnees();		
-		//recup.recupererDonneesChansons();
+		recup.recupererDonneesChansons();
 		recup.recupererDonneesArtistes();
-		//recup.recupererInfosComplementairesPlus();
-		//recup.recupererDonneesAlbums();
-		//recup.recupererDonneesComplementairesTags();
-		//recup.recupererListesDesTags();
+		recup.recupererInfosComplementairesPlus();
+		recup.recupererDonneesAlbums();
+		recup.recupererDonneesComplementairesTags();
+		recup.recupererListesDesTags();
 		recup.affichageDonneesRecuperees();
 		
 		//attention à l'ordre TODO
@@ -77,6 +81,12 @@ public class main {
 		ChargementBDDOracleDepuisTxt.charger();
 		ChargementBDDdepuisOracle.charger();*/
 		
+		//String s = "6 Apr 1999, 00:00";
+		//String s ="30 Nov 2004, 00:00";
+		//Date d=null;
+		//try {
+		//	d = Utilitaire.getInstanceunique().transformerEnDate(s);
+		//} catch (ExceptionDate e) {}
 	}
 
 }
