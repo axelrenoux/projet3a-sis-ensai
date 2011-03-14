@@ -2,15 +2,34 @@ package formulaire.reponses.gestion;
 
 import java.util.ArrayList;
 
+import metier.Album;
+import metier.Artiste;
+
 public class RechercheArtist extends Recherche {
+	
+	/********************************************************************/
+	/*************************      attributs       *********************/
+	/********************************************************************/
+	private ArrayList<Artiste> resultats;
 	
 	/********************************************************************/
 	/************************      methodes      ************************/
 	/********************************************************************/
 
 	
+	//en attendant on met un mock
 	public ArrayList lancerRecherche() {
-		return null;
+		resultats = new ArrayList<Artiste>();
+		Artiste a1 = new Artiste();
+		Artiste a2 = new Artiste();
+		
+		a1.setName("The Rolling Stones");
+		a2.setName("The fugees");
+		
+		resultats.add(a1);
+		resultats.add(a2);
+		
+		return resultats;
 	}
 
 }

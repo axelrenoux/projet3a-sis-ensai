@@ -13,7 +13,7 @@ public abstract class Recherche {
 	private String track=null;
 	private String tag=null;
 	private String motCle=null;
-
+	
 	/********************************************************************/
 	/************************      methodes      ************************/
 	/********************************************************************/
