@@ -35,7 +35,7 @@ public class GestionFormulaire {
 			recherche=new RechercheTrack();
 		}
 		else if(ceQueRecherche==2){
-			recherche=new RechercheArtist();
+			recherche=new RechercheArtiste();
 		}
 		else if(ceQueRecherche==3){
 			recherche=new RechercheAlbum();
@@ -51,6 +51,10 @@ public class GestionFormulaire {
 		resultats = recherche.lancerRecherche();
 		return resultats;
 		
+	}
+	
+	public String retournerTypeAffichage(){
+		return recherche.retournerTypeAffichage();
 	}
 
 	

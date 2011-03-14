@@ -31,4 +31,9 @@ public class RechercheAlbum extends Recherche {
 		return resultats;
 		
 	}
+	
+	
+	public String retournerTypeAffichage(){
+		return "album";
+	}
 }

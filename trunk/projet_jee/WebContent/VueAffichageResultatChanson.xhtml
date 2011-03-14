@@ -1,0 +1,39 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui">
+
+
+
+<ui:composition template="/modeleFormulaire.xhtml">
+	<ui:define name="contenu">
+		<h:form> 
+			<p:panel>
+				<p:dataTable var="chanson" value="#{vueAffichageResultat.resultats}">
+					<p:column>
+						<f:facet name="header">  
+	                  	Name
+			          	</f:facet>
+						<h:outputText value="#{chanson.name}" />
+					</p:column>
+			
+					<p:column>
+						<f:facet name="header">  
+	                  	Name
+			          	</f:facet>
+						<h:outputText value="#{artiste.name}" />
+					</p:column>
+				</p:dataTable>
+			</p:panel>			
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>
+
+
+
+
+
+
+
