@@ -8,8 +8,8 @@
 
 <ui:composition template="/modeleFormulaire.xhtml">
 	<ui:define name="contenu">
-		<h:form> 
-			<panel header="affichage des artistes">	
+		<panel header="affichage des artistes" position="absolute" left="100px" >	
+			<h:form> 
 				<p:dataTable
 					var="artiste" value="#{vueAffichageResultat.resultats}">
 					<p:column>
@@ -25,21 +25,19 @@
 			          	</f:facet>
 						<h:outputText value="#{artiste.name}" />
 					</p:column>
+					
+					
+					
 				</p:dataTable>
-				
-			<h3>Basic Carousel</h3>  
-			<p:carousel value="#{vueAffichageResultat.resultats}" var="artiste">  
-    			<h:panelGrid columns="1" style="width:100%" cellpadding="5">  
-        			<p:graphicImage value="#{artiste.imageLarge}"/>    
-           			<h:outputText value="Name: #{artiste.name}" />             
-    			</h:panelGrid>  
-			</p:carousel>  
- 
-				
-				
-				
-			</panel>	
-		</h:form>
+
+				<p:carousel   var="artiste" value="#{vueAffichageResultat.resultats}" >  
+	    			<h:panelGrid columns="2" style="width:100%" cellpadding="5">   
+	           			<h:outputText> aaaa </h:outputText> 
+	           			<h:outputText value="Name: #{artiste.name}" />            
+	    			</h:panelGrid>  
+				</p:carousel>  
+			</h:form>
+		</panel>	
 	</ui:define>
 </ui:composition>
 </html>
