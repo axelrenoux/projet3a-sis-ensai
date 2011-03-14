@@ -51,12 +51,12 @@ public class main {
 		Controleur.getInstanceuniquecontroleur().ajouter(t);*/
 		
 		RecupDonnees recup = new RecupDonnees();		
-		recup.recupererDonneesChansons();
+		//recup.recupererDonneesChansons();
 		recup.recupererDonneesArtistes();
-		recup.recupererInfosComplementairesPlus();
-		recup.recupererDonneesAlbums();
-		recup.recupererDonneesComplementairesTags();
-		recup.recupererListesDesTags();
+		//recup.recupererInfosComplementairesPlus();
+		//recup.recupererDonneesAlbums();
+		//recup.recupererDonneesComplementairesTags();
+		//recup.recupererListesDesTags();
 		recup.affichageDonneesRecuperees();
 		
 		//attention à l'ordre TODO

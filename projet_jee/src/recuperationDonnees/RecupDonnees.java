@@ -28,13 +28,13 @@ public class RecupDonnees {
 	/************ methodes d'initialisation ***********************/
 	
 	public void initialisationChanson(){
-		motsCleChansons.add("believe");
+		motsCleChansons.add("ordinateur");
 	}
 	public void initialisationArtiste(){
-		motsCleArtistes.add("cher");
+		motsCleArtistes.add("ordinateur");
 	}
 	public void initialisationAlbum(){
-		motsCleAlbums.add("believe");
+		motsCleAlbums.add("ordinateur");
 	}
 	
 	

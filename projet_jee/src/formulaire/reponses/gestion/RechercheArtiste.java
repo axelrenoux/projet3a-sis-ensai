@@ -24,7 +24,9 @@ public class RechercheArtiste extends Recherche {
 		Artiste a2 = new Artiste();
 		
 		a1.setName("The Rolling Stones");
+		a1.setImageLarge("http://userserve-ak.last.fm/serve/126/50853825.png");
 		a2.setName("The fugees");
+		a1.setImageLarge("http://userserve-ak.last.fm/serve/126/32571933.jpg");
 		
 		resultats.add(a1);
 		resultats.add(a2);
