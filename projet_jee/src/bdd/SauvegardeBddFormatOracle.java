@@ -27,7 +27,7 @@ public class SauvegardeBddFormatOracle extends SauvegardeUnFormatPourLaBdd{
 		try {SQLViaJDBC.executerRequeteSansRetour(ligne);} 
 		catch (UpdateException e) {e.printStackTrace();}
 		//Et on l'écrit en parallèle dans un fichier txt partagé, pour que les autres aussi puissent peupler leur bdd
-		fluxSortie.println(ligne+";");
+		fluxSortie.println(ligne);
 	}
 	
 	@Override
