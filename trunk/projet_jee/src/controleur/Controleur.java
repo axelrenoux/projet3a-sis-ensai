@@ -1,5 +1,6 @@
 package controleur;
 
+import java.sql.Date;
 import java.util.HashMap;
 
 import exceptions.ExceptionMiseAjour;
@@ -20,6 +21,7 @@ public class  Controleur {
 	private HashMap<String,Chanson> listeChansons = new HashMap<String, Chanson>();
 	private HashMap<String,Tag> listeTags = new HashMap<String, Tag>();
 	private HashMap<String,String> listeProblemesRencontres = new HashMap<String, String>();
+	private HashMap<String,Date> listeDate = new HashMap<String, Date>();
 	
 	private static final Controleur instanceUniqueControleur = new Controleur();
 	
@@ -49,7 +51,10 @@ public class  Controleur {
 		if(listeAlbums.containsKey(newalbum.getUrl())){
 			try {
 				listeAlbums.get(newalbum.getUrl()).mettreAjour(newalbum);
-			} catch (ExceptionMiseAjour e) {}
+			} catch (ExceptionMiseAjour e) {
+				Controleur.getInstanceuniquecontroleur().
+				ajouterProbleme(e.getTitre(),e.getMessage());
+			}
 		}else{
 			listeAlbums.put(newalbum.getUrl(), newalbum);	
 		}
@@ -63,7 +68,10 @@ public class  Controleur {
 		if(listeArtistes.containsKey(newartiste.getName())){
 			try {
 				listeArtistes.get(newartiste.getName()).mettreAjour(newartiste);
-			} catch (ExceptionMiseAjour e) {}
+			} catch (ExceptionMiseAjour e) {
+				Controleur.getInstanceuniquecontroleur().
+				ajouterProbleme(e.getTitre(),e.getMessage());
+			}
 		}else{
 			listeArtistes.put(newartiste.getName(), newartiste);	
 		}
@@ -76,7 +84,10 @@ public class  Controleur {
 		if(listeChansons.containsKey(newchanson.getUrl())){
 			try {
 				listeChansons.get(newchanson.getUrl()).mettreAjour(newchanson);
-			} catch (ExceptionMiseAjour e) {}
+			} catch (ExceptionMiseAjour e) {
+				Controleur.getInstanceuniquecontroleur().
+				ajouterProbleme(e.getTitre(),e.getMessage());
+			}
 		}
 		else{
 			listeChansons.put(newchanson.getUrl(), newchanson);			
@@ -93,6 +104,10 @@ public class  Controleur {
 		}
 	}
 	
+	
+	public void ajouter(Date date,String s){
+		listeDate.put(s,date);
+	}
 	
 	/***********methodes qui verifient l'existence d'objets**************/
 	
@@ -154,6 +169,10 @@ public class  Controleur {
 
 	public HashMap<String, String> getListeProblemesRencontres() {
 		return listeProblemesRencontres;
+	}
+
+	public HashMap<String, Date> getListeDate() {
+		return listeDate;
 	}
 	
 	
