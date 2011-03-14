@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+
+import metier.Artiste;
 /**
  * on ajoute ces 2 lignes afin que la classe soit instanciee automatiquement (managedBean)
  * et qu'il n'y ait qu'une seule instance tout au long de la session (sessionScoped)
@@ -48,8 +50,10 @@ public class GestionFormulaire {
 	public ArrayList lancerRecherche() {
 		resultats = recherche.lancerRecherche();
 		return resultats;
+		
 	}
 
+	
 
 
 	

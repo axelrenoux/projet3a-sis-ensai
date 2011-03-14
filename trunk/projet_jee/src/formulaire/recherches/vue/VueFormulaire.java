@@ -43,6 +43,7 @@ import formulaire.reponses.gestion.GestionFormulaire;
 		 * 
 		 */
 		public String lancerRecherche(){
+			
 			boolean success = false;
 			gestionFormulaire.setObjectif(ceQueRecherche);
 			
@@ -76,6 +77,7 @@ import formulaire.reponses.gestion.GestionFormulaire;
 			if(success){
 				//on attribue les resultats à la page de resultats
 				vueAffichageResultat.setResultats(gestionFormulaire.lancerRecherche());
+				vueAffichageResultat.setType("artiste");
 				//return "confirmation";
 				return "success";
 			}

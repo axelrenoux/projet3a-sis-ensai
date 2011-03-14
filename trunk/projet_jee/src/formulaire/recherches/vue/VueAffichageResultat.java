@@ -17,13 +17,14 @@ public class VueAffichageResultat {
 	/*************************      attributs       *********************/
 	/********************************************************************/
 	private ArrayList resultats;
-
+	private String type;
 	
 	
 	/********************************************************************/
 	/************************      methodes      ************************/
 	/********************************************************************/
-
+	
+	
 
 	/********************************************************************/
 	/******************      getters / setters       ********************/
@@ -36,4 +37,14 @@ public class VueAffichageResultat {
 		this.resultats = resultats;
 	}
 
+	
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+ 
+	
 }
