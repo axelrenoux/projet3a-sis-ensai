@@ -8,8 +8,8 @@
 
 <ui:composition template="/modeleFormulaire.xhtml">
 	<ui:define name="contenu">
-		<h:form>
-			<p:dataTable rendered="#{vueAffichageResultat.type} == chanson"  
+		<h:form> 
+			<p:dataTable rendered="#{vueAffichageResultat.type == 'chanson'}"  
 				var="chanson" value="#{vueAffichageResultat.resultats}">
 				<p:column>
 					<f:facet name="header">  
@@ -26,7 +26,7 @@
 				</p:column>
 			</p:dataTable>
 			
-			<p:dataTable rendered="true" 
+			<p:dataTable rendered="#{vueAffichageResultat.type == 'artiste'}" 
 				var="artiste" value="#{vueAffichageResultat.resultats}">
 				<p:column>
 					<f:facet name="header">  
@@ -43,7 +43,7 @@
 				</p:column>
 			</p:dataTable>
 			
-			<p:dataTable rendered="#{vueAffichageResultat.type} ==album"  
+			<p:dataTable rendered="#{vueAffichageResultat.type == 'album'}"  
 				var="album" value="#{vueAffichageResultat.resultats}">
 				<p:column>
 					<f:facet name="header">  
