@@ -96,4 +96,16 @@ public class SauvegardeBddFormatRdfFichierTxt extends SauvegardeUnFormatPourLaBd
 		
 	}
 
+	@Override
+	public void ajouterLigne(String ligne) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void creerTables() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

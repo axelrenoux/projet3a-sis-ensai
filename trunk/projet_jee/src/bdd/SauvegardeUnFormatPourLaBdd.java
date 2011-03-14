@@ -5,6 +5,11 @@ import java.util.Date;
 
 
 public abstract class SauvegardeUnFormatPourLaBdd {
+	
+	public abstract void creerTables();
+
+	public abstract void ajouterLigne(String ligne);
+	
 	public abstract void ecrireEnTete();
 
 	public abstract void ecrireConclusion();

@@ -4,7 +4,8 @@ import java.util.Date;
 
 public class SauvegardeBddFormatXmlFichierTxt extends SauvegardeUnFormatPourLaBdd{
 
-	public static void ajouterLigne(String ligne){
+	@Override
+	public void ajouterLigne(String ligne){
 		//TODO	
 	}
 
@@ -96,6 +97,12 @@ public class SauvegardeBddFormatXmlFichierTxt extends SauvegardeUnFormatPourLaBd
 	@Override
 	public void sauverAlbum(int pk, int coord_album, Date date_sortie,
 			int pkImages, int pkAudimat, int pkWiki, Integer artiste) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void creerTables() {
 		// TODO Auto-generated method stub
 		
 	}

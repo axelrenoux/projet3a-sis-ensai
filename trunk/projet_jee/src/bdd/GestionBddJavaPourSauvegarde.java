@@ -1,8 +1,8 @@
 package bdd;
 
 import handler.sax.AlbumSearchHandler;
-import handler.sax.ArtisteHandler;
-import handler.sax.ChansonHandler;
+import handler.sax.ArtisteSearchHandler;
+import handler.sax.ChansonSearchHandler;
 
 import java.util.HashMap;
 import java.util.List;
@@ -19,8 +19,8 @@ public class GestionBddJavaPourSauvegarde {
 	SauvegardeUnFormatPourLaBdd formatSauv;
 	
 	//Les endroits où se trouvent nos données
-	private ArtisteHandler stockageArtistes;//FIXME à modifier
-	private ChansonHandler stockageChansons;//FIXME à modifier
+	private ArtisteSearchHandler stockageArtistes;//FIXME à modifier
+	private ChansonSearchHandler stockageChansons;//FIXME à modifier
 	private AlbumSearchHandler stockageAlbums;//FIXME à modifier
 	
 	//Nos données d'origine en Java
@@ -148,7 +148,7 @@ public class GestionBddJavaPourSauvegarde {
 				/*CORRESP_CHANSON_TAG(chanson INTEGER references CHANSON(cle_primaire),
 									tag INTEGER references TAG(cle_primaire))*/
 			}//endFor
-			for(Album lAlbum:laChanson.getAlbums().values()){
+			for(Album lAlbum:laChanson.getAlbums()){
 				sauver(lAlbum);
 				formatSauv.sauverChansonAlbum(clesPrimairesAlbums.get(lAlbum),
 											clesPrimairesChansons.get(laChanson));
