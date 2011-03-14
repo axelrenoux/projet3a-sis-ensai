@@ -1,34 +1,23 @@
  package bdd;
 
-import handler.sax.AlbumSearchHandler;
-import handler.sax.ArtisteSearchHandler;
-import handler.sax.ChansonSearchHandler;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import controleur.Controleur;
-
 import metier.Album;
 import metier.Artiste;
 import metier.Chanson;
 import metier.Tag;
 import metier.Wiki;
-import bdd.exceptions.CanalException;
 import bdd.exceptions.ChargementException;
 import bdd.exceptions.QueryException;
+import controleur.Controleur;
 
 public class ChargementBDDdepuisOracle extends ChargementBDD {
 	//Les endroits où charger nos données
 	private static Controleur leControleur=Controleur.getInstanceuniquecontroleur();
-	/*
-	private static ArtisteSearchHandler stockageArtistes;//FIXME à modifier
-	private static ChansonSearchHandler stockageChansons;//FIXME à modifier
-	private static AlbumSearchHandler stockageAlbums;//FIXME à modifier
-	*/
 	
 	//Nos données en Java, associées à leurs clés primaires
 	private static Map<Integer,Artiste> artistes=new HashMap<Integer,Artiste>();
@@ -77,23 +66,11 @@ public class ChargementBDDdepuisOracle extends ChargementBDD {
 									resultat.getString("resumeWiki"),
 									resultat.getString("contenuWiki"));
 				/**	public Artiste(String name, String url,
-				String imageSmall,String imageMedium,String imageLarge,
-				String imageExtraLarge,String imageMega,double listeners,
-				double playcount,ArrayList<Artiste> artistesSimilaires,
-				ArrayList<Tag> toptags,Wiki wiki)*/
-				"inu.name as name," +
-				"inu.url as url," +
-				"i.imageSmall as iS," +
-				"i.imageMedium as iMd," +
-				"i.imageLarge as iL," +
-				"i.imageExtraLarge as iEL," +
-				"i.imageMega as iMg," +
-				"aud.listeners as list," +
-				"aud.playcount as playc," +
-				"w.datepublication as dateWiki,"+
-				"w.resume as resumeWiki,"+
-				"w.contenu as contenuWiki"+
-				//XXX Modifier ici si le constructeur d'artiste est modifié
+									String imageSmall,String imageMedium,String imageLarge,
+									String imageExtraLarge,String imageMega,double listeners,
+									double playcount,ArrayList<Artiste> artistesSimilaires,
+									ArrayList<Tag> toptags,Wiki wiki)*/
+				//XXX Modifier ici si le constructeur d'Artiste est modifié
 				Artiste lArtiste=new Artiste(resultat.getString("name"),
 						resultat.getString("url"),
 						resultat.getString("iS"),
@@ -107,7 +84,7 @@ public class ChargementBDDdepuisOracle extends ChargementBDD {
 						new ArrayList<Tag>(),
 						leWiki);
 				artistes.put(resultat.getInt("clef"),lArtiste);//pour les correspondances
-				leControleur.getListeArtistes().put(lArtiste.getID(),lArtiste);//pour charger
+				leControleur.getListeArtistes().put(resultat.getString("clef"),lArtiste);//pour charger
 			}
 		} catch (SQLException e) {
 			throw new ChargementException(e);
@@ -117,11 +94,11 @@ public class ChargementBDDdepuisOracle extends ChargementBDD {
 	public static void chargerListeAlbums() throws ChargementException{
 		ResultSet resultat;
 		String recherche="SELECT DISTINCT alb.cle_primaire as clef," +
-								"inu.name as val1," +
+								"inu.name as name," +
 								"c.artiste as clefArtiste," +
-								"inu.id as val1_5," +
-								"inu.url as val2," +
-								"alb.date_sortie as val2_5,"+
+								"inu.id as id," +
+								"inu.url as url," +
+								"alb.date_sortie as datesortie,"+
 								"i.imageSmall as iS," +
 								"i.imageMedium as iMd," +
 								"i.imageLarge as iL," +
@@ -148,11 +125,17 @@ public class ChargementBDDdepuisOracle extends ChargementBDD {
 									resultat.getString("resumeWiki"),
 									resultat.getString("contenuWiki"));
 				Artiste lArtiste=artistes.get(resultat.getInt("clefArtiste"));
-				Album lAlbum=new Album(resultat.getString("val1"),
+				/**	public Album(String name, Artiste artiste, String ID, String url,Date date,
+								String imageSmall,String imageMedium,String imageLarge,
+								String imageExtraLarge,String imageMega,double listeners,
+								double playcount,ArrayList<Chanson> chansons,
+								ArrayList<Tag> toptags,Wiki wiki)*/
+				//XXX Modifier ici si le constructeur d'Album est modifié
+				Album lAlbum=new Album(resultat.getString("name"),
 						lArtiste,
-						resultat.getString("val1_5"),
-						resultat.getString("val2"),
-						resultat.getDate("val2_5"),
+						resultat.getString("id"),
+						resultat.getString("url"),
+						resultat.getDate("date_sortie"),
 						resultat.getString("iS"),
 						resultat.getString("iMd"),
 						resultat.getString("iL"),
@@ -164,7 +147,7 @@ public class ChargementBDDdepuisOracle extends ChargementBDD {
 						new ArrayList<Tag>(),
 						leWiki);
 				albums.put(resultat.getInt("clef"),lAlbum);//pour les correspondances
-				stockageAlbums.getLstAlbums().add(lAlbum);//pour charger
+				leControleur.getListeAlbums().put(resultat.getString("clef"),lAlbum);//pour charger
 			}
 		} catch (SQLException e) {
 			throw new ChargementException(e);
@@ -174,9 +157,9 @@ public class ChargementBDDdepuisOracle extends ChargementBDD {
 	public static void chargerListeChansons() throws ChargementException{
 		ResultSet resultat;
 		String recherche="SELECT DISTINCT c.cle_primaire as clef," +
-								"inu.name as val1," +
-								"inu.url as val2," +
-								"c.duree as val2_5,"+
+								"inu.name as name," +
+								"inu.url as url," +
+								"c.duree as duree"+
 								"i.imageSmall as iS," +
 								"i.imageMedium as iMd," +
 								"i.imageLarge as iL," +
@@ -204,9 +187,14 @@ public class ChargementBDDdepuisOracle extends ChargementBDD {
 									resultat.getString("resumeWiki"),
 									resultat.getString("contenuWiki"));
 				Artiste lArtiste=artistes.get(resultat.getString("clefArtiste"));
-				Chanson laChanson=new Chanson(resultat.getString("val1"),
-						resultat.getDouble("val2_5"),
-						resultat.getString("val2"),
+				/**	public Chanson(String name, Double duree, String url,
+						Artiste artiste,double listeners,double playcount,
+						ArrayList<Album> albums,
+						ArrayList<Tag> toptags,Wiki wiki) */
+				//XXX Modifier ici si le constructeur de Chanson est modifié
+				Chanson laChanson=new Chanson(resultat.getString("name"),
+						resultat.getDouble("duree"),
+						resultat.getString("url"),
 						lArtiste,
 						resultat.getDouble("list"),
 						resultat.getDouble("playc"),
@@ -214,7 +202,7 @@ public class ChargementBDDdepuisOracle extends ChargementBDD {
 						new ArrayList<Tag>(),
 						leWiki);
 				chansons.put(resultat.getInt("clef"),laChanson);//pour les correspondances
-				stockageChansons.getLstChanson().add(laChanson);//pour charger
+				leControleur.getListeChansons().put(resultat.getString("clef"),laChanson);//pour charger
 			}
 		} catch (SQLException e) {
 			throw new ChargementException(e);
@@ -224,10 +212,10 @@ public class ChargementBDDdepuisOracle extends ChargementBDD {
 	public static void chargerListeTags() throws ChargementException{
 		ResultSet resultat;
 		String recherche="SELECT DISTINCT t.cle_primaire as clef," +
-								"inu.name as val1," +
-								"inu.url as val2," +
-								"t.reach as iS," +
-								"t.taggings as iMd," +
+								"inu.name as name," +
+								"inu.url as url," +
+								"t.reach as reach," +
+								"t.taggings as taggings," +
 								"w.datepublication as dateWiki,"+
 								"w.resume as resumeWiki,"+
 								"w.contenu as contenuWiki"+
@@ -244,10 +232,13 @@ public class ChargementBDDdepuisOracle extends ChargementBDD {
 				Wiki leWiki=new Wiki(resultat.getDate("dateWiki"),
 									resultat.getString("resumeWiki"),
 									resultat.getString("contenuWiki"));
-				Tag leTag=new Tag(resultat.getString("val1"),
-									resultat.getString("val2"),
-									resultat.getDouble("iS"),
-									resultat.getDouble("iMd"),
+				/**	public Tag(String name, String url,
+							double reach,double tagging,Wiki wiki) */
+				//XXX Modifier ici si le constructeur de Tag est modifié
+				Tag leTag=new Tag(resultat.getString("name"),
+									resultat.getString("url"),
+									resultat.getDouble("reach"),
+									resultat.getDouble("taggings"),
 									leWiki);
 				tags.put(resultat.getInt("clef"),leTag);//pour les correspondances
 			}

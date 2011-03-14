@@ -1,9 +1,5 @@
 package bdd;
 
-import handler.sax.AlbumSearchHandler;
-import handler.sax.ArtisteSearchHandler;
-import handler.sax.ChansonSearchHandler;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,20 +9,16 @@ import metier.Artiste;
 import metier.Chanson;
 import metier.Tag;
 import metier.Wiki;
+import controleur.Controleur;
 
 public class GestionBddJavaPourSauvegarde {
 	//La classe gérant le format sous lequel on va enregistrer la BDD
 	private static SauvegardeUnFormatPourLaBdd formatSauv;
 	
-	//Les endroits où se trouvent nos données
-	private static ArtisteSearchHandler stockageArtistes;//FIXME à modifier
-	private static ChansonSearchHandler stockageChansons;//FIXME à modifier
-	private static AlbumSearchHandler stockageAlbums;//FIXME à modifier
-	
 	//Nos données d'origine en Java
-	private static List<Artiste> artistes=stockageArtistes.getLstArtistes();
-	private static List<Chanson> chansons=stockageChansons.getLstChanson();
-	private static List<Album> albums=stockageAlbums.getLstAlbums();
+	private static List<Artiste> artistes=(List<Artiste>) Controleur.getInstanceuniquecontroleur().getListeArtistes().values();
+	private static List<Chanson> chansons=(List<Chanson>) Controleur.getInstanceuniquecontroleur().getListeChansons().values();
+	private static List<Album> albums=(List<Album>) Controleur.getInstanceuniquecontroleur().getListeAlbums().values();
 	
 	//Des maps de clés primaire : savoir si on a déjà entré un artiste(etc...), si oui récupérer sa clé primaire, sinon le créer
 	private static Map<Artiste,Integer> clesPrimairesArtistes=new HashMap<Artiste,Integer>();
