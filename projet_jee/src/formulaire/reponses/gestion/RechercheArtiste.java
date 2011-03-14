@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import metier.Album;
 import metier.Artiste;
 
-public class RechercheArtist extends Recherche {
+public class RechercheArtiste extends Recherche {
 	
 	/********************************************************************/
 	/*************************      attributs       *********************/
@@ -30,6 +30,10 @@ public class RechercheArtist extends Recherche {
 		resultats.add(a2);
 		
 		return resultats;
+	}
+	
+	public String retournerTypeAffichage(){
+		return "artiste";
 	}
 
 }

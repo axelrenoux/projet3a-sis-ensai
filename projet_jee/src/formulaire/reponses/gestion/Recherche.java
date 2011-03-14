@@ -21,6 +21,10 @@ public abstract class Recherche {
 	public ArrayList lancerRecherche() {
 		return null;
 	}
+	
+	public String retournerTypeAffichage(){
+		return null;
+	}
 
 
 

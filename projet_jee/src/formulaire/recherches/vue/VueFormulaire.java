@@ -77,9 +77,10 @@ import formulaire.reponses.gestion.GestionFormulaire;
 			if(success){
 				//on attribue les resultats à la page de resultats
 				vueAffichageResultat.setResultats(gestionFormulaire.lancerRecherche());
-				vueAffichageResultat.setType("artiste");
+				vueAffichageResultat.setType(gestionFormulaire.retournerTypeAffichage());
+				System.out.println(vueAffichageResultat.getType());
 				//return "confirmation";
-				return "success";
+				return vueAffichageResultat.getType();
 			}
 			else{
 				addError();

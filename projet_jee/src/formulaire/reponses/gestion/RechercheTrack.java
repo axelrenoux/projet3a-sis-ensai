@@ -31,4 +31,8 @@ public class RechercheTrack extends Recherche {
 		return resultats;
 		
 	}
+	
+	public String retournerTypeAffichage(){
+		return "chanson";
+	}
 }
