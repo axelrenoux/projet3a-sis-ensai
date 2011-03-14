@@ -1,5 +1,6 @@
 package recuperationDonnees;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Map.Entry;
 
@@ -274,6 +275,16 @@ public class RecupDonnees {
 			System.out.println(currentEntry.getKey() + " " + currentEntry.getValue());
 		}
 		
+		
+		System.out.println("***********************************************");
+		System.out.println("***** affichage des date  ******");
+		System.out.println("***********************************************");
+		System.out.println("nb dates " + Controleur.getInstanceuniquecontroleur().getListeDate().size());
+		for(Entry<String, Date> currentEntry : Controleur.getInstanceuniquecontroleur().getListeDate().entrySet()){
+			System.out.println(currentEntry.getKey() + " " + currentEntry.getValue());
+		}
+		
+
 	}
 	
 

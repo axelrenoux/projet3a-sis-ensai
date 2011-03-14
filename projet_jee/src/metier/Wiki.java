@@ -1,7 +1,7 @@
  package metier;
 
+import java.sql.Date;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 
 public class Wiki {
@@ -71,10 +71,8 @@ public class Wiki {
 	 * TODO à coder
 	 * @param datePublication
 	 */
-	public void setDatePublication(String datePublication) {
-		//transformer en date
-		//Date d = new Date(datePublication);
-		//this.datePublication = d;
+	public void setDatePublication(Date datePublication) {
+		this.datePublication = datePublication;
 	}
 
 	public String getResume() {
