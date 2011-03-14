@@ -1,5 +1,9 @@
 package main;
 
+import bdd.ChargementBDDOracleDepuisTxt;
+import bdd.ChargementBDDdepuisOracle;
+import bdd.GestionBddJavaPourSauvegarde;
+import bdd.SauvegardeBddFormatOracle;
 import controleur.Controleur;
 import exceptions.ExceptionMiseAjour;
 import metier.Album;
@@ -50,6 +54,7 @@ public class main {
 		t.setUrl("http://www.last.fm/tag/post-industrial");
 		Controleur.getInstanceuniquecontroleur().ajouter(t);*/
 		
+		
 		RecupDonnees recup = new RecupDonnees();		
 		//recup.recupererDonneesChansons();
 		recup.recupererDonneesArtistes();
@@ -62,7 +67,15 @@ public class main {
 		//attention à l'ordre TODO
 		
 		
-		
+		/*	POUR TESTER LA GESTION BDD ORACLE
+		 */ 
+		/*System.out.println("Sauvegarder nos classes java sous Oracle en mettant à jour le fichier txt");
+		GestionBddJavaPourSauvegarde.decomposerAvantSauvegardeGereePar(new SauvegardeBddFormatOracle());
+		System.out.println("Charger sous Java nos données enregistrées sous Oracle");
+		ChargementBDDdepuisOracle.charger();
+		System.out.println("Charger sous Oracle à partir du fichier txt, puis charger sous Java les données ainsi enregistrées sous Oracle");
+		ChargementBDDOracleDepuisTxt.charger();
+		ChargementBDDdepuisOracle.charger();*/
 		
 	}
 

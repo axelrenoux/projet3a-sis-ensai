@@ -1,0 +1,26 @@
+drop table ARTISTES_SIMILAIRES
+drop table CORRESP_ARTISTE_TAG
+drop table CORRESP_CHANSON_TAG
+drop table CORRESP_ALBUM_TAG
+drop table CORRESP_CHANSON_ALBUM
+drop table CHANSON
+drop table ALBUM
+drop table TAG
+drop table ARTISTE
+drop table AUDIMAT
+drop table IMAGES
+drop table WIKI
+drop table ID_NAME_URL
+create table ID_NAME_URL(cle_primaire INTEGER,id VARCHAR2(256),name VARCHAR2(128),url VARCHAR2(256),PRIMARY KEY(cle_primaire))
+create table AUDIMAT(cle_primaire INTEGER,listeners INTEGER,playcount INTEGER,PRIMARY KEY(cle_primaire))
+create table IMAGES(cle_primaire INTEGER,imageSmall VARCHAR2(256),imageMedium VARCHAR2(256),imageLarge VARCHAR2(256),imageExtraLarge VARCHAR2(256),imageMega VARCHAR2(256),PRIMARY KEY(cle_primaire))
+create table WIKI(cle_primaire INTEGER,id_wiki VARCHAR2(256),datePublication date,resume VARCHAR2(512),contenu VARCHAR2(2048),PRIMARY KEY(cle_primaire))
+create table ARTISTE(cle_primaire INTEGER,id_name_url INTEGER references ID_NAME_URL(cle_primaire),images INTEGER references IMAGES(cle_primaire),audimat INTEGER references AUDIMAT(cle_primaire),wiki INTEGER references WIKI(cle_primaire),PRIMARY KEY(cle_primaire))
+create table CHANSON(cle_primaire INTEGER,id_name_url INTEGER references ID_NAME_URL(cle_primaire),duree FLOAT,images INTEGER references IMAGES(cle_primaire),audimat INTEGER references AUDIMAT(cle_primaire),wiki INTEGER references WIKI(cle_primaire),artiste INTEGER references ARTISTE(cle_primaire),PRIMARY KEY(cle_primaire))
+create table ALBUM(cle_primaire INTEGER,id_name_url INTEGER references ID_NAME_URL(cle_primaire),date_sortie date,images INTEGER references IMAGES(cle_primaire),audimat INTEGER references AUDIMAT(cle_primaire),wiki INTEGER references WIKI(cle_primaire),artiste INTEGER references ARTISTE(cle_primaire),PRIMARY KEY(cle_primaire))
+create table TAG(cle_primaire INTEGER,id_name_url INTEGER references ID_NAME_URL(cle_primaire),reach FLOAT,taggings FLOAT,wiki INTEGER references WIKI(cle_primaire),PRIMARY KEY(cle_primaire))
+create table ARTISTES_SIMILAIRES(artiste1 INTEGER references ARTISTE(cle_primaire),artiste2 INTEGER references ARTISTE(cle_primaire))
+create table CORRESP_ARTISTE_TAG(artiste INTEGER references ARTISTE(cle_primaire),tag INTEGER references TAG(cle_primaire))
+create table CORRESP_CHANSON_TAG(chanson INTEGER references CHANSON(cle_primaire),tag INTEGER references TAG(cle_primaire))
+create table CORRESP_ALBUM_TAG(tag INTEGER references TAG(cle_primaire),album INTEGER references ALBUM(cle_primaire))
+create table CORRESP_CHANSON_ALBUM(album INTEGER references ALBUM(cle_primaire),chanson INTEGER references CHANSON(cle_primaire))
