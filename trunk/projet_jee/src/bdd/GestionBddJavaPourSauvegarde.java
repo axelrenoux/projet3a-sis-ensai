@@ -1,5 +1,6 @@
 package bdd;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,9 +17,9 @@ public class GestionBddJavaPourSauvegarde {
 	private static SauvegardeUnFormatPourLaBdd formatSauv;
 	
 	//Nos données d'origine en Java
-	private static List<Artiste> artistes=(List<Artiste>) Controleur.getInstanceuniquecontroleur().getListeArtistes().values();
-	private static List<Chanson> chansons=(List<Chanson>) Controleur.getInstanceuniquecontroleur().getListeChansons().values();
-	private static List<Album> albums=(List<Album>) Controleur.getInstanceuniquecontroleur().getListeAlbums().values();
+	private static List<Artiste> artistes=new ArrayList<Artiste>();
+	private static List<Chanson> chansons=new ArrayList<Chanson>();
+	private static List<Album> albums=new ArrayList<Album>();
 	
 	//Des maps de clés primaire : savoir si on a déjà entré un artiste(etc...), si oui récupérer sa clé primaire, sinon le créer
 	private static Map<Artiste,Integer> clesPrimairesArtistes=new HashMap<Artiste,Integer>();
@@ -33,7 +34,20 @@ public class GestionBddJavaPourSauvegarde {
 		pk=pk+1;
 	}
 	
+	private static void init(){
+		for(Artiste a:Controleur.getInstanceuniquecontroleur().getListeArtistes().values()){
+			artistes.add(a);
+		}
+		for(Album a:Controleur.getInstanceuniquecontroleur().getListeAlbums().values()){
+			albums.add(a);
+		}
+		for(Chanson a:Controleur.getInstanceuniquecontroleur().getListeChansons().values()){
+			chansons.add(a);
+		}
+	}
+	
 	public static void decomposerAvantSauvegardeGereePar(SauvegardeUnFormatPourLaBdd gestionnaireDeFormatdeSauvegarde){
+		init();
 		formatSauv=gestionnaireDeFormatdeSauvegarde;
 		formatSauv.ecrireEnTete();
 		for(Artiste lArtiste:artistes){//Pour chaque artiste
