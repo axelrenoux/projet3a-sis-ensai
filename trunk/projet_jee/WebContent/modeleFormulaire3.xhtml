@@ -1,0 +1,27 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+         xmlns:ui="http://java.sun.com/jsf/facelets"
+         xmlns:h="http://java.sun.com/jsf/html"
+         xmlns:p="http://primefaces.prime.com.tr/ui">
+	<h:head>
+         <title><ui:insert name="title">Accueil</ui:insert></title>
+         <link type = "text/css" rel="stylesheet" href="/projet_jee/css/cupertino/skin.css"/>
+	</h:head>
+	<h:body>		
+		<p:layout fullPage="true">                            
+			<p:layoutUnit id="top"  style="border:0;" position="top" resizable="false" height="100" >                          
+			
+				<h:outputText value="Trouver de la musique" style="font-size:36px;position:absolute;top:20px;left:150px;"/>                  
+			
+			</p:layoutUnit>                                    
+			<p:layoutUnit id="center" position="center" style="text-align:center;" scrollable="true"> 
+				<table>
+					<tr>
+						<td width="100%">
+							<ui:insert name="contenu"/>
+						</td>
+					</tr>
+				</table>
+			</p:layoutUnit>
+		</p:layout>
+	</h:body>
+</html>

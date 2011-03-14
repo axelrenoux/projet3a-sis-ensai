@@ -6,22 +6,25 @@
          <title><ui:insert name="title">Accueil</ui:insert></title>
          <link type = "text/css" rel="stylesheet" href="/projet_jee/css/cupertino/skin.css"/>
 	</h:head>
-	<h:body>		
-		<p:layout fullPage="true">                            
-			<p:layoutUnit id="top"  style="border:0;" position="top" resizable="false" height="100" >                          
-			
-				<h:outputText value="Trouver de la musique" style="font-size:36px;position:absolute;top:20px;left:150px;"/>                  
-			
-			</p:layoutUnit>                                    
-			<p:layoutUnit id="center" position="center" style="text-align:center;" scrollable="true"> 
-				<table>
-					<tr>
-						<td width="100%">
-							<ui:insert name="contenu"/>
-						</td>
-					</tr>
-				</table>
-			</p:layoutUnit>
-		</p:layout>
+	<h:body> 
+		<table style="height: 100%; width: 100%" >
+			<tr>
+				<td  style = "height:80px;" >
+					<h:panelGrid columns="3" width="100%" > 
+						<p:graphicImage styleClass="left" width="120px" weight="120px" value = "/logoEnsai.jpg"/>
+						<p:panel>
+							<h:outputLabel  style="color:#38ACEC; font-size: 28; text-align:center"> Trouver de la musique</h:outputLabel>  
+						</p:panel>
+						<p:graphicImage styleClass="right" width="120px" weight="120px" value = "/music.jpg"/>
+					</h:panelGrid>
+ 				</td>
+			</tr>
+			<tr>
+				<td width="100%">
+					<ui:insert name="contenu"/>
+				</td>
+			</tr>
+		</table>
 	</h:body>
 </html>
+

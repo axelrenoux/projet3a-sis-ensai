@@ -145,6 +145,7 @@ public class Artiste {
 		+ " url " +  url+ "\n "
 		+ "listeners "+ listeners+ "\n "
 		+ "playcount " + playcount + "\n "
+		+ "image small " + imageSmall + "\n "
 		+ "image mega " + imageMega + "\n ";
 		
 		try{
