@@ -12,6 +12,10 @@ public class SauvegardeBddFormatOracle extends SauvegardeUnFormatPourLaBdd{
 	private String requeteSQL;
 	private PrintWriter fluxSortie;
 
+	public SauvegardeBddFormatOracle(){
+		super();
+	}
+	
 	@Override
 	public void ecrireEnTete() {
 		try {fluxSortie = new PrintWriter(new FileWriter("requetesSQL.txt"));} 

@@ -16,32 +16,32 @@ import metier.Wiki;
 
 public class GestionBddJavaPourSauvegarde {
 	//La classe gérant le format sous lequel on va enregistrer la BDD
-	SauvegardeUnFormatPourLaBdd formatSauv;
+	private static SauvegardeUnFormatPourLaBdd formatSauv;
 	
 	//Les endroits où se trouvent nos données
-	private ArtisteSearchHandler stockageArtistes;//FIXME à modifier
-	private ChansonSearchHandler stockageChansons;//FIXME à modifier
-	private AlbumSearchHandler stockageAlbums;//FIXME à modifier
+	private static ArtisteSearchHandler stockageArtistes;//FIXME à modifier
+	private static ChansonSearchHandler stockageChansons;//FIXME à modifier
+	private static AlbumSearchHandler stockageAlbums;//FIXME à modifier
 	
 	//Nos données d'origine en Java
-	List<Artiste> artistes=stockageArtistes.getLstArtistes();
-	List<Chanson> chansons=stockageChansons.getLstChanson();
-	List<Album> albums=stockageAlbums.getLstAlbums();
+	private static List<Artiste> artistes=stockageArtistes.getLstArtistes();
+	private static List<Chanson> chansons=stockageChansons.getLstChanson();
+	private static List<Album> albums=stockageAlbums.getLstAlbums();
 	
 	//Des maps de clés primaire : savoir si on a déjà entré un artiste(etc...), si oui récupérer sa clé primaire, sinon le créer
-	Map<Artiste,Integer> clesPrimairesArtistes=new HashMap<Artiste,Integer>();
-	Map<Album,Integer> clesPrimairesAlbums=new HashMap<Album,Integer>();
-	Map<Chanson, Integer> clesPrimairesChansons=new HashMap<Chanson,Integer>();
-	Map<Tag, Integer> clesPrimairesTags=new HashMap<Tag,Integer>();
+	private static Map<Artiste,Integer> clesPrimairesArtistes=new HashMap<Artiste,Integer>();
+	private static Map<Album,Integer> clesPrimairesAlbums=new HashMap<Album,Integer>();
+	private static Map<Chanson, Integer> clesPrimairesChansons=new HashMap<Chanson,Integer>();
+	private static Map<Tag, Integer> clesPrimairesTags=new HashMap<Tag,Integer>();
 	
 	//Variable servant à incrémenter les clés primaires, pour s'assurer qu'elles seront toutes différentes
-	private int pk=0;
+	private static int pk=0;
 	
-	private void incrementerClesPrimaires() {
+	private static void incrementerClesPrimaires() {
 		pk=pk+1;
 	}
 	
-	public void decomposerAvantSauvegardeGereePar(SauvegardeUnFormatPourLaBdd gestionnaireDeFormatdeSauvegarde){
+	public static void decomposerAvantSauvegardeGereePar(SauvegardeUnFormatPourLaBdd gestionnaireDeFormatdeSauvegarde){
 		formatSauv=gestionnaireDeFormatdeSauvegarde;
 		formatSauv.ecrireEnTete();
 		for(Artiste lArtiste:artistes){//Pour chaque artiste
@@ -56,7 +56,7 @@ public class GestionBddJavaPourSauvegarde {
 		formatSauv.ecrireConclusion();
 	}
 
-	private void sauver(Chanson laChanson) {
+	private static void sauver(Chanson laChanson) {
 		if(!clesPrimairesChansons.containsKey(laChanson)){//Pour eviter les doublons
 			
 			//On sauvegarde le wiki
@@ -159,7 +159,7 @@ public class GestionBddJavaPourSauvegarde {
 	}//finSauver(Chanson)
 	
 
-	private void sauver(Artiste lArtiste){
+	private static void sauver(Artiste lArtiste){
 		if(!clesPrimairesArtistes.containsKey(lArtiste)){//Pour eviter les doublons
 			//On sauvegarde le wiki
 			Wiki leWiki=lArtiste.getWiki();
@@ -255,7 +255,7 @@ public class GestionBddJavaPourSauvegarde {
 		}//endIf
 	}//endSauver(Artiste)
 
-	private void sauver(Tag leTag) {
+	private static void sauver(Tag leTag) {
 		if(!clesPrimairesTags.containsKey(leTag)){//Pour eviter les doublons
 			//On sauvegarde le wiki
 			Wiki leWiki=leTag.getWiki();
@@ -305,7 +305,7 @@ public class GestionBddJavaPourSauvegarde {
 		}//finIf
 	}//finSauver(Tag)
 	
-	private void sauver(Album lAlbum) {
+	private static void sauver(Album lAlbum) {
 		if(!clesPrimairesAlbums.containsKey(lAlbum)){//Pour eviter les doublons
 			//On sauvegarde le wiki
 			Wiki leWiki=lAlbum.getWiki();

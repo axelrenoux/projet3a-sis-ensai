@@ -4,6 +4,10 @@ import java.util.Date;
 
 public class SauvegardeBddFormatXmlFichierTxt extends SauvegardeUnFormatPourLaBdd{
 
+	public SauvegardeBddFormatXmlFichierTxt(){
+		super();
+	}
+	
 	@Override
 	public void ajouterLigne(String ligne){
 		//TODO	
