@@ -1,4 +1,4 @@
-package formulaire.recherche.controleur;
+package formulaire.recherche.controleurOLD;
 
 public abstract class Recherche {
 	public String getAdresseRequete(String type, String motClef){
