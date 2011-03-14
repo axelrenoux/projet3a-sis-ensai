@@ -3,6 +3,7 @@
  */
 package handler.sax;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -13,6 +14,8 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import controleur.Controleur;
+import controleur.Utilitaire;
+import exceptions.ExceptionDate;
 import exceptions.ExceptionMiseAjour;
 
 import metier.Album;
@@ -150,7 +153,16 @@ public class TagInfoHandler extends DefaultHandler{
 		}else if(inTaggings){
 			tag.setTagging(Double.parseDouble(lecture));
 		}else if(inPublished){
-			currentWiki.setDatePublication(lecture);	 	
+			Date d;
+			try {
+				d = Utilitaire.getInstanceunique().
+					transformerEnDateWiki(lecture);
+				currentWiki.setDatePublication(d);
+			} catch (ExceptionDate e) {
+				Controleur.getInstanceuniquecontroleur().
+				ajouterProbleme(e.getTitre()+Controleur.getInstanceuniquecontroleur().
+						getListeProblemesRencontres().size(), e.getMessage());
+			}	 	
 		}else if(inSummary){
 			currentWiki.setResume(lecture);
 		}else if(inContent){

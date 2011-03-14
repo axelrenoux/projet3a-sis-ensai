@@ -3,6 +3,7 @@
  */
 package handler.sax;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -15,6 +16,8 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import controleur.Controleur;
+import controleur.Utilitaire;
+import exceptions.ExceptionDate;
 import exceptions.ExceptionMiseAjour;
 
 import metier.Album;
@@ -89,6 +92,7 @@ public class AlbumInfoHandler extends DefaultHandler{
 	private boolean inAlbum;
 	private boolean inListeners;
 	private boolean inPlaycount;
+	private boolean inReleasedate;
 	private boolean inTracks;
 	private boolean inTrack;
 	private boolean inNameChanson;
@@ -143,7 +147,9 @@ public class AlbumInfoHandler extends DefaultHandler{
 		}else if(qName.equals("listeners")){
 			inListeners = true;	
 		}else if(qName.equals("playcount")){
-			inPlaycount = true;	
+			inPlaycount = true;
+		}else if(qName.equals("releasedate")){
+			inReleasedate = true;	
 		}else if(qName.equals("tracks")){
 			listeChansons = new ArrayList<Chanson>();
 			inTracks = true;	
@@ -204,6 +210,8 @@ public class AlbumInfoHandler extends DefaultHandler{
 			inListeners = false;	
 		}else if(qName.equals("playcount")){
 			inPlaycount = false;	
+		}else if(qName.equals("releasedate")){
+			inReleasedate = false;	
 		}else if(qName.equals("tracks")){
 			inTracks = false;	
 			album.setChansons(listeChansons);
@@ -263,6 +271,17 @@ public class AlbumInfoHandler extends DefaultHandler{
 			album.setListeners(Double.parseDouble(lecture));
 		}else if(inPlaycount){
 			album.setPlaycount(Double.parseDouble(lecture)); 
+		}else if(inReleasedate){
+			Date d;
+			try {
+				d = Utilitaire.getInstanceunique().
+					transformerEnDate(lecture);
+				album.setDate(d);
+			} catch (ExceptionDate e) {
+				Controleur.getInstanceuniquecontroleur().
+				ajouterProbleme(e.getTitre()+Controleur.getInstanceuniquecontroleur().
+						getListeProblemesRencontres().size(), e.getMessage());
+			} 
 		}else if(inNameChanson){
 			currentChanson.setName(lecture);
 		}else if(inDuration){
@@ -278,7 +297,16 @@ public class AlbumInfoHandler extends DefaultHandler{
 		}else if(inUrlTag){
 			  currentTag.setUrl(lecture);
 		}else if(inPublished){
-			currentWiki.setDatePublication(lecture);	 	
+			Date d;
+			try {
+				d = Utilitaire.getInstanceunique().
+					transformerEnDateWiki(lecture);
+				currentWiki.setDatePublication(d);
+			} catch (ExceptionDate e) {
+				Controleur.getInstanceuniquecontroleur().
+				ajouterProbleme(e.getTitre()+Controleur.getInstanceuniquecontroleur().
+						getListeProblemesRencontres().size(), e.getMessage());
+			} 
 		}else if(inSummary){
 			 currentWiki.setResume(lecture);
 		}else if(inContent){
@@ -323,7 +351,10 @@ public class AlbumInfoHandler extends DefaultHandler{
 				Controleur.getInstanceuniquecontroleur().
 				getListeArtistes().get(currentArtisteChanson.getName()).
 				mettreAjour(currentArtisteChanson);
-			} catch (ExceptionMiseAjour e) {}
+			} catch (ExceptionMiseAjour e) {
+				Controleur.getInstanceuniquecontroleur().
+				ajouterProbleme(e.getTitre(),e.getMessage());
+			}
 			//on ajoute l'artiste deja existant, à la chanson de l'album
 			currentChanson.setArtiste(Controleur.getInstanceuniquecontroleur().
 					getListeArtistes().get(currentArtisteChanson.getName()));
@@ -356,7 +387,10 @@ public class AlbumInfoHandler extends DefaultHandler{
 				Controleur.getInstanceuniquecontroleur().
 				getListeChansons().get(currentChanson.getUrl()).
 				mettreAjour(currentChanson);
-			} catch (ExceptionMiseAjour e) {}
+			} catch (ExceptionMiseAjour e) {
+				Controleur.getInstanceuniquecontroleur().
+				ajouterProbleme(e.getTitre(),e.getMessage());
+			}
 			//on ajoute la chanson deja existante à la liste 
 			//de chansons de l'album
 			listeChansons.add(Controleur.getInstanceuniquecontroleur().
@@ -395,6 +429,7 @@ public class AlbumInfoHandler extends DefaultHandler{
 			Controleur.getInstanceuniquecontroleur().ajouter(currentTag);
 		}
 	}
+
 
 	
 	/********************************************************************/

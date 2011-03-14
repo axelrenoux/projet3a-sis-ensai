@@ -206,7 +206,10 @@ public class AlbumSearchHandler extends DefaultHandler{
 				Controleur.getInstanceuniquecontroleur().
 				getListeArtistes().get(currentArtist.getName()).
 				mettreAjour(currentArtist);
-			} catch (ExceptionMiseAjour e) {}
+			} catch (ExceptionMiseAjour e) {
+				Controleur.getInstanceuniquecontroleur().
+				ajouterProbleme(e.getTitre(),e.getMessage());				
+			}
 			//on ajoute l'artiste deja existant, à l'album
 			currentAlbum.setArtiste(Controleur.getInstanceuniquecontroleur().
 					getListeArtistes().get(currentArtist.getName()));
