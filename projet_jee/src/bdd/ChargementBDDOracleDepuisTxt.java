@@ -8,10 +8,10 @@ import bdd.exceptions.ConnectionException;
 import bdd.exceptions.UpdateException;
 
 public abstract class ChargementBDDOracleDepuisTxt {
-	private String requeteSQL;
-	private BufferedReader fluxEntree;
+	private static String requeteSQL;
+	private static BufferedReader fluxEntree;
 	
-	public void charger(){
+	public static void charger(){
 		try {fluxEntree = new BufferedReader(new FileReader("requetesSQL.txt"));} 
 		catch (IOException e) {e.printStackTrace();}
 		try {SQLViaJDBC.connecter();}

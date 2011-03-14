@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import controleur.Controleur;
+
 import metier.Album;
 import metier.Artiste;
 import metier.Chanson;
@@ -21,39 +23,44 @@ import bdd.exceptions.QueryException;
 
 public class ChargementBDDdepuisOracle extends ChargementBDD {
 	//Les endroits où charger nos données
-	private ArtisteSearchHandler stockageArtistes;//FIXME à modifier
-	private ChansonSearchHandler stockageChansons;//FIXME à modifier
-	private AlbumSearchHandler stockageAlbums;//FIXME à modifier
+	private static Controleur leControleur=Controleur.getInstanceuniquecontroleur();
+	/*
+	private static ArtisteSearchHandler stockageArtistes;//FIXME à modifier
+	private static ChansonSearchHandler stockageChansons;//FIXME à modifier
+	private static AlbumSearchHandler stockageAlbums;//FIXME à modifier
+	*/
 	
 	//Nos données en Java, associées à leurs clés primaires
-	private Map<Integer,Artiste> artistes=new HashMap<Integer,Artiste>();
-	private Map<Integer,Chanson> chansons=new HashMap<Integer,Chanson>();
-	private Map<Integer,Album> albums=new HashMap<Integer,Album>();
-	private Map<Integer,Tag> tags=new HashMap<Integer,Tag>();
+	private static Map<Integer,Artiste> artistes=new HashMap<Integer,Artiste>();
+	private static Map<Integer,Chanson> chansons=new HashMap<Integer,Chanson>();
+	private static Map<Integer,Album> albums=new HashMap<Integer,Album>();
+	private static Map<Integer,Tag> tags=new HashMap<Integer,Tag>();
 
-	public void charger() throws CanalException, ChargementException {
-		chargerListeTags();
-		chargerListeArtistes();
-		chargerListeAlbums();
-		chargerListeChansons();
-		chargerCorrespondances();
+	public static void charger(){
+			try {
+				chargerListeTags();
+				chargerListeArtistes();
+				chargerListeAlbums();
+				chargerListeChansons();
+				chargerCorrespondances();
+			} catch (ChargementException e) {e.printStackTrace();}
 	}
 
-	public void chargerListeArtistes() throws ChargementException{
+	public static void chargerListeArtistes() throws ChargementException{
 		ResultSet resultat;
 		String recherche="SELECT DISTINCT art.cle_primaire as clef," +
-								"inu.name as val1," +
-								"inu.url as val2," +
-								"i.imageSmall as val3," +
-								"i.imageMedium as val4," +
-								"i.imageLarge as val5," +
-								"i.imageExtraLarge as val6," +
-								"i.imageMega as val7," +
-								"aud.listeners as val8," +
-								"aud.playcount as val9," +
-								"w.datepublication as val12,"+
-								"w.resume as val13,"+
-								"w.contenu as val14"+
+								"inu.name as name," +
+								"inu.url as url," +
+								"i.imageSmall as iS," +
+								"i.imageMedium as iMd," +
+								"i.imageLarge as iL," +
+								"i.imageExtraLarge as iEL," +
+								"i.imageMega as iMg," +
+								"aud.listeners as list," +
+								"aud.playcount as playc," +
+								"w.datepublication as dateWiki,"+
+								"w.resume as resumeWiki,"+
+								"w.contenu as contenuWiki"+
 				"FROM ARTISTE as art, WIKI as w, IMAGES as i, AUDIMAT as aud, ID_NAME_URL as inu"+
 				"WHERE(art.id_name_url=inu.cle_primaire" +
 					"and art.images=i.cle_primaire" +
@@ -66,35 +73,48 @@ public class ChargementBDDdepuisOracle extends ChargementBDD {
 		}
 		try {
 			while(resultat.next()){
-				Wiki leWiki=new Wiki(resultat.getDate("val12"),
-									resultat.getString("val13"),
-									resultat.getString("val14"));
-				/**Artiste(String name, String url,
-					String imageSmall,String imageMedium,String imageLarge,
-					String imageExtraLarge,String imageMega,double listeners,
-					double playcount,ArrayList<Artiste> artistesSimilaires,
-					ArrayList<Tag> toptags,Wiki wiki)*/
-				Artiste lArtiste=new Artiste(resultat.getString("val1"),
-						resultat.getString("val2"),
-						resultat.getString("val3"),
-						resultat.getString("val4"),
-						resultat.getString("val5"),
-						resultat.getString("val6"),
-						resultat.getString("val7"),
-						resultat.getDouble("val8"),
-						resultat.getDouble("val9"),
+				Wiki leWiki=new Wiki(resultat.getDate("dateWiki"),
+									resultat.getString("resumeWiki"),
+									resultat.getString("contenuWiki"));
+				/**	public Artiste(String name, String url,
+				String imageSmall,String imageMedium,String imageLarge,
+				String imageExtraLarge,String imageMega,double listeners,
+				double playcount,ArrayList<Artiste> artistesSimilaires,
+				ArrayList<Tag> toptags,Wiki wiki)*/
+				"inu.name as name," +
+				"inu.url as url," +
+				"i.imageSmall as iS," +
+				"i.imageMedium as iMd," +
+				"i.imageLarge as iL," +
+				"i.imageExtraLarge as iEL," +
+				"i.imageMega as iMg," +
+				"aud.listeners as list," +
+				"aud.playcount as playc," +
+				"w.datepublication as dateWiki,"+
+				"w.resume as resumeWiki,"+
+				"w.contenu as contenuWiki"+
+				//XXX Modifier ici si le constructeur d'artiste est modifié
+				Artiste lArtiste=new Artiste(resultat.getString("name"),
+						resultat.getString("url"),
+						resultat.getString("iS"),
+						resultat.getString("iMd"),
+						resultat.getString("iL"),
+						resultat.getString("iEL"),
+						resultat.getString("iMg"),
+						resultat.getDouble("list"),
+						resultat.getDouble("playc"),
 						new ArrayList<Artiste>(),
 						new ArrayList<Tag>(),
 						leWiki);
 				artistes.put(resultat.getInt("clef"),lArtiste);//pour les correspondances
-				stockageArtistes.getLstArtistes().add(lArtiste);//pour charger
+				leControleur.getListeArtistes().put(lArtiste.getID(),lArtiste);//pour charger
 			}
 		} catch (SQLException e) {
 			throw new ChargementException(e);
 		}
 	}
 	
-	public void chargerListeAlbums() throws ChargementException{
+	public static void chargerListeAlbums() throws ChargementException{
 		ResultSet resultat;
 		String recherche="SELECT DISTINCT alb.cle_primaire as clef," +
 								"inu.name as val1," +
@@ -102,16 +122,16 @@ public class ChargementBDDdepuisOracle extends ChargementBDD {
 								"inu.id as val1_5," +
 								"inu.url as val2," +
 								"alb.date_sortie as val2_5,"+
-								"i.imageSmall as val3," +
-								"i.imageMedium as val4," +
-								"i.imageLarge as val5," +
-								"i.imageExtraLarge as val6," +
-								"i.imageMega as val7," +
-								"aud.listeners as val8," +
-								"aud.playcount as val9," +
-								"w.datepublication as val12,"+
-								"w.resume as val13,"+
-								"w.contenu as val14"+
+								"i.imageSmall as iS," +
+								"i.imageMedium as iMd," +
+								"i.imageLarge as iL," +
+								"i.imageExtraLarge as iEL," +
+								"i.imageMega as iMg," +
+								"aud.listeners as list," +
+								"aud.playcount as playc," +
+								"w.datepublication as dateWiki,"+
+								"w.resume as resumeWiki,"+
+								"w.contenu as contenuWiki"+
 				"FROM ALBUM as alb, WIKI as w, IMAGES as i, AUDIMAT as aud, ID_NAME_URL as inu"+
 				"WHERE(alb.id_name_url=inu.cle_primaire" +
 					"and alb.images=i.cle_primaire" +
@@ -124,22 +144,22 @@ public class ChargementBDDdepuisOracle extends ChargementBDD {
 		}
 		try {
 			while(resultat.next()){
-				Wiki leWiki=new Wiki(resultat.getDate("val12"),
-									resultat.getString("val13"),
-									resultat.getString("val14"));
+				Wiki leWiki=new Wiki(resultat.getDate("dateWiki"),
+									resultat.getString("resumeWiki"),
+									resultat.getString("contenuWiki"));
 				Artiste lArtiste=artistes.get(resultat.getInt("clefArtiste"));
 				Album lAlbum=new Album(resultat.getString("val1"),
 						lArtiste,
 						resultat.getString("val1_5"),
 						resultat.getString("val2"),
 						resultat.getDate("val2_5"),
-						resultat.getString("val3"),
-						resultat.getString("val4"),
-						resultat.getString("val5"),
-						resultat.getString("val6"),
-						resultat.getString("val7"),
-						resultat.getDouble("val8"),
-						resultat.getDouble("val9"),
+						resultat.getString("iS"),
+						resultat.getString("iMd"),
+						resultat.getString("iL"),
+						resultat.getString("iEL"),
+						resultat.getString("iMg"),
+						resultat.getDouble("list"),
+						resultat.getDouble("playc"),
 						new ArrayList<Chanson>(),
 						new ArrayList<Tag>(),
 						leWiki);
@@ -151,23 +171,23 @@ public class ChargementBDDdepuisOracle extends ChargementBDD {
 		}
 	}
 	
-	public void chargerListeChansons() throws ChargementException{
+	public static void chargerListeChansons() throws ChargementException{
 		ResultSet resultat;
 		String recherche="SELECT DISTINCT c.cle_primaire as clef," +
 								"inu.name as val1," +
 								"inu.url as val2," +
 								"c.duree as val2_5,"+
-								"i.imageSmall as val3," +
-								"i.imageMedium as val4," +
-								"i.imageLarge as val5," +
-								"i.imageExtraLarge as val6," +
-								"i.imageMega as val7," +
-								"aud.listeners as val8," +
-								"aud.playcount as val9," +
+								"i.imageSmall as iS," +
+								"i.imageMedium as iMd," +
+								"i.imageLarge as iL," +
+								"i.imageExtraLarge as iEL," +
+								"i.imageMega as iMg," +
+								"aud.listeners as list," +
+								"aud.playcount as playc," +
 								"c.artiste as clefArtiste," +
-								"w.datepublication as val12," +
-								"w.resume as val13," +
-								"w.contenu as val14" +
+								"w.datepublication as dateWiki," +
+								"w.resume as resumeWiki," +
+								"w.contenu as contenuWiki" +
 				"FROM CHANSON as c, WIKI as w, IMAGES as i, AUDIMAT as aud, ID_NAME_URL as inu"+
 				"WHERE(c.id_name_url=inu.cle_primaire" +
 					"and c.images=i.cle_primaire" +
@@ -180,16 +200,16 @@ public class ChargementBDDdepuisOracle extends ChargementBDD {
 		}
 		try {
 			while(resultat.next()){
-				Wiki leWiki=new Wiki(resultat.getDate("val12"),
-									resultat.getString("val13"),
-									resultat.getString("val14"));
+				Wiki leWiki=new Wiki(resultat.getDate("dateWiki"),
+									resultat.getString("resumeWiki"),
+									resultat.getString("contenuWiki"));
 				Artiste lArtiste=artistes.get(resultat.getString("clefArtiste"));
 				Chanson laChanson=new Chanson(resultat.getString("val1"),
 						resultat.getDouble("val2_5"),
 						resultat.getString("val2"),
 						lArtiste,
-						resultat.getDouble("val8"),
-						resultat.getDouble("val9"),
+						resultat.getDouble("list"),
+						resultat.getDouble("playc"),
 						new ArrayList<Album>(),
 						new ArrayList<Tag>(),
 						leWiki);
@@ -201,16 +221,16 @@ public class ChargementBDDdepuisOracle extends ChargementBDD {
 		}
 	}
 	
-	public void chargerListeTags() throws ChargementException{
+	public static void chargerListeTags() throws ChargementException{
 		ResultSet resultat;
 		String recherche="SELECT DISTINCT t.cle_primaire as clef," +
 								"inu.name as val1," +
 								"inu.url as val2," +
-								"t.reach as val3," +
-								"t.taggings as val4," +
-								"w.datepublication as val12,"+
-								"w.resume as val13,"+
-								"w.contenu as val14"+
+								"t.reach as iS," +
+								"t.taggings as iMd," +
+								"w.datepublication as dateWiki,"+
+								"w.resume as resumeWiki,"+
+								"w.contenu as contenuWiki"+
 				"FROM TAG as t, WIKI as w, ID_NAME_URL as inu"+
 				"WHERE(t.id_name_url=inu.cle_primaire" +
 					"and t.wiki=w.cle_primaire)";
@@ -221,13 +241,13 @@ public class ChargementBDDdepuisOracle extends ChargementBDD {
 		}
 		try {
 			while(resultat.next()){
-				Wiki leWiki=new Wiki(resultat.getDate("val12"),
-									resultat.getString("val13"),
-									resultat.getString("val14"));
+				Wiki leWiki=new Wiki(resultat.getDate("dateWiki"),
+									resultat.getString("resumeWiki"),
+									resultat.getString("contenuWiki"));
 				Tag leTag=new Tag(resultat.getString("val1"),
 									resultat.getString("val2"),
-									resultat.getDouble("val3"),
-									resultat.getDouble("val4"),
+									resultat.getDouble("iS"),
+									resultat.getDouble("iMd"),
 									leWiki);
 				tags.put(resultat.getInt("clef"),leTag);//pour les correspondances
 			}
@@ -236,7 +256,7 @@ public class ChargementBDDdepuisOracle extends ChargementBDD {
 		}
 	}
 	
-	public void chargerCorrespondances() throws ChargementException{
+	public static void chargerCorrespondances() throws ChargementException{
 		ResultSet resultat;
 		String rechercheSimArtiste="SELECT DISTINCT " +
 				"artiste1, artiste2 from ARTISTES_SIMILAIRES";

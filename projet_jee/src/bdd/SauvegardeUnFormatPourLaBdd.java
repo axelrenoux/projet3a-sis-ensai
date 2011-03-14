@@ -6,6 +6,9 @@ import java.util.Date;
 
 public abstract class SauvegardeUnFormatPourLaBdd {
 	
+	public SauvegardeUnFormatPourLaBdd() {
+	}
+	
 	public abstract void creerTables();
 
 	public abstract void ajouterLigne(String ligne);

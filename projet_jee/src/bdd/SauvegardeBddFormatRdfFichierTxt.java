@@ -4,6 +4,10 @@ import java.util.Date;
 
 public class SauvegardeBddFormatRdfFichierTxt extends SauvegardeUnFormatPourLaBdd{
 
+	public SauvegardeBddFormatRdfFichierTxt(){
+		super();
+	}
+	
 	@Override
 	public void ecrireEnTete() {
 		// TODO Auto-generated method stub
