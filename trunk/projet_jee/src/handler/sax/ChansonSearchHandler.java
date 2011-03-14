@@ -206,7 +206,10 @@ public class ChansonSearchHandler extends DefaultHandler{
 				Controleur.getInstanceuniquecontroleur().
 				getListeArtistes().get(currentArtiste.getName()).
 				mettreAjour(currentArtiste);
-			} catch (ExceptionMiseAjour e) {}
+			} catch (ExceptionMiseAjour e) {
+				Controleur.getInstanceuniquecontroleur().
+				ajouterProbleme(e.getTitre(),e.getMessage());
+			}
 			//on ajoute l'artiste deja existant, à la chanson
 			currentChanson.setArtiste(Controleur.getInstanceuniquecontroleur().
 					getListeArtistes().get(currentArtiste.getName()));

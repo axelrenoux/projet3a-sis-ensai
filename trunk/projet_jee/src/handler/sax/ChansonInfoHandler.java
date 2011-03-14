@@ -3,6 +3,7 @@
  */
 package handler.sax;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -13,6 +14,8 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import controleur.Controleur;
+import controleur.Utilitaire;
+import exceptions.ExceptionDate;
 import exceptions.ExceptionMiseAjour;
 
 import metier.Album;
@@ -305,7 +308,16 @@ public class ChansonInfoHandler extends DefaultHandler{
 		}else if(inUrlTag){
 			currentTag.setUrl(lecture);
 		}else if(inPublished){
-			currentWiki.setDatePublication(lecture);	 	
+			Date d;
+			try {
+				d = Utilitaire.getInstanceunique().
+					transformerEnDateWiki(lecture);
+				currentWiki.setDatePublication(d);
+			} catch (ExceptionDate e) {
+				Controleur.getInstanceuniquecontroleur().
+				ajouterProbleme(e.getTitre()+Controleur.getInstanceuniquecontroleur().
+						getListeProblemesRencontres().size(), e.getMessage());
+			}	 	
 		}else if(inSummary){
 			currentWiki.setResume(lecture);
 		}else if(inContent){
@@ -350,7 +362,10 @@ public class ChansonInfoHandler extends DefaultHandler{
 				Controleur.getInstanceuniquecontroleur().
 				getListeArtistes().get(currentArtisteAlbum.getName()).
 				mettreAjour(currentArtisteAlbum);
-			} catch (ExceptionMiseAjour e) {}
+			} catch (ExceptionMiseAjour e) {
+				Controleur.getInstanceuniquecontroleur().
+				ajouterProbleme(e.getTitre(),e.getMessage());
+			}
 			//on ajoute l'artiste deja existant à l'album de la chanson
 			currentAlbum.setArtiste(Controleur.getInstanceuniquecontroleur().
 					getListeArtistes().get(currentArtisteAlbum.getName()));
@@ -381,7 +396,10 @@ public class ChansonInfoHandler extends DefaultHandler{
 				Controleur.getInstanceuniquecontroleur().
 				getListeAlbums().get(currentAlbum.getUrl()).
 				mettreAjour(currentAlbum);
-			} catch (ExceptionMiseAjour e) {}
+			} catch (ExceptionMiseAjour e) {
+				Controleur.getInstanceuniquecontroleur().
+				ajouterProbleme(e.getTitre(),e.getMessage());
+			}
 			//on ajoute l'album deja existant à la liste des albums de la chanson
 			listeAlbums.add(Controleur.getInstanceuniquecontroleur().
 					getListeAlbums().get(currentAlbum.getUrl()));
