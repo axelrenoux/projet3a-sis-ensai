@@ -4,3 +4,8 @@ where album.artiste = artiste.cle_primaire and
 album.audimat = audimat.cle_primaire and
 album.id_name_url = id_name_urlAlbum.cle_primaire and
 artiste.id_name_url = id_name_urlArtiste.cle_primaire
+
+
+select album.*, id_name_url.name 
+from album, id_name_url
+where album.id_name_url= id_name_url.cle_primaire
