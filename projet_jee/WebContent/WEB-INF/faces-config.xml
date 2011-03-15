@@ -16,19 +16,10 @@
    		</navigation-case>
    		<navigation-case>
    			<from-action>#{vueFormulaire.lancerRecherche}</from-action>
-   			<from-outcome>album</from-outcome>
-   			<to-view-id>/VueAffichageResultatAlbum.xhtml</to-view-id>
+   			<from-outcome>success</from-outcome>
+   			<to-view-id>/VueAffichageResultat.xhtml</to-view-id>
    		</navigation-case>
-   		<navigation-case>
-   			<from-action>#{vueFormulaire.lancerRecherche}</from-action>
-   			<from-outcome>artiste</from-outcome>
-   			<to-view-id>/VueAffichageResultatArtiste.xhtml</to-view-id>
-   		</navigation-case>
-  		<navigation-case>
-   			<from-action>#{vueFormulaire.lancerRecherche}</from-action>
-   			<from-outcome>chanson</from-outcome>
-   			<to-view-id>/VueAffichageResultatChanson.xhtml</to-view-id>
-   		</navigation-case>
+   		
   
    </navigation-rule>
    
