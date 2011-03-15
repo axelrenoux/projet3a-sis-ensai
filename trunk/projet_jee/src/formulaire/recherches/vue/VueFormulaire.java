@@ -27,12 +27,7 @@ import formulaire.reponses.gestion.GestionFormulaire;
 		@ManagedProperty(value="#{vueAffichageResultat}")
 		private VueAffichageResultat vueAffichageResultat;
 		
-		private String artist;
-		private String album;
-		private String track;
-		private String tag;
 		private String motcle;
-		private int ceQueRecherche;
 		
 		/********************************************************************/
 		/************************      methodes      ************************/
@@ -44,43 +39,23 @@ import formulaire.reponses.gestion.GestionFormulaire;
 		 */
 		public String lancerRecherche(){
 			
-			boolean success = false;
-			gestionFormulaire.setObjectif(ceQueRecherche);
-			
-			if(!track.isEmpty()){
-				vueConfirmation.setCompteRendu(vueConfirmation.getCompteRendu()+"Chanson : "+track+"\n ");
-				gestionFormulaire.getRecherche().setTrack(track);
-				success = true;
-			}
-			if(!artist.isEmpty()){
-				vueConfirmation.setCompteRendu(vueConfirmation.getCompteRendu()+"Groupe : "+artist+"\n ");
-				gestionFormulaire.getRecherche().setArtist(artist);
-				success = true;
-			}
-			if(!album.isEmpty()){
-				vueConfirmation.setCompteRendu(vueConfirmation.getCompteRendu()+"Album : "+album+"\n ");
-				gestionFormulaire.getRecherche().setAlbum(album);
-				success = true;
-			}
+			boolean success = false;			
+
 			if(!motcle.isEmpty()){
-				vueConfirmation.setCompteRendu(vueConfirmation.getCompteRendu()+"Album : "+album+"\n ");
-				gestionFormulaire.getRecherche().setMotCle(motcle);
+				/*gestionFormulaire.getRechercheAlbum().setMotCle(motcle);
+				gestionFormulaire.getRechercheArtiste().setMotCle(motcle);
+				gestionFormulaire.getRechercheChanson().setMotCle(motcle);*/
 				success = true;
 			}
-			if(!tag.isEmpty()){
-				vueConfirmation.setCompteRendu(vueConfirmation.getCompteRendu()+"Album : "+album+"\n ");
-				gestionFormulaire.getRecherche().setTag(tag);
-			}
-			
-			
-			
+
 			if(success){
 				//on attribue les resultats à la page de resultats
-				vueAffichageResultat.setResultats(gestionFormulaire.lancerRecherche());
-				vueAffichageResultat.setType(gestionFormulaire.retournerTypeAffichage());
-				System.out.println(vueAffichageResultat.getType());
+				vueAffichageResultat.setResultatsAlbum(gestionFormulaire.lancerRechercheAlbum());;
+				vueAffichageResultat.setResultatsArtiste(gestionFormulaire.lancerRechercheArtiste());;
+				vueAffichageResultat.setResultatsChanson(gestionFormulaire.lancerRechercheChanson());;
+				
 				//return "confirmation";
-				return vueAffichageResultat.getType();
+				return "success";
 			}
 			else{
 				addError();
@@ -96,8 +71,6 @@ import formulaire.reponses.gestion.GestionFormulaire;
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Erreur","Erreur de requetage : requete vide")); 
 		}
 
-  
-		
 
 		
 		
@@ -105,46 +78,6 @@ import formulaire.reponses.gestion.GestionFormulaire;
 		/******************      getters / setters       ********************/
 		/********************************************************************/
 
-		public String getArtist() {
-			return artist;
-		}
-
-
-		public void setArtist(String artist) {
-			this.artist = artist;
-		}
-
-
-
-		public String getAlbum() {
-			return album;
-		}
-
-
-		public void setAlbum(String album) {
-			this.album = album;
-		}
-
-
-
-		public String getTrack() {
-			return track;
-		}
-
-
-		public void setTrack(String track) {
-			this.track = track;
-		}
-
-
-		public int getCeQueRecherche() {
-			return ceQueRecherche;
-		}
-
-
-		public void setCeQueRecherche(int ceQueRecherche) {
-			this.ceQueRecherche = ceQueRecherche;
-		}
 
 
 		public VueConfirmation getVueConfirmation() {
@@ -167,14 +100,6 @@ import formulaire.reponses.gestion.GestionFormulaire;
 		}
 
 
-		public String getTag() {
-			return tag;
-		}
-
-
-		public void setTag(String tag) {
-			this.tag = tag;
-		}
 
 
 		public String getMotcle() {
