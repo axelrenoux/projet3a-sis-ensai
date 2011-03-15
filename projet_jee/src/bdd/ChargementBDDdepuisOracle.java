@@ -12,6 +12,7 @@ import metier.Chanson;
 import metier.Tag;
 import metier.Wiki;
 import bdd.exceptions.ChargementException;
+import bdd.exceptions.ConnectionException;
 import bdd.exceptions.QueryException;
 import controleur.Controleur;
 
@@ -27,34 +28,37 @@ public class ChargementBDDdepuisOracle extends ChargementBDD {
 
 	public static void charger(){
 			try {
+				SQLViaJDBC.connecter();
 				chargerListeTags();
 				chargerListeArtistes();
 				chargerListeAlbums();
 				chargerListeChansons();
 				chargerCorrespondances();
-			} catch (ChargementException e) {e.printStackTrace();}
+				SQLViaJDBC.fermerBDD();
+			} catch (ChargementException e) {e.printStackTrace();} 
+			catch (ConnectionException e) {e.printStackTrace();}
 	}
 
 	public static void chargerListeArtistes() throws ChargementException{
 		ResultSet resultat;
-		String recherche="SELECT DISTINCT art.cle_primaire as clef," +
-								"inu.name as name," +
-								"inu.url as url," +
-								"i.imageSmall as iS," +
-								"i.imageMedium as iMd," +
-								"i.imageLarge as iL," +
-								"i.imageExtraLarge as iEL," +
-								"i.imageMega as iMg," +
-								"aud.listeners as list," +
-								"aud.playcount as playc," +
-								"w.datepublication as dateWiki,"+
-								"w.resume as resumeWiki,"+
+		String recherche="SELECT DISTINCT art.cle_primaire as clef , " +
+								"inu.name as name , " +
+								"inu.url as url , " +
+								"i.imagesmall as iSmall , " +
+								"i.imagemedium as iMd , " +
+								"i.imagelarge as iL , " +
+								"i.imageextralarge as iEL , " +
+								"i.imagemega as iMg , " +
+								"aud.listeners as list , " +
+								"aud.playcount as playc , " +
+								"w.datepublication as dateWiki , "+
+								"w.resume as resumeWiki , "+
 								"w.contenu as contenuWiki"+
-				"FROM ARTISTE as art, WIKI as w, IMAGES as i, AUDIMAT as aud, ID_NAME_URL as inu"+
-				"WHERE(art.id_name_url=inu.cle_primaire" +
-					"and art.images=i.cle_primaire" +
-					"and art.audimat=aud.cle_primaire" +
-					"and art.wiki=w.cle_primaire)";
+				" FROM ARTISTE art , WIKI w , IMAGES i , AUDIMAT aud , ID_NAME_URL inu"+
+				" WHERE art.id_name_url = inu.cle_primaire" +
+					" and art.images = i.cle_primaire" +
+					" and art.audimat = aud.cle_primaire" +
+					" and art.wiki = w.cle_primaire";
 		try {
 			resultat = SQLViaJDBC.executerRequeteAvecRetour(recherche);
 		} catch (QueryException e1) {
@@ -73,7 +77,7 @@ public class ChargementBDDdepuisOracle extends ChargementBDD {
 				//XXX Modifier ici si le constructeur d'Artiste est modifié
 				Artiste lArtiste=new Artiste(resultat.getString("name"),
 						resultat.getString("url"),
-						resultat.getString("iS"),
+						resultat.getString("iSmall"),
 						resultat.getString("iMd"),
 						resultat.getString("iL"),
 						resultat.getString("iEL"),
@@ -93,27 +97,27 @@ public class ChargementBDDdepuisOracle extends ChargementBDD {
 	
 	public static void chargerListeAlbums() throws ChargementException{
 		ResultSet resultat;
-		String recherche="SELECT DISTINCT alb.cle_primaire as clef," +
-								"inu.name as name," +
-								"c.artiste as clefArtiste," +
-								"inu.id as id," +
-								"inu.url as url," +
-								"alb.date_sortie as datesortie,"+
-								"i.imageSmall as iS," +
-								"i.imageMedium as iMd," +
-								"i.imageLarge as iL," +
-								"i.imageExtraLarge as iEL," +
-								"i.imageMega as iMg," +
-								"aud.listeners as list," +
-								"aud.playcount as playc," +
-								"w.datepublication as dateWiki,"+
-								"w.resume as resumeWiki,"+
+		String recherche="SELECT DISTINCT alb.cle_primaire as clef , " +
+								"inu.name as name , " +
+								"alb.artiste as clefArtiste , " +
+								"inu.id as id , " +
+								"inu.url as url , " +
+								"alb.date_sortie as datesortie , "+
+								"i.imageSmall as iSmall , " +
+								"i.imageMedium as iMd , " +
+								"i.imageLarge as iL , " +
+								"i.imageExtraLarge as iEL , " +
+								"i.imageMega as iMg , " +
+								"aud.listeners as list , " +
+								"aud.playcount as playc , " +
+								"w.datepublication as dateWiki , "+
+								"w.resume as resumeWiki , "+
 								"w.contenu as contenuWiki"+
-				"FROM ALBUM as alb, WIKI as w, IMAGES as i, AUDIMAT as aud, ID_NAME_URL as inu"+
-				"WHERE(alb.id_name_url=inu.cle_primaire" +
-					"and alb.images=i.cle_primaire" +
-					"and alb.audimat=aud.cle_primaire" +
-					"and alb.wiki=w.cle_primaire)";
+				" FROM ALBUM alb , WIKI w , IMAGES i , AUDIMAT aud , ID_NAME_URL inu "+
+				" WHERE alb.id_name_url = inu.cle_primaire" +
+					" and alb.images = i.cle_primaire" +
+					" and alb.audimat = aud.cle_primaire" +
+					" and alb.wiki = w.cle_primaire";
 		try {
 			resultat = SQLViaJDBC.executerRequeteAvecRetour(recherche);
 		} catch (QueryException e1) {
@@ -135,8 +139,8 @@ public class ChargementBDDdepuisOracle extends ChargementBDD {
 						lArtiste,
 						resultat.getString("id"),
 						resultat.getString("url"),
-						resultat.getDate("date_sortie"),
-						resultat.getString("iS"),
+						resultat.getDate("datesortie"),
+						resultat.getString("iSmall"),
 						resultat.getString("iMd"),
 						resultat.getString("iL"),
 						resultat.getString("iEL"),
@@ -156,26 +160,20 @@ public class ChargementBDDdepuisOracle extends ChargementBDD {
 	
 	public static void chargerListeChansons() throws ChargementException{
 		ResultSet resultat;
-		String recherche="SELECT DISTINCT c.cle_primaire as clef," +
-								"inu.name as name," +
-								"inu.url as url," +
-								"c.duree as duree"+
-								"i.imageSmall as iS," +
-								"i.imageMedium as iMd," +
-								"i.imageLarge as iL," +
-								"i.imageExtraLarge as iEL," +
-								"i.imageMega as iMg," +
-								"aud.listeners as list," +
-								"aud.playcount as playc," +
-								"c.artiste as clefArtiste," +
-								"w.datepublication as dateWiki," +
-								"w.resume as resumeWiki," +
+		String recherche="SELECT DISTINCT c.cle_primaire as clef , " +
+								"inu.name as name , " +
+								"inu.url as url , " +
+								"c.duree as duree , "+
+								"aud.listeners as list , " +
+								"aud.playcount as playc , " +
+								"c.artiste as clefArtiste , " +
+								"w.datepublication as dateWiki , " +
+								"w.resume as resumeWiki , " +
 								"w.contenu as contenuWiki" +
-				"FROM CHANSON as c, WIKI as w, IMAGES as i, AUDIMAT as aud, ID_NAME_URL as inu"+
-				"WHERE(c.id_name_url=inu.cle_primaire" +
-					"and c.images=i.cle_primaire" +
-					"and c.audimat=aud.cle_primaire" +
-					"and c.wiki=w.cle_primaire)";
+				" FROM CHANSON c , WIKI w , AUDIMAT aud , ID_NAME_URL inu "+
+				" WHERE c.id_name_url = inu.cle_primaire" +
+					" and c.audimat = aud.cle_primaire" +
+					" and c.wiki = w.cle_primaire";
 		try {
 			resultat = SQLViaJDBC.executerRequeteAvecRetour(recherche);
 		} catch (QueryException e1) {
@@ -211,17 +209,17 @@ public class ChargementBDDdepuisOracle extends ChargementBDD {
 	
 	public static void chargerListeTags() throws ChargementException{
 		ResultSet resultat;
-		String recherche="SELECT DISTINCT t.cle_primaire as clef," +
-								"inu.name as name," +
-								"inu.url as url," +
-								"t.reach as reach," +
-								"t.taggings as taggings," +
-								"w.datepublication as dateWiki,"+
-								"w.resume as resumeWiki,"+
+		String recherche="SELECT DISTINCT t.cle_primaire as clef , " +
+								"inu.name as name , " +
+								"inu.url as url , " +
+								"t.reach as reach , " +
+								"t.taggings as taggings , " +
+								"w.datepublication as dateWiki , "+
+								"w.resume as resumeWiki , "+
 								"w.contenu as contenuWiki"+
-				"FROM TAG as t, WIKI as w, ID_NAME_URL as inu"+
-				"WHERE(t.id_name_url=inu.cle_primaire" +
-					"and t.wiki=w.cle_primaire)";
+						" FROM TAG t, WIKI w, ID_NAME_URL inu"+
+						" WHERE t.id_name_url = inu.cle_primaire" +
+						" AND t.wiki = w.cle_primaire ";
 		try {
 			resultat = SQLViaJDBC.executerRequeteAvecRetour(recherche);
 		} catch (QueryException e1) {
@@ -250,15 +248,15 @@ public class ChargementBDDdepuisOracle extends ChargementBDD {
 	public static void chargerCorrespondances() throws ChargementException{
 		ResultSet resultat;
 		String rechercheSimArtiste="SELECT DISTINCT " +
-				"artiste1, artiste2 from ARTISTES_SIMILAIRES";
+				"artiste1 , artiste2 from ARTISTES_SIMILAIRES";
 		String rechercheTagArtiste="SELECT DISTINCT " +
-				"artiste, tag from CORRESP_ARTISTE_TAG";
+				"artiste , tag from CORRESP_ARTISTE_TAG";
 		String rechercheTagAlbum="SELECT DISTINCT " +
-				"album, tag from CORRESP_ALBUM_TAG";
+				"album , tag from CORRESP_ALBUM_TAG";
 		String rechercheTagChanson="SELECT DISTINCT " +
-				"chanson, tag from CORRESP_CHANSON_TAG";
+				"chanson , tag from CORRESP_CHANSON_TAG";
 		String rechercheChansonAlbum="SELECT DISTINCT " +
-				"chanson, album from CORRESP_CHANSON_ALBUM";
+				"chanson , album from CORRESP_CHANSON_ALBUM";
 		try {
 			resultat = SQLViaJDBC.executerRequeteAvecRetour(rechercheSimArtiste);
 		} catch (QueryException e1) {

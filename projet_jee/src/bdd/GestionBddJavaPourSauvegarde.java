@@ -14,7 +14,7 @@ import controleur.Controleur;
 
 public class GestionBddJavaPourSauvegarde {
 	//La classe gérant le format sous lequel on va enregistrer la BDD
-	private static SauvegardeUnFormatPourLaBdd formatSauv;
+	private static ControleSauvegardeUnFormatPourLaBdd formatSauv;
 	
 	//Nos données d'origine en Java
 	private static List<Artiste> artistes=new ArrayList<Artiste>();
@@ -28,10 +28,11 @@ public class GestionBddJavaPourSauvegarde {
 	private static Map<Tag, Integer> clesPrimairesTags=new HashMap<Tag,Integer>();
 	
 	//Variable servant à incrémenter les clés primaires, pour s'assurer qu'elles seront toutes différentes
-	private static int pk=0;
+	private static int primarykey=0;
 	
-	private static void incrementerClesPrimaires() {
-		pk=pk+1;
+	private static int incrementerClesPrimaires() {
+		primarykey=primarykey+1;
+		return primarykey;
 	}
 	
 	private static void init(){
@@ -46,7 +47,7 @@ public class GestionBddJavaPourSauvegarde {
 		}
 	}
 	
-	public static void decomposerAvantSauvegardeGereePar(SauvegardeUnFormatPourLaBdd gestionnaireDeFormatdeSauvegarde){
+	public static void decomposerAvantSauvegardeGereePar(ControleSauvegardeUnFormatPourLaBdd gestionnaireDeFormatdeSauvegarde){
 		init();
 		formatSauv=gestionnaireDeFormatdeSauvegarde;
 		formatSauv.ecrireEnTete();
@@ -63,13 +64,20 @@ public class GestionBddJavaPourSauvegarde {
 	}
 
 	private static void sauver(Chanson laChanson) {
+		if(laChanson==null){
+			laChanson=new Chanson();
+		}
 		if(!clesPrimairesChansons.containsKey(laChanson)){//Pour eviter les doublons
+			//On attribue une clé à la chanson
+			int clefCetteChanson=incrementerClesPrimaires();
+			clesPrimairesChansons.put(laChanson,clefCetteChanson);
 			
 			//On sauvegarde le wiki
 			Wiki leWiki=laChanson.getWiki();
-			
-			incrementerClesPrimaires();
-			int pkWiki=pk;
+			if(leWiki==null){
+				leWiki=new Wiki();
+			}
+			int pkWiki=incrementerClesPrimaires();
 			formatSauv.sauverWiki(pkWiki,
 					String.valueOf(pkWiki),
 					leWiki.getDatePublication(),
@@ -82,9 +90,7 @@ public class GestionBddJavaPourSauvegarde {
 					contenu VARCHAR2(2048))*/
 			
 			//On sauvegarde l'audimat
-			
-			incrementerClesPrimaires();
-			int pkAudimat=pk;
+			int pkAudimat=incrementerClesPrimaires();
 			formatSauv.sauverAudimat(pkAudimat,
 					laChanson.getListeners(),
 					laChanson.getPlaycount());
@@ -93,9 +99,7 @@ public class GestionBddJavaPourSauvegarde {
 						playcount INTEGER)*/
 			
 			//On sauvegarde les images
-			
-			incrementerClesPrimaires();
-			int pkImages=pk;
+			int pkImages=incrementerClesPrimaires();
 			formatSauv.sauverImages(pkImages,
 					laChanson.getImageSmall(),
 					laChanson.getImageMedium(),
@@ -111,17 +115,16 @@ public class GestionBddJavaPourSauvegarde {
 			
 			//On sauvegarde l'artiste
 			Artiste lArtiste=laChanson.getArtiste();
+			if(lArtiste==null){
+				lArtiste=new Artiste();
+			}
 			sauver(lArtiste);
 			
-			//On attribue une clé à la chanson
-			incrementerClesPrimaires();
-			clesPrimairesChansons.put(laChanson,pk);
 			
 			//On sauvegarde les coordonnées de la chanson
-			incrementerClesPrimaires();
-			int pkCoord=pk;
+			int pkCoord=incrementerClesPrimaires();
 			formatSauv.sauverCoord(pkCoord,
-							String.valueOf(clesPrimairesChansons.get(laChanson)),
+							laChanson.getID(),
 							laChanson.getName(),
 							laChanson.getUrl());
 			/*ID_NAME_URL(cle_primaire INTEGER,
@@ -130,7 +133,7 @@ public class GestionBddJavaPourSauvegarde {
 						url VARCHAR2(256))*/
 			
 			//on sauvegarde la chanson
-			formatSauv.sauverChanson(clesPrimairesChansons.get(laChanson),
+			formatSauv.sauverChanson(clefCetteChanson,
 									pkCoord,
 									laChanson.getDuree(),
 									pkImages,
@@ -146,34 +149,51 @@ public class GestionBddJavaPourSauvegarde {
 					audimat INTEGER references AUDIMAT(cle_primaire),
 					wiki INTEGER references WIKI(cle_primaire),
 					artiste INTEGER references ARTISTE(cle_primaire))*/
-			
-			for(Tag leTag:laChanson.getToptags()){
-				sauver(leTag);
-				formatSauv.sauverChansonTag(clesPrimairesChansons.get(laChanson),
-											clesPrimairesTags.get(leTag));
-				/*CORRESP_CHANSON_TAG(chanson INTEGER references CHANSON(cle_primaire),
-									tag INTEGER references TAG(cle_primaire))*/
-			}//endFor
-			for(Album lAlbum:laChanson.getAlbums()){
-				sauver(lAlbum);
-				formatSauv.sauverChansonAlbum(clesPrimairesAlbums.get(lAlbum),
-											clesPrimairesChansons.get(laChanson));
-				/*CORRESP_CHANSON_ALBUM(album INTEGER references ALBUM(cle_primaire),
-										chanson INTEGER references CHANSON(cle_primaire))*/
-			}//endFor
+			if(laChanson.getToptags()!=null){
+				for(Tag leTag:laChanson.getToptags()){
+					if(leTag==null){
+						leTag=new Tag();
+					}
+					sauver(leTag);
+					formatSauv.sauverChansonTag(clefCetteChanson,
+												clesPrimairesTags.get(leTag));
+					/*CORRESP_CHANSON_TAG(chanson INTEGER references CHANSON(cle_primaire),
+										tag INTEGER references TAG(cle_primaire))*/
+				}//endFor
+			}//endIf
+			if(laChanson.getAlbums()!=null){
+				for(Album lAlbum:laChanson.getAlbums()){
+					if(lAlbum==null){
+						lAlbum=new Album();
+					}
+					sauver(lAlbum);
+					formatSauv.sauverChansonAlbum(clesPrimairesAlbums.get(lAlbum),
+												clefCetteChanson);
+					/*CORRESP_CHANSON_ALBUM(album INTEGER references ALBUM(cle_primaire),
+											chanson INTEGER references CHANSON(cle_primaire))*/
+				}//endFor
+			}//endIf
 		}//endIf	
 	}//finSauver(Chanson)
 	
 
 	private static void sauver(Artiste lArtiste){
+		if(lArtiste==null){
+			lArtiste=new Artiste();
+		}
 		if(!clesPrimairesArtistes.containsKey(lArtiste)){//Pour eviter les doublons
+			//On attribue une clé à l'artiste
+			int clefCetArtiste=incrementerClesPrimaires();
+			clesPrimairesArtistes.put(lArtiste,clefCetArtiste);
+			//Pour pouvoir retrouver l'artiste pour les correspondances avec albums etc
 			//On sauvegarde le wiki
 			Wiki leWiki=lArtiste.getWiki();
-			
-			incrementerClesPrimaires();
-			int pkWikiCetArtiste=pk;
-			formatSauv.sauverWiki(pkWikiCetArtiste,
-					String.valueOf(pkWikiCetArtiste),
+			if(leWiki==null){
+				leWiki=new Wiki();
+			}
+			int pkWiki=incrementerClesPrimaires();
+			formatSauv.sauverWiki(pkWiki,
+					String.valueOf(pkWiki),
 					leWiki.getDatePublication(),
 					leWiki.getResume(),
 					leWiki.getContenu());
@@ -184,10 +204,8 @@ public class GestionBddJavaPourSauvegarde {
 					contenu VARCHAR2(2048))*/
 			
 			//On sauvegarde l'audimat
-			
-			incrementerClesPrimaires();
-			int pkAudimatCetArtiste=pk;
-			formatSauv.sauverAudimat(pkAudimatCetArtiste,
+			int pkAudimat=incrementerClesPrimaires();
+			formatSauv.sauverAudimat(pkAudimat,
 					lArtiste.getListeners(),
 					lArtiste.getPlaycount());
 			/*AUDIMAT(cle_primaire INTEGER,
@@ -195,10 +213,8 @@ public class GestionBddJavaPourSauvegarde {
 						playcount INTEGER)*/
 			
 			//On sauvegarde les images
-			
-			incrementerClesPrimaires();
-			int pkImagesCetArtiste=pk;
-			formatSauv.sauverImages(pkImagesCetArtiste,
+			int pkImages=incrementerClesPrimaires();
+			formatSauv.sauverImages(pkImages,
 					lArtiste.getImageSmall(),
 					lArtiste.getImageMedium(),
 					lArtiste.getImageLarge(),
@@ -211,18 +227,10 @@ public class GestionBddJavaPourSauvegarde {
 					imageExtraLarge VARCHAR2(256),
 					imageMega VARCHAR2(256))*/
 			
-			
-			
-			//On attribue une clé à l'artiste
-			incrementerClesPrimaires();
-			clesPrimairesArtistes.put(lArtiste,pk);
-			//Pour pouvoir retrouver l'artiste pour les correspondances avec albums etc
-			
 			//On sauvegarde les coordonnées de la chanson
-			incrementerClesPrimaires();
-			int pkCoord=pk;
+			int pkCoord=incrementerClesPrimaires();
 			formatSauv.sauverCoord(pkCoord,
-							String.valueOf(clesPrimairesArtistes.get(lArtiste)),
+							lArtiste.getID(),
 							lArtiste.getName(),
 							lArtiste.getUrl());
 			/*ID_NAME_URL(cle_primaire INTEGER,
@@ -231,11 +239,11 @@ public class GestionBddJavaPourSauvegarde {
 						url VARCHAR2(256))*/
 			
 			//Et on sauvegarde l'artiste
-			formatSauv.sauverArtiste(clesPrimairesChansons.get(lArtiste),
+			formatSauv.sauverArtiste(clefCetArtiste,
 									pkCoord,
-									pkImagesCetArtiste,
-									pkAudimatCetArtiste,
-									pkWikiCetArtiste);
+									pkImages,
+									pkAudimat,
+									pkWiki);
 			/*ARTISTE(cle_primaire INTEGER,
 					id_artiste VARCHAR2(256),
 					name VARCHAR2(128),
@@ -243,31 +251,50 @@ public class GestionBddJavaPourSauvegarde {
 					images INTEGER references IMAGES(cle_primaire),
 					audimat INTEGER references AUDIMAT(cle_primaire),
 					wiki INTEGER references WIKI(cle_primaire))*/
-			for(Artiste autreArtiste:lArtiste.getArtistesSimilaires()){
-				sauver(autreArtiste);
-				//Ainsi les deux artistes sont FORCEMENT déjà enregistré quand on arrive à ce point.
-				formatSauv.sauverSimilartist(clesPrimairesArtistes.get(lArtiste),
-											clesPrimairesArtistes.get(autreArtiste));
-				/*ARTISTES_SIMILAIRES(artiste1 INTEGER references ARTISTE(cle_primaire),
-									artiste2 INTEGER references ARTISTE(cle_primaire))*/
-			}//endFor
-			for(Tag leTag:lArtiste.getToptags()){
-				sauver(leTag);
-				formatSauv.sauverArtisteTag(clesPrimairesArtistes.get(lArtiste),
-											clesPrimairesTags.get(leTag));
-				/*CORRESP_ARTISTE_TAG(artiste INTEGER references ARTISTE(cle_primaire),
-									tag INTEGER references TAG(cle_primaire))*/
-			}//endFor
+			if(lArtiste.getArtistesSimilaires()!=null){
+				for(Artiste autreArtiste:lArtiste.getArtistesSimilaires()){
+					if(autreArtiste==null){
+						autreArtiste=new Artiste();
+					}
+					sauver(autreArtiste);
+					//Ainsi les deux artistes sont FORCEMENT déjà enregistré quand on arrive à ce point.
+					formatSauv.sauverSimilartist(clefCetArtiste,
+												clesPrimairesArtistes.get(autreArtiste));
+					/*ARTISTES_SIMILAIRES(artiste1 INTEGER references ARTISTE(cle_primaire),
+										artiste2 INTEGER references ARTISTE(cle_primaire))*/
+				}//endFor
+			}//endif
+			if(lArtiste.getToptags()!=null){
+				for(Tag leTag:lArtiste.getToptags()){
+					if(leTag==null){
+						leTag=new Tag();
+					}
+					sauver(leTag);
+					formatSauv.sauverArtisteTag(clefCetArtiste,
+												clesPrimairesTags.get(leTag));
+					/*CORRESP_ARTISTE_TAG(artiste INTEGER references ARTISTE(cle_primaire),
+										tag INTEGER references TAG(cle_primaire))*/
+				}//endFor
+			}//endif
 		}//endIf
 	}//endSauver(Artiste)
 
 	private static void sauver(Tag leTag) {
+		if(leTag==null){
+			leTag=new Tag();
+		}
 		if(!clesPrimairesTags.containsKey(leTag)){//Pour eviter les doublons
+			//On attribue une clé au tag
+			int clefCeTag=incrementerClesPrimaires();
+			clesPrimairesTags.put(leTag,clefCeTag);
+			
 			//On sauvegarde le wiki
 			Wiki leWiki=leTag.getWiki();
+			if(leWiki==null){
+				leWiki=new Wiki();
+			}
 			
-			incrementerClesPrimaires();
-			int pkWiki=pk;
+			int pkWiki=incrementerClesPrimaires();
 			formatSauv.sauverWiki(pkWiki,
 					String.valueOf(pkWiki),
 					leWiki.getDatePublication(),
@@ -279,15 +306,10 @@ public class GestionBddJavaPourSauvegarde {
 					resume VARCHAR2(512),
 					contenu VARCHAR2(2048))*/
 			
-			//On attribue une clé au tag
-			incrementerClesPrimaires();
-			clesPrimairesTags.put(leTag,pk);
-			
 			//On sauvegarde les coordonnées du tag
-			incrementerClesPrimaires();
-			int pkCoord=pk;
+			int pkCoord=incrementerClesPrimaires();
 			formatSauv.sauverCoord(pkCoord,
-							String.valueOf(clesPrimairesTags.get(leTag)),
+							String.valueOf(clefCeTag),
 							leTag.getName(),
 							leTag.getUrl());
 			/*ID_NAME_URL(cle_primaire INTEGER,
@@ -296,7 +318,7 @@ public class GestionBddJavaPourSauvegarde {
 						url VARCHAR2(256))*/			
 			
 			//On sauvegarde le tag
-			formatSauv.sauverTag(clesPrimairesTags.get(leTag),
+			formatSauv.sauverTag(clefCeTag,
 								pkCoord,
 								leTag.getReach(),
 								leTag.getTagging(),
@@ -312,12 +334,21 @@ public class GestionBddJavaPourSauvegarde {
 	}//finSauver(Tag)
 	
 	private static void sauver(Album lAlbum) {
+		if(lAlbum==null){
+			lAlbum=new Album();
+		}
 		if(!clesPrimairesAlbums.containsKey(lAlbum)){//Pour eviter les doublons
+			//On attribue une clé à l'album
+			int clefCetAlbum=incrementerClesPrimaires();
+			clesPrimairesAlbums.put(lAlbum,clefCetAlbum);
+			
 			//On sauvegarde le wiki
 			Wiki leWiki=lAlbum.getWiki();
+			if(leWiki==null){
+				leWiki=new Wiki();
+			}
 			
-			incrementerClesPrimaires();
-			int pkWiki=pk;
+			int pkWiki=incrementerClesPrimaires();
 			formatSauv.sauverWiki(pkWiki,
 					String.valueOf(pkWiki),
 					leWiki.getDatePublication(),
@@ -331,8 +362,7 @@ public class GestionBddJavaPourSauvegarde {
 			
 			//On sauvegarde l'audimat
 			
-			incrementerClesPrimaires();
-			int pkAudimat=pk;
+			int pkAudimat=incrementerClesPrimaires();
 			formatSauv.sauverAudimat(pkAudimat,
 					lAlbum.getListeners(),
 					lAlbum.getPlaycount());
@@ -341,9 +371,7 @@ public class GestionBddJavaPourSauvegarde {
 						playcount INTEGER)*/
 			
 			//On sauvegarde les images
-			
-			incrementerClesPrimaires();
-			int pkImages=pk;
+			int pkImages=incrementerClesPrimaires();
 			formatSauv.sauverImages(pkImages,
 					lAlbum.getImageSmall(),
 					lAlbum.getImageMedium(),
@@ -359,15 +387,13 @@ public class GestionBddJavaPourSauvegarde {
 			
 			//On sauvegarde l'artiste
 			Artiste lArtiste=lAlbum.getArtiste();
+			if(lArtiste==null){
+				lArtiste=new Artiste();
+			}
 			sauver(lArtiste);
 			
-			//On attribue une clé à l'album
-			incrementerClesPrimaires();
-			clesPrimairesAlbums.put(lAlbum,pk);
-			
 			//On sauvegarde les coordonnées de la chanson
-			incrementerClesPrimaires();
-			int pkCoord=pk;
+			int pkCoord=incrementerClesPrimaires();
 			formatSauv.sauverCoord(pkCoord,
 							lAlbum.getID(),
 							lAlbum.getName(),
@@ -378,7 +404,7 @@ public class GestionBddJavaPourSauvegarde {
 						url VARCHAR2(256))*/
 			
 			//on sauvegarde la chanson
-			formatSauv.sauverAlbum(clesPrimairesAlbums.get(lAlbum),
+			formatSauv.sauverAlbum(clefCetAlbum,
 									pkCoord,
 									lAlbum.getDate(),
 									pkImages,
@@ -393,7 +419,7 @@ public class GestionBddJavaPourSauvegarde {
 							wiki INTEGER references WIKI(cle_primaire),
 							artiste INTEGER references ARTISTE(cle_primaire),
 							PRIMARY KEY(cle_primaire))*/
-			//XXX Un album n'a pas de tags?!?
+			//XXX Un album n'a pas de tags?
 		}//endIf	
 	}//finSauver(Album)
 }

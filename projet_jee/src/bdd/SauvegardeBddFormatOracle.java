@@ -3,11 +3,12 @@ package bdd;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Date;
-
 import bdd.exceptions.ConnectionException;
 import bdd.exceptions.UpdateException;
 
+/**
+ * Mettre les String entre guillemets et vérifier le format des dates a été vérifié au niveau du ControleSauvegardeBddFormatOracle
+ */
 public class SauvegardeBddFormatOracle extends SauvegardeUnFormatPourLaBdd{
 	private String requeteSQL;
 	private PrintWriter fluxSortie;
@@ -40,33 +41,33 @@ public class SauvegardeBddFormatOracle extends SauvegardeUnFormatPourLaBdd{
 		catch (ConnectionException e) {e.printStackTrace();}
 		fluxSortie.close();
 	}
-
+	
 	@Override
-	public void sauverWiki(int pk, String id_wiki, Date datePublication,
+	public void sauverWiki(String pk, String id_wiki, String datePublication,
 			String resume, String contenu) {
-		//FIXME gérer la date JAVA vs SQL
 		requeteSQL="INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)"+
-					"values("+pk+","+id_wiki+","+datePublication+","+resume+","+contenu+")";
+				"values("+pk+","+id_wiki+","+datePublication+","+resume+","+contenu+")";
 		ajouterLigne(requeteSQL);
+		
 	}
 
 	@Override
-	public void sauverAudimat(int pk, double listeners, double playcount) {
+	public void sauverAudimat(String pk, String listeners, String playcount) {
 		requeteSQL="INSERT INTO AUDIMAT(cle_primaire, listeners, playcount)"+
 					"values("+pk+","+listeners+","+playcount+")";
 		ajouterLigne(requeteSQL);
 	}
 
 	@Override
-	public void sauverArtiste(int pk, int coord_artiste,
-			int images, int audimat, int wiki) {
+	public void sauverArtiste(String pk, String coord_artiste,
+			String images, String audimat, String wiki) {
 		requeteSQL="INSERT INTO ARTISTE(cle_primaire,id_name_url,images,audimat,wiki)"+
 				"values("+pk+","+coord_artiste+","+images+","+audimat+","+wiki+")";
 		ajouterLigne(requeteSQL);
 	}
 
 	@Override
-	public void sauverImages(int pk, String imageSmall,
+	public void sauverImages(String pk, String imageSmall,
 			String imageMedium, String imageLarge, String imageExtraLarge,
 			String imageMega) {
 		requeteSQL="INSERT INTO IMAGES(cle_primaire,imageSmall,imageMedium,imageLarge,imageExtraLarge,imageMega)"+
@@ -75,60 +76,59 @@ public class SauvegardeBddFormatOracle extends SauvegardeUnFormatPourLaBdd{
 	}
 
 	@Override
-	public void sauverSimilartist(Integer artiste1, Integer artiste2) {
+	public void sauverSimilartist(String artiste1, String artiste2) {
 		requeteSQL="INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)"+
 				"values("+artiste1+","+artiste2+")";
 		ajouterLigne(requeteSQL);
 	}
 
 	@Override
-	public void sauverChanson(int pk, int coord_chanson, Double duree,
-			int pkImages, int pkAudimat, int pkWiki, int pkArtiste) {
+	public void sauverChanson(String pk, String coord_chanson, String duree,
+			String pkImages, String pkAudimat, String pkWiki, String pkArtiste) {
 		requeteSQL="INSERT INTO CHANSON(cle_primaire,id_name_url,duree,images,audimat,wiki,artiste)"+
 				"values("+pk+","+coord_chanson+","+duree+","+pkImages+","+pkAudimat+","+pkWiki+","+pkArtiste+")";
 		ajouterLigne(requeteSQL);
 	}
 
 	@Override
-	public void sauverArtisteTag(Integer artiste, Integer tag) {
+	public void sauverArtisteTag(String artiste, String tag) {
 		requeteSQL="INSERT INTO CORRESP_ARTISTE_TAG(artiste,tag)"+
 				"values("+artiste+","+tag+")";
 		ajouterLigne(requeteSQL);
 	}
 
 	@Override
-	public void sauverChansonTag(Integer chanson, Integer tag) {
+	public void sauverChansonTag(String chanson, String tag) {
 		requeteSQL="INSERT INTO CORRESP_CHANSON_TAG(chanson,tag)"+
 				"values("+chanson+","+tag+")";
 		ajouterLigne(requeteSQL);
 	}
 
 	@Override
-	public void sauverTag(int pk, int coord_tag, Double reach, Double tagging,
-			int pkWiki) {
+	public void sauverTag(String pk, String coord_tag, String reach, String tagging,
+			String pkWiki) {
 		requeteSQL="INSERT INTO TAG(cle_primaire,id_name_url,reach,taggings,wiki)"+
 				"values("+pk+","+coord_tag+","+reach+","+tagging+","+pkWiki+")";
 		ajouterLigne(requeteSQL);
 	}
 
 	@Override
-	public void sauverCoord(int pk, String id, String name, String url) {
+	public void sauverCoord(String pk, String id, String name, String url) {
 		requeteSQL="INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)"+
 				"values("+pk+","+id+","+name+","+url+")";
 		ajouterLigne(requeteSQL);
 	}
 
 	@Override
-	public void sauverChansonAlbum(Integer album, Integer chanson) {
+	public void sauverChansonAlbum(String album, String chanson) {
 		requeteSQL="INSERT INTO CORRESP_CHANSON_ALBUM(album,chanson)"+
 				"values("+album+","+chanson+")";
 		ajouterLigne(requeteSQL);
 	}
 
 	@Override
-	public void sauverAlbum(int pk, int coord_album, Date date_sortie,
-			int pkImages, int pkAudimat, int pkWiki, Integer artiste) {
-		//FIXME gérer la date JAVA vs SQL
+	public void sauverAlbum(String pk, String coord_album, String date_sortie,
+			String pkImages, String pkAudimat, String pkWiki, String artiste) {
 		requeteSQL="INSERT INTO ALBUM(cle_primaire,id_name_url,date_sortie,images,audimat,wiki,artiste)"+
 				"values("+pk+","+coord_album+","+date_sortie+","+pkImages+","+pkAudimat+","+pkWiki+","+artiste+")";
 		ajouterLigne(requeteSQL);
@@ -155,9 +155,9 @@ public class SauvegardeBddFormatOracle extends SauvegardeUnFormatPourLaBdd{
 		
 		ajouterLigne(
 		"create table ID_NAME_URL(cle_primaire INTEGER,"+
-						"id VARCHAR2(256),"+
-						"name VARCHAR2(128),"+
-						"url VARCHAR2(256),"+
+						"id VARCHAR2(4000),"+
+						"name VARCHAR2(4000),"+
+						"url VARCHAR2(4000),"+
 						"PRIMARY KEY(cle_primaire))");
 		
 		ajouterLigne(
@@ -167,18 +167,18 @@ public class SauvegardeBddFormatOracle extends SauvegardeUnFormatPourLaBdd{
 						"PRIMARY KEY(cle_primaire))");
 		ajouterLigne(
 		"create table IMAGES(cle_primaire INTEGER,"+
-						"imageSmall VARCHAR2(256),"+
-						"imageMedium VARCHAR2(256),"+
-						"imageLarge VARCHAR2(256),"+
-						"imageExtraLarge VARCHAR2(256),"+
-						"imageMega VARCHAR2(256)," +
+						"imageSmall VARCHAR2(4000),"+
+						"imageMedium VARCHAR2(4000),"+
+						"imageLarge VARCHAR2(4000),"+
+						"imageExtraLarge VARCHAR2(4000),"+
+						"imageMega VARCHAR2(4000)," +
 						"PRIMARY KEY(cle_primaire))");
 		ajouterLigne(
 		"create table WIKI(cle_primaire INTEGER,"+
 						"id_wiki VARCHAR2(256),"+
 						"datePublication date,"+
-						"resume VARCHAR2(512),"+
-						"contenu VARCHAR2(2048)," +
+						"resume VARCHAR2(4000),"+
+						"contenu VARCHAR2(4000)," +
 						"PRIMARY KEY(cle_primaire))");
 		ajouterLigne(
 		"create table ARTISTE(cle_primaire INTEGER,"+
