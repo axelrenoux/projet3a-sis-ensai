@@ -72,7 +72,6 @@ public class UtilitaireDate {
 		int year=0, month=0, day=0;
 		String month_string;
 		Date d = null;
-		System.out.println("iciiiiiiiiiiii "+ s  + " " +s.length());
 		try{
 			if(s.length()==25){//le jour est sur 1 chiffre
 				day=Integer.parseInt(s.substring(4, 5));
@@ -84,11 +83,6 @@ public class UtilitaireDate {
 				month_string = s.substring(6, 9);
 				month = Integer.parseInt(correspondancesMois.get(month_string));
 				year = Integer.parseInt(s.substring(9,13)) -1900;
-				System.out.println(" day " + day);
-				System.out.println(" month_string " + month);
-				System.out.println(" month " + month);
-				System.out.println(" year " + year);
-				
 			}
 			if(!(day==0 && month==0 && year==0)){
 				d = new Date(year,month,day);	
