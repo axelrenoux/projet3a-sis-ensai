@@ -154,8 +154,8 @@ public class Album {
 		+ "playcount " + playcount + "\n "
 		+ "id " + ID +"\n ";
 		try{
+			descrip+="nom artiste "+ artiste.getName()+ "\n ";
 				descrip+="nb chansons "+ chansons.size()+ "\n ";
-				descrip+="nom artiste "+ artiste.getName()+ "\n ";
 				descrip+="nb tags "+ toptags.size()+ "\n ";
 				descrip+="resume wiki "+ wiki.getResume()+ "\n ";
 		}
