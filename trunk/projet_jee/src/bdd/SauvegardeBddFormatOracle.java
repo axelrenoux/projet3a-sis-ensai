@@ -1,5 +1,7 @@
 package bdd;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -18,12 +20,20 @@ public class SauvegardeBddFormatOracle extends SauvegardeUnFormatPourLaBdd{
 	}
 	
 	@Override
-	public void ecrireEnTete() {
+	public void ecrireEnTete(boolean lesTablesExistent) {
+		if(lesTablesExistent){
+			conserverDonneesExistantes();
+		}
 		try {fluxSortie = new PrintWriter(new FileWriter("requetesSQL.txt"));} 
 		catch (IOException e1) {e1.printStackTrace();}
 		try {SQLViaJDBC.connecter();}
 		catch (ConnectionException e) {e.printStackTrace();}
-		creerTables();
+		if(lesTablesExistent){
+			reecrireDonneesExistantes();
+		}
+		else{
+			creerTables();
+		}
 	}
 
 	@Override
@@ -227,5 +237,33 @@ public class SauvegardeBddFormatOracle extends SauvegardeUnFormatPourLaBdd{
 		ajouterLigne(
 		"create table CORRESP_CHANSON_ALBUM(album INTEGER references ALBUM(cle_primaire),"+
 										"chanson INTEGER references CHANSON(cle_primaire))");
+	}
+
+	@Override
+	public void conserverDonneesExistantes() {
+		try {
+			String ligneDevantEtreRecopiee;
+			PrintWriter fluxSortie2 = new PrintWriter(new FileWriter("requetesSQLinter.txt"));
+			BufferedReader fluxEntree = new BufferedReader(new FileReader("requetesSQL.txt"));
+			while (fluxEntree.ready()) {
+				ligneDevantEtreRecopiee = fluxEntree.readLine();
+				fluxSortie2.println(ligneDevantEtreRecopiee);
+			}
+			fluxEntree.close();
+			fluxSortie2.close(); 
+		}catch (IOException e1) {e1.printStackTrace();}
+	}
+
+	@Override
+	public void reecrireDonneesExistantes() {
+		try {
+			String ligneDevantEtreRecopiee;
+			BufferedReader fluxEntree2 = new BufferedReader(new FileReader("requetesSQLinter.txt"));
+			while (fluxEntree2.ready()) {
+				ligneDevantEtreRecopiee = fluxEntree2.readLine();
+				fluxSortie.println(ligneDevantEtreRecopiee);
+			}
+			fluxEntree2.close();
+		}catch (IOException e1) {e1.printStackTrace();}
 	}
 }

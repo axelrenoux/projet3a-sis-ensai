@@ -6,6 +6,9 @@ import java.io.PrintWriter;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+*@deprecated
+*/
 public class SauvegardeBddFormatXmlFichierTxt extends SauvegardeUnFormatPourLaBdd{
 	//Comporte la liste d'imbrications de balises dans laquelles nous écrivont actuellement
 	//L'identation (nb de tabulations en début de ligne) est donnée par le nombre d'élément dans cette liste
@@ -50,7 +53,8 @@ public class SauvegardeBddFormatXmlFichierTxt extends SauvegardeUnFormatPourLaBd
 	}
 	
 	@Override
-	public void ecrireEnTete() {
+	public void ecrireEnTete(boolean lesTablesExistent) {
+		//XXX le boolean lesTablesExistent n'est pas traité pour l'instant ici
 		try {fluxSortie = new PrintWriter(new FileWriter("XMLenCours.xml"));} 
 		catch (IOException e1) {e1.printStackTrace();}
 		/* TODO : 
@@ -151,6 +155,18 @@ public class SauvegardeBddFormatXmlFichierTxt extends SauvegardeUnFormatPourLaBd
 	@Override
 	public void sauverAlbum(String pk, String coord_album, String string,
 			String pkImages, String pkAudimat, String pkWiki, String artiste) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void conserverDonneesExistantes() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void reecrireDonneesExistantes() {
 		// TODO Auto-generated method stub
 		
 	}

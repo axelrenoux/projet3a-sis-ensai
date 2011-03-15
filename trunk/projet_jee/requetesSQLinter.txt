@@ -1,0 +1,704 @@
+drop table ARTISTES_SIMILAIRES
+drop table CORRESP_ARTISTE_TAG
+drop table CORRESP_CHANSON_TAG
+drop table CORRESP_ALBUM_TAG
+drop table CORRESP_CHANSON_ALBUM
+drop table CHANSON
+drop table ALBUM
+drop table TAG
+drop table ARTISTE
+drop table AUDIMAT
+drop table IMAGES
+drop table WIKI
+drop table ID_NAME_URL
+create table ID_NAME_URL(cle_primaire INTEGER,id VARCHAR2(4000),name VARCHAR2(4000),url VARCHAR2(4000),PRIMARY KEY(cle_primaire))
+create table AUDIMAT(cle_primaire INTEGER,listeners INTEGER,playcount INTEGER,PRIMARY KEY(cle_primaire))
+create table IMAGES(cle_primaire INTEGER,imageSmall VARCHAR2(4000),imageMedium VARCHAR2(4000),imageLarge VARCHAR2(4000),imageExtraLarge VARCHAR2(4000),imageMega VARCHAR2(4000),PRIMARY KEY(cle_primaire))
+create table WIKI(cle_primaire INTEGER,id_wiki VARCHAR2(256),datePublication date,resume VARCHAR2(4000),contenu VARCHAR2(4000),PRIMARY KEY(cle_primaire))
+create table ARTISTE(cle_primaire INTEGER,id_name_url INTEGER references ID_NAME_URL(cle_primaire),images INTEGER references IMAGES(cle_primaire),audimat INTEGER references AUDIMAT(cle_primaire),wiki INTEGER references WIKI(cle_primaire),PRIMARY KEY(cle_primaire))
+create table CHANSON(cle_primaire INTEGER,id_name_url INTEGER references ID_NAME_URL(cle_primaire),duree FLOAT,images INTEGER references IMAGES(cle_primaire),audimat INTEGER references AUDIMAT(cle_primaire),wiki INTEGER references WIKI(cle_primaire),artiste INTEGER references ARTISTE(cle_primaire),PRIMARY KEY(cle_primaire))
+create table ALBUM(cle_primaire INTEGER,id_name_url INTEGER references ID_NAME_URL(cle_primaire),date_sortie date,images INTEGER references IMAGES(cle_primaire),audimat INTEGER references AUDIMAT(cle_primaire),wiki INTEGER references WIKI(cle_primaire),artiste INTEGER references ARTISTE(cle_primaire),PRIMARY KEY(cle_primaire))
+create table TAG(cle_primaire INTEGER,id_name_url INTEGER references ID_NAME_URL(cle_primaire),reach FLOAT,taggings FLOAT,wiki INTEGER references WIKI(cle_primaire),PRIMARY KEY(cle_primaire))
+create table ARTISTES_SIMILAIRES(artiste1 INTEGER references ARTISTE(cle_primaire),artiste2 INTEGER references ARTISTE(cle_primaire))
+create table CORRESP_ARTISTE_TAG(artiste INTEGER references ARTISTE(cle_primaire),tag INTEGER references TAG(cle_primaire))
+create table CORRESP_CHANSON_TAG(chanson INTEGER references CHANSON(cle_primaire),tag INTEGER references TAG(cle_primaire))
+create table CORRESP_ALBUM_TAG(tag INTEGER references TAG(cle_primaire),album INTEGER references ALBUM(cle_primaire))
+create table CORRESP_CHANSON_ALBUM(album INTEGER references ALBUM(cle_primaire),chanson INTEGER references CHANSON(cle_primaire))
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(2,'2','','%27%27','%27%27')
+INSERT INTO AUDIMAT(cle_primaire, listeners, playcount)values(3,0.0,0.0)
+INSERT INTO IMAGES(cle_primaire,imageSmall,imageMedium,imageLarge,imageExtraLarge,imageMega)values(4,'http://userserve-ak.last.fm/serve/34/8452813.jpg','http://userserve-ak.last.fm/serve/64/8452813.jpg','http://userserve-ak.last.fm/serve/126/8452813.jpg','http://userserve-ak.last.fm/serve/252/8452813.jpg','http://userserve-ak.last.fm/serve/_/8452813/Peter++Sloane.jpg')
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(5,'%27%27',' Sloane','http://www.last.fm/music/Peter%2B%2526%2BSloane')
+INSERT INTO ARTISTE(cle_primaire,id_name_url,images,audimat,wiki)values(1,5,4,3,2)
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(7,'7','','Frederick Francois (Francesco Barracatto) is born in Sicily on 3 June 1950. He is only two years old when his family is leaving their village to establish themselves in Tilleur, Wallony, near Liege, a little county in Belgium. He did inherit his fondness of music and singing from his father Peppino. When he is 12 years old he decides to buy his first guitar and joines the band Les Eperviers. His father is approving this decision by helping hom to acced at the Music Accademy.','Frederick Francois (Francesco Barracatto) is born in Sicily on 3 June 1950. He is only two years old when his family is leaving their village to establish themselves in Tilleur, Wallony, near Liege, a little county in Belgium. He did inherit his fondness of music and singing from his father Peppino. When he is 12 years old he decides to buy his first guitar and joines the band Les Eperviers. His father is approving this decision by helping hom to acced at the Music Accademy. This is a succesful thing to do, because Frederic Francois is winning that same year the singing contest Festival du Chatelet, which allows him to make his first record. But he is making his real debut in 1969 when he makes his first 45 tours record whith his actual nickname. He gets married and have a family of his own while he is still young. This thing happens in 1971, the year when his first hits are launched, such like Je nai jamais aime comme je taime, Laisse-moi vivre ma vie, Chicago and many others. As a tribute to his increasing charismatical success in France, he also conquered by his music Canada, Belgium and the Switzerland. The hits are still going on with titles like  Mon coeur te dit Je taime in 1984 and  Je taime a litallienne in 1985. Many times till now Frederic Francois is performing many concerts in the Olympia Hall in Paris, such as in the years 1994, 1996, 1998 or 2000. If the name of Frederick Francois is mostly related to the 70s decade, he still has a great fame and huge success especially among the French music listeners.
+    
+User-contributed text is available under the Creative Commons By-SA License and may also be available under the GNU FDL.')
+INSERT INTO AUDIMAT(cle_primaire, listeners, playcount)values(8,1309.0,7750.0)
+INSERT INTO IMAGES(cle_primaire,imageSmall,imageMedium,imageLarge,imageExtraLarge,imageMega)values(9,'%27%27','%27%27','%27%27','%27%27','%27%27')
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(10,'%27%27','Frédéric François','http://www.last.fm/music/Fr%C3%A9d%C3%A9ric+Fran%C3%A7ois')
+INSERT INTO ARTISTE(cle_primaire,id_name_url,images,audimat,wiki)values(6,10,9,8,7)
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(12,'12','','%27%27','%27%27')
+INSERT INTO AUDIMAT(cle_primaire, listeners, playcount)values(13,0.0,0.0)
+INSERT INTO IMAGES(cle_primaire,imageSmall,imageMedium,imageLarge,imageExtraLarge,imageMega)values(14,'http://userserve-ak.last.fm/serve/34/453109.jpg','http://userserve-ak.last.fm/serve/64/453109.jpg','http://userserve-ak.last.fm/serve/126/453109.jpg','http://userserve-ak.last.fm/serve/252/453109.jpg','http://userserve-ak.last.fm/serve/_/453109/Frank+Michael.jpg')
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(15,'%27%27','Frank Michael','http://www.last.fm/music/Frank+Michael')
+INSERT INTO ARTISTE(cle_primaire,id_name_url,images,audimat,wiki)values(11,15,14,13,12)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(11,6)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(6,11)
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(17,'17','','%27%27','%27%27')
+INSERT INTO AUDIMAT(cle_primaire, listeners, playcount)values(18,0.0,0.0)
+INSERT INTO IMAGES(cle_primaire,imageSmall,imageMedium,imageLarge,imageExtraLarge,imageMega)values(19,'http://userserve-ak.last.fm/serve/34/84962.jpg','http://userserve-ak.last.fm/serve/64/84962.jpg','http://userserve-ak.last.fm/serve/126/84962.jpg','http://userserve-ak.last.fm/serve/252/84962.jpg','http://userserve-ak.last.fm/serve/_/84962/Frederic+Francois.jpg')
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(20,'%27%27','Frederic Francois','http://www.last.fm/music/Frederic+Francois')
+INSERT INTO ARTISTE(cle_primaire,id_name_url,images,audimat,wiki)values(16,20,19,18,17)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(16,6)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(6,16)
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(22,'22','','%27%27','%27%27')
+INSERT INTO AUDIMAT(cle_primaire, listeners, playcount)values(23,0.0,0.0)
+INSERT INTO IMAGES(cle_primaire,imageSmall,imageMedium,imageLarge,imageExtraLarge,imageMega)values(24,'http://userserve-ak.last.fm/serve/34/37707371.jpg','http://userserve-ak.last.fm/serve/64/37707371.jpg','http://userserve-ak.last.fm/serve/126/37707371.jpg','http://userserve-ak.last.fm/serve/252/37707371.jpg','http://userserve-ak.last.fm/serve/_/37707371/Phil+Barney+Barney.jpg')
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(25,'%27%27','Phil Barney','http://www.last.fm/music/Phil+Barney')
+INSERT INTO ARTISTE(cle_primaire,id_name_url,images,audimat,wiki)values(21,25,24,23,22)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(21,6)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(6,21)
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(27,'27','','%27%27','%27%27')
+INSERT INTO AUDIMAT(cle_primaire, listeners, playcount)values(28,0.0,0.0)
+INSERT INTO IMAGES(cle_primaire,imageSmall,imageMedium,imageLarge,imageExtraLarge,imageMega)values(29,'http://userserve-ak.last.fm/serve/34/17852289.jpg','http://userserve-ak.last.fm/serve/64/17852289.jpg','http://userserve-ak.last.fm/serve/126/17852289.jpg','http://userserve-ak.last.fm/serve/252/17852289.jpg','http://userserve-ak.last.fm/serve/500/17852289/Christian+Delagrange+07578.jpg')
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(30,'%27%27','Christian Delagrange','http://www.last.fm/music/Christian+Delagrange')
+INSERT INTO ARTISTE(cle_primaire,id_name_url,images,audimat,wiki)values(26,30,29,28,27)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(26,6)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(6,26)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(6,1)
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(32,'32','','%27Balada%27 is Spanish for <a href="http://www.last.fm/tag/ballad" class="bbcode_tag" rel="tag">ballad</a>','%27Balada%27 is Spanish for <a href="http://www.last.fm/tag/ballad" class="bbcode_tag" rel="tag">ballad</a>')
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(33,'31','balada','http://www.last.fm/tag/balada')
+INSERT INTO TAG(cle_primaire,id_name_url,reach,taggings,wiki)values(31,33,822.0,2046.0,32)
+INSERT INTO CORRESP_ARTISTE_TAG(artiste,tag)values(6,31)
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(35,'35','','%27%27','%27%27')
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(36,'34','frederic francois','http://www.last.fm/tag/frederic%20francois')
+INSERT INTO TAG(cle_primaire,id_name_url,reach,taggings,wiki)values(34,36,1.0,2.0,35)
+INSERT INTO CORRESP_ARTISTE_TAG(artiste,tag)values(6,34)
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(38,'38','','Music with Spanish lyrics or music by artists and bands from Spain.','Music with Spanish lyrics or music by artists and bands from Spain.')
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(39,'37','spanish','http://www.last.fm/tag/spanish')
+INSERT INTO TAG(cle_primaire,id_name_url,reach,taggings,wiki)values(37,39,21401.0,81708.0,38)
+INSERT INTO CORRESP_ARTISTE_TAG(artiste,tag)values(6,37)
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(41,'41','','%27%27','%27%27')
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(42,'40','french singer','http://www.last.fm/tag/french%20singer')
+INSERT INTO TAG(cle_primaire,id_name_url,reach,taggings,wiki)values(40,42,82.0,213.0,41)
+INSERT INTO CORRESP_ARTISTE_TAG(artiste,tag)values(6,40)
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(44,'44','','Belgium is a cultural crossroads where Flemish Dutch-speaking and Walloon French-speaking inhabitants mix with German minorities and immigrant communities from Republic of the Congo and other distant countries.  Classical music  During the centuries Belgium produced several notable names in the field of classical music. In the 15th and 16th century composers like Guillaume Dufay, Orlando di Lasso, Josquin des Prez reached European acclaim. André Ernest Modeste Grétry was the most famous composer- born in what is now called Belgium- of the 18th century.','Belgium is a cultural crossroads where Flemish Dutch-speaking and Walloon French-speaking inhabitants mix with German minorities and immigrant communities from Republic of the Congo and other distant countries.
+ 
+ <strong>Classical music</strong>
+ 
+ During the centuries Belgium produced several notable names in the field of classical music. In the 15th and 16th century composers like Guillaume Dufay, Orlando di Lasso, Josquin des Prez reached European acclaim. André Ernest Modeste Grétry was the most famous composer- born in what is now called Belgium- of the 18th century. The 19th century supplied composers like Henri Vieuxtemps, César Franck, Guillaume Lekeu and Eugène Ysaÿe. The famous German composer Ludwig van Beethoven was of Flemish descent and his grandfather (who was born in Mechelen). At the end of the 20th century the most notable Belgian composer was Wim Mertens.
+ 
+ In the field of opera, baritons Jules Bastin and José van Dam have become the most famous and internationally successful Belgian opera singers. In the lighter classical genre Flemish singer Helmut Lotti reached huge international success with his interpretations of popular opera songs for large audiences.
+ 
+ <strong>Blues and Jazz</strong>
+ 
+ One of the most famous jazz instruments, the saxophone, was invented by a Belgian: Adolphe Sax.
+ 
+ Some known Belgian blues artists are Elmore D (who sings in English and Walloon dialect), the Flemish Roland van Campenhout (also known as Roland) and the Brussels band Tomahawk Blues Band.
+ 
+ In the 1930s, the Belgian gypsy guitarist Django Reinhardt became one of the first important jazz musicians to be born in Europe, and one of the most important jazz guitarists of all time. In 1949 Toots Thielemans joined a jam session in Paris with Sidney Bechet, Charlie Parker, Miles Davis, Max Roach and others. He moved to the US in 1952 where he was a member of Charlie Parker%27s All-Stars. Toots Thielemans is often credited by jazz aficionados and jazz critics of being the greatest jazz mouth hamonica player of the century. His music has been used in films like Midnight Cowboy and Turkish Delight, and television series such as Sesame Street and Baantjer. Other wellknown Belgian artists are Aka Moon, Bobby Jaspar, Bert Joris, Philip Catherine, Steve Houben, Octurn and René Thomas
+ 
+ <strong>Folk and other traditional music</strong>
+ 
+ Bobbejaan Schoepen has been a pioneer in Belgian vaudeville and popmusic since the late 1940s. Not only was he the first Belgian singer to manage an international breakthrough, he was also the first to use modern equipment, a personal tourbus and a system of artist sponsoring. He also introduced the first country &amp; western recordings in the Low Countries and Germany. In the 1950s Bobbejaan Schoepen recorded his own absolutely crazy folk music often singing in the dialect of his native Brussels. He is also a virtuoso whistler.
+ 
+ During the 1950s and following decades the most popular, enduring, commercial and critical successful Flemish singer was Will Tura, whose most well known hit in Flanders is &quot;Ik ben zo eenzaam zonder jou&quot; (1963) (&quot;I%27m so lonely without you&quot;).
+ 
+ The most popular and enduring artists in Flanders and the Netherlands who sing in either their Flemish dialect or standard Dutch are Eddy Wally, Raymond van het Groenewoud, De Kreuners, Clouseau, Gorki (band), Noordkaap and de Fixkes.
+ 
+ Walloon folk music has not had as vibrant a revival as Flemish, but artists like Coïncidence, Remy Dubois, Luc Pilartz, Rue du Village and Claude Flagel have kept the folk traditions alive.
+ 
+ <strong>Chanson</strong>
+ 
+ The greatest Belgian chansonnier was Jacques Brel, whose classic songs have been covered by several international artists such as David Bowie, Frank Sinatra, Scott Walker and Terry Jacks. Others like Salvatore Adamo, Pierre Rapsat, Arno, Maurane, Axelle Red and Lara Fabian have also enjoyed some success in other French-speaking countries.
+ 
+ <strong>Po')
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(45,'43','belgium','http://www.last.fm/tag/belgium')
+INSERT INTO TAG(cle_primaire,id_name_url,reach,taggings,wiki)values(43,45,3432.0,13082.0,44)
+INSERT INTO CORRESP_ARTISTE_TAG(artiste,tag)values(6,43)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(1,6)
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(47,'47','','%27%27','%27%27')
+INSERT INTO AUDIMAT(cle_primaire, listeners, playcount)values(48,0.0,0.0)
+INSERT INTO IMAGES(cle_primaire,imageSmall,imageMedium,imageLarge,imageExtraLarge,imageMega)values(49,'http://userserve-ak.last.fm/serve/34/3437906.jpg','http://userserve-ak.last.fm/serve/64/3437906.jpg','http://userserve-ak.last.fm/serve/126/3437906.jpg','http://userserve-ak.last.fm/serve/252/3437906.jpg','http://userserve-ak.last.fm/serve/_/3437906/Liz+Brady+bradyliz.jpg')
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(50,'%27%27','Liz Brady','http://www.last.fm/music/Liz+Brady')
+INSERT INTO ARTISTE(cle_primaire,id_name_url,images,audimat,wiki)values(46,50,49,48,47)
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(52,'52','','Alice Donadel, commonly known as Alice Dona, was born on 17 February, 1946, in Maisons-Alfort, Paris, France, to a French mother and an Italian father.  She released her first EP in 1963, and her first single was &quot;Mon train de banlieue - Demain,jai dix sept ans.&quot;  Her career as a singer during the French ye-ye scene is notable for six singles, and she married Bernard Ricci in 1965.    Dona was also a songwriter for other artists which include Sylvie Vartan, Joe Dassin and Claude Francois.  She%27s listed as &quot;composer&quot; for the 1977 French film, Le Dernier baiser or The Last Kiss.','Alice Donadel, commonly known as Alice Dona, was born on 17 February, 1946, in Maisons-Alfort, Paris, France, to a French mother and an Italian father.
+ 
+ She released her first EP in 1963, and her first single was &quot;Mon train de banlieue - Demain,jai dix sept ans.&quot;  Her career as a singer during the French ye-ye scene is notable for six singles, and she married Bernard Ricci in 1965.  
+ 
+ Dona was also a songwriter for other artists which include Sylvie Vartan, Joe Dassin and Claude Francois.  She%27s listed as &quot;composer&quot; for the 1977 French film, <em>Le Dernier baiser</em> or <em>The Last Kiss</em>.  
+    
+User-contributed text is available under the Creative Commons By-SA License and may also be available under the GNU FDL.')
+INSERT INTO AUDIMAT(cle_primaire, listeners, playcount)values(53,6250.0,22617.0)
+INSERT INTO IMAGES(cle_primaire,imageSmall,imageMedium,imageLarge,imageExtraLarge,imageMega)values(54,'%27%27','%27%27','%27%27','%27%27','%27%27')
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(55,'%27%27','Alice Dona','http://www.last.fm/music/Alice+Dona')
+INSERT INTO ARTISTE(cle_primaire,id_name_url,images,audimat,wiki)values(51,55,54,53,52)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(51,46)
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(57,'57','','%27%27','%27%27')
+INSERT INTO AUDIMAT(cle_primaire, listeners, playcount)values(58,0.0,0.0)
+INSERT INTO IMAGES(cle_primaire,imageSmall,imageMedium,imageLarge,imageExtraLarge,imageMega)values(59,'http://userserve-ak.last.fm/serve/34/13072707.jpg','http://userserve-ak.last.fm/serve/64/13072707.jpg','http://userserve-ak.last.fm/serve/126/13072707.jpg','http://userserve-ak.last.fm/serve/252/13072707.jpg','http://userserve-ak.last.fm/serve/_/13072707/Ria+Bartok.jpg')
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(60,'%27%27','Ria Bartok','http://www.last.fm/music/Ria+Bartok')
+INSERT INTO ARTISTE(cle_primaire,id_name_url,images,audimat,wiki)values(56,60,59,58,57)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(56,51)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(51,56)
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(62,'62','','%27%27','%27%27')
+INSERT INTO AUDIMAT(cle_primaire, listeners, playcount)values(63,0.0,0.0)
+INSERT INTO IMAGES(cle_primaire,imageSmall,imageMedium,imageLarge,imageExtraLarge,imageMega)values(64,'http://userserve-ak.last.fm/serve/34/3564178.jpg','http://userserve-ak.last.fm/serve/64/3564178.jpg','http://userserve-ak.last.fm/serve/126/3564178.jpg','http://userserve-ak.last.fm/serve/252/3564178.jpg','http://userserve-ak.last.fm/serve/_/3564178/Christie+Laume+frenchpop.jpg')
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(65,'%27%27','Christie Laume','http://www.last.fm/music/Christie+Laume')
+INSERT INTO ARTISTE(cle_primaire,id_name_url,images,audimat,wiki)values(61,65,64,63,62)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(61,51)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(51,61)
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(67,'67','','%27%27','%27%27')
+INSERT INTO AUDIMAT(cle_primaire, listeners, playcount)values(68,0.0,0.0)
+INSERT INTO IMAGES(cle_primaire,imageSmall,imageMedium,imageLarge,imageExtraLarge,imageMega)values(69,'http://userserve-ak.last.fm/serve/34/38946555.jpg','http://userserve-ak.last.fm/serve/64/38946555.jpg','http://userserve-ak.last.fm/serve/126/38946555.jpg','http://userserve-ak.last.fm/serve/252/38946555.jpg','http://userserve-ak.last.fm/serve/_/38946555/Anne+Kern.jpg')
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(70,'%27%27','Anne Kern','http://www.last.fm/music/Anne+Kern')
+INSERT INTO ARTISTE(cle_primaire,id_name_url,images,audimat,wiki)values(66,70,69,68,67)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(66,51)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(51,66)
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(72,'72','','%27%27','%27%27')
+INSERT INTO AUDIMAT(cle_primaire, listeners, playcount)values(73,0.0,0.0)
+INSERT INTO IMAGES(cle_primaire,imageSmall,imageMedium,imageLarge,imageExtraLarge,imageMega)values(74,'http://userserve-ak.last.fm/serve/34/40983867.jpg','http://userserve-ak.last.fm/serve/64/40983867.jpg','http://userserve-ak.last.fm/serve/126/40983867.jpg','http://userserve-ak.last.fm/serve/252/40983867.jpg','http://userserve-ak.last.fm/serve/_/40983867/Les+Roche+Martin+Les+Roches+Martin.jpg')
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(75,'%27%27','Les Roche Martin','http://www.last.fm/music/Les+Roche+Martin')
+INSERT INTO ARTISTE(cle_primaire,id_name_url,images,audimat,wiki)values(71,75,74,73,72)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(71,51)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(51,71)
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(77,'77','','Yé-yé was a style of pop music that emerged out of France, Québec and Spain in the early 1960s. The term &quot;yé-yé&quot; derived from &quot;yeah! yeah!&quot; yell.','Yé-yé was a style of pop music that emerged out of France, Québec and Spain in the early 1960s. The term &quot;yé-yé&quot; derived from &quot;yeah! yeah!&quot; yell.')
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(78,'76','ye-ye','http://www.last.fm/tag/ye-ye')
+INSERT INTO TAG(cle_primaire,id_name_url,reach,taggings,wiki)values(76,78,920.0,5177.0,77)
+INSERT INTO CORRESP_ARTISTE_TAG(artiste,tag)values(51,76)
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(80,'80','','Music or artists tagged with &quot;French&quot; have some relation to France, the French language, or French culture. For artists who are actually from France, go to <a href="http://www.last.fm/tag/france" class="bbcode_tag" rel="tag">france</a>. For music written in French, go to <a href="http://www.last.fm/tag/french%20lyrics" class="bbcode_tag" rel="tag">french lyrics</a>.','Music or artists tagged with &quot;French&quot; have some relation to France, the French language, or French culture. For artists who are actually from France, go to <a href="http://www.last.fm/tag/france" class="bbcode_tag" rel="tag">france</a>. For music written in French, go to <a href="http://www.last.fm/tag/french%20lyrics" class="bbcode_tag" rel="tag">french lyrics</a>.')
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(81,'79','french','http://www.last.fm/tag/french')
+INSERT INTO TAG(cle_primaire,id_name_url,reach,taggings,wiki)values(79,81,44816.0,199106.0,80)
+INSERT INTO CORRESP_ARTISTE_TAG(artiste,tag)values(51,79)
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(83,'83','','Music from 1960 -1969.  
+ The rise of the counterculture, particularly among the youth, created a huge market for rock, soul, pop, reggae and blues music produced by drug-culture influenced bands such as The Beatles, The Doors, The Rolling Stones, Led Zeppelin, Cream, The Grateful Dead, Jefferson Airplane, Janis Joplin, Bob Marley, Deep Purple, The Who, Sly and the Family Stone, Jimi Hendrix Experience, and The Incredible String Band.','Music from 1960 -1969.
+ 
+ 
+ The rise of the counterculture, particularly among the youth, created a huge market for rock, soul, pop, reggae and blues music produced by drug-culture influenced bands such as The Beatles, The Doors, The Rolling Stones, Led Zeppelin, Cream, The Grateful Dead, Jefferson Airplane, Janis Joplin, Bob Marley, Deep Purple, The Who, Sly and the Family Stone, Jimi Hendrix Experience, and The Incredible String Band. It also saw a major rise in protest songs  and the folk genre. Pioneers in the US were Bob Dylan, The Mamas and the Papas, and Joan Baez; in England, Donovan helped create the folk rock sound.')
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(84,'82','60s','http://www.last.fm/tag/60s')
+INSERT INTO TAG(cle_primaire,id_name_url,reach,taggings,wiki)values(82,84,38374.0,263149.0,83)
+INSERT INTO CORRESP_ARTISTE_TAG(artiste,tag)values(51,82)
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(86,'86','','Music with this tag features female lead vocalists. The tag is not limited to any one musical genre.','Music with this tag features female lead vocalists. The tag is not limited to any one musical genre.')
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(87,'85','female vocalists','http://www.last.fm/tag/female%20vocalists')
+INSERT INTO TAG(cle_primaire,id_name_url,reach,taggings,wiki)values(85,87,134649.0,1172605.0,86)
+INSERT INTO CORRESP_ARTISTE_TAG(artiste,tag)values(51,85)
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(89,'89','','%27%27','%27%27')
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(90,'88','french 60s','http://www.last.fm/tag/french%2060s')
+INSERT INTO TAG(cle_primaire,id_name_url,reach,taggings,wiki)values(88,90,259.0,1111.0,89)
+INSERT INTO CORRESP_ARTISTE_TAG(artiste,tag)values(51,88)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(46,51)
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(92,'92','','%27%27','%27%27')
+INSERT INTO AUDIMAT(cle_primaire, listeners, playcount)values(93,0.0,0.0)
+INSERT INTO IMAGES(cle_primaire,imageSmall,imageMedium,imageLarge,imageExtraLarge,imageMega)values(94,'%27%27','%27%27','%27%27','%27%27','%27%27')
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(95,'%27%27','%27%27','%27%27')
+INSERT INTO ARTISTE(cle_primaire,id_name_url,images,audimat,wiki)values(91,95,94,93,92)
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(97,'97','','%27%27','%27%27')
+INSERT INTO AUDIMAT(cle_primaire, listeners, playcount)values(98,0.0,0.0)
+INSERT INTO IMAGES(cle_primaire,imageSmall,imageMedium,imageLarge,imageExtraLarge,imageMega)values(99,'http://userserve-ak.last.fm/serve/34/33222883.jpg','http://userserve-ak.last.fm/serve/64/33222883.jpg','http://userserve-ak.last.fm/serve/126/33222883.jpg','http://userserve-ak.last.fm/serve/252/33222883.jpg','http://userserve-ak.last.fm/serve/500/33222883/Marie+Lafort+07513775.jpg')
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(100,'%27%27','Marie Laforêt','http://www.last.fm/music/Marie+Lafor%C3%AAt')
+INSERT INTO ARTISTE(cle_primaire,id_name_url,images,audimat,wiki)values(96,100,99,98,97)
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(102,'102','','Mireille Mathieu (born July 22, 1946) is a French singer, who besides being very successful in her own country, became a star of international stature, recording in several languages.  
+ She was born in Avignon, Vaucluse, France, the oldest daughter of a poor family of fourteen children. She began singing as a small child, appearing in public at the age of four, singing in her church. As a young girl she worked in a factory, where she saved her money to pay for singing lessons.  ','<strong>Mireille Mathieu</strong> (born July 22, 1946) is a French singer, who besides being very successful in her own country, became a star of international stature, recording in several languages.
+ 
+ 
+ She was born in Avignon, Vaucluse, France, the oldest daughter of a poor family of fourteen children. She began singing as a small child, appearing in public at the age of four, singing in her church. As a young girl she worked in a factory, where she saved her money to pay for singing lessons.
+ 
+ Discovered by Johnny Stark, manager of France%27s biggest star at the time, <a href="http://www.last.fm/music/Johnny+Hallyday">Johnny Hallyday</a>, she was tutored by orchestra leader <a href="http://www.last.fm/music/Paul+Mauriat">Paul Mauriat</a> and song writer André Pascal who wrote &quot;Mon crédo&quot;, &quot;Viens dans ma rue&quot;, &quot;La première étoile&quot; and many other hits for her . After her television performance in 1965 and debut run at the Paris Olympia, she was immediately hailed as the next <a href="http://www.last.fm/music/%C3%89dith+Piaf?q=%C3%89dith+Piaf">Édith Piaf</a>, such was her haunting voice.
+ 
+ Singles such as &quot;Mon Credo&quot; and &quot;C%27est Ton Nom&quot; made her a huge star in France and all over Europe while making her a big success in North America and Mexico. Her French cover of <a href="http://www.last.fm/music/Engelbert+Humperdinck">Engelbert Humperdinck</a>%27s &quot;The Last Waltz&quot; generated much publicity in Great Britain and with hit after hit, she soon toured Canada and the United States where she appeared on the Ed Sullivan Show and the Danny Kaye Show. In Las Vegas, she sang with <a href="http://www.last.fm/music/Dean+Martin">Dean Martin</a> and <a href="http://www.last.fm/music/Frank+Sinatra">Frank Sinatra</a> to great applause.
+ 
+ Still much in demand, she continues to perform regularly. She travels frequently, appearing at such venues as New York City%27s Carnegie Hall, Sport Palace in Montreal, Universal Amphitheatre in Los Angeles and Ice Palace of St. Petersburg. She has sold about 150 million copies of her albums in her 40 year career, recorded about 1200 songs in 9 languages, and was the first western singer in history who gave concerts in China. Over the years she sang duets with such luminaries as <a href="http://www.last.fm/music/Charles+Aznavour">Charles Aznavour</a>, <a href="http://www.last.fm/music/Barry+Manilow">Barry Manilow</a>, <a href="http://www.last.fm/music/Paul+Anka">Paul Anka</a>, <a href="http://www.last.fm/music/Pl%C3%A1cido+Domingo">Plácido Domingo</a>, <a href="http://www.last.fm/music/Julio+Iglesias">Julio Iglesias</a>, <a href="http://www.last.fm/music/Tom+Jones">Tom Jones</a> and others.
+ 
+ Songs such as &quot;Acropolis adieu,&quot; &quot;Ne me quitte pas,&quot; and &quot;Santa Maria de la mer,&quot; are considered classics. Her French version of <a href="http://www.last.fm/music/Roy+Orbison">Roy Orbison</a>%27s ballad, &quot;Blue Bayou&quot;, is regarded by many as one of the best covers of that popular song.
+ 
+ In 1989, President François Mitterrand invited Mireille Mathieu to sing a tribute to General de Gaulle. She gave a series of concerts at the Palais des Congrès in Paris in December 1990. Three years later, she released an album devoted to her all-time idol, <a href="http://www.last.fm/music/%C3%89dith+Piaf?q=%C3%89dith+Piaf">Édith Piaf</a>.
+ 
+ In January 1996, &quot;Vous lui direz&&quot; was released. Maxime le Forestier wrote one of the titles, &quot;A la moitié de la distance&quot;. She did not choose to perform live in France to promote the album, preferring rather to go to Los Angeles USA, where she triumphed on November 14th with her vibrant tribute to another of her idols, <a href="http://www.last.fm/music/Judy+Garland">Judy Garland</a>. The performance was a tremendous success she was dressed by Provence couturier, Christian Lacroix and looked stunning for the performance. [1]
+ 
+ In 2002, she released her 37th French albu')
+INSERT INTO AUDIMAT(cle_primaire, listeners, playcount)values(103,60544.0,467167.0)
+INSERT INTO IMAGES(cle_primaire,imageSmall,imageMedium,imageLarge,imageExtraLarge,imageMega)values(104,'%27%27','%27%27','%27%27','%27%27','%27%27')
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(105,'%27%27','Mireille Mathieu','http://www.last.fm/music/Mireille+Mathieu')
+INSERT INTO ARTISTE(cle_primaire,id_name_url,images,audimat,wiki)values(101,105,104,103,102)
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(107,'107','','%27%27','%27%27')
+INSERT INTO AUDIMAT(cle_primaire, listeners, playcount)values(108,0.0,0.0)
+INSERT INTO IMAGES(cle_primaire,imageSmall,imageMedium,imageLarge,imageExtraLarge,imageMega)values(109,'http://userserve-ak.last.fm/serve/34/34678401.jpg','http://userserve-ak.last.fm/serve/64/34678401.jpg','http://userserve-ak.last.fm/serve/126/34678401.jpg','http://userserve-ak.last.fm/serve/252/34678401.jpg','http://userserve-ak.last.fm/serve/500/34678401/Salvatore+Adamo+3372550756_f26e1c59d2_o.jpg')
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(110,'%27%27','Salvatore Adamo','http://www.last.fm/music/Salvatore+Adamo')
+INSERT INTO ARTISTE(cle_primaire,id_name_url,images,audimat,wiki)values(106,110,109,108,107)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(106,101)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(101,106)
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(112,'112','','%27%27','%27%27')
+INSERT INTO AUDIMAT(cle_primaire, listeners, playcount)values(113,0.0,0.0)
+INSERT INTO IMAGES(cle_primaire,imageSmall,imageMedium,imageLarge,imageExtraLarge,imageMega)values(114,'http://userserve-ak.last.fm/serve/34/26078933.jpg','http://userserve-ak.last.fm/serve/64/26078933.jpg','http://userserve-ak.last.fm/serve/126/26078933.jpg','http://userserve-ak.last.fm/serve/252/26078933.jpg','http://userserve-ak.last.fm/serve/500/26078933/Sheila.jpg')
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(115,'%27%27','Sheila','http://www.last.fm/music/Sheila')
+INSERT INTO ARTISTE(cle_primaire,id_name_url,images,audimat,wiki)values(111,115,114,113,112)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(111,101)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(101,111)
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(117,'117','','%27%27','%27%27')
+INSERT INTO AUDIMAT(cle_primaire, listeners, playcount)values(118,0.0,0.0)
+INSERT INTO IMAGES(cle_primaire,imageSmall,imageMedium,imageLarge,imageExtraLarge,imageMega)values(119,'http://userserve-ak.last.fm/serve/34/33433647.png','http://userserve-ak.last.fm/serve/64/33433647.png','http://userserve-ak.last.fm/serve/126/33433647.png','http://userserve-ak.last.fm/serve/252/33433647.png','http://userserve-ak.last.fm/serve/_/33433647/Dalida++3.png')
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(120,'%27%27','Dalida','http://www.last.fm/music/Dalida')
+INSERT INTO ARTISTE(cle_primaire,id_name_url,images,audimat,wiki)values(116,120,119,118,117)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(116,101)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(101,116)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(101,96)
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(122,'122','','%27%27','%27%27')
+INSERT INTO AUDIMAT(cle_primaire, listeners, playcount)values(123,0.0,0.0)
+INSERT INTO IMAGES(cle_primaire,imageSmall,imageMedium,imageLarge,imageExtraLarge,imageMega)values(124,'http://userserve-ak.last.fm/serve/34/63496.jpg','http://userserve-ak.last.fm/serve/64/63496.jpg','http://userserve-ak.last.fm/serve/126/63496.jpg','http://userserve-ak.last.fm/serve/252/63496.jpg','http://userserve-ak.last.fm/serve/500/63496/Nana+Mouskouri.jpg')
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(125,'%27%27','Nana Mouskouri','http://www.last.fm/music/Nana+Mouskouri')
+INSERT INTO ARTISTE(cle_primaire,id_name_url,images,audimat,wiki)values(121,125,124,123,122)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(121,101)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(101,121)
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(127,'127','','%27%27','%27%27')
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(128,'126','francais','http://www.last.fm/tag/francais')
+INSERT INTO TAG(cle_primaire,id_name_url,reach,taggings,wiki)values(126,128,4839.0,22254.0,127)
+INSERT INTO CORRESP_ARTISTE_TAG(artiste,tag)values(101,126)
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(130,'130','','&quot;Pop music&quot; is a broad-term for many different types of music: The term is flexible, and the music labeled &quot;pop&quot; changes frequently. It does, however, usually refer to popular, mainstream music with emphasis on a catchy melody and accessible style.','&quot;Pop music&quot; is a broad-term for many different types of music: The term is flexible, and the music labeled &quot;pop&quot; changes frequently. It does, however, usually refer to popular, mainstream music with emphasis on a catchy melody and accessible style.')
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(131,'129','pop','http://www.last.fm/tag/pop')
+INSERT INTO TAG(cle_primaire,id_name_url,reach,taggings,wiki)values(129,131,169775.0,1417397.0,130)
+INSERT INTO CORRESP_ARTISTE_TAG(artiste,tag)values(101,129)
+INSERT INTO CORRESP_ARTISTE_TAG(artiste,tag)values(101,79)
+INSERT INTO CORRESP_ARTISTE_TAG(artiste,tag)values(101,85)
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(133,'133','','A chanson is in general any lyric-driven French song, usually polyphonic and secular. A singer specializing in chansons is known as a &quot;chansonnier&quot;; a collection of chansons, especially from the late Middle Ages and Renaissance, is also known as a chansonnier.','A chanson is in general any lyric-driven French song, usually polyphonic and secular. A singer specializing in chansons is known as a &quot;chansonnier&quot;; a collection of chansons, especially from the late Middle Ages and Renaissance, is also known as a chansonnier.')
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(134,'132','chanson','http://www.last.fm/tag/chanson')
+INSERT INTO TAG(cle_primaire,id_name_url,reach,taggings,wiki)values(132,134,8224.0,30987.0,133)
+INSERT INTO CORRESP_ARTISTE_TAG(artiste,tag)values(101,132)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(96,101)
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(136,'136','','%27%27','%27%27')
+INSERT INTO AUDIMAT(cle_primaire, listeners, playcount)values(137,0.0,0.0)
+INSERT INTO IMAGES(cle_primaire,imageSmall,imageMedium,imageLarge,imageExtraLarge,imageMega)values(138,'%27%27','%27%27','%27%27','%27%27','%27%27')
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(139,'%27%27','%27%27','%27%27')
+INSERT INTO ARTISTE(cle_primaire,id_name_url,images,audimat,wiki)values(135,139,138,137,136)
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(141,'141','','%27%27','%27%27')
+INSERT INTO AUDIMAT(cle_primaire, listeners, playcount)values(142,13.0,111.0)
+INSERT INTO IMAGES(cle_primaire,imageSmall,imageMedium,imageLarge,imageExtraLarge,imageMega)values(143,'%27%27','%27%27','%27%27','%27%27','%27%27')
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(144,'%27%27','Bérézina','http://www.last.fm/music/B%C3%A9r%C3%A9zina')
+INSERT INTO ARTISTE(cle_primaire,id_name_url,images,audimat,wiki)values(140,144,143,142,141)
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(146,'146','','%27%27','%27%27')
+INSERT INTO AUDIMAT(cle_primaire, listeners, playcount)values(147,0.0,0.0)
+INSERT INTO IMAGES(cle_primaire,imageSmall,imageMedium,imageLarge,imageExtraLarge,imageMega)values(148,'http://userserve-ak.last.fm/serve/34/260633.jpg','http://userserve-ak.last.fm/serve/64/260633.jpg','http://userserve-ak.last.fm/serve/126/260633.jpg','http://userserve-ak.last.fm/serve/252/260633.jpg','http://userserve-ak.last.fm/serve/_/260633/Butter+Beans.jpg')
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(149,'%27%27','Butter Beans','http://www.last.fm/music/Butter+Beans')
+INSERT INTO ARTISTE(cle_primaire,id_name_url,images,audimat,wiki)values(145,149,148,147,146)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(145,140)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(140,145)
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(151,'151','','%27%27','%27%27')
+INSERT INTO AUDIMAT(cle_primaire, listeners, playcount)values(152,1.0,3.0)
+INSERT INTO IMAGES(cle_primaire,imageSmall,imageMedium,imageLarge,imageExtraLarge,imageMega)values(153,'%27%27','%27%27','%27%27','%27%27','%27%27')
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(154,'%27%27','Strapontin','http://www.last.fm/music/Strapontin')
+INSERT INTO ARTISTE(cle_primaire,id_name_url,images,audimat,wiki)values(150,154,153,152,151)
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(156,'156','','%27%27','%27%27')
+INSERT INTO AUDIMAT(cle_primaire, listeners, playcount)values(157,6.0,10.0)
+INSERT INTO IMAGES(cle_primaire,imageSmall,imageMedium,imageLarge,imageExtraLarge,imageMega)values(158,'%27%27','%27%27','%27%27','%27%27','%27%27')
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(160,'160','','%27%27','%27%27')
+INSERT INTO AUDIMAT(cle_primaire, listeners, playcount)values(161,0.0,0.0)
+INSERT INTO IMAGES(cle_primaire,imageSmall,imageMedium,imageLarge,imageExtraLarge,imageMega)values(162,'%27%27','%27%27','%27%27','%27%27','%27%27')
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(163,'%27%27','%27%27','%27%27')
+INSERT INTO ARTISTE(cle_primaire,id_name_url,images,audimat,wiki)values(159,163,162,161,160)
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(164,'%27%27','Le strapontin','http://www.last.fm/music/Alice+Dona/_/Le+strapontin')
+INSERT INTO CHANSON(cle_primaire,id_name_url,duree,images,audimat,wiki,artiste)values(155,164,161000.0,158,157,156,159)
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(166,'166','','%27%27','%27%27')
+INSERT INTO AUDIMAT(cle_primaire, listeners, playcount)values(167,0.0,0.0)
+INSERT INTO IMAGES(cle_primaire,imageSmall,imageMedium,imageLarge,imageExtraLarge,imageMega)values(168,'http://userserve-ak.last.fm/serve/64s/40175271.jpg','http://userserve-ak.last.fm/serve/126/40175271.jpg','http://userserve-ak.last.fm/serve/174s/40175271.jpg','http://userserve-ak.last.fm/serve/300x300/40175271.jpg','%27%27')
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(169,'%27%27','Ses plus grands succès','http://www.last.fm/music/Alice+Dona/Ses+plus+grands+succ%C3%A8s')
+INSERT INTO ALBUM(cle_primaire,id_name_url,date_sortie,images,audimat,wiki,artiste)values(165,169,'',168,167,166,91)
+INSERT INTO CORRESP_CHANSON_ALBUM(album,chanson)values(165,155)
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(171,'171','','%27%27','%27%27')
+INSERT INTO AUDIMAT(cle_primaire, listeners, playcount)values(172,12.0,31.0)
+INSERT INTO IMAGES(cle_primaire,imageSmall,imageMedium,imageLarge,imageExtraLarge,imageMega)values(173,'%27%27','%27%27','%27%27','%27%27','%27%27')
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(175,'175','','%27%27','%27%27')
+INSERT INTO AUDIMAT(cle_primaire, listeners, playcount)values(176,0.0,0.0)
+INSERT INTO IMAGES(cle_primaire,imageSmall,imageMedium,imageLarge,imageExtraLarge,imageMega)values(177,'%27%27','%27%27','%27%27','%27%27','%27%27')
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(178,'%27%27','%27%27','%27%27')
+INSERT INTO ARTISTE(cle_primaire,id_name_url,images,audimat,wiki)values(174,178,177,176,175)
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(179,'%27%27','Le Strapontin De Papa','http://www.last.fm/music/Fr%C3%A9d%C3%A9ric+Fran%C3%A7ois/_/Le+Strapontin+De+Papa')
+INSERT INTO CHANSON(cle_primaire,id_name_url,duree,images,audimat,wiki,artiste)values(170,179,260000.0,173,172,171,174)
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(181,'181','','%27%27','%27%27')
+INSERT INTO AUDIMAT(cle_primaire, listeners, playcount)values(182,0.0,0.0)
+INSERT INTO IMAGES(cle_primaire,imageSmall,imageMedium,imageLarge,imageExtraLarge,imageMega)values(183,'http://userserve-ak.last.fm/serve/64s/32569607.jpg','http://userserve-ak.last.fm/serve/126/32569607.jpg','http://userserve-ak.last.fm/serve/174s/32569607.jpg','http://userserve-ak.last.fm/serve/300x300/32569607.jpg','%27%27')
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(184,'%27%27','Tzigane','http://www.last.fm/music/Fr%C3%A9d%C3%A9ric+Fran%C3%A7ois/Tzigane')
+INSERT INTO ALBUM(cle_primaire,id_name_url,date_sortie,images,audimat,wiki,artiste)values(180,184,'',183,182,181,135)
+INSERT INTO CORRESP_CHANSON_ALBUM(album,chanson)values(180,170)
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(186,'186','','%27%27','%27%27')
+INSERT INTO AUDIMAT(cle_primaire, listeners, playcount)values(187,9.0,50.0)
+INSERT INTO IMAGES(cle_primaire,imageSmall,imageMedium,imageLarge,imageExtraLarge,imageMega)values(188,'%27%27','%27%27','%27%27','%27%27','%27%27')
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(190,'190','','%27%27','%27%27')
+INSERT INTO AUDIMAT(cle_primaire, listeners, playcount)values(191,0.0,0.0)
+INSERT INTO IMAGES(cle_primaire,imageSmall,imageMedium,imageLarge,imageExtraLarge,imageMega)values(192,'%27%27','%27%27','%27%27','%27%27','%27%27')
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(193,'%27%27','%27%27','%27%27')
+INSERT INTO ARTISTE(cle_primaire,id_name_url,images,audimat,wiki)values(189,193,192,191,190)
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(194,'%27%27','Strapontin','http://www.last.fm/music/B%C3%A9r%C3%A9zina/_/Strapontin')
+INSERT INTO CHANSON(cle_primaire,id_name_url,duree,images,audimat,wiki,artiste)values(185,194,179000.0,188,187,186,189)
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(196,'196','','%27%27','%27%27')
+INSERT INTO AUDIMAT(cle_primaire, listeners, playcount)values(197,12.0,99.0)
+INSERT INTO IMAGES(cle_primaire,imageSmall,imageMedium,imageLarge,imageExtraLarge,imageMega)values(198,'%27%27','%27%27','%27%27','%27%27','%27%27')
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(200,'200','','%27%27','%27%27')
+INSERT INTO AUDIMAT(cle_primaire, listeners, playcount)values(201,0.0,0.0)
+INSERT INTO IMAGES(cle_primaire,imageSmall,imageMedium,imageLarge,imageExtraLarge,imageMega)values(202,'%27%27','%27%27','%27%27','%27%27','%27%27')
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(203,'%27%27','%27%27','%27%27')
+INSERT INTO ARTISTE(cle_primaire,id_name_url,images,audimat,wiki)values(199,203,202,201,200)
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(204,'%27%27','Le Strapontin','http://www.last.fm/music/Mireille+Mathieu/_/Le+Strapontin')
+INSERT INTO CHANSON(cle_primaire,id_name_url,duree,images,audimat,wiki,artiste)values(195,204,163000.0,198,197,196,199)
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(206,'206','','%27%27','%27%27')
+INSERT INTO AUDIMAT(cle_primaire, listeners, playcount)values(207,0.0,0.0)
+INSERT INTO IMAGES(cle_primaire,imageSmall,imageMedium,imageLarge,imageExtraLarge,imageMega)values(208,'http://userserve-ak.last.fm/serve/34/33433647.png','http://userserve-ak.last.fm/serve/64/33433647.png','http://userserve-ak.last.fm/serve/126/33433647.png','http://userserve-ak.last.fm/serve/252/33433647.png','http://userserve-ak.last.fm/serve/_/33433647/Dalida++3.png')
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(209,'%27%27','Dalida','http://www.last.fm/music/Dalida')
+INSERT INTO ARTISTE(cle_primaire,id_name_url,images,audimat,wiki)values(205,209,208,207,206)
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(211,'211','','Mireille Mathieu (born July 22, 1946) is a French singer, who besides being very successful in her own country, became a star of international stature, recording in several languages.  
+ She was born in Avignon, Vaucluse, France, the oldest daughter of a poor family of fourteen children. She began singing as a small child, appearing in public at the age of four, singing in her church. As a young girl she worked in a factory, where she saved her money to pay for singing lessons.  ','<strong>Mireille Mathieu</strong> (born July 22, 1946) is a French singer, who besides being very successful in her own country, became a star of international stature, recording in several languages.
+ 
+ 
+ She was born in Avignon, Vaucluse, France, the oldest daughter of a poor family of fourteen children. She began singing as a small child, appearing in public at the age of four, singing in her church. As a young girl she worked in a factory, where she saved her money to pay for singing lessons.
+ 
+ Discovered by Johnny Stark, manager of France%27s biggest star at the time, <a href="http://www.last.fm/music/Johnny+Hallyday">Johnny Hallyday</a>, she was tutored by orchestra leader <a href="http://www.last.fm/music/Paul+Mauriat">Paul Mauriat</a> and song writer André Pascal who wrote &quot;Mon crédo&quot;, &quot;Viens dans ma rue&quot;, &quot;La première étoile&quot; and many other hits for her . After her television performance in 1965 and debut run at the Paris Olympia, she was immediately hailed as the next <a href="http://www.last.fm/music/%C3%89dith+Piaf?q=%C3%89dith+Piaf">Édith Piaf</a>, such was her haunting voice.
+ 
+ Singles such as &quot;Mon Credo&quot; and &quot;C%27est Ton Nom&quot; made her a huge star in France and all over Europe while making her a big success in North America and Mexico. Her French cover of <a href="http://www.last.fm/music/Engelbert+Humperdinck">Engelbert Humperdinck</a>%27s &quot;The Last Waltz&quot; generated much publicity in Great Britain and with hit after hit, she soon toured Canada and the United States where she appeared on the Ed Sullivan Show and the Danny Kaye Show. In Las Vegas, she sang with <a href="http://www.last.fm/music/Dean+Martin">Dean Martin</a> and <a href="http://www.last.fm/music/Frank+Sinatra">Frank Sinatra</a> to great applause.
+ 
+ Still much in demand, she continues to perform regularly. She travels frequently, appearing at such venues as New York City%27s Carnegie Hall, Sport Palace in Montreal, Universal Amphitheatre in Los Angeles and Ice Palace of St. Petersburg. She has sold about 150 million copies of her albums in her 40 year career, recorded about 1200 songs in 9 languages, and was the first western singer in history who gave concerts in China. Over the years she sang duets with such luminaries as <a href="http://www.last.fm/music/Charles+Aznavour">Charles Aznavour</a>, <a href="http://www.last.fm/music/Barry+Manilow">Barry Manilow</a>, <a href="http://www.last.fm/music/Paul+Anka">Paul Anka</a>, <a href="http://www.last.fm/music/Pl%C3%A1cido+Domingo">Plácido Domingo</a>, <a href="http://www.last.fm/music/Julio+Iglesias">Julio Iglesias</a>, <a href="http://www.last.fm/music/Tom+Jones">Tom Jones</a> and others.
+ 
+ Songs such as &quot;Acropolis adieu,&quot; &quot;Ne me quitte pas,&quot; and &quot;Santa Maria de la mer,&quot; are considered classics. Her French version of <a href="http://www.last.fm/music/Roy+Orbison">Roy Orbison</a>%27s ballad, &quot;Blue Bayou&quot;, is regarded by many as one of the best covers of that popular song.
+ 
+ In 1989, President François Mitterrand invited Mireille Mathieu to sing a tribute to General de Gaulle. She gave a series of concerts at the Palais des Congrès in Paris in December 1990. Three years later, she released an album devoted to her all-time idol, <a href="http://www.last.fm/music/%C3%89dith+Piaf?q=%C3%89dith+Piaf">Édith Piaf</a>.
+ 
+ In January 1996, &quot;Vous lui direz&&quot; was released. Maxime le Forestier wrote one of the titles, &quot;A la moitié de la distance&quot;. She did not choose to perform live in France to promote the album, preferring rather to go to Los Angeles USA, where she triumphed on November 14th with her vibrant tribute to another of her idols, <a href="http://www.last.fm/music/Judy+Garland">Judy Garland</a>. The performance was a tremendous success she was dressed by Provence couturier, Christian Lacroix and looked stunning for the performance. [1]
+ 
+ In 2002, she released her 37th French albu')
+INSERT INTO AUDIMAT(cle_primaire, listeners, playcount)values(212,60544.0,467167.0)
+INSERT INTO IMAGES(cle_primaire,imageSmall,imageMedium,imageLarge,imageExtraLarge,imageMega)values(213,'%27%27','%27%27','%27%27','%27%27','%27%27')
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(214,'%27%27','Mireille Mathieu','http://www.last.fm/music/Mireille+Mathieu')
+INSERT INTO ARTISTE(cle_primaire,id_name_url,images,audimat,wiki)values(210,214,213,212,211)
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(216,'216','','%27%27','%27%27')
+INSERT INTO AUDIMAT(cle_primaire, listeners, playcount)values(217,0.0,0.0)
+INSERT INTO IMAGES(cle_primaire,imageSmall,imageMedium,imageLarge,imageExtraLarge,imageMega)values(218,'http://userserve-ak.last.fm/serve/34/26078933.jpg','http://userserve-ak.last.fm/serve/64/26078933.jpg','http://userserve-ak.last.fm/serve/126/26078933.jpg','http://userserve-ak.last.fm/serve/252/26078933.jpg','http://userserve-ak.last.fm/serve/500/26078933/Sheila.jpg')
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(219,'%27%27','Sheila','http://www.last.fm/music/Sheila')
+INSERT INTO ARTISTE(cle_primaire,id_name_url,images,audimat,wiki)values(215,219,218,217,216)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(215,210)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(215,210)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(210,215)
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(221,'221','','%27%27','%27%27')
+INSERT INTO AUDIMAT(cle_primaire, listeners, playcount)values(222,0.0,0.0)
+INSERT INTO IMAGES(cle_primaire,imageSmall,imageMedium,imageLarge,imageExtraLarge,imageMega)values(223,'http://userserve-ak.last.fm/serve/34/34678401.jpg','http://userserve-ak.last.fm/serve/64/34678401.jpg','http://userserve-ak.last.fm/serve/126/34678401.jpg','http://userserve-ak.last.fm/serve/252/34678401.jpg','http://userserve-ak.last.fm/serve/500/34678401/Salvatore+Adamo+3372550756_f26e1c59d2_o.jpg')
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(224,'%27%27','Salvatore Adamo','http://www.last.fm/music/Salvatore+Adamo')
+INSERT INTO ARTISTE(cle_primaire,id_name_url,images,audimat,wiki)values(220,224,223,222,221)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(220,210)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(220,210)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(210,220)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(210,205)
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(226,'226','','%27%27','%27%27')
+INSERT INTO AUDIMAT(cle_primaire, listeners, playcount)values(227,0.0,0.0)
+INSERT INTO IMAGES(cle_primaire,imageSmall,imageMedium,imageLarge,imageExtraLarge,imageMega)values(228,'http://userserve-ak.last.fm/serve/34/63496.jpg','http://userserve-ak.last.fm/serve/64/63496.jpg','http://userserve-ak.last.fm/serve/126/63496.jpg','http://userserve-ak.last.fm/serve/252/63496.jpg','http://userserve-ak.last.fm/serve/500/63496/Nana+Mouskouri.jpg')
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(229,'%27%27','Nana Mouskouri','http://www.last.fm/music/Nana+Mouskouri')
+INSERT INTO ARTISTE(cle_primaire,id_name_url,images,audimat,wiki)values(225,229,228,227,226)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(225,210)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(225,210)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(210,225)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(210,220)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(210,205)
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(231,'231','','%27%27','%27%27')
+INSERT INTO AUDIMAT(cle_primaire, listeners, playcount)values(232,0.0,0.0)
+INSERT INTO IMAGES(cle_primaire,imageSmall,imageMedium,imageLarge,imageExtraLarge,imageMega)values(233,'http://userserve-ak.last.fm/serve/34/33222883.jpg','http://userserve-ak.last.fm/serve/64/33222883.jpg','http://userserve-ak.last.fm/serve/126/33222883.jpg','http://userserve-ak.last.fm/serve/252/33222883.jpg','http://userserve-ak.last.fm/serve/500/33222883/Marie+Lafort+07513775.jpg')
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(234,'%27%27','Marie Laforêt','http://www.last.fm/music/Marie+Lafor%C3%AAt')
+INSERT INTO ARTISTE(cle_primaire,id_name_url,images,audimat,wiki)values(230,234,233,232,231)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(230,210)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(230,210)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(210,230)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(210,215)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(210,225)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(210,230)
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(236,'236','','A chanson is in general any lyric-driven French song, usually polyphonic and secular. A singer specializing in chansons is known as a &quot;chansonnier&quot;; a collection of chansons, especially from the late Middle Ages and Renaissance, is also known as a chansonnier.','A chanson is in general any lyric-driven French song, usually polyphonic and secular. A singer specializing in chansons is known as a &quot;chansonnier&quot;; a collection of chansons, especially from the late Middle Ages and Renaissance, is also known as a chansonnier.')
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(237,'235','chanson','http://www.last.fm/tag/chanson')
+INSERT INTO TAG(cle_primaire,id_name_url,reach,taggings,wiki)values(235,237,8224.0,30987.0,236)
+INSERT INTO CORRESP_ARTISTE_TAG(artiste,tag)values(210,235)
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(239,'239','','%27%27','%27%27')
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(240,'238','francais','http://www.last.fm/tag/francais')
+INSERT INTO TAG(cle_primaire,id_name_url,reach,taggings,wiki)values(238,240,4839.0,22254.0,239)
+INSERT INTO CORRESP_ARTISTE_TAG(artiste,tag)values(210,238)
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(242,'242','','Music with this tag features female lead vocalists. The tag is not limited to any one musical genre.','Music with this tag features female lead vocalists. The tag is not limited to any one musical genre.')
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(243,'241','female vocalists','http://www.last.fm/tag/female%20vocalists')
+INSERT INTO TAG(cle_primaire,id_name_url,reach,taggings,wiki)values(241,243,134649.0,1172605.0,242)
+INSERT INTO CORRESP_ARTISTE_TAG(artiste,tag)values(210,241)
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(245,'245','','&quot;Pop music&quot; is a broad-term for many different types of music: The term is flexible, and the music labeled &quot;pop&quot; changes frequently. It does, however, usually refer to popular, mainstream music with emphasis on a catchy melody and accessible style.','&quot;Pop music&quot; is a broad-term for many different types of music: The term is flexible, and the music labeled &quot;pop&quot; changes frequently. It does, however, usually refer to popular, mainstream music with emphasis on a catchy melody and accessible style.')
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(246,'244','pop','http://www.last.fm/tag/pop')
+INSERT INTO TAG(cle_primaire,id_name_url,reach,taggings,wiki)values(244,246,169775.0,1417397.0,245)
+INSERT INTO CORRESP_ARTISTE_TAG(artiste,tag)values(210,244)
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(248,'248','','Music or artists tagged with &quot;French&quot; have some relation to France, the French language, or French culture. For artists who are actually from France, go to <a href="http://www.last.fm/tag/france" class="bbcode_tag" rel="tag">france</a>. For music written in French, go to <a href="http://www.last.fm/tag/french%20lyrics" class="bbcode_tag" rel="tag">french lyrics</a>.','Music or artists tagged with &quot;French&quot; have some relation to France, the French language, or French culture. For artists who are actually from France, go to <a href="http://www.last.fm/tag/france" class="bbcode_tag" rel="tag">france</a>. For music written in French, go to <a href="http://www.last.fm/tag/french%20lyrics" class="bbcode_tag" rel="tag">french lyrics</a>.')
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(249,'247','french','http://www.last.fm/tag/french')
+INSERT INTO TAG(cle_primaire,id_name_url,reach,taggings,wiki)values(247,249,44816.0,199106.0,248)
+INSERT INTO CORRESP_ARTISTE_TAG(artiste,tag)values(210,247)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(205,210)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(205,210)
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(251,'251','','%27%27','%27%27')
+INSERT INTO AUDIMAT(cle_primaire, listeners, playcount)values(252,0.0,0.0)
+INSERT INTO IMAGES(cle_primaire,imageSmall,imageMedium,imageLarge,imageExtraLarge,imageMega)values(253,'%27%27','%27%27','%27%27','%27%27','%27%27')
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(254,'%27%27','%27%27','%27%27')
+INSERT INTO ARTISTE(cle_primaire,id_name_url,images,audimat,wiki)values(250,254,253,252,251)
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(256,'256','','%27%27','%27%27')
+INSERT INTO AUDIMAT(cle_primaire, listeners, playcount)values(257,0.0,0.0)
+INSERT INTO IMAGES(cle_primaire,imageSmall,imageMedium,imageLarge,imageExtraLarge,imageMega)values(258,'http://userserve-ak.last.fm/serve/34/13072707.jpg','http://userserve-ak.last.fm/serve/64/13072707.jpg','http://userserve-ak.last.fm/serve/126/13072707.jpg','http://userserve-ak.last.fm/serve/252/13072707.jpg','http://userserve-ak.last.fm/serve/_/13072707/Ria+Bartok.jpg')
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(259,'%27%27','Ria Bartok','http://www.last.fm/music/Ria+Bartok')
+INSERT INTO ARTISTE(cle_primaire,id_name_url,images,audimat,wiki)values(255,259,258,257,256)
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(261,'261','','Alice Donadel, commonly known as Alice Dona, was born on 17 February, 1946, in Maisons-Alfort, Paris, France, to a French mother and an Italian father.  She released her first EP in 1963, and her first single was &quot;Mon train de banlieue - Demain,jai dix sept ans.&quot;  Her career as a singer during the French ye-ye scene is notable for six singles, and she married Bernard Ricci in 1965.    Dona was also a songwriter for other artists which include Sylvie Vartan, Joe Dassin and Claude Francois.  She%27s listed as &quot;composer&quot; for the 1977 French film, Le Dernier baiser or The Last Kiss.','Alice Donadel, commonly known as Alice Dona, was born on 17 February, 1946, in Maisons-Alfort, Paris, France, to a French mother and an Italian father.
+ 
+ She released her first EP in 1963, and her first single was &quot;Mon train de banlieue - Demain,jai dix sept ans.&quot;  Her career as a singer during the French ye-ye scene is notable for six singles, and she married Bernard Ricci in 1965.  
+ 
+ Dona was also a songwriter for other artists which include Sylvie Vartan, Joe Dassin and Claude Francois.  She%27s listed as &quot;composer&quot; for the 1977 French film, <em>Le Dernier baiser</em> or <em>The Last Kiss</em>.  
+    
+User-contributed text is available under the Creative Commons By-SA License and may also be available under the GNU FDL.')
+INSERT INTO AUDIMAT(cle_primaire, listeners, playcount)values(262,6250.0,22617.0)
+INSERT INTO IMAGES(cle_primaire,imageSmall,imageMedium,imageLarge,imageExtraLarge,imageMega)values(263,'%27%27','%27%27','%27%27','%27%27','%27%27')
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(264,'%27%27','Alice Dona','http://www.last.fm/music/Alice+Dona')
+INSERT INTO ARTISTE(cle_primaire,id_name_url,images,audimat,wiki)values(260,264,263,262,261)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(260,255)
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(266,'266','','%27%27','%27%27')
+INSERT INTO AUDIMAT(cle_primaire, listeners, playcount)values(267,0.0,0.0)
+INSERT INTO IMAGES(cle_primaire,imageSmall,imageMedium,imageLarge,imageExtraLarge,imageMega)values(268,'http://userserve-ak.last.fm/serve/34/40983867.jpg','http://userserve-ak.last.fm/serve/64/40983867.jpg','http://userserve-ak.last.fm/serve/126/40983867.jpg','http://userserve-ak.last.fm/serve/252/40983867.jpg','http://userserve-ak.last.fm/serve/_/40983867/Les+Roche+Martin+Les+Roches+Martin.jpg')
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(269,'%27%27','Les Roche Martin','http://www.last.fm/music/Les+Roche+Martin')
+INSERT INTO ARTISTE(cle_primaire,id_name_url,images,audimat,wiki)values(265,269,268,267,266)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(265,260)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(265,260)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(260,265)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(260,265)
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(271,'271','','%27%27','%27%27')
+INSERT INTO AUDIMAT(cle_primaire, listeners, playcount)values(272,0.0,0.0)
+INSERT INTO IMAGES(cle_primaire,imageSmall,imageMedium,imageLarge,imageExtraLarge,imageMega)values(273,'http://userserve-ak.last.fm/serve/34/3437906.jpg','http://userserve-ak.last.fm/serve/64/3437906.jpg','http://userserve-ak.last.fm/serve/126/3437906.jpg','http://userserve-ak.last.fm/serve/252/3437906.jpg','http://userserve-ak.last.fm/serve/_/3437906/Liz+Brady+bradyliz.jpg')
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(274,'%27%27','Liz Brady','http://www.last.fm/music/Liz+Brady')
+INSERT INTO ARTISTE(cle_primaire,id_name_url,images,audimat,wiki)values(270,274,273,272,271)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(270,260)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(270,260)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(260,270)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(260,255)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(260,270)
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(276,'276','','%27%27','%27%27')
+INSERT INTO AUDIMAT(cle_primaire, listeners, playcount)values(277,0.0,0.0)
+INSERT INTO IMAGES(cle_primaire,imageSmall,imageMedium,imageLarge,imageExtraLarge,imageMega)values(278,'http://userserve-ak.last.fm/serve/34/3564178.jpg','http://userserve-ak.last.fm/serve/64/3564178.jpg','http://userserve-ak.last.fm/serve/126/3564178.jpg','http://userserve-ak.last.fm/serve/252/3564178.jpg','http://userserve-ak.last.fm/serve/_/3564178/Christie+Laume+frenchpop.jpg')
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(279,'%27%27','Christie Laume','http://www.last.fm/music/Christie+Laume')
+INSERT INTO ARTISTE(cle_primaire,id_name_url,images,audimat,wiki)values(275,279,278,277,276)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(275,260)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(275,260)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(260,275)
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(281,'281','','%27%27','%27%27')
+INSERT INTO AUDIMAT(cle_primaire, listeners, playcount)values(282,0.0,0.0)
+INSERT INTO IMAGES(cle_primaire,imageSmall,imageMedium,imageLarge,imageExtraLarge,imageMega)values(283,'http://userserve-ak.last.fm/serve/34/38946555.jpg','http://userserve-ak.last.fm/serve/64/38946555.jpg','http://userserve-ak.last.fm/serve/126/38946555.jpg','http://userserve-ak.last.fm/serve/252/38946555.jpg','http://userserve-ak.last.fm/serve/_/38946555/Anne+Kern.jpg')
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(284,'%27%27','Anne Kern','http://www.last.fm/music/Anne+Kern')
+INSERT INTO ARTISTE(cle_primaire,id_name_url,images,audimat,wiki)values(280,284,283,282,281)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(280,260)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(280,260)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(260,280)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(260,280)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(260,275)
+INSERT INTO CORRESP_ARTISTE_TAG(artiste,tag)values(260,241)
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(286,'286','','Yé-yé was a style of pop music that emerged out of France, Québec and Spain in the early 1960s. The term &quot;yé-yé&quot; derived from &quot;yeah! yeah!&quot; yell.','Yé-yé was a style of pop music that emerged out of France, Québec and Spain in the early 1960s. The term &quot;yé-yé&quot; derived from &quot;yeah! yeah!&quot; yell.')
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(287,'285','ye-ye','http://www.last.fm/tag/ye-ye')
+INSERT INTO TAG(cle_primaire,id_name_url,reach,taggings,wiki)values(285,287,920.0,5177.0,286)
+INSERT INTO CORRESP_ARTISTE_TAG(artiste,tag)values(260,285)
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(289,'289','','Music from 1960 -1969.  
+ The rise of the counterculture, particularly among the youth, created a huge market for rock, soul, pop, reggae and blues music produced by drug-culture influenced bands such as The Beatles, The Doors, The Rolling Stones, Led Zeppelin, Cream, The Grateful Dead, Jefferson Airplane, Janis Joplin, Bob Marley, Deep Purple, The Who, Sly and the Family Stone, Jimi Hendrix Experience, and The Incredible String Band.','Music from 1960 -1969.
+ 
+ 
+ The rise of the counterculture, particularly among the youth, created a huge market for rock, soul, pop, reggae and blues music produced by drug-culture influenced bands such as The Beatles, The Doors, The Rolling Stones, Led Zeppelin, Cream, The Grateful Dead, Jefferson Airplane, Janis Joplin, Bob Marley, Deep Purple, The Who, Sly and the Family Stone, Jimi Hendrix Experience, and The Incredible String Band. It also saw a major rise in protest songs  and the folk genre. Pioneers in the US were Bob Dylan, The Mamas and the Papas, and Joan Baez; in England, Donovan helped create the folk rock sound.')
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(290,'288','60s','http://www.last.fm/tag/60s')
+INSERT INTO TAG(cle_primaire,id_name_url,reach,taggings,wiki)values(288,290,38374.0,263149.0,289)
+INSERT INTO CORRESP_ARTISTE_TAG(artiste,tag)values(260,288)
+INSERT INTO CORRESP_ARTISTE_TAG(artiste,tag)values(260,247)
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(292,'292','','%27%27','%27%27')
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(293,'291','french 60s','http://www.last.fm/tag/french%2060s')
+INSERT INTO TAG(cle_primaire,id_name_url,reach,taggings,wiki)values(291,293,259.0,1111.0,292)
+INSERT INTO CORRESP_ARTISTE_TAG(artiste,tag)values(260,291)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(255,260)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(255,260)
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(295,'295','','%27%27','%27%27')
+INSERT INTO AUDIMAT(cle_primaire, listeners, playcount)values(296,0.0,0.0)
+INSERT INTO IMAGES(cle_primaire,imageSmall,imageMedium,imageLarge,imageExtraLarge,imageMega)values(297,'%27%27','%27%27','%27%27','%27%27','%27%27')
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(298,'%27%27','%27%27','%27%27')
+INSERT INTO ARTISTE(cle_primaire,id_name_url,images,audimat,wiki)values(294,298,297,296,295)
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(300,'300','','%27%27','%27%27')
+INSERT INTO AUDIMAT(cle_primaire, listeners, playcount)values(301,0.0,0.0)
+INSERT INTO IMAGES(cle_primaire,imageSmall,imageMedium,imageLarge,imageExtraLarge,imageMega)values(302,'http://userserve-ak.last.fm/serve/34/84962.jpg','http://userserve-ak.last.fm/serve/64/84962.jpg','http://userserve-ak.last.fm/serve/126/84962.jpg','http://userserve-ak.last.fm/serve/252/84962.jpg','http://userserve-ak.last.fm/serve/_/84962/Frederic+Francois.jpg')
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(303,'%27%27','Frederic Francois','http://www.last.fm/music/Frederic+Francois')
+INSERT INTO ARTISTE(cle_primaire,id_name_url,images,audimat,wiki)values(299,303,302,301,300)
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(305,'305','','Frederick Francois (Francesco Barracatto) is born in Sicily on 3 June 1950. He is only two years old when his family is leaving their village to establish themselves in Tilleur, Wallony, near Liege, a little county in Belgium. He did inherit his fondness of music and singing from his father Peppino. When he is 12 years old he decides to buy his first guitar and joines the band Les Eperviers. His father is approving this decision by helping hom to acced at the Music Accademy.','Frederick Francois (Francesco Barracatto) is born in Sicily on 3 June 1950. He is only two years old when his family is leaving their village to establish themselves in Tilleur, Wallony, near Liege, a little county in Belgium. He did inherit his fondness of music and singing from his father Peppino. When he is 12 years old he decides to buy his first guitar and joines the band Les Eperviers. His father is approving this decision by helping hom to acced at the Music Accademy. This is a succesful thing to do, because Frederic Francois is winning that same year the singing contest Festival du Chatelet, which allows him to make his first record. But he is making his real debut in 1969 when he makes his first 45 tours record whith his actual nickname. He gets married and have a family of his own while he is still young. This thing happens in 1971, the year when his first hits are launched, such like Je nai jamais aime comme je taime, Laisse-moi vivre ma vie, Chicago and many others. As a tribute to his increasing charismatical success in France, he also conquered by his music Canada, Belgium and the Switzerland. The hits are still going on with titles like  Mon coeur te dit Je taime in 1984 and  Je taime a litallienne in 1985. Many times till now Frederic Francois is performing many concerts in the Olympia Hall in Paris, such as in the years 1994, 1996, 1998 or 2000. If the name of Frederick Francois is mostly related to the 70s decade, he still has a great fame and huge success especially among the French music listeners.
+    
+User-contributed text is available under the Creative Commons By-SA License and may also be available under the GNU FDL.')
+INSERT INTO AUDIMAT(cle_primaire, listeners, playcount)values(306,1309.0,7750.0)
+INSERT INTO IMAGES(cle_primaire,imageSmall,imageMedium,imageLarge,imageExtraLarge,imageMega)values(307,'%27%27','%27%27','%27%27','%27%27','%27%27')
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(308,'%27%27','Frédéric François','http://www.last.fm/music/Fr%C3%A9d%C3%A9ric+Fran%C3%A7ois')
+INSERT INTO ARTISTE(cle_primaire,id_name_url,images,audimat,wiki)values(304,308,307,306,305)
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(310,'310','','%27%27','%27%27')
+INSERT INTO AUDIMAT(cle_primaire, listeners, playcount)values(311,0.0,0.0)
+INSERT INTO IMAGES(cle_primaire,imageSmall,imageMedium,imageLarge,imageExtraLarge,imageMega)values(312,'http://userserve-ak.last.fm/serve/34/37707371.jpg','http://userserve-ak.last.fm/serve/64/37707371.jpg','http://userserve-ak.last.fm/serve/126/37707371.jpg','http://userserve-ak.last.fm/serve/252/37707371.jpg','http://userserve-ak.last.fm/serve/_/37707371/Phil+Barney+Barney.jpg')
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(313,'%27%27','Phil Barney','http://www.last.fm/music/Phil+Barney')
+INSERT INTO ARTISTE(cle_primaire,id_name_url,images,audimat,wiki)values(309,313,312,311,310)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(309,304)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(309,304)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(304,309)
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(315,'315','','%27%27','%27%27')
+INSERT INTO AUDIMAT(cle_primaire, listeners, playcount)values(316,0.0,0.0)
+INSERT INTO IMAGES(cle_primaire,imageSmall,imageMedium,imageLarge,imageExtraLarge,imageMega)values(317,'http://userserve-ak.last.fm/serve/34/17852289.jpg','http://userserve-ak.last.fm/serve/64/17852289.jpg','http://userserve-ak.last.fm/serve/126/17852289.jpg','http://userserve-ak.last.fm/serve/252/17852289.jpg','http://userserve-ak.last.fm/serve/500/17852289/Christian+Delagrange+07578.jpg')
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(318,'%27%27','Christian Delagrange','http://www.last.fm/music/Christian+Delagrange')
+INSERT INTO ARTISTE(cle_primaire,id_name_url,images,audimat,wiki)values(314,318,317,316,315)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(314,304)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(314,304)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(304,314)
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(320,'320','','%27%27','%27%27')
+INSERT INTO AUDIMAT(cle_primaire, listeners, playcount)values(321,0.0,0.0)
+INSERT INTO IMAGES(cle_primaire,imageSmall,imageMedium,imageLarge,imageExtraLarge,imageMega)values(322,'http://userserve-ak.last.fm/serve/34/8452813.jpg','http://userserve-ak.last.fm/serve/64/8452813.jpg','http://userserve-ak.last.fm/serve/126/8452813.jpg','http://userserve-ak.last.fm/serve/252/8452813.jpg','http://userserve-ak.last.fm/serve/_/8452813/Peter++Sloane.jpg')
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(323,'%27%27',' Sloane','http://www.last.fm/music/Peter%2B%2526%2BSloane')
+INSERT INTO ARTISTE(cle_primaire,id_name_url,images,audimat,wiki)values(319,323,322,321,320)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(319,304)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(319,304)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(304,319)
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(325,'325','','%27%27','%27%27')
+INSERT INTO AUDIMAT(cle_primaire, listeners, playcount)values(326,0.0,0.0)
+INSERT INTO IMAGES(cle_primaire,imageSmall,imageMedium,imageLarge,imageExtraLarge,imageMega)values(327,'http://userserve-ak.last.fm/serve/34/453109.jpg','http://userserve-ak.last.fm/serve/64/453109.jpg','http://userserve-ak.last.fm/serve/126/453109.jpg','http://userserve-ak.last.fm/serve/252/453109.jpg','http://userserve-ak.last.fm/serve/_/453109/Frank+Michael.jpg')
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(328,'%27%27','Frank Michael','http://www.last.fm/music/Frank+Michael')
+INSERT INTO ARTISTE(cle_primaire,id_name_url,images,audimat,wiki)values(324,328,327,326,325)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(324,304)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(324,304)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(304,324)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(304,324)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(304,299)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(304,299)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(304,309)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(304,319)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(304,314)
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(330,'330','','Belgium is a cultural crossroads where Flemish Dutch-speaking and Walloon French-speaking inhabitants mix with German minorities and immigrant communities from Republic of the Congo and other distant countries.  Classical music  During the centuries Belgium produced several notable names in the field of classical music. In the 15th and 16th century composers like Guillaume Dufay, Orlando di Lasso, Josquin des Prez reached European acclaim. André Ernest Modeste Grétry was the most famous composer- born in what is now called Belgium- of the 18th century.','Belgium is a cultural crossroads where Flemish Dutch-speaking and Walloon French-speaking inhabitants mix with German minorities and immigrant communities from Republic of the Congo and other distant countries.
+ 
+ <strong>Classical music</strong>
+ 
+ During the centuries Belgium produced several notable names in the field of classical music. In the 15th and 16th century composers like Guillaume Dufay, Orlando di Lasso, Josquin des Prez reached European acclaim. André Ernest Modeste Grétry was the most famous composer- born in what is now called Belgium- of the 18th century. The 19th century supplied composers like Henri Vieuxtemps, César Franck, Guillaume Lekeu and Eugène Ysaÿe. The famous German composer Ludwig van Beethoven was of Flemish descent and his grandfather (who was born in Mechelen). At the end of the 20th century the most notable Belgian composer was Wim Mertens.
+ 
+ In the field of opera, baritons Jules Bastin and José van Dam have become the most famous and internationally successful Belgian opera singers. In the lighter classical genre Flemish singer Helmut Lotti reached huge international success with his interpretations of popular opera songs for large audiences.
+ 
+ <strong>Blues and Jazz</strong>
+ 
+ One of the most famous jazz instruments, the saxophone, was invented by a Belgian: Adolphe Sax.
+ 
+ Some known Belgian blues artists are Elmore D (who sings in English and Walloon dialect), the Flemish Roland van Campenhout (also known as Roland) and the Brussels band Tomahawk Blues Band.
+ 
+ In the 1930s, the Belgian gypsy guitarist Django Reinhardt became one of the first important jazz musicians to be born in Europe, and one of the most important jazz guitarists of all time. In 1949 Toots Thielemans joined a jam session in Paris with Sidney Bechet, Charlie Parker, Miles Davis, Max Roach and others. He moved to the US in 1952 where he was a member of Charlie Parker%27s All-Stars. Toots Thielemans is often credited by jazz aficionados and jazz critics of being the greatest jazz mouth hamonica player of the century. His music has been used in films like Midnight Cowboy and Turkish Delight, and television series such as Sesame Street and Baantjer. Other wellknown Belgian artists are Aka Moon, Bobby Jaspar, Bert Joris, Philip Catherine, Steve Houben, Octurn and René Thomas
+ 
+ <strong>Folk and other traditional music</strong>
+ 
+ Bobbejaan Schoepen has been a pioneer in Belgian vaudeville and popmusic since the late 1940s. Not only was he the first Belgian singer to manage an international breakthrough, he was also the first to use modern equipment, a personal tourbus and a system of artist sponsoring. He also introduced the first country &amp; western recordings in the Low Countries and Germany. In the 1950s Bobbejaan Schoepen recorded his own absolutely crazy folk music often singing in the dialect of his native Brussels. He is also a virtuoso whistler.
+ 
+ During the 1950s and following decades the most popular, enduring, commercial and critical successful Flemish singer was Will Tura, whose most well known hit in Flanders is &quot;Ik ben zo eenzaam zonder jou&quot; (1963) (&quot;I%27m so lonely without you&quot;).
+ 
+ The most popular and enduring artists in Flanders and the Netherlands who sing in either their Flemish dialect or standard Dutch are Eddy Wally, Raymond van het Groenewoud, De Kreuners, Clouseau, Gorki (band), Noordkaap and de Fixkes.
+ 
+ Walloon folk music has not had as vibrant a revival as Flemish, but artists like Coïncidence, Remy Dubois, Luc Pilartz, Rue du Village and Claude Flagel have kept the folk traditions alive.
+ 
+ <strong>Chanson</strong>
+ 
+ The greatest Belgian chansonnier was Jacques Brel, whose classic songs have been covered by several international artists such as David Bowie, Frank Sinatra, Scott Walker and Terry Jacks. Others like Salvatore Adamo, Pierre Rapsat, Arno, Maurane, Axelle Red and Lara Fabian have also enjoyed some success in other French-speaking countries.
+ 
+ <strong>Po')
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(331,'329','belgium','http://www.last.fm/tag/belgium')
+INSERT INTO TAG(cle_primaire,id_name_url,reach,taggings,wiki)values(329,331,3432.0,13082.0,330)
+INSERT INTO CORRESP_ARTISTE_TAG(artiste,tag)values(304,329)
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(333,'333','','%27%27','%27%27')
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(334,'332','french singer','http://www.last.fm/tag/french%20singer')
+INSERT INTO TAG(cle_primaire,id_name_url,reach,taggings,wiki)values(332,334,82.0,213.0,333)
+INSERT INTO CORRESP_ARTISTE_TAG(artiste,tag)values(304,332)
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(336,'336','','Music with Spanish lyrics or music by artists and bands from Spain.','Music with Spanish lyrics or music by artists and bands from Spain.')
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(337,'335','spanish','http://www.last.fm/tag/spanish')
+INSERT INTO TAG(cle_primaire,id_name_url,reach,taggings,wiki)values(335,337,21401.0,81708.0,336)
+INSERT INTO CORRESP_ARTISTE_TAG(artiste,tag)values(304,335)
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(339,'339','','%27%27','%27%27')
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(340,'338','frederic francois','http://www.last.fm/tag/frederic%20francois')
+INSERT INTO TAG(cle_primaire,id_name_url,reach,taggings,wiki)values(338,340,1.0,2.0,339)
+INSERT INTO CORRESP_ARTISTE_TAG(artiste,tag)values(304,338)
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(342,'342','','%27Balada%27 is Spanish for <a href="http://www.last.fm/tag/ballad" class="bbcode_tag" rel="tag">ballad</a>','%27Balada%27 is Spanish for <a href="http://www.last.fm/tag/ballad" class="bbcode_tag" rel="tag">ballad</a>')
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(343,'341','balada','http://www.last.fm/tag/balada')
+INSERT INTO TAG(cle_primaire,id_name_url,reach,taggings,wiki)values(341,343,822.0,2046.0,342)
+INSERT INTO CORRESP_ARTISTE_TAG(artiste,tag)values(304,341)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(299,304)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(299,304)
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(345,'345','','%27%27','%27%27')
+INSERT INTO AUDIMAT(cle_primaire, listeners, playcount)values(346,1.0,3.0)
+INSERT INTO IMAGES(cle_primaire,imageSmall,imageMedium,imageLarge,imageExtraLarge,imageMega)values(347,'%27%27','%27%27','%27%27','%27%27','%27%27')
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(348,'%27%27','Strapontin','http://www.last.fm/music/Strapontin')
+INSERT INTO ARTISTE(cle_primaire,id_name_url,images,audimat,wiki)values(344,348,347,346,345)
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(350,'350','','%27%27','%27%27')
+INSERT INTO AUDIMAT(cle_primaire, listeners, playcount)values(351,0.0,0.0)
+INSERT INTO IMAGES(cle_primaire,imageSmall,imageMedium,imageLarge,imageExtraLarge,imageMega)values(352,'%27%27','%27%27','%27%27','%27%27','%27%27')
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(353,'%27%27','%27%27','%27%27')
+INSERT INTO ARTISTE(cle_primaire,id_name_url,images,audimat,wiki)values(349,353,352,351,350)
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(355,'355','','%27%27','%27%27')
+INSERT INTO AUDIMAT(cle_primaire, listeners, playcount)values(356,0.0,0.0)
+INSERT INTO IMAGES(cle_primaire,imageSmall,imageMedium,imageLarge,imageExtraLarge,imageMega)values(357,'%27%27','%27%27','%27%27','%27%27','%27%27')
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(358,'%27%27','%27%27','%27%27')
+INSERT INTO ARTISTE(cle_primaire,id_name_url,images,audimat,wiki)values(354,358,357,356,355)
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(360,'360','','%27%27','%27%27')
+INSERT INTO AUDIMAT(cle_primaire, listeners, playcount)values(361,0.0,0.0)
+INSERT INTO IMAGES(cle_primaire,imageSmall,imageMedium,imageLarge,imageExtraLarge,imageMega)values(362,'http://userserve-ak.last.fm/serve/34/260633.jpg','http://userserve-ak.last.fm/serve/64/260633.jpg','http://userserve-ak.last.fm/serve/126/260633.jpg','http://userserve-ak.last.fm/serve/252/260633.jpg','http://userserve-ak.last.fm/serve/_/260633/Butter+Beans.jpg')
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(363,'%27%27','Butter Beans','http://www.last.fm/music/Butter+Beans')
+INSERT INTO ARTISTE(cle_primaire,id_name_url,images,audimat,wiki)values(359,363,362,361,360)
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(365,'365','','%27%27','%27%27')
+INSERT INTO AUDIMAT(cle_primaire, listeners, playcount)values(366,13.0,111.0)
+INSERT INTO IMAGES(cle_primaire,imageSmall,imageMedium,imageLarge,imageExtraLarge,imageMega)values(367,'%27%27','%27%27','%27%27','%27%27','%27%27')
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(368,'%27%27','Bérézina','http://www.last.fm/music/B%C3%A9r%C3%A9zina')
+INSERT INTO ARTISTE(cle_primaire,id_name_url,images,audimat,wiki)values(364,368,367,366,365)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(364,359)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(364,359)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(359,364)
+INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(359,364)
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(370,'370','','%27%27','%27%27')
+INSERT INTO AUDIMAT(cle_primaire, listeners, playcount)values(371,0.0,0.0)
+INSERT INTO IMAGES(cle_primaire,imageSmall,imageMedium,imageLarge,imageExtraLarge,imageMega)values(372,'%27%27','%27%27','%27%27','%27%27','%27%27')
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(373,'%27%27','%27%27','%27%27')
+INSERT INTO ARTISTE(cle_primaire,id_name_url,images,audimat,wiki)values(369,373,372,371,370)
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(375,'375','','%27%27','%27%27')
+INSERT INTO AUDIMAT(cle_primaire, listeners, playcount)values(376,0.0,0.0)
+INSERT INTO IMAGES(cle_primaire,imageSmall,imageMedium,imageLarge,imageExtraLarge,imageMega)values(377,'%27%27','%27%27','%27%27','%27%27','%27%27')
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(378,'%27%27','%27%27','%27%27')
+INSERT INTO ARTISTE(cle_primaire,id_name_url,images,audimat,wiki)values(374,378,377,376,375)
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(380,'380','','%27%27','%27%27')
+INSERT INTO AUDIMAT(cle_primaire, listeners, playcount)values(381,12.0,31.0)
+INSERT INTO IMAGES(cle_primaire,imageSmall,imageMedium,imageLarge,imageExtraLarge,imageMega)values(382,'%27%27','%27%27','%27%27','%27%27','%27%27')
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(384,'384','','%27%27','%27%27')
+INSERT INTO AUDIMAT(cle_primaire, listeners, playcount)values(385,0.0,0.0)
+INSERT INTO IMAGES(cle_primaire,imageSmall,imageMedium,imageLarge,imageExtraLarge,imageMega)values(386,'%27%27','%27%27','%27%27','%27%27','%27%27')
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(387,'%27%27','%27%27','%27%27')
+INSERT INTO ARTISTE(cle_primaire,id_name_url,images,audimat,wiki)values(383,387,386,385,384)
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(388,'%27%27','Le Strapontin De Papa','http://www.last.fm/music/Fr%C3%A9d%C3%A9ric+Fran%C3%A7ois/_/Le+Strapontin+De+Papa')
+INSERT INTO CHANSON(cle_primaire,id_name_url,duree,images,audimat,wiki,artiste)values(379,388,260000.0,382,381,380,383)
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(390,'390','','%27%27','%27%27')
+INSERT INTO AUDIMAT(cle_primaire, listeners, playcount)values(391,0.0,0.0)
+INSERT INTO IMAGES(cle_primaire,imageSmall,imageMedium,imageLarge,imageExtraLarge,imageMega)values(392,'http://userserve-ak.last.fm/serve/64s/32569607.jpg','http://userserve-ak.last.fm/serve/126/32569607.jpg','http://userserve-ak.last.fm/serve/174s/32569607.jpg','http://userserve-ak.last.fm/serve/300x300/32569607.jpg','%27%27')
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(393,'%27%27','Tzigane','http://www.last.fm/music/Fr%C3%A9d%C3%A9ric+Fran%C3%A7ois/Tzigane')
+INSERT INTO ALBUM(cle_primaire,id_name_url,date_sortie,images,audimat,wiki,artiste)values(389,393,'',392,391,390,250)
+INSERT INTO CORRESP_CHANSON_ALBUM(album,chanson)values(389,379)
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(395,'395','','%27%27','%27%27')
+INSERT INTO AUDIMAT(cle_primaire, listeners, playcount)values(396,9.0,50.0)
+INSERT INTO IMAGES(cle_primaire,imageSmall,imageMedium,imageLarge,imageExtraLarge,imageMega)values(397,'%27%27','%27%27','%27%27','%27%27','%27%27')
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(399,'399','','%27%27','%27%27')
+INSERT INTO AUDIMAT(cle_primaire, listeners, playcount)values(400,0.0,0.0)
+INSERT INTO IMAGES(cle_primaire,imageSmall,imageMedium,imageLarge,imageExtraLarge,imageMega)values(401,'%27%27','%27%27','%27%27','%27%27','%27%27')
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(402,'%27%27','%27%27','%27%27')
+INSERT INTO ARTISTE(cle_primaire,id_name_url,images,audimat,wiki)values(398,402,401,400,399)
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(403,'%27%27','Strapontin','http://www.last.fm/music/B%C3%A9r%C3%A9zina/_/Strapontin')
+INSERT INTO CHANSON(cle_primaire,id_name_url,duree,images,audimat,wiki,artiste)values(394,403,179000.0,397,396,395,398)
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(405,'405','','%27%27','%27%27')
+INSERT INTO AUDIMAT(cle_primaire, listeners, playcount)values(406,12.0,99.0)
+INSERT INTO IMAGES(cle_primaire,imageSmall,imageMedium,imageLarge,imageExtraLarge,imageMega)values(407,'%27%27','%27%27','%27%27','%27%27','%27%27')
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(409,'409','','%27%27','%27%27')
+INSERT INTO AUDIMAT(cle_primaire, listeners, playcount)values(410,0.0,0.0)
+INSERT INTO IMAGES(cle_primaire,imageSmall,imageMedium,imageLarge,imageExtraLarge,imageMega)values(411,'%27%27','%27%27','%27%27','%27%27','%27%27')
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(412,'%27%27','%27%27','%27%27')
+INSERT INTO ARTISTE(cle_primaire,id_name_url,images,audimat,wiki)values(408,412,411,410,409)
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(413,'%27%27','Le Strapontin','http://www.last.fm/music/Mireille+Mathieu/_/Le+Strapontin')
+INSERT INTO CHANSON(cle_primaire,id_name_url,duree,images,audimat,wiki,artiste)values(404,413,163000.0,407,406,405,408)
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(415,'415','','%27%27','%27%27')
+INSERT INTO AUDIMAT(cle_primaire, listeners, playcount)values(416,6.0,10.0)
+INSERT INTO IMAGES(cle_primaire,imageSmall,imageMedium,imageLarge,imageExtraLarge,imageMega)values(417,'%27%27','%27%27','%27%27','%27%27','%27%27')
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(419,'419','','%27%27','%27%27')
+INSERT INTO AUDIMAT(cle_primaire, listeners, playcount)values(420,0.0,0.0)
+INSERT INTO IMAGES(cle_primaire,imageSmall,imageMedium,imageLarge,imageExtraLarge,imageMega)values(421,'%27%27','%27%27','%27%27','%27%27','%27%27')
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(422,'%27%27','%27%27','%27%27')
+INSERT INTO ARTISTE(cle_primaire,id_name_url,images,audimat,wiki)values(418,422,421,420,419)
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(423,'%27%27','Le strapontin','http://www.last.fm/music/Alice+Dona/_/Le+strapontin')
+INSERT INTO CHANSON(cle_primaire,id_name_url,duree,images,audimat,wiki,artiste)values(414,423,161000.0,417,416,415,418)
+INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(425,'425','','%27%27','%27%27')
+INSERT INTO AUDIMAT(cle_primaire, listeners, playcount)values(426,0.0,0.0)
+INSERT INTO IMAGES(cle_primaire,imageSmall,imageMedium,imageLarge,imageExtraLarge,imageMega)values(427,'http://userserve-ak.last.fm/serve/64s/40175271.jpg','http://userserve-ak.last.fm/serve/126/40175271.jpg','http://userserve-ak.last.fm/serve/174s/40175271.jpg','http://userserve-ak.last.fm/serve/300x300/40175271.jpg','%27%27')
+INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(428,'%27%27','Ses plus grands succès','http://www.last.fm/music/Alice+Dona/Ses+plus+grands+succ%C3%A8s')
+INSERT INTO ALBUM(cle_primaire,id_name_url,date_sortie,images,audimat,wiki,artiste)values(424,428,'',427,426,425,369)
+INSERT INTO CORRESP_CHANSON_ALBUM(album,chanson)values(424,414)
