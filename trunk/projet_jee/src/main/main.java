@@ -48,7 +48,8 @@ public class main {
 		 */ 
 		
 		//System.out.println("Sauvegarder nos classes java sous Oracle en mettant à jour le fichier txt");
-		GestionBddJavaPourSauvegarde.decomposerAvantSauvegardeGereePar(new ControleSauvegardeBddFormatOracle());
+		boolean recreerLesTables=false;
+		GestionBddJavaPourSauvegarde.decomposerAvantSauvegardeGereePar(new ControleSauvegardeBddFormatOracle(),recreerLesTables);
 		//System.out.println("Charger sous Java nos données enregistrées sous Oracle");
 		//ChargementBDDdepuisOracle.charger();
 		//System.out.println("Charger sous Oracle à partir du fichier txt, puis charger sous Java les données ainsi enregistrées sous Oracle");
