@@ -487,7 +487,7 @@ INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(
  <a href="http://www.myspace.com/thehottoddies" rel="nofollow">www.myspace.com/thehottoddies</a>
     
 User-contributed text is available under the Creative Commons By-SA License and may also be available under the GNU FDL.')
-INSERT INTO AUDIMAT(cle_primaire, listeners, playcount)values(335,26392.0,153253.0)
+INSERT INTO AUDIMAT(cle_primaire, listeners, playcount)values(335,26404.0,153241.0)
 INSERT INTO IMAGES(cle_primaire,imageSmall,imageMedium,imageLarge,imageExtraLarge,imageMega)values(336,'%27%27','%27%27','%27%27','%27%27','%27%27')
 INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(337,'%27%27','The Hot Toddies','http://www.last.fm/music/The+Hot+Toddies')
 INSERT INTO ARTISTE(cle_primaire,id_name_url,images,audimat,wiki)values(333,337,336,335,334)
@@ -1028,7 +1028,7 @@ INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(669,'667','female vocals
 INSERT INTO TAG(cle_primaire,id_name_url,reach,taggings,wiki)values(667,669,10239.0,60781.0,668)
 INSERT INTO CORRESP_ARTISTE_TAG(artiste,tag)values(636,667)
 INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(671,'671','','%27%27','%27%27')
-INSERT INTO AUDIMAT(cle_primaire, listeners, playcount)values(672,393.0,810.0)
+INSERT INTO AUDIMAT(cle_primaire, listeners, playcount)values(672,393.0,798.0)
 INSERT INTO IMAGES(cle_primaire,imageSmall,imageMedium,imageLarge,imageExtraLarge,imageMega)values(673,'%27%27','%27%27','%27%27','%27%27','%27%27')
 INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(674,'%27%27','L%27Epicier','http://www.last.fm/music/L%27Epicier')
 INSERT INTO ARTISTE(cle_primaire,id_name_url,images,audimat,wiki)values(670,674,673,672,671)
@@ -1941,7 +1941,7 @@ INSERT INTO IMAGES(cle_primaire,imageSmall,imageMedium,imageLarge,imageExtraLarg
 INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(1325,'%27%27','Judy Mahoney','http://www.last.fm/music/Judy+Mahoney')
 INSERT INTO ARTISTE(cle_primaire,id_name_url,images,audimat,wiki)values(1321,1325,1324,1323,1322)
 INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(1327,'1327','','%27%27','%27%27')
-INSERT INTO AUDIMAT(cle_primaire, listeners, playcount)values(1328,1070.0,33294.0)
+INSERT INTO AUDIMAT(cle_primaire, listeners, playcount)values(1328,1064.0,33264.0)
 INSERT INTO IMAGES(cle_primaire,imageSmall,imageMedium,imageLarge,imageExtraLarge,imageMega)values(1329,'%27%27','%27%27','%27%27','%27%27','%27%27')
 INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(1330,'%27%27','Radio Suisse Romande','http://www.last.fm/music/Radio+Suisse+Romande')
 INSERT INTO ARTISTE(cle_primaire,id_name_url,images,audimat,wiki)values(1326,1330,1329,1328,1327)
@@ -2292,7 +2292,7 @@ INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(
  
     
 User-contributed text is available under the Creative Commons By-SA License and may also be available under the GNU FDL.')
-INSERT INTO AUDIMAT(cle_primaire, listeners, playcount)values(1559,2131.0,13862.0)
+INSERT INTO AUDIMAT(cle_primaire, listeners, playcount)values(1559,2131.0,13861.0)
 INSERT INTO IMAGES(cle_primaire,imageSmall,imageMedium,imageLarge,imageExtraLarge,imageMega)values(1560,'http://userserve-ak.last.fm/serve/34/526359.jpg','http://userserve-ak.last.fm/serve/64/526359.jpg','http://userserve-ak.last.fm/serve/126/526359.jpg','http://userserve-ak.last.fm/serve/252/526359.jpg','http://userserve-ak.last.fm/serve/500/526359/Exclipsect.jpg')
 INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(1561,'%27%27','Exclipsect','http://www.last.fm/music/Exclipsect')
 INSERT INTO ARTISTE(cle_primaire,id_name_url,images,audimat,wiki)values(1557,1561,1560,1559,1558)
@@ -2907,7 +2907,7 @@ INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(1885,'%27%27','Jimmy Ona
 INSERT INTO ARTISTE(cle_primaire,id_name_url,images,audimat,wiki)values(1881,1885,1884,1883,1882)
 INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)values(1876,1881)
 INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(1887,'1887','','%27%27','%27%27')
-INSERT INTO AUDIMAT(cle_primaire, listeners, playcount)values(1888,135.0,599.0)
+INSERT INTO AUDIMAT(cle_primaire, listeners, playcount)values(1888,138.0,626.0)
 INSERT INTO IMAGES(cle_primaire,imageSmall,imageMedium,imageLarge,imageExtraLarge,imageMega)values(1889,'http://userserve-ak.last.fm/serve/34/42988663.png','http://userserve-ak.last.fm/serve/64/42988663.png','http://userserve-ak.last.fm/serve/126/42988663.png','http://userserve-ak.last.fm/serve/252/42988663.png','http://userserve-ak.last.fm/serve/_/42988663/La+Musique+dOrdinateur+m_c8577915c8854b4d9a55a08a85d5.png')
 INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(1890,'%27%27','La Musique d%27Ordinateur','http://www.last.fm/music/La+Musique+d%27Ordinateur')
 INSERT INTO ARTISTE(cle_primaire,id_name_url,images,audimat,wiki)values(1886,1890,1889,1888,1887)
@@ -2955,7 +2955,7 @@ INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(
  
     
 User-contributed text is available under the Creative Commons By-SA License and may also be available under the GNU FDL.')
-INSERT INTO AUDIMAT(cle_primaire, listeners, playcount)values(1908,18612.0,127498.0)
+INSERT INTO AUDIMAT(cle_primaire, listeners, playcount)values(1908,18632.0,127652.0)
 INSERT INTO IMAGES(cle_primaire,imageSmall,imageMedium,imageLarge,imageExtraLarge,imageMega)values(1909,'%27%27','%27%27','%27%27','%27%27','%27%27')
 INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(1910,'%27%27','Luc Ferrari','%27%27')
 INSERT INTO ARTISTE(cle_primaire,id_name_url,images,audimat,wiki)values(1906,1910,1909,1908,1907)
@@ -3746,7 +3746,7 @@ INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(
  <strong>Website:</strong> <a href="http://www.ocremix.org" rel="nofollow">http://www.ocremix.org</a>
     
 User-contributed text is available under the Creative Commons By-SA License and may also be available under the GNU FDL.')
-INSERT INTO AUDIMAT(cle_primaire, listeners, playcount)values(2317,1998.0,149968.0)
+INSERT INTO AUDIMAT(cle_primaire, listeners, playcount)values(2317,2002.0,149449.0)
 INSERT INTO IMAGES(cle_primaire,imageSmall,imageMedium,imageLarge,imageExtraLarge,imageMega)values(2318,'%27%27','%27%27','%27%27','%27%27','%27%27')
 INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(2319,'%27%27','OC ReMix','http://www.last.fm/music/OC+ReMix')
 INSERT INTO ARTISTE(cle_primaire,id_name_url,images,audimat,wiki)values(2315,2319,2318,2317,2316)
@@ -4187,7 +4187,7 @@ INSERT INTO IMAGES(cle_primaire,imageSmall,imageMedium,imageLarge,imageExtraLarg
 INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(2697,'112014131','L%27Ordinateur Dérégle','http://www.last.fm/music/Cecil+Leuter/_/L%27Ordinateur+D%C3%A9r%C3%A9gle')
 INSERT INTO CHANSON(cle_primaire,id_name_url,duree,images,audimat,wiki,artiste)values(2693,2697,0.0,2696,2695,2694,2291)
 INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)values(2699,'2699','','%27%27','%27%27')
-INSERT INTO AUDIMAT(cle_primaire, listeners, playcount)values(2700,475.0,1254.0)
+INSERT INTO AUDIMAT(cle_primaire, listeners, playcount)values(2700,481.0,1264.0)
 INSERT INTO IMAGES(cle_primaire,imageSmall,imageMedium,imageLarge,imageExtraLarge,imageMega)values(2701,'http://userserve-ak.last.fm/serve/34s/32922439.jpg','http://userserve-ak.last.fm/serve/64s/32922439.jpg','http://userserve-ak.last.fm/serve/126/32922439.jpg','http://userserve-ak.last.fm/serve/300x300/32922439.jpg','%27%27')
 INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)values(2702,'7167652','Read Underline','http://www.last.fm/music/Ordinateur/_/Read+Underline')
 INSERT INTO CHANSON(cle_primaire,id_name_url,duree,images,audimat,wiki,artiste)values(2698,2702,247000.0,2701,2700,2699,1567)
