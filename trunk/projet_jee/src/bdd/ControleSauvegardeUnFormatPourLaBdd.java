@@ -1,6 +1,10 @@
 package bdd;
 
-import java.util.Date;
+
+
+import java.sql.Date;
+
+import controleur.UtilitaireDate;
 
 
 /**
@@ -24,7 +28,7 @@ public abstract class ControleSauvegardeUnFormatPourLaBdd {
 		if(d==null){
 			return "''";
 		}else{
-			return "'2012-12-31'";
+			return UtilitaireDate.getInstanceunique().transformeEnString(d);
 		}
 	}
 	
