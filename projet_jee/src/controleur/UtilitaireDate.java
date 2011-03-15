@@ -50,7 +50,7 @@ public class UtilitaireDate {
 	
 	
 	
-	
+	/**Methodes qui permettent de créer une date à partir des resultats de lastfm**/
 
 	/**
 	 * la date des WIKI est 2 formes possibles selon si le jour est sur 1 ou 2 chiffres 
@@ -151,6 +151,13 @@ public class UtilitaireDate {
 	}
 
 	
+	/** methodes qui permettent de passer du format data à string et <--> pour la BDD**/
+	
+	/**
+	 * ecrit en format string une date
+	 * @param d
+	 * @return
+	 */
 	public String transformeEnString(Date d){
 		String s = "";
 		int j = d.getDate();
@@ -167,6 +174,40 @@ public class UtilitaireDate {
 		return s;
 	}
 	
+	
+	/**
+	 * les dates dans la BDD sont de cette forme : 06/04/1999 (6 avril)
+	 * 
+	 * 
+	 * index : 	0 .1 .2 .3 .4 .5 .6 .7 .8 .9
+	 * date  : 	0 .6 ./ .0 .4 ./ .1 .9 .9 .9 
+	 * 
+	 * 	
+	 * @param s
+	 * @return
+	 * @throws ExceptionDate 
+	 */
+	public Date transformerEnDateUneDateBDD(String s) throws ExceptionDate{
+		int year=0, month=0, day=0;
+		String month_string;
+		Date d = null;
+		try{
+			if(s.length()==10){
+				day=Integer.parseInt(s.substring(0, 2));
+				month = Integer.parseInt(s.substring(3, 5))-1;
+				year = Integer.parseInt(s.substring(6,10))-1900;
+			}
+			if(!(day==0 && month==0 && year==0)){
+				d = new Date(year,month,day);	
+			}else throw new ExceptionDate(s);
+		}catch(Exception e){
+			throw new ExceptionDate(s); 
+		}
+		Controleur.getInstanceuniquecontroleur().
+		ajouter(d, s);
+		return d;
+	}
+
 	
 	
 	/********************************************************************/
