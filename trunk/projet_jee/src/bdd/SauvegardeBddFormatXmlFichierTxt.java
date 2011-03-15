@@ -1,12 +1,16 @@
 package bdd;
 
-import java.util.Date;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.LinkedList;
 import java.util.List;
 
 public class SauvegardeBddFormatXmlFichierTxt extends SauvegardeUnFormatPourLaBdd{
 	//Comporte la liste d'imbrications de balises dans laquelles nous écrivont actuellement
 	//L'identation (nb de tabulations en début de ligne) est donnée par le nombre d'élément dans cette liste
-	private List<String> hierarchieDesBalises;
+	private List<String> hierarchieDesBalises=new LinkedList<String>();
+	private PrintWriter fluxSortie;
 
 	public SauvegardeBddFormatXmlFichierTxt(){
 		super();
@@ -14,9 +18,10 @@ public class SauvegardeBddFormatXmlFichierTxt extends SauvegardeUnFormatPourLaBd
 	
 	@Override
 	public void ajouterLigne(String ligne){
-		/*TODO : la méthode qui écrit dans le fichier
-		* elle gère l'identation en regardant la taille de la liste hierarchieDesBalises
-		*/
+		for(@SuppressWarnings("unused") String nonLu:hierarchieDesBalises){
+			ligne="	"+ligne;//C'est ici que l'on gère l'identation, en fonction du nombre de balises ouvertes
+		}
+		fluxSortie.println(ligne);
 	}
 	
 	public void ajouterLigne(String acronymeBalise, 
@@ -24,7 +29,7 @@ public class SauvegardeBddFormatXmlFichierTxt extends SauvegardeUnFormatPourLaBd
 							String contenuHorsBalise,
 							boolean contientAutresBalises){
 		if((contenuHorsBalise.isEmpty())&&(!contientAutresBalises)){
-			// TODO : on l'écrit avec le "/>" à la fin
+			ajouterLigne("<"+acronymeBalise+" "+contenuEnAttributSousFormeDef+"/>");
 		}else{
 			agrandirHierarchie(acronymeBalise, contenuHorsBalise, contenuEnAttributSousFormeDef);
 		}
@@ -33,59 +38,66 @@ public class SauvegardeBddFormatXmlFichierTxt extends SauvegardeUnFormatPourLaBd
 	public void agrandirHierarchie(String acronymeBalise,
 									String contenuHorsBalise,
 									String contenuEnAttributSousFormeDef){
-		/*TODO : 
-		 * - en faire une balise ouvrante, et l'écrire avec le contenuEnAttibutSousFormeDef
-		 * - ajouter l'acronyme à la liste hierarchieDesBalises
-		 * - on augmente l'identation (géré automatiquement par le fait d'ajouter à hierarchieDesBalises)
-		 * - on écrit le contenuHorsBalise
-		 */
+		ajouterLigne("<"+acronymeBalise+" "+contenuEnAttributSousFormeDef+">");
+		hierarchieDesBalises.add(acronymeBalise);
+		ajouterLigne("<xsl:text>"+contenuHorsBalise+"</xsl:text>");
 	}
 	
 	public void diminuerHierarchie(){
-		/*TODO : 
-		 * - récupérer l'acronyme de la dernière balise de la liste hierarchieDesBalises
-		 * - supprimer de la liste hierarchieDesBalises (ce qui réduira l'identation)
-		 * - en faire une balise fermante, et l'écrire en réduisant l'identation
-		 */
+		int positionDerniereBalise=hierarchieDesBalises.size()-1;
+		String acronymeBalise=hierarchieDesBalises.remove(positionDerniereBalise);
+		ajouterLigne("</"+acronymeBalise+">");
 	}
 	
 	@Override
 	public void ecrireEnTete() {
+		try {fluxSortie = new PrintWriter(new FileWriter("XMLenCours.xml"));} 
+		catch (IOException e1) {e1.printStackTrace();}
 		/* TODO : 
 		 * - on écrit l'entête, les référence à la DTD
+		 * - ne pas oublier le xlmns:xsl
+		 * - puis :
 		 */
-		ajouterLigne("BDD","","",true);
+		ajouterLigne("BDD","","",true);//<BDD>
 	}
 
 	@Override
 	public void ecrireConclusion() {
-		// TODO Auto-generated method stub
-		
+		diminuerHierarchie();//</BDD>
+		fluxSortie.close();
 	}
 
 	@Override
-	public void sauverWiki(int pk, String id_wiki, Date datePublication,
+	public void sauverWiki(String pk, String id_wiki, String datePublication,
 			String resume, String contenu) {
+		ajouterLigne("WIKI","","",true);
+		//TODO : ajouter le contenu du WIKI
+		//XXX : ouais, mais là on n'est pas vraiment en train de mettre le WIKI à l'intérieur de ce à quoi il correspond
+		diminuerHierarchie();
+	}
+
+	@Override
+	public void creerTables() {
+		//rien : le fichier txt existe déjà
+		//éventuellement : charger la DTD? Je ne suis pas certain que ce soit le lieu approprié...
+	}
+
+	@Override
+	public void sauverAudimat(String pk, String listeners, String playcount) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void sauverAudimat(int pk, double listeners, double playcount) {
+	public void sauverArtiste(String pk, String coord_artiste,
+			String pkImagesCetArtiste, String pkAudimatCetArtiste,
+			String pkWikiCetArtiste) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void sauverArtiste(int pk, int coord_artiste,
-			int pkImagesCetArtiste, int pkAudimatCetArtiste,
-			int pkWikiCetArtiste) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void sauverImages(int pkImagesCetArtiste, String imageSmall,
+	public void sauverImages(String pkImagesCetArtiste, String imageSmall,
 			String imageMedium, String imageLarge, String imageExtraLarge,
 			String imageMega) {
 		// TODO Auto-generated method stub
@@ -93,59 +105,53 @@ public class SauvegardeBddFormatXmlFichierTxt extends SauvegardeUnFormatPourLaBd
 	}
 
 	@Override
-	public void sauverSimilartist(Integer artiste1, Integer artiste2) {
+	public void sauverSimilartist(String artiste1, String artiste2) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void sauverChanson(int pk, int coord_chanson, Double duree,
-			int pkImages, int pkAudimat, int pkWiki, int pkArtiste) {
+	public void sauverChanson(String pk, String coord_chanson, String duree,
+			String pkImages, String pkAudimat, String pkWiki, String pkArtiste) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void sauverArtisteTag(Integer artiste, Integer tag) {
+	public void sauverArtisteTag(String artiste, String tag) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void sauverChansonTag(Integer chanson, Integer tag) {
+	public void sauverChansonTag(String chanson, String tag) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void sauverTag(int pk, int coord_tag, Double reach, Double tagging,
-			int pkWiki) {
+	public void sauverTag(String pk, String coord_tag, String reach,
+			String tagging, String pkWiki) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void sauverCoord(int pk, String id, String name, String url) {
+	public void sauverCoord(String pk, String id, String name, String url) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void sauverChansonAlbum(Integer album, Integer chanson) {
+	public void sauverChansonAlbum(String album, String chanson) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void sauverAlbum(int pk, int coord_album, Date date_sortie,
-			int pkImages, int pkAudimat, int pkWiki, Integer artiste) {
+	public void sauverAlbum(String pk, String coord_album, String string,
+			String pkImages, String pkAudimat, String pkWiki, String artiste) {
 		// TODO Auto-generated method stub
 		
-	}
-
-	@Override
-	public void creerTables() {
-		//rien : le fichier txt existe déjà
-		//éventuellement : charger la DTD? Je ne suis pas certain que ce soit le lieu approprié...
 	}
 }
