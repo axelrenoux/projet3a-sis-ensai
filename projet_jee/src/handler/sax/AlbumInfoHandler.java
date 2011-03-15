@@ -16,7 +16,7 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import controleur.Controleur;
-import controleur.Utilitaire;
+import controleur.UtilitaireDate;
 import exceptions.ExceptionDate;
 import exceptions.ExceptionMiseAjour;
 
@@ -274,7 +274,7 @@ public class AlbumInfoHandler extends DefaultHandler{
 		}else if(inReleasedate){
 			Date d;
 			try {
-				d = Utilitaire.getInstanceunique().
+				d = UtilitaireDate.getInstanceunique().
 					transformerEnDate(lecture);
 				album.setDate(d);
 			} catch (ExceptionDate e) {
@@ -299,7 +299,7 @@ public class AlbumInfoHandler extends DefaultHandler{
 		}else if(inPublished){
 			Date d;
 			try {
-				d = Utilitaire.getInstanceunique().
+				d = UtilitaireDate.getInstanceunique().
 					transformerEnDateWiki(lecture);
 				currentWiki.setDatePublication(d);
 			} catch (ExceptionDate e) {

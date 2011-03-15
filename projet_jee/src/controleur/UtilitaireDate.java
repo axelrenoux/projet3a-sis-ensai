@@ -14,19 +14,19 @@ import exceptions.ExceptionDate;
  * @author Administrateur
  *
  */
-public class Utilitaire {
+public class UtilitaireDate {
 
 	/********************************************************************/
 	/*************************      attributs       *********************/
 	/********************************************************************/
 
 	private HashMap<String,String> correspondancesMois;
-	private static final Utilitaire instanceUnique = new Utilitaire();
+	private static final UtilitaireDate instanceUnique = new UtilitaireDate();
 
 	/********************************************************************/
 	/**********************      constructeurs      *********************/
 	/********************************************************************/
-	private Utilitaire(){
+	private UtilitaireDate(){
 		correspondancesMois = new HashMap<String, String>();
 		correspondancesMois.put("Jan","0");
 		correspondancesMois.put("Feb","1");
@@ -150,11 +150,30 @@ public class Utilitaire {
 		return ssansvide;
 	}
 
+	
+	public String transformeEnString(Date d){
+		String s = "";
+		int j = d.getDate();
+		int m = d.getMonth()+1;
+		int y = d.getYear()+1900;
+		
+		if(j<10) s="'0"+j+"/";
+		else s="'"+j+"/";
+		
+		if(m<10) s+="0"+m+"/";
+		else s+=m+"/";
+		
+		s+=y+"'";
+		return s;
+	}
+	
+	
+	
 	/********************************************************************/
 	/******************      getters / setters       ********************/
 	/********************************************************************/
 
-	public static Utilitaire getInstanceunique() {
+	public static UtilitaireDate getInstanceunique() {
 		return instanceUnique;
 	}
 

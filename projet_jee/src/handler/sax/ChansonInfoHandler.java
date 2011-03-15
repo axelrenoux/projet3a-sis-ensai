@@ -14,7 +14,7 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import controleur.Controleur;
-import controleur.Utilitaire;
+import controleur.UtilitaireDate;
 import exceptions.ExceptionDate;
 import exceptions.ExceptionMiseAjour;
 
@@ -310,7 +310,7 @@ public class ChansonInfoHandler extends DefaultHandler{
 		}else if(inPublished){
 			Date d;
 			try {
-				d = Utilitaire.getInstanceunique().
+				d = UtilitaireDate.getInstanceunique().
 					transformerEnDateWiki(lecture);
 				currentWiki.setDatePublication(d);
 			} catch (ExceptionDate e) {
