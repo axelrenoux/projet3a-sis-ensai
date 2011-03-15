@@ -146,7 +146,7 @@ public class ChansonInfoHandler extends DefaultHandler{
 			inPlaycount = true;	
 		}else if(qName.equals("duration")){
 			inDuration = true;	
-		}else if(qName.equals("artist")&& !inArtisteAlbum){
+		}else if(qName.equals("artist")&& !inAlbum){
 			inArtisteChanson = true;
 			//currentArtisteChanson = new Artiste();
 		}else if(qName.equals("url") && inArtisteChanson){
@@ -159,6 +159,7 @@ public class ChansonInfoHandler extends DefaultHandler{
 			rangCurrentAlbum = attributes.getValue(0);
 		}else if(qName.equals("artist") && inAlbum){
 			inArtisteAlbum = true;
+			currentArtisteAlbum = new Artiste();
 		}else if(qName.equals("title") && inAlbum){
 			inTitleAlbum = true;
 		}else if(qName.equals("url") && inAlbum){
@@ -198,7 +199,7 @@ public class ChansonInfoHandler extends DefaultHandler{
 			//System.out.println("Balise non traitee pour le moment : " + qName);
 		}
 	}
-
+		
 
 	/* (non-Javadoc)
 	 * @see org.xml.sax.helpers.DefaultHandler#endElement(java.lang.String, java.lang.String, java.lang.String)
@@ -217,7 +218,7 @@ public class ChansonInfoHandler extends DefaultHandler{
 		}else if(qName.equals("duration")){
 			inDuration = false;	
 		}else if(qName.equals("artist")&& !inArtisteAlbum){
-			inArtisteChanson = false;
+			inArtisteChanson = false;//TODO
 		}else if(qName.equals("url") && inArtisteChanson){
 			inURLArtisteChanson = false;
 		}else if(qName.equals("album")){
@@ -227,7 +228,7 @@ public class ChansonInfoHandler extends DefaultHandler{
 			chanson.setAlbums(listeAlbums);
 		}else if(qName.equals("artist") && inAlbum){
 			inArtisteAlbum = false;
-			gererAjoutArtisteAlbum();
+			gererAjoutArtisteAlbum();//TODO
 			//currentAlbum.setArtiste(currentArtisteAlbum);
 		}else if(qName.equals("title") && inAlbum){
 			inTitleAlbum = false;
@@ -377,6 +378,21 @@ public class ChansonInfoHandler extends DefaultHandler{
 			//et on ajoute l'artiste א la liste des artistes du controleur
 			Controleur.getInstanceuniquecontroleur().ajouter(currentArtisteAlbum);
 		}
+		
+		//currentAlbum.setArtiste(Controleur.getInstanceuniquecontroleur().
+		//		getListeArtistes().get(currentArtisteAlbum.getName()));
+		
+
+		Controleur.getInstanceuniquecontroleur()
+		.ajouterProbleme("שששש2","@@@@@@@@@" + 
+				currentArtisteAlbum + 
+				currentAlbum +Controleur.getInstanceuniquecontroleur().
+				getListeArtistes().get(currentArtisteAlbum.getName())+ 
+				currentAlbum.getArtiste());
+		
+		Controleur.getInstanceuniquecontroleur()
+		.ajouterProbleme("שששש2","@@@@@@@@@" + currentArtisteAlbum + currentAlbum +Controleur.getInstanceuniquecontroleur().
+				getListeArtistes().get(currentArtisteAlbum.getName()));
 	}
 
 
