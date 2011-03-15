@@ -1,6 +1,8 @@
 package bdd;
 
-
+/**
+*@deprecated
+*/
 public class SauvegardeBddFormatRdfFichierTxt extends SauvegardeUnFormatPourLaBdd{
 
 	public SauvegardeBddFormatRdfFichierTxt(){
@@ -8,7 +10,7 @@ public class SauvegardeBddFormatRdfFichierTxt extends SauvegardeUnFormatPourLaBd
 	}
 	
 	@Override
-	public void ecrireEnTete() {
+	public void ecrireEnTete(boolean tablesDejaExistantes) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -107,6 +109,18 @@ public class SauvegardeBddFormatRdfFichierTxt extends SauvegardeUnFormatPourLaBd
 
 	@Override
 	public void creerTables() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void conserverDonneesExistantes() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void reecrireDonneesExistantes() {
 		// TODO Auto-generated method stub
 		
 	}

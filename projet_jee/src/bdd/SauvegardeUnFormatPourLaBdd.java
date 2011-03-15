@@ -2,14 +2,17 @@ package bdd;
 
 public abstract class SauvegardeUnFormatPourLaBdd {
 	
-	public SauvegardeUnFormatPourLaBdd() {
-	}
+	public SauvegardeUnFormatPourLaBdd() {}
+	
+	public abstract void ecrireEnTete(boolean lesTablesExistent);
 	
 	public abstract void creerTables();
 
-	public abstract void ajouterLigne(String ligne);
+	public abstract void conserverDonneesExistantes();
 	
-	public abstract void ecrireEnTete();
+	public abstract void reecrireDonneesExistantes();
+
+	public abstract void ajouterLigne(String ligne);
 
 	public abstract void ecrireConclusion();
 

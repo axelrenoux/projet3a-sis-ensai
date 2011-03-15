@@ -45,12 +45,14 @@ public class GestionBddJavaPourSauvegarde {
 		for(Chanson a:Controleur.getInstanceuniquecontroleur().getListeChansons().values()){
 			chansons.add(a);
 		}
+		
 	}
 	
-	public static void decomposerAvantSauvegardeGereePar(ControleSauvegardeUnFormatPourLaBdd gestionnaireDeFormatdeSauvegarde){
+	public static void decomposerAvantSauvegardeGereePar(ControleSauvegardeUnFormatPourLaBdd gestionnaireDeFormatdeSauvegarde,boolean recreerLesTables){
 		init();
 		formatSauv=gestionnaireDeFormatdeSauvegarde;
-		formatSauv.ecrireEnTete();
+		primarykey=formatSauv.getNbObsExistantes(recreerLesTables);
+		formatSauv.ecrireEnTete(!recreerLesTables);
 		for(Artiste lArtiste:artistes){//Pour chaque artiste
 			sauver(lArtiste);
 		}
@@ -61,6 +63,7 @@ public class GestionBddJavaPourSauvegarde {
 			sauver(lAlbum);
 		}
 		formatSauv.ecrireConclusion();
+		formatSauv.setNbObsExistantes(primarykey);
 	}
 
 	private static void sauver(Chanson laChanson) {

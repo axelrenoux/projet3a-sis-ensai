@@ -1,7 +1,5 @@
 package bdd;
 
-
-
 import java.sql.Date;
 
 import controleur.UtilitaireDate;
@@ -64,8 +62,8 @@ public abstract class ControleSauvegardeUnFormatPourLaBdd {
 		sauveur.ajouterLigne(controle(ligne));
 	}
 	
-	public void ecrireEnTete(){
-		sauveur.ecrireEnTete();
+	public void ecrireEnTete(boolean lesTablesExistent){
+		sauveur.ecrireEnTete(lesTablesExistent);
 	}
 
 	public void ecrireConclusion(){
@@ -161,4 +159,7 @@ public abstract class ControleSauvegardeUnFormatPourLaBdd {
 	public void setSauveur(SauvegardeUnFormatPourLaBdd sauveur) {
 		this.sauveur = sauveur;
 	}
+
+	public abstract int getNbObsExistantes(boolean recreerLesTables);
+	public abstract void setNbObsExistantes(int primarykey);
 }

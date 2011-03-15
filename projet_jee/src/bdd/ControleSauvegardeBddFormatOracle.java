@@ -1,5 +1,11 @@
 package bdd;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+
 
 public class ControleSauvegardeBddFormatOracle extends ControleSauvegardeUnFormatPourLaBdd{
 
@@ -19,5 +25,30 @@ public class ControleSauvegardeBddFormatOracle extends ControleSauvegardeUnForma
 		//On veut du SQL : les VARCHAR2 doivent être entre guillemets
 		input="'"+input+"'";
 		return input;
+	}
+
+	
+	@Override
+	public int getNbObsExistantes(boolean recreerLesTables) {
+		int clefDebut=0;
+		if(!recreerLesTables){
+			try {
+				BufferedReader fluxEntree = new BufferedReader(new FileReader("valDerniereClefPrimaireSQL.txt"));
+				if (fluxEntree.ready()) {
+					clefDebut=  Integer.parseInt(fluxEntree.readLine());
+				}
+				fluxEntree.close();
+			}catch (IOException e1) {e1.printStackTrace();}
+		}
+		return clefDebut;
+	}
+
+	@Override
+	public void setNbObsExistantes(int primarykey) {
+		try {
+			PrintWriter fluxSortie = new PrintWriter(new FileWriter("valDerniereClefPrimaireSQL.txt"));
+			fluxSortie.println(primarykey);
+			fluxSortie.close(); 
+		}catch (IOException e1) {e1.printStackTrace();}
 	}
 }
