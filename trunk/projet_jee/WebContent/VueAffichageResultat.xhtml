@@ -8,16 +8,15 @@
 
 <ui:composition template="/modeleFormulaire.xhtml">
 	<ui:define name="contenu">
-		<h:form> 
-			<p:dataTable rendered="#{vueAffichageResultat.type == 'chanson'}"  
-				var="chanson" value="#{vueAffichageResultat.resultats}">
+		<h:form>
+			<p:dataTable var="chanson" value="#{vueAffichageResultat.resultatsChanson}">
 				<p:column>
 					<f:facet name="header">  
                   	Name
 		          	</f:facet>
 					<h:outputText value="#{chanson.name}" />
 				</p:column>
-		
+
 				<p:column>
 					<f:facet name="header">  
                   	Name
@@ -25,16 +24,15 @@
 					<h:outputText value="#{artiste.name}" />
 				</p:column>
 			</p:dataTable>
-			
-			<p:dataTable rendered="#{vueAffichageResultat.type == 'artiste'}" 
-				var="artiste" value="#{vueAffichageResultat.resultats}">
+
+			<p:dataTable var="artiste" value="#{vueAffichageResultat.resultatsArtiste}">
 				<p:column>
 					<f:facet name="header">  
                   	Name
 		          	</f:facet>
 					<h:outputText value="#{artiste.name}" />
 				</p:column>
-		
+
 				<p:column>
 					<f:facet name="header">  
                   	Name
@@ -42,16 +40,15 @@
 					<h:outputText value="#{artiste.name}" />
 				</p:column>
 			</p:dataTable>
-			
-			<p:dataTable rendered="#{vueAffichageResultat.type == 'album'}"  
-				var="album" value="#{vueAffichageResultat.resultats}">
+
+			<p:dataTable var="album" value="#{vueAffichageResultat.resultatsAlbum}">
 				<p:column>
 					<f:facet name="header">  
                   	Name
 		          	</f:facet>
 					<h:outputText value="#{album.name}" />
 				</p:column>
-		
+
 				<p:column>
 					<f:facet name="header">  
                   	Name
