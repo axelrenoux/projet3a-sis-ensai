@@ -1,4 +1,4 @@
-select id_name_urlAlbum.name as nameAlbum, id_name_urlArtiste.name as nameArtiste, audimat.listeners, audimat.playcount
+select id_name_urlAlbum.name as nameAlbum, date_sortie ,id_name_urlArtiste.name as nameArtiste, audimat.listeners, audimat.playcount
 from album, artiste, audimat, id_name_url id_name_urlAlbum, id_name_url id_name_urlArtiste
 where album.artiste = artiste.cle_primaire and
 album.audimat = audimat.cle_primaire and
@@ -6,6 +6,4 @@ album.id_name_url = id_name_urlAlbum.cle_primaire and
 artiste.id_name_url = id_name_urlArtiste.cle_primaire
 
 
-select album.*, id_name_url.name 
-from album, id_name_url
-where album.id_name_url= id_name_url.cle_primaire
+ 
