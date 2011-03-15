@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
+import metier.Album;
 import metier.Artiste;
+import metier.Chanson;
 /**
  * on ajoute ces 2 lignes afin que la classe soit instanciee automatiquement (managedBean)
  * et qu'il n'y ait qu'une seule instance tout au long de la session (sessionScoped)
@@ -20,8 +22,12 @@ public class GestionFormulaire {
 	/*************************      attributs       *********************/
 	/********************************************************************/
 	
-	private Recherche recherche;
-	private ArrayList resultats;
+	private RechercheAlbum rechercheAlbum = new RechercheAlbum();
+	private RechercheArtiste rechercheArtiste = new RechercheArtiste();
+	private RechercheChanson rechercheChanson = new RechercheChanson();
+	private ArrayList<Album> resultatsAlbum = new ArrayList<Album>();
+	private ArrayList<Artiste> resultatsArtiste = new ArrayList<Artiste>();
+	private ArrayList<Chanson> resultatsChanson = new ArrayList<Chanson>();
 
 
 	/********************************************************************/
@@ -29,35 +35,29 @@ public class GestionFormulaire {
 	/********************************************************************/
 
 	
-	public void setObjectif(int ceQueRecherche) {
-		//item1Chanson item2Artiste item3Album
-		if(ceQueRecherche==1){
-			recherche=new RechercheTrack();
-		}
-		else if(ceQueRecherche==2){
-			recherche=new RechercheArtiste();
-		}
-		else if(ceQueRecherche==3){
-			recherche=new RechercheAlbum();
-		}
-		else if(ceQueRecherche==4){
-			recherche=new RechercheGenerale();
-		}
-	}
 	
 	
-	
-	public ArrayList lancerRecherche() {
-		resultats = recherche.lancerRecherche();
-		return resultats;
+	public ArrayList<Album> lancerRechercheAlbum() {
+		
+		return rechercheAlbum.lancerRecherche();
 		
 	}
 	
-	public String retournerTypeAffichage(){
-		return recherche.retournerTypeAffichage();
+	public ArrayList<Artiste> lancerRechercheArtiste() {
+		
+		return rechercheArtiste.lancerRecherche();
+		
 	}
-
 	
+	public ArrayList<Chanson> lancerRechercheChanson() {
+		
+		return rechercheChanson.lancerRecherche();
+		
+	}
+	
+	
+
+
 
 
 	
@@ -66,17 +66,90 @@ public class GestionFormulaire {
 	/********************************************************************/
 
 	
-	public Recherche getRecherche() {
-		return recherche;
+
+	public RechercheAlbum getRechercheAlbum() {
+		return rechercheAlbum;
+	}
+
+
+	public void setRechercheAlbum(RechercheAlbum rechercheAlbum) {
+		this.rechercheAlbum = rechercheAlbum;
+	}
+
+
+	public RechercheArtiste getRechercheArtiste() {
+		return rechercheArtiste;
+	}
+
+
+	public void setRechercheArtiste(RechercheArtiste rechercheArtiste) {
+		this.rechercheArtiste = rechercheArtiste;
+	}
+
+
+	public RechercheChanson getRechercheChanson() {
+		return rechercheChanson;
+	}
+
+
+	public void setRechercheChanson(RechercheChanson rechercheChanson) {
+		this.rechercheChanson = rechercheChanson;
 	}
 
 
 
-	public void setRecherche(Recherche recherche) {
-		this.recherche = recherche;
+
+
+	public ArrayList<Album> getResultatsAlbum() {
+		return resultatsAlbum;
 	}
+
+
+
+
+
+	public void setResultatsAlbum(ArrayList<Album> resultatsAlbum) {
+		this.resultatsAlbum = resultatsAlbum;
+	}
+
+
+
+
+
+	public ArrayList<Artiste> getResultatsArtiste() {
+		return resultatsArtiste;
+	}
+
+
+
+
+
+	public void setResultatsArtiste(ArrayList<Artiste> resultatsArtiste) {
+		this.resultatsArtiste = resultatsArtiste;
+	}
+
+
+
+
+
+	public ArrayList<Chanson> getResultatsChanson() {
+		return resultatsChanson;
+	}
+
+
+
+
+
+	public void setResultatsChanson(ArrayList<Chanson> resultatsChanson) {
+		this.resultatsChanson = resultatsChanson;
+	}
+
+
+
+
+
 	
-	 
+	
 	
 
 }
