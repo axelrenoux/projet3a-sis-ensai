@@ -3,6 +3,7 @@
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 
 import metier.ComposantCluster;
 import metier.ObjetAComparer;
@@ -177,6 +178,21 @@ public class Album extends ObjetAComparer implements Oeuvre {
 	+ playcount + ", chansons=" + chansons 
 	+ ", wiki=" + wiki + "]";*/
 
+	
+	
+	@Override
+	public HashMap<String, ComposantCluster> getContenu() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
+	public String getNom() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	
 	
 	/********************************************************************/
 	/******************      getters / setters       ********************/
@@ -378,4 +394,6 @@ public class Album extends ObjetAComparer implements Oeuvre {
 	public Collection<Album> getObjetsDeCeType() {
 		return Controleur.getInstanceuniquecontroleur().getListeAlbums().values();
 	}
+
+
 }

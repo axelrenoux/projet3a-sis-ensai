@@ -2,6 +2,7 @@
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 
 import metier.ComposantCluster;
 import metier.ObjetAComparer;
@@ -164,6 +165,19 @@ public class Chanson extends ObjetAComparer implements Oeuvre{
 		catch (NullPointerException e){
 		}
 		return descrip;	
+	}
+	
+	
+	@Override
+	public HashMap<String, ComposantCluster> getContenu() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getNom() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	/********************************************************************/

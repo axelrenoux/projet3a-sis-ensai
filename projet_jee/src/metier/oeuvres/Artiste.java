@@ -2,6 +2,7 @@
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 
 import metier.ComposantCluster;
 import metier.ObjetAComparer;
@@ -175,6 +176,19 @@ public class Artiste extends ObjetAComparer implements Oeuvre{
 	}*/
 
 
+		@Override
+		public HashMap<String, ComposantCluster> getContenu() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+	
+		@Override
+		public String getNom() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+	
+	
 	/********************************************************************/
 	/******************      getters / setters       ********************/
 	/********************************************************************/
