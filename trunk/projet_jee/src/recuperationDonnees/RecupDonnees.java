@@ -23,26 +23,39 @@ public class RecupDonnees {
 	ArrayList<String> motsCleArtistes = new ArrayList<String>();
 	
 	
-	
-	
+	/************ rechercher à partir d'une ArrayList de mots clés****************/
+	public void rechercher(ArrayList<String> motsClef){
+		for(String mot:motsClef){
+			motsCleChansons.add(mot);
+			motsCleArtistes.add(mot);
+			motsCleAlbums.add(mot);
+		}		
+		recupererDonneesChansons();
+		recupererDonneesArtistes();
+		recupererInfosComplementairesPlus();
+		recupererDonneesAlbums();
+		recupererDonneesComplementairesTags();
+		recupererListesDesTags();
+		//affichageDonneesRecuperees();
+	}
 	
 	/************ methodes d'initialisation ***********************/
 	
 	public void initialisationChanson(){
-		motsCleChansons.add("ordinateur");
+		motsCleChansons.add("strapontin");
 	}
 	public void initialisationArtiste(){
-		motsCleArtistes.add("ordinateur");
+		motsCleArtistes.add("strapontin");
 	}
 	public void initialisationAlbum(){
-		motsCleAlbums.add("ordinateur");
+		motsCleAlbums.add("strapontin");
 	}
 	
 	
 	/************ recuperation de chansons ***********************/
 	public void recupererDonneesChansons(){
 		
-		initialisationChanson();
+		//initialisationChanson();
 		ArrayList<Chanson> listeChansons = new ArrayList<Chanson>();
 		
 		ParsingChanson parsingChanson = new ParsingChanson();
@@ -62,7 +75,7 @@ public class RecupDonnees {
 	/************ recuperation d'albums    ***********************/
 	public void recupererDonneesAlbums(){
 	
-		initialisationAlbum();
+		//initialisationAlbum();
 		ArrayList<Album> listeAlbums = new ArrayList<Album>();
 		
 		ParsingAlbum parsingAlbum = new ParsingAlbum();
@@ -83,7 +96,7 @@ public class RecupDonnees {
 	/************ recuperation d'artistes  ***********************/
 	public void recupererDonneesArtistes(){
 		
-		initialisationArtiste();
+		//initialisationArtiste();
 		ArrayList<Artiste> listeArtistes = new ArrayList<Artiste>();
 		
 		ParsingArtiste parsingArtiste = new ParsingArtiste();
