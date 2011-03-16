@@ -60,4 +60,32 @@ inner join id_name_url id_name_url1 on artiste.id_name_url = id_name_url1.cle_pr
 inner join audimat on artiste.audimat = audimat.cle_primaire
 
 
+---------------------------------------------------------------------------------
+
+------------selection des chansons-----------------------
+
+create view vCORRESP_Chanson_TAGTOP1 as
+select chanson, min(tag) as tag from CORRESP_chanson_TAG group by chanson order by chanson
+
+select 
+chanson.cle_primaire as chanson,
+id_name_url1.name as chanson,
+duree,
+id_name_url2.name as artiste,
+vCORRESP_CHANSON_TAGTOP1.tag,
+id_name_url3.name as tag,
+audimat.listeners,
+audimat.playcount
+
+from chanson 
+left join (artiste 
+inner join id_name_url id_name_url2 on artiste.id_name_url=id_name_url2.cle_primaire) 
+on artiste.cle_primaire = chanson.artiste
+left join (vCORRESP_CHANSON_TAGTOP1 
+inner join (tag 
+inner join id_name_url id_name_url3 on tag.id_name_url = id_name_url3.cle_primaire)
+on tag.cle_primaire =  vCORRESP_CHANSON_TAGTOP1.tag)
+on chanson.cle_primaire = vCORRESP_CHANSON_TAGTOP1.chanson
+inner join id_name_url id_name_url1 on chanson.id_name_url = id_name_url1.cle_primaire
+inner join audimat on chanson.audimat = audimat.cle_primaire
  
