@@ -1,4 +1,4 @@
-package bdd;
+package bdd.sauvegarde_controlee;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -6,28 +6,30 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import bdd.sqlviajdbc.ControlAccesSQLViaJDBC;
+
 import exceptions.ConnectionException;
 import exceptions.UpdateException;
 
 /**
  * Mettre les String entre guillemets et vérifier le format des dates a été vérifié au niveau du ControleSauvegardeBddFormatOracle
  */
-public class SauvegardeBddFormatOracle extends SauvegardeUnFormatPourLaBdd{
+class SauvegardeBddFormatOracle extends SauvegardeUnFormatPourLaBdd{
 	private String requeteSQL;
 	private PrintWriter fluxSortie;
 
-	public SauvegardeBddFormatOracle(){
+	protected SauvegardeBddFormatOracle(){
 		super();
 	}
 	
 	@Override
-	public void ecrireEnTete(boolean lesTablesExistent) {
+	protected void ecrireEnTete(boolean lesTablesExistent) {
 		if(lesTablesExistent){
 			conserverDonneesExistantes();
 		}
 		try {fluxSortie = new PrintWriter(new FileWriter("requetesSQL.txt"));} 
 		catch (IOException e1) {e1.printStackTrace();}
-		try {SQLViaJDBC.connecter();}
+		try {ControlAccesSQLViaJDBC.connecter();}
 		catch (ConnectionException e) {e.printStackTrace();}
 		if(lesTablesExistent){
 			reecrireDonneesExistantes();
@@ -38,39 +40,39 @@ public class SauvegardeBddFormatOracle extends SauvegardeUnFormatPourLaBdd{
 	}
 
 	@Override
-	public void ajouterLigne(String ligne) {
+	protected void ajouterLigne(String ligne) {
 		//On envoie la requête au serveur Oracle en local
-		try {SQLViaJDBC.executerRequeteSansRetour(ligne);} 
+		try {ControlAccesSQLViaJDBC.executerRequeteSansRetour(ligne);} 
 		catch (UpdateException e) {e.printStackTrace();}
 		//Et on l'écrit en parallèle dans un fichier txt partagé, pour que les autres aussi puissent peupler leur bdd
 		fluxSortie.println(ligne);
 	}
 	
 	@Override
-	public void ecrireConclusion() {
-		try {SQLViaJDBC.fermerBDD();}
+	protected void ecrireConclusion() {
+		try {ControlAccesSQLViaJDBC.fermerBDD();}
 		catch (ConnectionException e) {e.printStackTrace();}
 		fluxSortie.close();
 	}
 	
 	@Override
-	public void sauverWiki(String pk, String id_wiki, String datePublication,
+	protected void sauverWiki(String pk, String id_wiki, String dateprotectedation,
 			String resume, String contenu) {
-		requeteSQL="INSERT INTO WIKI(cle_primaire, id_wiki, datePublication, resume, contenu)"+
-				"values("+pk+","+id_wiki+","+datePublication+","+resume+","+contenu+")";
+		requeteSQL="INSERT INTO WIKI(cle_primaire, id_wiki, dateprotectedation, resume, contenu)"+
+				"values("+pk+","+id_wiki+","+dateprotectedation+","+resume+","+contenu+")";
 		ajouterLigne(requeteSQL);
 		
 	}
 
 	@Override
-	public void sauverAudimat(String pk, String listeners, String playcount) {
+	protected void sauverAudimat(String pk, String listeners, String playcount) {
 		requeteSQL="INSERT INTO AUDIMAT(cle_primaire, listeners, playcount)"+
 					"values("+pk+","+listeners+","+playcount+")";
 		ajouterLigne(requeteSQL);
 	}
 
 	@Override
-	public void sauverArtiste(String pk, String coord_artiste,
+	protected void sauverArtiste(String pk, String coord_artiste,
 			String images, String audimat, String wiki) {
 		requeteSQL="INSERT INTO ARTISTE(cle_primaire,id_name_url,images,audimat,wiki)"+
 				"values("+pk+","+coord_artiste+","+images+","+audimat+","+wiki+")";
@@ -78,7 +80,7 @@ public class SauvegardeBddFormatOracle extends SauvegardeUnFormatPourLaBdd{
 	}
 
 	@Override
-	public void sauverImages(String pk, String imageSmall,
+	protected void sauverImages(String pk, String imageSmall,
 			String imageMedium, String imageLarge, String imageExtraLarge,
 			String imageMega) {
 		requeteSQL="INSERT INTO IMAGES(cle_primaire,imageSmall,imageMedium,imageLarge,imageExtraLarge,imageMega)"+
@@ -87,14 +89,14 @@ public class SauvegardeBddFormatOracle extends SauvegardeUnFormatPourLaBdd{
 	}
 
 	@Override
-	public void sauverSimilartist(String artiste1, String artiste2) {
+	protected void sauverSimilartist(String artiste1, String artiste2) {
 		requeteSQL="INSERT INTO ARTISTES_SIMILAIRES(artiste1,artiste2)"+
 				"values("+artiste1+","+artiste2+")";
 		ajouterLigne(requeteSQL);
 	}
 
 	@Override
-	public void sauverChanson(String pk, String coord_chanson, String duree,
+	protected void sauverChanson(String pk, String coord_chanson, String duree,
 			String pkImages, String pkAudimat, String pkWiki, String pkArtiste) {
 		requeteSQL="INSERT INTO CHANSON(cle_primaire,id_name_url,duree,images,audimat,wiki,artiste)"+
 				"values("+pk+","+coord_chanson+","+duree+","+pkImages+","+pkAudimat+","+pkWiki+","+pkArtiste+")";
@@ -102,21 +104,21 @@ public class SauvegardeBddFormatOracle extends SauvegardeUnFormatPourLaBdd{
 	}
 
 	@Override
-	public void sauverArtisteTag(String artiste, String tag) {
+	protected void sauverArtisteTag(String artiste, String tag) {
 		requeteSQL="INSERT INTO CORRESP_ARTISTE_TAG(artiste,tag)"+
 				"values("+artiste+","+tag+")";
 		ajouterLigne(requeteSQL);
 	}
 
 	@Override
-	public void sauverChansonTag(String chanson, String tag) {
+	protected void sauverChansonTag(String chanson, String tag) {
 		requeteSQL="INSERT INTO CORRESP_CHANSON_TAG(chanson,tag)"+
 				"values("+chanson+","+tag+")";
 		ajouterLigne(requeteSQL);
 	}
 
 	@Override
-	public void sauverTag(String pk, String coord_tag, String reach, String tagging,
+	protected void sauverTag(String pk, String coord_tag, String reach, String tagging,
 			String pkWiki) {
 		requeteSQL="INSERT INTO TAG(cle_primaire,id_name_url,reach,taggings,wiki)"+
 				"values("+pk+","+coord_tag+","+reach+","+tagging+","+pkWiki+")";
@@ -124,21 +126,21 @@ public class SauvegardeBddFormatOracle extends SauvegardeUnFormatPourLaBdd{
 	}
 
 	@Override
-	public void sauverCoord(String pk, String id, String name, String url) {
+	protected void sauverCoord(String pk, String id, String name, String url) {
 		requeteSQL="INSERT INTO ID_NAME_URL(cle_primaire,id,name,url)"+
 				"values("+pk+","+id+","+name+","+url+")";
 		ajouterLigne(requeteSQL);
 	}
 
 	@Override
-	public void sauverChansonAlbum(String album, String chanson) {
+	protected void sauverChansonAlbum(String album, String chanson) {
 		requeteSQL="INSERT INTO CORRESP_CHANSON_ALBUM(album,chanson)"+
 				"values("+album+","+chanson+")";
 		ajouterLigne(requeteSQL);
 	}
 
 	@Override
-	public void sauverAlbum(String pk, String coord_album, String date_sortie,
+	protected void sauverAlbum(String pk, String coord_album, String date_sortie,
 			String pkImages, String pkAudimat, String pkWiki, String artiste) {
 		requeteSQL="INSERT INTO ALBUM(cle_primaire,id_name_url,date_sortie,images,audimat,wiki,artiste)"+
 				"values("+pk+","+coord_album+","+date_sortie+","+pkImages+","+pkAudimat+","+pkWiki+","+artiste+")";
@@ -146,7 +148,7 @@ public class SauvegardeBddFormatOracle extends SauvegardeUnFormatPourLaBdd{
 	}
 
 	@Override
-	public void creerTables(){
+	protected void creerTables(){
 		ajouterLigne("drop table ARTISTES_SIMILAIRES");
 		ajouterLigne("drop table CORRESP_ARTISTE_TAG");
 		ajouterLigne("drop table CORRESP_CHANSON_TAG");
@@ -187,7 +189,7 @@ public class SauvegardeBddFormatOracle extends SauvegardeUnFormatPourLaBdd{
 		ajouterLigne(
 		"create table WIKI(cle_primaire INTEGER,"+
 						"id_wiki VARCHAR2(256),"+
-						"datePublication date,"+
+						"dateprotectedation date,"+
 						"resume VARCHAR2(4000),"+
 						"contenu VARCHAR2(4000)," +
 						"PRIMARY KEY(cle_primaire))");
@@ -241,7 +243,7 @@ public class SauvegardeBddFormatOracle extends SauvegardeUnFormatPourLaBdd{
 	}
 
 	@Override
-	public void conserverDonneesExistantes() {
+	protected void conserverDonneesExistantes() {
 		try {
 			String ligneDevantEtreRecopiee;
 			PrintWriter fluxSortie2 = new PrintWriter(new FileWriter("requetesSQLinter.txt"));
@@ -256,7 +258,7 @@ public class SauvegardeBddFormatOracle extends SauvegardeUnFormatPourLaBdd{
 	}
 
 	@Override
-	public void reecrireDonneesExistantes() {
+	protected void reecrireDonneesExistantes() {
 		try {
 			String ligneDevantEtreRecopiee;
 			BufferedReader fluxEntree2 = new BufferedReader(new FileReader("requetesSQLinter.txt"));

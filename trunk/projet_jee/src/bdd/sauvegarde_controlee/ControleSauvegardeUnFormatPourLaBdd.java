@@ -1,8 +1,11 @@
-package bdd;
+package bdd.sauvegarde_controlee;
 
 import java.sql.Date;
 
+import bdd.ChargementEtControleUrlExistantes;
+
 import controleur.UtilitaireDate;
+import exceptions.UrlReserveeException;
 
 
 /**
@@ -134,7 +137,8 @@ public abstract class ControleSauvegardeUnFormatPourLaBdd {
 	public void sauverCoord(int pk, 
 									String id, 
 									String name, 
-									String url){
+									String url) throws UrlReserveeException{
+		ChargementEtControleUrlExistantes.registerUrl(url);
 		sauveur.sauverCoord(controle(pk),controle(id),controle(name),controle(url));
 	}
 
