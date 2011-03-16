@@ -2,8 +2,8 @@ package formulaire.reponses.gestion;
 
 import java.util.ArrayList;
 
-import metier.Album;
-import metier.Artiste;
+import metier.oeuvres.Album;
+import metier.oeuvres.Artiste;
 
 public class RechercheAlbum extends Recherche {
 	

@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
-import metier.Album;
-import metier.Artiste;
-import metier.Chanson;
+import metier.oeuvres.Album;
+import metier.oeuvres.Artiste;
+import metier.oeuvres.Chanson;
 /**
  * on ajoute ces 2 lignes afin que la classe soit instanciee automatiquement (managedBean)
  * et qu'il n'y ait qu'une seule instance tout au long de la session (sessionScoped)

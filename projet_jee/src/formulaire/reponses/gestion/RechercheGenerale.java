@@ -2,7 +2,7 @@ package formulaire.reponses.gestion;
 
 import java.util.ArrayList;
 
-import metier.Artiste;
+import metier.oeuvres.Artiste;
 
 public class RechercheGenerale extends Recherche {
 	
