@@ -9,53 +9,72 @@
 <ui:composition template="/modeleFormulaire.xhtml">
 	<ui:define name="contenu">
 		<h:form>
-			<p:dataTable var="chanson" value="#{vueAffichageResultat.resultatsChanson}">
-				<p:column>
-					<f:facet name="header">  
-                  	Name
-		          	</f:facet>
-					<h:outputText value="#{chanson.name}" />
-				</p:column>
+			<p:graphicImage styleClass="left" width="120px" weight="120px"
+				value="http://userserve-ak.last.fm/serve/126/50853825.png" />
+				
 
-				<p:column>
-					<f:facet name="header">  
-                  	Name
-		          	</f:facet>
-					<h:outputText value="#{artiste.name}" />
-				</p:column>
-			</p:dataTable>
+				
+			<table style="height: 100%; width: 100%">
+				<tr valign="top">
+					<td style="width: 50px;"></td>
+					<td style="width: 500px;"><h:panelGrid columns="1"
+						columnClasses="column" cellpadding="5">
+						<p:dataTable var="chanson"
+							value="#{vueAffichageResultat.resultatsChanson}">
+							<f:facet name="header">
+								<h:outputLabel style="color:#245F86; font-size: 18;">Les chansons qui répondent à votre recherche</h:outputLabel>
+							</f:facet>
+							<p:column>
+								<f:facet name="header">  
+		                  	Name
+				          	</f:facet>
+								<h:outputText value="#{chanson.name}" />
+							</p:column>
 
-			<p:dataTable var="artiste" value="#{vueAffichageResultat.resultatsArtiste}">
-				<p:column>
-					<f:facet name="header">  
-                  	Name
-		          	</f:facet>
-					<h:outputText value="#{artiste.name}" />
-				</p:column>
 
-				<p:column>
-					<f:facet name="header">  
-                  	Name
-		          	</f:facet>
-					<h:outputText value="#{artiste.name}" />
-				</p:column>
-			</p:dataTable>
 
-			<p:dataTable var="album" value="#{vueAffichageResultat.resultatsAlbum}">
-				<p:column>
-					<f:facet name="header">  
-                  	Name
-		          	</f:facet>
-					<h:outputText value="#{album.name}" />
-				</p:column>
+						</p:dataTable>
+						<p:dataTable var="artiste"
+							value="#{vueAffichageResultat.resultatsArtiste}">
+							<f:facet name="header">
+								<h:outputLabel style="color:#245F86; font-size: 18;">
+					 			Les artistes qui répondent à votre recherche
+					 		</h:outputLabel>
+							</f:facet>
 
-				<p:column>
-					<f:facet name="header">  
-                  	Name
-		          	</f:facet>
-					<h:outputText value="#{artiste.name}" />
-				</p:column>
-			</p:dataTable>
+							<p:column>
+								<f:facet name="header">  
+		                  	Name
+				          	</f:facet>
+								<h:outputText value="#{artiste.name}" />
+							</p:column>
+
+						
+
+						</p:dataTable>
+
+						<p:dataTable var="album"
+							value="#{vueAffichageResultat.resultatsAlbum}">
+							<f:facet name="header">
+								<h:outputLabel style="color:#245F86; font-size: 18;">
+					 			Les albums qui répondent à votre recherche
+					 		</h:outputLabel>
+							</f:facet>
+
+							<p:column>
+								<f:facet name="header">  
+		                  	Name
+				          	</f:facet>
+								<h:outputText value="#{album.name}" />
+							</p:column>
+
+
+							
+
+						</p:dataTable>
+					</h:panelGrid></td>
+				</tr>
+			</table>
 		</h:form>
 	</ui:define>
 </ui:composition>
