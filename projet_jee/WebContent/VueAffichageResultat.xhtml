@@ -11,13 +11,13 @@
 		<h:form>
 			<table style="height: 100%; width: 100%">
 				<tr valign="top">
-					<td style="width: 50px;"></td>
+					<td style="width: 50px;"> </td>
 					<td style="width: 500px;"><h:panelGrid columns="1"
 						columnClasses="column" cellpadding="5">
 						<p:dataTable var="chanson"
 							value="#{vueAffichageResultat.resultatsChanson}">
 							<f:facet name="header">
-								<h:outputLabel style="color:#245F86; font-size: 18;">Les chansons qui répondent à votre recherche</h:outputLabel>
+								<h:outputLabel style="font-size: 18;">Les chansons qui répondent à votre recherche</h:outputLabel>
 							</f:facet>
 							<p:column>
 								<f:facet name="header">  
@@ -62,7 +62,7 @@
 						<p:dataTable var="artiste"
 							value="#{vueAffichageResultat.resultatsArtiste}">
 							<f:facet name="header">
-								<h:outputLabel style="color:#245F86; font-size: 18;">
+								<h:outputLabel style="font-size: 18;">
 					 			Les artistes qui répondent à votre recherche
 					 		</h:outputLabel>
 							</f:facet>
@@ -95,7 +95,7 @@
 						<p:dataTable var="album"
 							value="#{vueAffichageResultat.resultatsAlbum}">
 							<f:facet name="header">
-								<h:outputLabel style="color:#245F86; font-size: 18;">
+								<h:outputLabel style="font-size: 18;">
 					 			Les albums qui répondent à votre recherche
 					 		</h:outputLabel>
 							</f:facet>
