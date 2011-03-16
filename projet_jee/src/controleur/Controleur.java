@@ -175,5 +175,14 @@ public class  Controleur {
 		return listeDate;
 	}
 	
+	public void vider(){
+		listeAlbums= new HashMap<String, Album>();
+		listeArtistes = new HashMap<String, Artiste>();
+		listeChansons = new HashMap<String, Chanson>();
+		listeTags = new HashMap<String, Tag>();
+		listeProblemesRencontres = new HashMap<String, String>();
+		listeDate = new HashMap<String, Date>();
+	}
+	
 	
 }
