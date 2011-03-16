@@ -23,13 +23,9 @@ public class RecupDonnees {
 	ArrayList<String> motsCleArtistes = new ArrayList<String>();
 	
 	
-	/************ rechercher à partir d'une ArrayList de mots clés****************/
-	public void rechercher(ArrayList<String> motsClef){
-		for(String mot:motsClef){
-			motsCleChansons.add(mot);
-			motsCleArtistes.add(mot);
-			motsCleAlbums.add(mot);
-		}		
+	/************ rechercher à partir d'une ArrayList de mots clés****************/	
+	public void rechercher(String motClef){
+		initialiserLes3(motClef);
 		recupererDonneesChansons();
 		recupererDonneesArtistes();
 		recupererInfosComplementairesPlus();
@@ -49,6 +45,11 @@ public class RecupDonnees {
 	}
 	public void initialisationAlbum(){
 		motsCleAlbums.add("strapontin");
+	}
+	public void initialiserLes3(String motClef){
+		motsCleChansons.add(motClef);
+		motsCleArtistes.add(motClef);
+		motsCleAlbums.add(motClef);
 	}
 	
 	
