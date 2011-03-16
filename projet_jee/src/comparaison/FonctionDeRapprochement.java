@@ -1,6 +1,6 @@
 package comparaison;
 
-import comparaison.interfaces.ObjetAComparE;
+import metier.ObjetAComparer;
 import exceptions.JaroException;
 
 /**
@@ -14,7 +14,7 @@ import exceptions.JaroException;
  */
 public abstract class FonctionDeRapprochement{
 	
-	public double appliquer(ObjetAComparE a,ObjetAComparE b){
+	public double appliquer(ObjetAComparer a,ObjetAComparer b){
 		try{
 			return appliquer(a.getName(),b.getName());
 		}
