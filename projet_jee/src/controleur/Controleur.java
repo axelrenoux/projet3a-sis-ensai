@@ -5,10 +5,10 @@ import java.util.HashMap;
 
 import exceptions.ExceptionMiseAjour;
 
-import metier.Album;
-import metier.Artiste;
-import metier.Chanson;
 import metier.Tag;
+import metier.oeuvres.Album;
+import metier.oeuvres.Artiste;
+import metier.oeuvres.Chanson;
 
 public class  Controleur {
 
