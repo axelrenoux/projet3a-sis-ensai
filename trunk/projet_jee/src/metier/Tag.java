@@ -3,6 +3,10 @@
 import java.util.ArrayList;
 import java.util.Collection;
 
+import metier.oeuvres.Album;
+import metier.oeuvres.Artiste;
+import metier.oeuvres.Chanson;
+
 import controleur.Controleur;
 
 public class Tag extends ObjetAComparer{

@@ -1,7 +1,11 @@
- package metier;
+ package metier.oeuvres;
 
 import java.util.ArrayList;
 import java.util.Collection;
+
+import metier.ObjetAComparer;
+import metier.Tag;
+import metier.Wiki;
 import controleur.Controleur;
 
 import exceptions.ExceptionMiseAjour;
