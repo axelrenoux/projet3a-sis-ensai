@@ -68,7 +68,9 @@ import formulaire.reponses.gestion.GestionFormulaire;
 		 * methode qui ajoute un message d'erreur
 		 */
 		public void addError() {  
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Erreur","Erreur de requetage : requete vide")); 
+			FacesContext.getCurrentInstance().
+			addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+					"Erreur","Veuillez saisir un mot clé")); 
 		}
 
 
