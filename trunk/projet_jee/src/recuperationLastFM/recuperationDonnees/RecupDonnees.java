@@ -23,13 +23,17 @@ public class RecupDonnees {
 	ArrayList<String> motsCleArtistes = new ArrayList<String>();
 	
 	
-	/************ rechercher à partir d'une ArrayList de mots clés****************/
-	public void rechercher(ArrayList<String> motsClef){
-		for(String mot:motsClef){
-			motsCleChansons.add(mot);
-			motsCleArtistes.add(mot);
-			motsCleAlbums.add(mot);
-		}		
+	/************ rechercher à partir d'un seul mot clé*****************
+	 * 
+	 * pour la recherche par plusieur mots-clef, passer par la classe Peuplement
+	 */
+	public void rechercher(String mot){
+		motsCleChansons = new ArrayList<String>();
+		motsCleAlbums = new ArrayList<String>();
+		motsCleArtistes = new ArrayList<String>();
+		motsCleChansons.add(mot);
+		motsCleArtistes.add(mot);
+		motsCleAlbums.add(mot);
 		recupererDonneesChansons();
 		recupererDonneesArtistes();
 		recupererInfosComplementairesPlus();
