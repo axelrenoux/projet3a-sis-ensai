@@ -11,7 +11,7 @@
         <h:form >
         	<p:panel header="Saisie de la recherche" toggleable="true">
 	        	<h:panelGrid columns="2" columnClasses="column" cellpadding="5"> 
-		        	<h:outputLabel style="color:#245F86;"  value = "Recherche"/>
+		        	<h:outputLabel value = "Recherche"/>
 		        	<h:inputText value="#{vueFormulaire.motcle}"/>
 		        	<p:messages id="msgs" showDetail="true"/>
 					<p:commandButton value ="C'est parti !" action="#{vueFormulaire.lancerRecherche}" 
