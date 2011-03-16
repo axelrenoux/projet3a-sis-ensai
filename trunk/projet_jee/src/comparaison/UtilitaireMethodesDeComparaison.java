@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import comparaison.exceptions.ChaineVideException;
-import comparaison.exceptions.JaroException;
+import exceptions.ChaineVideException;
+import exceptions.JaroException;
 
 /**
  * @author Samuel Maistre, bureau 259

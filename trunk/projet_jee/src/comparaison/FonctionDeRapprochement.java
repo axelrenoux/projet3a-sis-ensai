@@ -1,7 +1,7 @@
 package comparaison;
 
-import comparaison.exceptions.JaroException;
 import comparaison.interfaces.ObjetAComparE;
+import exceptions.JaroException;
 
 /**
  *  

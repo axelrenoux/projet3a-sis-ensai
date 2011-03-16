@@ -2,8 +2,8 @@ package comparaison;
 
 import java.util.LinkedList;
 
-import comparaison.exceptions.ChaineVideException;
-import comparaison.exceptions.JaroException;
+import exceptions.ChaineVideException;
+import exceptions.JaroException;
 
 public class ComparaisonAlbumChanson extends FonctionDeRapprochement {
 
