@@ -2,8 +2,8 @@ package formulaire.reponses.gestion;
 
 import java.util.ArrayList;
 
-import metier.Artiste;
-import metier.Chanson;
+import metier.oeuvres.Artiste;
+import metier.oeuvres.Chanson;
 
 public class RechercheTrack extends Recherche {
 	
