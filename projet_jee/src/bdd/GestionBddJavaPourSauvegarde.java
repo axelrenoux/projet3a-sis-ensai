@@ -5,11 +5,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import metier.Album;
-import metier.Artiste;
-import metier.Chanson;
 import metier.Tag;
 import metier.Wiki;
+import metier.oeuvres.Album;
+import metier.oeuvres.Artiste;
+import metier.oeuvres.Chanson;
 import controleur.Controleur;
 
 public class GestionBddJavaPourSauvegarde {

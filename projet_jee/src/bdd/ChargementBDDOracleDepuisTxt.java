@@ -4,8 +4,9 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-import bdd.exceptions.ConnectionException;
-import bdd.exceptions.UpdateException;
+import exceptions.ConnectionException;
+import exceptions.UpdateException;
+
 
 public abstract class ChargementBDDOracleDepuisTxt {
 	private static String requeteSQL;

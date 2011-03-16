@@ -6,15 +6,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import metier.Album;
-import metier.Artiste;
-import metier.Chanson;
 import metier.Tag;
 import metier.Wiki;
-import bdd.exceptions.ChargementException;
-import bdd.exceptions.ConnectionException;
-import bdd.exceptions.QueryException;
+import metier.oeuvres.Album;
+import metier.oeuvres.Artiste;
+import metier.oeuvres.Chanson;
 import controleur.Controleur;
+import exceptions.ChargementException;
+import exceptions.ConnectionException;
+import exceptions.QueryException;
 
 public class ChargementBDDdepuisOracle extends ChargementBDD {
 	//Les endroits où charger nos données

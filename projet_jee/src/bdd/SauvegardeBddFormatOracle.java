@@ -5,8 +5,9 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import bdd.exceptions.ConnectionException;
-import bdd.exceptions.UpdateException;
+
+import exceptions.ConnectionException;
+import exceptions.UpdateException;
 
 /**
  * Mettre les String entre guillemets et vérifier le format des dates a été vérifié au niveau du ControleSauvegardeBddFormatOracle
