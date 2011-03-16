@@ -1,64 +1,54 @@
 package main;
 
-import java.sql.Date;
+import java.util.ArrayList;
 
+import recuperationDonnees.RecupDonnees;
 import bdd.ChargementBDDOracleDepuisTxt;
 import bdd.ChargementBDDdepuisOracle;
 import bdd.ControleSauvegardeBddFormatOracle;
-import bdd.ControleSauvegardeUnFormatPourLaBdd;
 import bdd.GestionBddJavaPourSauvegarde;
-import bdd.SauvegardeBddFormatOracle;
 import controleur.Controleur;
-import controleur.UtilitaireDate;
-import exceptions.ExceptionDate;
-import exceptions.ExceptionMiseAjour;
-import metier.Album;
-import metier.Artiste;
-import metier.Chanson;
-import metier.Tag;
-import parsing.sax.ParsingAlbum;
-import parsing.sax.ParsingChanson;
-import parsing.sax.ParsingArtiste;
-import parsing.sax.ParsingChanson;
-import recuperationDonnees.RecupDonnees;
 
 public class main {
 
 	/**
 	 * @param args
 	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		
-	
-		
-		RecupDonnees recup = new RecupDonnees();		
-		recup.recupererDonneesChansons();
-		recup.recupererDonneesArtistes();
-		recup.recupererInfosComplementairesPlus();
-		recup.recupererDonneesAlbums();
-		recup.recupererDonneesComplementairesTags();
-		recup.recupererListesDesTags();
-		recup.affichageDonneesRecuperees();
-		
-		//attention à l'ordre TODO
-		
-		
+	public static void main(String[] args) {		
 		/*	POUR TESTER LA GESTION BDD ORACLE
 		 */ 
-		
-		//System.out.println("Sauvegarder nos classes java sous Oracle en mettant à jour le fichier txt");
+
+		//boolean recreerLesTables=true;
+		//ChargementBDDdepuisOracle.charger();
+		//GestionBddJavaPourSauvegarde.decomposerAvantSauvegardeGereePar(new ControleSauvegardeBddFormatOracle(),recreerLesTables);
+		//ChargementBDDOracleDepuisTxt.charger();
+		//GestionBddJavaPourSauvegarde.decomposerAvantSauvegardeGereePar(new ControleSauvegardeBddFormatOracle(),recreerLesTables);
+		/*RecupDonnees recup = new RecupDonnees();
+		ArrayList<String> recherche=new ArrayList<String>();
+		recherche.add("Marie");
+		recherche.add("Mary");
+		recherche.add("Christine");
+		recherche.add("Tiny");
+		recherche.add("Mary");
+		recherche.add("Ronan");
+		recherche.add("Renan");
+		recherche.add("Axel");
+		recherche.add("Axelle");
+		recherche.add("love");
+		recherche.add("black");
+		recherche.add("best");
+		recherche.add("hitmachine");
+		recherche.add("free");
+		recherche.add("toi");
+		recherche.add("rock");
+		recup.rechercher(recherche);
 		boolean recreerLesTables=false;
 		GestionBddJavaPourSauvegarde.decomposerAvantSauvegardeGereePar(new ControleSauvegardeBddFormatOracle(),recreerLesTables);
-		//System.out.println("Charger sous Java nos données enregistrées sous Oracle");
-		//ChargementBDDdepuisOracle.charger();
-		//System.out.println("Charger sous Oracle à partir du fichier txt, puis charger sous Java les données ainsi enregistrées sous Oracle");
 		//ChargementBDDOracleDepuisTxt.charger();
-		//ChargementBDDdepuisOracle.charger();
 		 
 		
-		System.out.println(Controleur.getInstanceuniquecontroleur().
-				getListeAlbums().get("http://www.last.fm/music/Lunabee/Prenez+garde+aux+flots+bleus"));
+		/*System.out.println(Controleur.getInstanceuniquecontroleur().
+				getListeAlbums().get("http://www.last.fm/music/Lunabee/Prenez+garde+aux+flots+bleus"));*/
 		
 	
 	}
