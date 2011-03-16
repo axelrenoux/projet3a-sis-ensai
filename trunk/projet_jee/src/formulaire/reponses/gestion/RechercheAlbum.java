@@ -23,7 +23,9 @@ public class RechercheAlbum extends Recherche {
 		Album a2 = new Album();
 		
 		a1.setName("Sticky Fingers");
+		a1.setImageLarge("http://userserve-ak.last.fm/serve/126/50853825.png");
 		a2.setName("The score");
+		a2.setImageLarge("http://userserve-ak.last.fm/serve/126/32571933.jpg");
 		
 		resultats.add(a1);
 		resultats.add(a2);
