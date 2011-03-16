@@ -1,11 +1,12 @@
  package metier;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Collection;
+import controleur.Controleur;
 
 import exceptions.ExceptionMiseAjour;
  
-public class Chanson {
+public class Chanson extends ObjetAComparer{
 
 
 	/********************************************************************/
@@ -36,8 +37,8 @@ public class Chanson {
 	 * constructeur vide
 	 */
 	public Chanson() {
+		//super(new ComparaisonAlbumChanson());
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	
 	
@@ -61,7 +62,7 @@ public class Chanson {
 			Artiste artiste,double listeners,double playcount,
 			ArrayList<Album> albums,
 			ArrayList<Tag> toptags,Wiki wiki) {
-		super();
+		this();
 		this.name = name;
 		this.duree = duree;
 		this.url=url;
@@ -438,15 +439,8 @@ public class Chanson {
 	}
 
 
-
-
-
-
-
-
-
-
-	
-
-
+	@Override
+	public Collection<Chanson> getObjetsDeCeType() {
+		return Controleur.getInstanceuniquecontroleur().getListeChansons().values();
+	}
 }

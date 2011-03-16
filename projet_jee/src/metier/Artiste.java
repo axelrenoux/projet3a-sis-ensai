@@ -1,12 +1,15 @@
  package metier;
 
 import java.util.ArrayList;
+import java.util.Collection;
+
+import controleur.Controleur;
 
 import exceptions.ExceptionMiseAjour;
 
 
 
-public class Artiste {
+public class Artiste extends ObjetAComparer{
 
 
 	/********************************************************************/
@@ -35,8 +38,8 @@ public class Artiste {
 	 * constructeur vide
 	 */
 	public Artiste() {
+		//super(new ComparaisonArtisteTag());
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	
 	
@@ -64,7 +67,7 @@ public class Artiste {
 			String imageExtraLarge,String imageMega,double listeners,
 			double playcount,ArrayList<Artiste> artistesSimilaires,
 			ArrayList<Tag> toptags,Wiki wiki) {
-		super();
+		this();
 		this.name = name;
 		this.url=url;
 		this.imageSmall=imageSmall;
@@ -400,4 +403,8 @@ public class Artiste {
 		ID = iD;
 	}
 
+	@Override
+	public Collection<Artiste> getObjetsDeCeType() {
+		return Controleur.getInstanceuniquecontroleur().getListeArtistes().values();
+	}
 }
