@@ -112,7 +112,6 @@ public class SQLViaJDBC{
 		} catch (SQLException e) {
 			throw new ConnectionException(e);
 		}
-		
 	}
 	
 	/**
