@@ -1,10 +1,11 @@
  package metier;
 
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
+import java.util.Collection;
 
-public class Tag {
+import controleur.Controleur;
+
+public class Tag extends ObjetAComparer{
 
 
 	/********************************************************************/
@@ -29,6 +30,7 @@ public class Tag {
 	 * constructeur vide
 	 */
 	public Tag() {
+		//super(new ComparaisonArtisteTag());
 		super();
 		listeArtistes = new ArrayList<Artiste>();
 		listeAlbums = new ArrayList<Album>();
@@ -48,7 +50,7 @@ public class Tag {
 	 */
 	public Tag(String name, String url,
 			double reach,double tagging,Wiki wiki) {
-		super();
+		this();
 		this.name = name;
 		this.url=url;
 		this.reach=reach; 
@@ -199,9 +201,12 @@ public class Tag {
 	public void setListeChansons(ArrayList<Chanson> listeChansons) {
 		this.listeChansons = listeChansons;
 	}
-	
-	
-	
-	
-	
+
+
+
+
+	@Override
+	public Collection<Tag> getObjetsDeCeType() {
+		return Controleur.getInstanceuniquecontroleur().getListeTags().values();
+	}
 }

@@ -2,11 +2,12 @@
 
 import java.sql.Date;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Collection;
 
+import controleur.Controleur;
 import exceptions.ExceptionMiseAjour;
 
-public class Album {
+public class Album extends ObjetAComparer{
 
 
 	/********************************************************************/
@@ -37,11 +38,10 @@ public class Album {
 	 * constructeur vide
 	 */
 	public Album() {
+		//super(new ComparaisonAlbumChanson());
 		super();
-		// TODO Auto-generated constructor stub
 	}
-	
-	
+
 	
 	/**
 	 * constructeur avec les parametres
@@ -66,7 +66,7 @@ public class Album {
 			String imageExtraLarge,String imageMega,double listeners,
 			double playcount,ArrayList<Chanson> chansons,
 			ArrayList<Tag> toptags,Wiki wiki) {
-		super();
+		this();
 		this.name = name;
 		this.artiste=artiste;
 		this.ID = ID;
@@ -368,10 +368,9 @@ public class Album {
 		ID = iD;
 	}
 	
-	
-	
-	
-	
-	
-	
+
+	@Override
+	public Collection<Album> getObjetsDeCeType() {
+		return Controleur.getInstanceuniquecontroleur().getListeAlbums().values();
+	}
 }
