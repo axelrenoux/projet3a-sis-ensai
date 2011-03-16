@@ -22,15 +22,16 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import bdd.exceptions.CanalException;
-import bdd.exceptions.ChargementException;
-import bdd.exceptions.ConnectionException;
-import bdd.exceptions.CreationTableException;
-import bdd.exceptions.DescriptionTableException;
-import bdd.exceptions.QueryException;
-import bdd.exceptions.SuppressionTableException;
-import bdd.exceptions.TransactionException;
-import bdd.exceptions.UpdateException;
+import exceptions.CanalException;
+import exceptions.ChargementException;
+import exceptions.ConnectionException;
+import exceptions.CreationTableException;
+import exceptions.DescriptionTableException;
+import exceptions.QueryException;
+import exceptions.SuppressionTableException;
+import exceptions.TransactionException;
+import exceptions.UpdateException;
+
 
 public class SQLViaJDBC{
 	//attributs
