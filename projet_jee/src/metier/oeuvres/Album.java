@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import metier.ComposantCluster;
 import metier.ObjetAComparer;
 import metier.Tag;
 import metier.Wiki;
@@ -11,7 +12,7 @@ import metier.Wiki;
 import controleur.Controleur;
 import exceptions.ExceptionMiseAjour;
 
-public class Album extends ObjetAComparer{
+public class Album extends ObjetAComparer implements Oeuvre {
 
 
 	/********************************************************************/

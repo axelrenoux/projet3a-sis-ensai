@@ -3,6 +3,7 @@
 import java.util.ArrayList;
 import java.util.Collection;
 
+import metier.ComposantCluster;
 import metier.ObjetAComparer;
 import metier.Tag;
 import metier.Wiki;
@@ -13,7 +14,7 @@ import exceptions.ExceptionMiseAjour;
 
 
 
-public class Artiste extends ObjetAComparer{
+public class Artiste extends ObjetAComparer implements Oeuvre{
 
 
 	/********************************************************************/
