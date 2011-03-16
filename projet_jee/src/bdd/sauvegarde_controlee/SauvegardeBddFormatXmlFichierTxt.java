@@ -1,4 +1,4 @@
-package bdd;
+package bdd.sauvegarde_controlee;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -9,25 +9,25 @@ import java.util.List;
 /**
 *@deprecated
 */
-public class SauvegardeBddFormatXmlFichierTxt extends SauvegardeUnFormatPourLaBdd{
+class SauvegardeBddFormatXmlFichierTxt extends SauvegardeUnFormatPourLaBdd{
 	//Comporte la liste d'imbrications de balises dans laquelles nous écrivont actuellement
 	//L'identation (nb de tabulations en début de ligne) est donnée par le nombre d'élément dans cette liste
 	private List<String> hierarchieDesBalises=new LinkedList<String>();
 	private PrintWriter fluxSortie;
 
-	public SauvegardeBddFormatXmlFichierTxt(){
+	protected SauvegardeBddFormatXmlFichierTxt(){
 		super();
 	}
 	
 	@Override
-	public void ajouterLigne(String ligne){
+	protected void ajouterLigne(String ligne){
 		for(@SuppressWarnings("unused") String nonLu:hierarchieDesBalises){
 			ligne="	"+ligne;//C'est ici que l'on gère l'identation, en fonction du nombre de balises ouvertes
 		}
 		fluxSortie.println(ligne);
 	}
 	
-	public void ajouterLigne(String acronymeBalise, 
+	protected void ajouterLigne(String acronymeBalise, 
 							String contenuEnAttributSousFormeDef,
 							String contenuHorsBalise,
 							boolean contientAutresBalises){
@@ -38,7 +38,7 @@ public class SauvegardeBddFormatXmlFichierTxt extends SauvegardeUnFormatPourLaBd
 		}
 	}
 
-	public void agrandirHierarchie(String acronymeBalise,
+	protected void agrandirHierarchie(String acronymeBalise,
 									String contenuHorsBalise,
 									String contenuEnAttributSousFormeDef){
 		ajouterLigne("<"+acronymeBalise+" "+contenuEnAttributSousFormeDef+">");
@@ -46,14 +46,14 @@ public class SauvegardeBddFormatXmlFichierTxt extends SauvegardeUnFormatPourLaBd
 		ajouterLigne("<xsl:text>"+contenuHorsBalise+"</xsl:text>");
 	}
 	
-	public void diminuerHierarchie(){
+	protected void diminuerHierarchie(){
 		int positionDerniereBalise=hierarchieDesBalises.size()-1;
 		String acronymeBalise=hierarchieDesBalises.remove(positionDerniereBalise);
 		ajouterLigne("</"+acronymeBalise+">");
 	}
 	
 	@Override
-	public void ecrireEnTete(boolean lesTablesExistent) {
+	protected void ecrireEnTete(boolean lesTablesExistent) {
 		//XXX le boolean lesTablesExistent n'est pas traité pour l'instant ici
 		try {fluxSortie = new PrintWriter(new FileWriter("XMLenCours.xml"));} 
 		catch (IOException e1) {e1.printStackTrace();}
@@ -66,13 +66,13 @@ public class SauvegardeBddFormatXmlFichierTxt extends SauvegardeUnFormatPourLaBd
 	}
 
 	@Override
-	public void ecrireConclusion() {
+	protected void ecrireConclusion() {
 		diminuerHierarchie();//</BDD>
 		fluxSortie.close();
 	}
 
 	@Override
-	public void sauverWiki(String pk, String id_wiki, String datePublication,
+	protected void sauverWiki(String pk, String id_wiki, String dateprotectedation,
 			String resume, String contenu) {
 		ajouterLigne("WIKI","","",true);
 		//TODO : ajouter le contenu du WIKI
@@ -81,19 +81,19 @@ public class SauvegardeBddFormatXmlFichierTxt extends SauvegardeUnFormatPourLaBd
 	}
 
 	@Override
-	public void creerTables() {
+	protected void creerTables() {
 		//rien : le fichier txt existe déjà
 		//éventuellement : charger la DTD? Je ne suis pas certain que ce soit le lieu approprié...
 	}
 
 	@Override
-	public void sauverAudimat(String pk, String listeners, String playcount) {
+	protected void sauverAudimat(String pk, String listeners, String playcount) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void sauverArtiste(String pk, String coord_artiste,
+	protected void sauverArtiste(String pk, String coord_artiste,
 			String pkImagesCetArtiste, String pkAudimatCetArtiste,
 			String pkWikiCetArtiste) {
 		// TODO Auto-generated method stub
@@ -101,7 +101,7 @@ public class SauvegardeBddFormatXmlFichierTxt extends SauvegardeUnFormatPourLaBd
 	}
 
 	@Override
-	public void sauverImages(String pkImagesCetArtiste, String imageSmall,
+	protected void sauverImages(String pkImagesCetArtiste, String imageSmall,
 			String imageMedium, String imageLarge, String imageExtraLarge,
 			String imageMega) {
 		// TODO Auto-generated method stub
@@ -109,64 +109,64 @@ public class SauvegardeBddFormatXmlFichierTxt extends SauvegardeUnFormatPourLaBd
 	}
 
 	@Override
-	public void sauverSimilartist(String artiste1, String artiste2) {
+	protected void sauverSimilartist(String artiste1, String artiste2) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void sauverChanson(String pk, String coord_chanson, String duree,
+	protected void sauverChanson(String pk, String coord_chanson, String duree,
 			String pkImages, String pkAudimat, String pkWiki, String pkArtiste) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void sauverArtisteTag(String artiste, String tag) {
+	protected void sauverArtisteTag(String artiste, String tag) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void sauverChansonTag(String chanson, String tag) {
+	protected void sauverChansonTag(String chanson, String tag) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void sauverTag(String pk, String coord_tag, String reach,
+	protected void sauverTag(String pk, String coord_tag, String reach,
 			String tagging, String pkWiki) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void sauverCoord(String pk, String id, String name, String url) {
+	protected void sauverCoord(String pk, String id, String name, String url) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void sauverChansonAlbum(String album, String chanson) {
+	protected void sauverChansonAlbum(String album, String chanson) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void sauverAlbum(String pk, String coord_album, String string,
+	protected void sauverAlbum(String pk, String coord_album, String string,
 			String pkImages, String pkAudimat, String pkWiki, String artiste) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void conserverDonneesExistantes() {
+	protected void conserverDonneesExistantes() {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void reecrireDonneesExistantes() {
+	protected void reecrireDonneesExistantes() {
 		// TODO Auto-generated method stub
 		
 	}

@@ -1,4 +1,4 @@
-package bdd;
+package bdd.sqlviajdbc;
 
 
 /**
@@ -10,6 +10,11 @@ package bdd;
  * 			récupérer les noms de colonne
  * -Oracle 10g
  * Cf fichier de documentation dans les download du google code
+ * 
+ * @warning : afin de controler l'acces à la BDD, 
+ * la classe et ses methodes ne sont accessibles que depuis le package bdd.sqlviajdbc
+ * ce package ne doit rien contenir d'autre que ControlAccesSQLViaJDBC
+ * toutes les requetes devront donc transiter par cette classe
  */
 
 import java.sql.Connection;
@@ -18,22 +23,17 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 
 import exceptions.CanalException;
-import exceptions.ChargementException;
 import exceptions.ConnectionException;
 import exceptions.CreationTableException;
-import exceptions.DescriptionTableException;
 import exceptions.QueryException;
 import exceptions.SuppressionTableException;
 import exceptions.TransactionException;
 import exceptions.UpdateException;
 
-
-public class SQLViaJDBC{
+class SQLViaJDBC{
 	//attributs
 	private static Connection connection;
 	private static Statement instruction;
@@ -43,7 +43,7 @@ public class SQLViaJDBC{
 	private static Map<String,Statement> listeCanaux;
 	
 	//Constructeur
-	private SQLViaJDBC() {
+	protected SQLViaJDBC() {
 		
 	}
 
@@ -51,28 +51,10 @@ public class SQLViaJDBC{
 	 * Connecte l'application à Oracle avec un utilisateur Oracle par défaut
 	 * @throws ConnectionException
 	 */
-	public static void connecter() throws ConnectionException{
-		//Class.forName("com.mysql.jdbc.Driver").newInstance();
-		try {
-			DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
-		} catch (SQLException e1) {
-			throw new ConnectionException(e1);
-		}
+	protected static void connecter() throws ConnectionException{
 		userIDAcessBDD = "id2853";
 		passWordAccess = "id2853";
-		try {
-			//connection = DriverManager.getConnection("jdbc:mysql://localhost/test?user=root&password=");
-			//connection = DriverManager.getConnection("jdbc:oracle:thin:id2954/id2954@//localhost:1521/XE");
-			connection = DriverManager.getConnection(serveurBDD,userIDAcessBDD,passWordAccess);
-		} catch (SQLException e) {
-			throw new ConnectionException(e);
-		}
-		try {
-			instruction=connection.createStatement();
-		} catch (SQLException e) {
-			throw new ConnectionException(e);
-		}
-		listeCanaux = new HashMap<String, Statement>();
+		connecter(userIDAcessBDD,passWordAccess);
 	}
 	
 	/**
@@ -81,7 +63,7 @@ public class SQLViaJDBC{
 	 * @param mdp
 	 * @throws ConnectionException
 	 */
-	public static void connecter(String id, String mdp) throws ConnectionException {
+	protected static void connecter(String id, String mdp) throws ConnectionException {
 		try {
 			DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
 		} catch (SQLException e) {
@@ -103,7 +85,7 @@ public class SQLViaJDBC{
 	 * Ferme la connection
 	 * @throws ConnectionException
 	 */
-	public static void fermerBDD() throws ConnectionException{
+	protected static void fermerBDD() throws ConnectionException{
 		for(String s : listeCanaux.keySet()){
 			listeCanaux.remove(s);
 		}
@@ -121,7 +103,7 @@ public class SQLViaJDBC{
 	 * @throws UpdateException
 	 * @see executerRequeteSansRetour(final String requeteSQL, String canal)
 	 */
-	public static void executerRequeteSansRetour(final String requeteSQL) throws UpdateException{
+	protected static void executerRequeteSansRetour(final String requeteSQL) throws UpdateException{
 		System.out.println(requeteSQL);
 		try {
 			instruction.executeUpdate(requeteSQL);
@@ -137,7 +119,7 @@ public class SQLViaJDBC{
 	 * @throws QueryException
 	 * @see executerRequeteAvecRetour(final String requeteSQL, String canal)
 	 */
-	public static ResultSet executerRequeteAvecRetour(final String requeteSQL) throws QueryException {
+	protected static ResultSet executerRequeteAvecRetour(final String requeteSQL) throws QueryException {
 		ResultSet resultat = null;
 		System.out.println(requeteSQL);
 		try {
@@ -152,9 +134,11 @@ public class SQLViaJDBC{
 	 * Ouvre une nouvelle instruction
 	 * @param canal
 	 * @throws CanalException
+	 * 
+	 * @deprecated
 	 */
 	
-	public static void ouvrirInstruction(String canal) throws CanalException {
+	protected static void ouvrirInstruction(String canal) throws CanalException {
 		try {
 			listeCanaux.put(canal, connection.createStatement());
 		} catch (SQLException e) {
@@ -165,9 +149,11 @@ public class SQLViaJDBC{
 	/**
 	 * Ferme une instruction
 	 * @param canal
+	 * 
+	 * @deprecated
 	 */
 	
-	public static void fermerInstruction(String canal) {
+	protected static void fermerInstruction(String canal) {
 		listeCanaux.remove(canal);
 	}
 	
@@ -177,8 +163,10 @@ public class SQLViaJDBC{
 	 * @param canal
 	 * @throws UpdateException
 	 * @see executerRequeteAvecRetour(final String requeteSQL)
+	 * 
+	 * @deprecated
 	 */
-	public static void executerRequeteSansRetour(final String requeteSQL, String canal) throws UpdateException {
+	protected static void executerRequeteSansRetour(final String requeteSQL, String canal) throws UpdateException {
 		System.out.println(requeteSQL);
 		try {
 			listeCanaux.get(canal).executeUpdate(requeteSQL);
@@ -194,8 +182,10 @@ public class SQLViaJDBC{
 	 * @return
 	 * @throws QueryException
 	 * @see executerRequeteAvecRetour(final String requeteSQL)
+	 * 
+	 * @deprecated
 	 */
-	public static ResultSet executerRequeteAvecRetour(final String requeteSQL, String canal) throws QueryException {
+	protected static ResultSet executerRequeteAvecRetour(final String requeteSQL, String canal) throws QueryException {
 		System.out.println(requeteSQL);
 		ResultSet resultat = null;
 		try {
@@ -210,7 +200,7 @@ public class SQLViaJDBC{
 	 * Effectue un commit
 	 * @throws TransactionException
 	 */
-	public static void commit() throws TransactionException {
+	protected static void commit() throws TransactionException {
 		try {
 			executerRequeteSansRetour("COMMIT");
 		} catch (UpdateException e) {
@@ -222,7 +212,7 @@ public class SQLViaJDBC{
 	 * Effectue un rollback
 	 * @throws TransactionException
 	 */
-	public static void rollBack() throws TransactionException {
+	protected static void rollBack() throws TransactionException {
 		try {
 			executerRequeteSansRetour("ROLLBACK");
 		} catch (UpdateException e) {
@@ -235,9 +225,10 @@ public class SQLViaJDBC{
 	 * @param nomTable
 	 * @param variables
 	 * @throws CreationTableException
-	 * XXX Variables séparées par des virgules
+	 * 
+	 * @deprecated
 	 */
-	public static void creerTable(String nomTable, String variables) throws CreationTableException {
+	protected static void creerTable(String nomTable, String variables) throws CreationTableException {
 		try {
 			executerRequeteSansRetour("CREATE TABLE " + nomTable + " ( " + variables + " )");
 		} catch (UpdateException e) {
@@ -249,57 +240,14 @@ public class SQLViaJDBC{
 	 * Supprime une table du fichier de configuration
 	 * @param nomTable
 	 * @throws SuppressionTableException
+	 * 
+	 * @deprecated
 	 */
-	public static void supprimerTable(String nomTable) throws SuppressionTableException {
+	protected static void supprimerTable(String nomTable) throws SuppressionTableException {
 		try {
 			executerRequeteSansRetour("DROP TABLE " + nomTable);
 		} catch (UpdateException e) {
 			throw new SuppressionTableException(nomTable);
 		}
-	}
-	
-	/**
-	 * Décrit les colonnes d'une table
-	 * @param nomTable
-	 * @return
-	 * @throws CanalException
-	 * @throws ChargementException
-	 * @throws DescriptionTableException
-	 */
-	public static List<String> obtenirColonnes(String nomTable) throws CanalException, ChargementException, DescriptionTableException {
-		String canal = "canalObtenirColonnes";
-		ouvrirInstruction(canal);
-		//String nomVue = "vueColonnes";
-		//executerRequeteSansRetour("CREATE VIEW " + nomVue + " AS Select * From DESCRIBE " + nomTable, canal);
-		ResultSet resultat;
-		try {
-			//resultat = executerRequeteAvecRetour("SHOW COLUMNS from " + nomTable, canal);
-			resultat = executerRequeteAvecRetour("Select COLUMN_NAME from USER_TAB_COLUMNS where TABLE_NAME = '" + nomTable +"'", canal);
-		} catch (QueryException e1) {
-			throw new DescriptionTableException(e1);
-		}
-		//ResultSet resultat = executerRequeteAvecRetour("SELECT * FROM " + nomVue);
-		List<String> listeColonnes = new LinkedList<String>();
-		try {
-			while(resultat.next()){
-				listeColonnes.add(resultat.getString(1));
-			}
-		} catch (SQLException e) {
-			throw new DescriptionTableException(e);
-		}
-		if(listeColonnes.isEmpty()){
-			throw new DescriptionTableException();
-		}
-		fermerInstruction(canal);
-		return listeColonnes;
-		
-		/*
-		LinkedList<String> liste = new LinkedList<String>();
-		liste.add("hjkhlkh");
-		liste.add("hjkhlkh2");
-		liste.add("hjkhlkh3");
-		liste.add("hjkhlkh4");
-		return liste;
-		*/
 	}
 }

@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import bdd.sqlviajdbc.ControlAccesSQLViaJDBC;
+
 import metier.Tag;
 import metier.Wiki;
 import metier.oeuvres.Album;
@@ -28,13 +30,13 @@ public class ChargementBDDdepuisOracle extends ChargementBDD {
 
 	public static void charger(){
 			try {
-				SQLViaJDBC.connecter();
+				ControlAccesSQLViaJDBC.connecter();
 				chargerListeTags();
 				chargerListeArtistes();
 				chargerListeAlbums();
 				chargerListeChansons();
 				chargerCorrespondances();
-				SQLViaJDBC.fermerBDD();
+				ControlAccesSQLViaJDBC.fermerBDD();
 			} catch (ChargementException e) {e.printStackTrace();} 
 			catch (ConnectionException e) {e.printStackTrace();}
 	}
@@ -60,7 +62,7 @@ public class ChargementBDDdepuisOracle extends ChargementBDD {
 					" and art.audimat = aud.cle_primaire" +
 					" and art.wiki = w.cle_primaire";
 		try {
-			resultat = SQLViaJDBC.executerRequeteAvecRetour(recherche);
+			resultat = ControlAccesSQLViaJDBC.executerRequeteAvecRetour(recherche);
 		} catch (QueryException e1) {
 			throw new ChargementException(e1);
 		}
@@ -119,7 +121,7 @@ public class ChargementBDDdepuisOracle extends ChargementBDD {
 					" and alb.audimat = aud.cle_primaire" +
 					" and alb.wiki = w.cle_primaire";
 		try {
-			resultat = SQLViaJDBC.executerRequeteAvecRetour(recherche);
+			resultat = ControlAccesSQLViaJDBC.executerRequeteAvecRetour(recherche);
 		} catch (QueryException e1) {
 			throw new ChargementException(e1);
 		}
@@ -175,7 +177,7 @@ public class ChargementBDDdepuisOracle extends ChargementBDD {
 					" and c.audimat = aud.cle_primaire" +
 					" and c.wiki = w.cle_primaire";
 		try {
-			resultat = SQLViaJDBC.executerRequeteAvecRetour(recherche);
+			resultat = ControlAccesSQLViaJDBC.executerRequeteAvecRetour(recherche);
 		} catch (QueryException e1) {
 			throw new ChargementException(e1);
 		}
@@ -221,7 +223,7 @@ public class ChargementBDDdepuisOracle extends ChargementBDD {
 						" WHERE t.id_name_url = inu.cle_primaire" +
 						" AND t.wiki = w.cle_primaire ";
 		try {
-			resultat = SQLViaJDBC.executerRequeteAvecRetour(recherche);
+			resultat = ControlAccesSQLViaJDBC.executerRequeteAvecRetour(recherche);
 		} catch (QueryException e1) {
 			throw new ChargementException(e1);
 		}
@@ -258,7 +260,7 @@ public class ChargementBDDdepuisOracle extends ChargementBDD {
 		String rechercheChansonAlbum="SELECT DISTINCT " +
 				"chanson , album from CORRESP_CHANSON_ALBUM";
 		try {
-			resultat = SQLViaJDBC.executerRequeteAvecRetour(rechercheSimArtiste);
+			resultat = ControlAccesSQLViaJDBC.executerRequeteAvecRetour(rechercheSimArtiste);
 		} catch (QueryException e1) {
 			throw new ChargementException(e1);
 		}
@@ -275,7 +277,7 @@ public class ChargementBDDdepuisOracle extends ChargementBDD {
 			throw new ChargementException(e);
 		}
 		try {
-			resultat = SQLViaJDBC.executerRequeteAvecRetour(rechercheTagArtiste);
+			resultat = ControlAccesSQLViaJDBC.executerRequeteAvecRetour(rechercheTagArtiste);
 		} catch (QueryException e1) {
 			throw new ChargementException(e1);
 		}
@@ -288,7 +290,7 @@ public class ChargementBDDdepuisOracle extends ChargementBDD {
 			throw new ChargementException(e);
 		}
 		try {
-			resultat = SQLViaJDBC.executerRequeteAvecRetour(rechercheTagAlbum);
+			resultat = ControlAccesSQLViaJDBC.executerRequeteAvecRetour(rechercheTagAlbum);
 		} catch (QueryException e1) {
 			throw new ChargementException(e1);
 		}
@@ -301,7 +303,7 @@ public class ChargementBDDdepuisOracle extends ChargementBDD {
 			throw new ChargementException(e);
 		}
 		try {
-			resultat = SQLViaJDBC.executerRequeteAvecRetour(rechercheTagChanson);
+			resultat = ControlAccesSQLViaJDBC.executerRequeteAvecRetour(rechercheTagChanson);
 		} catch (QueryException e1) {
 			throw new ChargementException(e1);
 		}
@@ -314,7 +316,7 @@ public class ChargementBDDdepuisOracle extends ChargementBDD {
 			throw new ChargementException(e);
 		}
 		try {
-			resultat = SQLViaJDBC.executerRequeteAvecRetour(rechercheChansonAlbum);
+			resultat = ControlAccesSQLViaJDBC.executerRequeteAvecRetour(rechercheChansonAlbum);
 		} catch (QueryException e1) {
 			throw new ChargementException(e1);
 		}
