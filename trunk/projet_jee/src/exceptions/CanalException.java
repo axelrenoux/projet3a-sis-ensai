@@ -11,7 +11,7 @@ public class CanalException extends Exception {
 	/**
 	 * 
 	 */
-	public CanalException() {
+	public CanalException() {super();
 	}
 
 	/**
