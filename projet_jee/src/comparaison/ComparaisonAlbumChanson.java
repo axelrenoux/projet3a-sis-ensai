@@ -44,4 +44,6 @@ public class ComparaisonAlbumChanson extends FonctionDeRapprochement {
 			return 1.;
 		}
 	}
+	
+	//modifie
 }
