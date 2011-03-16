@@ -1,34 +1,38 @@
- package metier;
+ package metier.oeuvres;
 
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import metier.ObjetAComparer;
+import metier.Tag;
+import metier.Wiki;
+
 import controleur.Controleur;
+
 import exceptions.ExceptionMiseAjour;
 
-public class Album extends ObjetAComparer{
+
+
+public class Artiste extends ObjetAComparer{
 
 
 	/********************************************************************/
 	/*************************      attributs       *********************/
 	/********************************************************************/
 	
-	private String name=null;
-	private Artiste artiste=null;
-	private String ID=null;
-	private String url=null;
-	private Date date=null;
-	private String imageSmall=null;
-	private String imageMedium=null;
-	private String imageLarge=null;
-	private String imageExtraLarge=null;
-	private String imageMega=null;
-	private double listeners;//nb de personnes ayant écouté l'album
-	private double playcount;//nb de fois où l'album a été écouté
-	private ArrayList<Chanson> chansons = null;
-	private ArrayList<Tag> toptags=null;
-	private Wiki wiki=null;
+	private String ID;
+	private String name;
+	private String url;
+	private String imageSmall;
+	private String imageMedium;
+	private String imageLarge;
+	private String imageExtraLarge;
+	private String imageMega;
+	private double listeners;//nb de personnes ayant écouté la chanson
+	private double playcount;//nb de fois où la chanson a été écoutée
+	private ArrayList<Artiste> artistesSimilaires;
+	private ArrayList<Tag> toptags;
+	private Wiki wiki;
 	
 	/********************************************************************/
 	/**********************      constructeurs      *********************/
@@ -37,19 +41,20 @@ public class Album extends ObjetAComparer{
 	/**
 	 * constructeur vide
 	 */
-	public Album() {
-		//super(new ComparaisonAlbumChanson());
+	public Artiste() {
+		//super(new ComparaisonArtisteTag());
 		super();
 	}
-
+	
+	
+	
+ 
+	
 	
 	/**
 	 * constructeur avec les parametres
 	 * @param name
-	 * @param artiste
-	 * @param ID
 	 * @param url
-	 * @param date
 	 * @param imageSmall
 	 * @param imageMedium
 	 * @param imageLarge
@@ -57,21 +62,18 @@ public class Album extends ObjetAComparer{
 	 * @param imageMega
 	 * @param listeners
 	 * @param playcount
-	 * @param chansons
+	 * @param artistesSimilaires
 	 * @param toptags
 	 * @param wiki
 	 */
-	public Album(String name, Artiste artiste, String ID, String url,Date date,
+	public Artiste(String name, String url,
 			String imageSmall,String imageMedium,String imageLarge,
 			String imageExtraLarge,String imageMega,double listeners,
-			double playcount,ArrayList<Chanson> chansons,
+			double playcount,ArrayList<Artiste> artistesSimilaires,
 			ArrayList<Tag> toptags,Wiki wiki) {
 		this();
 		this.name = name;
-		this.artiste=artiste;
-		this.ID = ID;
 		this.url=url;
-		this.date=date;
 		this.imageSmall=imageSmall;
 		this.imageMedium=imageMedium;
 		this.imageLarge=imageLarge;
@@ -79,7 +81,7 @@ public class Album extends ObjetAComparer{
 		this.imageMega=imageMega;
 		this.listeners=listeners; 
 		this.playcount=playcount; 
-		this.chansons=chansons; 
+		this.artistesSimilaires = artistesSimilaires;
 		this.toptags=toptags;
 		this.wiki=wiki; 
 	}
@@ -94,43 +96,41 @@ public class Album extends ObjetAComparer{
 	/********************************************************************/
 	
 	
+	
 	/**
-	 * methode qui met a jour un album à partir d'un autre pour completer
-	 * d'eventuels attributs nuls
+	 * methode qui met a jour un artiste à partir d'un autre pour completer
 	 * @param albumPropose
-	 * @throws ExceptionMiseAjour 
+	 * @throws ExceptionMiseAjour
 	 */
-	public void mettreAjour(Album albumPropose) throws ExceptionMiseAjour{
+	public void mettreAjour(Artiste artistePropose) throws ExceptionMiseAjour{
 		//on commence par verifier la coherence de la mise a jour: 
-		if(!verifierCoherence(this, albumPropose))throw new ExceptionMiseAjour(this,albumPropose);
+		if(!verifierCoherence(this, artistePropose))throw new ExceptionMiseAjour(this,artistePropose);
 				
-		if(this.name==null) this.name = albumPropose.getName();
-		if(this.artiste==null) this.artiste = albumPropose.getArtiste(); 
-		if(this.ID==null)this.ID = albumPropose.getID();  
-		if(this.url==null)this.url = albumPropose.getUrl();
-		if(this.date==null)this.date = albumPropose.getDate();
-		if(this.imageSmall==null) this.imageSmall = albumPropose.getImageSmall();
-		if(this.imageMedium==null) this.imageMedium=albumPropose.getImageMedium();
-		if(this.imageLarge==null) this.imageLarge=albumPropose.getImageLarge();
-		if(this.imageExtraLarge==null)this.imageExtraLarge=albumPropose.getImageExtraLarge();
-		if(this.imageMega==null) this.imageMega=albumPropose.getImageMega();
-		if(this.listeners==0.0)this.listeners = albumPropose.getListeners();
-		if(this.playcount==0.0)this.playcount = albumPropose.getPlaycount();
-		if(this.chansons==null)this.chansons = albumPropose.getChansons();
-		if(this.toptags==null)this.toptags = albumPropose.getToptags();
-		if(this.wiki==null)this.wiki = albumPropose.getWiki();
+		if(this.name==null) this.name = artistePropose.getName();
+		if(this.ID==null)this.ID = artistePropose.getID();  
+		if(this.url==null)this.url = artistePropose.getUrl();
+		if(this.imageSmall==null) this.imageSmall = artistePropose.getImageSmall();
+		if(this.imageMedium==null) this.imageMedium=artistePropose.getImageMedium();
+		if(this.imageLarge==null) this.imageLarge=artistePropose.getImageLarge();
+		if(this.imageExtraLarge==null)this.imageExtraLarge=artistePropose.getImageExtraLarge();
+		if(this.imageMega==null) this.imageMega=artistePropose.getImageMega();
+		if(this.listeners==0.0)this.listeners = artistePropose.getListeners();
+		if(this.playcount==0.0)this.playcount = artistePropose.getPlaycount();
+		if(this.artistesSimilaires ==null) this.artistesSimilaires = artistePropose.getArtistesSimilaires();
+		if(this.toptags==null)this.toptags = artistePropose.getToptags();
+		if(this.wiki==null)this.wiki = artistePropose.getWiki();
 		
 	}
 	
 	/**
-	 * methode qui verifie la concordance entre 2 albums:
+	 * methode qui verifie la concordance entre 2 artistes:
 	 * si les url ne sont pas nulles, elles doivent correspondre,
 	 * sinon ce sont les noms qui doivent correspondre
 	 * @param a1
 	 * @param a2
 	 * @return
 	 */
-	private boolean verifierCoherence(Album a1, Album a2){
+	private boolean verifierCoherence(Artiste a1, Artiste a2){
 		boolean retour=false;
 		if(a1.getUrl()!=null && a2.getUrl()!=null){
 			if (a1.getUrl().equals(a2.getUrl())){
@@ -145,42 +145,48 @@ public class Album extends ObjetAComparer{
 		return retour;
 	}
 	
+	
 	public String toString() {
 		String descrip;
 		descrip = "\n " + "name " + name + "\n " 
-		+ " date " + date + "\n "
-		+ "url " + url + "\n "
+		+ " url " +  url+ "\n "
 		+ "listeners "+ listeners+ "\n "
 		+ "playcount " + playcount + "\n "
-		+ "id " + ID +"\n ";
+		+ "image small " + imageSmall + "\n "
+		+ "image mega " + imageMega + "\n ";
+		
 		try{
-			descrip+="nom artiste "+ artiste.getName()+ "\n ";
-				descrip+="nb chansons "+ chansons.size()+ "\n ";
+				descrip+="nb artistes sim "+ artistesSimilaires.size()+ "\n ";
 				descrip+="nb tags "+ toptags.size()+ "\n ";
 				descrip+="resume wiki "+ wiki.getResume()+ "\n ";
 		}
 		catch (NullPointerException e){
 		}
-		return descrip;
+		return descrip;	
 	}
+/*"Artiste [name=" + name + ", url=" + url + ", imageSmall="
+				+ imageSmall + ", imageMedium=" + imageMedium + ", imageLarge="
+				+ imageLarge + ", imageExtraLarge=" + imageExtraLarge
+				+ ", imageMega=" + imageMega + ", listeners=" + listeners
+				+ ", playcount=" + playcount + ", artistesSimilaires="
+				+ artistesSimilaires + ", toptags=" + toptags + ", wiki=" + wiki
+				+ "]";
+	}*/
 
-	/*"Album [name=" + name + ", artiste=" + artiste + ", url=" + url
-	+ ", date=" + date + ", imageSmall=" + imageSmall
-	+ ", imageMedium=" + imageMedium + ", imageLarge=" + imageLarge
-	+ ", imageExtraLarge=" + imageExtraLarge + ", imageMega="
-	+ imageMega + ", listeners=" + listeners + ", playcount="
-	+ playcount + ", chansons=" + chansons 
-	+ ", wiki=" + wiki + "]";*/
 
-	
 	/********************************************************************/
 	/******************      getters / setters       ********************/
 	/********************************************************************/
 	
 
+
+
 	public String getName() {
 		return name;
 	}
+
+
+
 
 
 
@@ -190,15 +196,6 @@ public class Album extends ObjetAComparer{
 
 
 
-	public Artiste getArtiste() {
-		return artiste;
-	}
-
-
-
-	public void setArtiste(Artiste artiste) {
-		this.artiste = artiste;
-	}
 
 
 
@@ -208,21 +205,15 @@ public class Album extends ObjetAComparer{
 
 
 
+
+
+
 	public void setUrl(String url) {
 		this.url = url;
 	}
 
 
 
-	public Date getDate() {
-		return date;
-	}
-
-
-
-	public void setDate(Date date) {
-		this.date = date;
-	}
 
 
 
@@ -232,9 +223,15 @@ public class Album extends ObjetAComparer{
 
 
 
+
+
+
 	public void setImageSmall(String imageSmall) {
 		this.imageSmall = imageSmall;
 	}
+
+
+
 
 
 
@@ -244,9 +241,15 @@ public class Album extends ObjetAComparer{
 
 
 
+
+
+
 	public void setImageMedium(String imageMedium) {
 		this.imageMedium = imageMedium;
 	}
+
+
+
 
 
 
@@ -256,9 +259,15 @@ public class Album extends ObjetAComparer{
 
 
 
+
+
+
 	public void setImageLarge(String imageLarge) {
 		this.imageLarge = imageLarge;
 	}
+
+
+
 
 
 
@@ -268,9 +277,15 @@ public class Album extends ObjetAComparer{
 
 
 
+
+
+
 	public void setImageExtraLarge(String imageExtraLarge) {
 		this.imageExtraLarge = imageExtraLarge;
 	}
+
+
+
 
 
 
@@ -280,9 +295,15 @@ public class Album extends ObjetAComparer{
 
 
 
+
+
+
 	public void setImageMega(String imageMega) {
 		this.imageMega = imageMega;
 	}
+
+
+
 
 
 
@@ -292,9 +313,15 @@ public class Album extends ObjetAComparer{
 
 
 
+
+
+
 	public void setListeners(double listeners) {
 		this.listeners = listeners;
 	}
+
+
+
 
 
 
@@ -304,27 +331,33 @@ public class Album extends ObjetAComparer{
 
 
 
+
+
+
 	public void setPlaycount(double playcount) {
 		this.playcount = playcount;
 	}
 
 
 
-	 
-
-	 
 
 
 
-	public ArrayList<Chanson> getChansons() {
-		return chansons;
+	public ArrayList<Artiste> getArtistesSimilaires() {
+		return artistesSimilaires;
 	}
 
 
 
-	public void setChansons(ArrayList<Chanson> chansons) {
-		this.chansons = chansons;
+
+
+
+	public void setArtistesSimilaires(ArrayList<Artiste> artistesSimilaires) {
+		this.artistesSimilaires = artistesSimilaires;
 	}
+
+
+
 
 
 
@@ -352,6 +385,9 @@ public class Album extends ObjetAComparer{
 
 
 
+
+
+
 	public void setWiki(Wiki wiki) {
 		this.wiki = wiki;
 	}
@@ -364,13 +400,15 @@ public class Album extends ObjetAComparer{
 
 
 
+
+
+
 	public void setID(String iD) {
 		ID = iD;
 	}
-	
 
 	@Override
-	public Collection<Album> getObjetsDeCeType() {
-		return Controleur.getInstanceuniquecontroleur().getListeAlbums().values();
+	public Collection<Artiste> getObjetsDeCeType() {
+		return Controleur.getInstanceuniquecontroleur().getListeArtistes().values();
 	}
 }
