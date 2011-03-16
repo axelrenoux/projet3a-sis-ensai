@@ -2,7 +2,7 @@ package main;
 
 import java.util.ArrayList;
 
-import recuperationDonnees.RecupDonnees;
+import recuperationLastFM.recuperationDonnees.RecupDonnees;
 import bdd.ChargementBDDOracleDepuisTxt;
 import bdd.ChargementBDDdepuisOracle;
 import bdd.ControleSauvegardeBddFormatOracle;
