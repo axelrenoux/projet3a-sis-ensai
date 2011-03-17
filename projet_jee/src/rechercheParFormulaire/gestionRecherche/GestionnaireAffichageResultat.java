@@ -1,10 +1,17 @@
 package rechercheParFormulaire.gestionRecherche;
 
+import java.util.ArrayList;
+import java.util.Map.Entry;
+
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
 import metier.Cluster;
+import metier.ComposantCluster;
+import metier.oeuvres.Album;
+import metier.oeuvres.Artiste;
+import metier.oeuvres.Chanson;
 
 /**
  * on ajoute ces 2 lignes afin que la classe soit instanciee automatiquement (managedBean)
@@ -19,52 +26,112 @@ public class GestionnaireAffichageResultat {
 	/********************************************************************/
 	/*************************      attributs       *********************/
 	/********************************************************************/
+	 
 	
-	private Cluster clustersAlbum;
-	private Cluster clustersArtiste;
-	private Cluster clustersChanson;
-	
-	
-
+	/*private ArrayList<String> titresClustersNiveau1Album = new ArrayList<String>();
+	private ArrayList<String> titresClustersNiveau1Artiste = new ArrayList<String>();
+	private ArrayList<String> titresClustersNiveau1Chanson = new ArrayList<String>();
+	private ArrayList<String> titresClustersNiveau2Album = new ArrayList<String>();
+	private ArrayList<String> titresClustersNiveau2Artiste = new ArrayList<String>();
+	private ArrayList<String> titresClustersNiveau2Chanson = new ArrayList<String>();
+*/
+	 
 	
 	/********************************************************************/
 	/************************      methodes      ************************/
 	/********************************************************************/
 	
-	/**
-	 * methode qui s'execute a la creation du javabean
-	 */
-	@PostConstruct
-	public void init() {
-		//on remplit les listes de titres de clusters de niveaux 1 ET 2 
-		//‡ partir des clusters
-		System.out.println("‡‡‡‡‡‡‡‡");
-		
+
+	public ArrayList<Cluster> retournerClustersAlbumNiveau1(Cluster clustersAlbum) {
+		ArrayList<Cluster> clustersAlbumsNiveau1 = new ArrayList<Cluster>();
+		for(Entry<String,ComposantCluster> currentEntry : 
+			clustersAlbum.getContenu().entrySet()){
+			clustersAlbumsNiveau1.add((Cluster)currentEntry.getValue());
+		}
+		return clustersAlbumsNiveau1;
 	}
 	
+	public ArrayList<Cluster> retournerClustersArtisteNiveau1(Cluster clustersArtiste) {
+		ArrayList<Cluster> clustersArtistesNiveau1= new ArrayList<Cluster>();
+		for(Entry<String,ComposantCluster> currentEntry : 
+			clustersArtiste.getContenu().entrySet()){
+			clustersArtistesNiveau1.add((Cluster)currentEntry.getValue());
+		}
+		return clustersArtistesNiveau1;
+	}
+	
+	public ArrayList<Cluster> retournerClustersChansonNiveau1(Cluster clustersChanson) {
+		ArrayList<Cluster> clustersChansonsNiveau1= new ArrayList<Cluster>();
+		for(Entry<String,ComposantCluster> currentEntry : 
+			clustersChanson.getContenu().entrySet()){
+			clustersChansonsNiveau1.add((Cluster)currentEntry.getValue());
+		}
+		return clustersChansonsNiveau1;
+	}
+	
+	
+	
+	public ArrayList<Cluster>  retournerClustersAlbumNiveau2(Cluster clusterAlbumNiveau1Choisi){
+		ArrayList<Cluster> clustersAlbumsNiveau2= new ArrayList<Cluster>();
+		for(Entry<String,ComposantCluster> currentEntry : 
+			clusterAlbumNiveau1Choisi.getContenu().entrySet()){
+			clustersAlbumsNiveau2.add((Cluster)currentEntry.getValue());
+		}
+		return clustersAlbumsNiveau2;
+	}
+	
+	public ArrayList<Cluster>  retournerClustersArtisteNiveau2(Cluster clusterArtisteNiveau1Choisi){
+		ArrayList<Cluster> clustersArtistesNiveau2= new ArrayList<Cluster>();
+		for(Entry<String,ComposantCluster> currentEntry : 
+			clusterArtisteNiveau1Choisi.getContenu().entrySet()){
+			clustersArtistesNiveau2.add((Cluster)currentEntry.getValue());
+		}
+		return clustersArtistesNiveau2;
+	}
+	
+	public ArrayList<Cluster>  retournerClustersChansonNiveau2(Cluster clusterChansonNiveau1Choisi){
+		ArrayList<Cluster> clustersChansonsNiveau2= new ArrayList<Cluster>();
+		for(Entry<String,ComposantCluster> currentEntry : 
+			clusterChansonNiveau1Choisi.getContenu().entrySet()){
+			clustersChansonsNiveau2.add((Cluster)currentEntry.getValue());
+		}
+		return clustersChansonsNiveau2;
+	}
+	
+	
+	public ArrayList<Album> retournerAlbums(Cluster clusterAlbumNiveau2Choisi){
+		ArrayList<Album> resultatAlbums= new ArrayList<Album>();
+		for(Entry<String,ComposantCluster> currentEntry : 
+			clusterAlbumNiveau2Choisi.getContenu().entrySet()){
+			resultatAlbums.add((Album)currentEntry.getValue());
+		}
+		return resultatAlbums;
+	}
+	
+	public ArrayList<Artiste> retournerArtistes(Cluster clusterArtisteNiveau2Choisi){
+		ArrayList<Artiste> resultatArtistes= new ArrayList<Artiste>();
+		for(Entry<String,ComposantCluster> currentEntry : 
+			clusterArtisteNiveau2Choisi.getContenu().entrySet()){
+			resultatArtistes.add((Artiste)currentEntry.getValue());
+		}
+		return resultatArtistes;
+	}
+
+
+	public ArrayList<Chanson> retournerChansons(Cluster clusterChansonNiveau2Choisi){
+		ArrayList<Chanson> resultatChansons= new ArrayList<Chanson>();
+		for(Entry<String,ComposantCluster> currentEntry : 
+			clusterChansonNiveau2Choisi.getContenu().entrySet()){
+			resultatChansons.add((Chanson)currentEntry.getValue());
+		}
+		return resultatChansons;
+	}
 	
 
 	/********************************************************************/
 	/******************      getters / setters       ********************/
 	/********************************************************************/
 
-	public Cluster getClustersAlbum() {
-		return clustersAlbum;
-	}
-	public void setClustersAlbum(Cluster clustersAlbum) {
-		this.clustersAlbum = clustersAlbum;
-	}
-	public Cluster getClustersArtiste() {
-		return clustersArtiste;
-	}
-	public void setClustersArtiste(Cluster clustersArtiste) {
-		this.clustersArtiste = clustersArtiste;
-	}
-	public Cluster getClustersChanson() {
-		return clustersChanson;
-	}
-	public void setClustersChanson(Cluster clustersChanson) {
-		this.clustersChanson = clustersChanson;
-	}
+	 
 
 }

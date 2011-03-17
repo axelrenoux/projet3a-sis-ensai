@@ -140,7 +140,7 @@ public class CalculateurDeClusters {
 	public void calculerClustersArtisteNiveau2(ComposantCluster sousCluster1,ArrayList<Artiste> artistes){
 		
 		//deuxieme decoupage
-		//on ajoute chaque album au contenu d'un sous-cluster de sous-cluster1
+		//on ajoute chaque artiste au contenu d'un sous-cluster de sous-cluster1
 		//et on créé on fur et a mesure les sous-clusters de sous-cluster1
 		for(Artiste a : artistes){
 			//selon le 2eme axe: exemple  
@@ -201,7 +201,7 @@ public class CalculateurDeClusters {
 	public void calculerClustersChansonNiveau2(ComposantCluster sousCluster1,ArrayList<Chanson> chansons){
 		
 		//deuxieme decoupage
-		//on ajoute chaque album au contenu d'un sous-cluster de sous-cluster1
+		//on ajoute chaque chanson au contenu d'un sous-cluster de sous-cluster1
 		//et on créé on fur et a mesure les sous-clusters de sous-cluster1
 		for(Chanson ch : chansons){
 			//selon le 2eme axe: exemple saison
