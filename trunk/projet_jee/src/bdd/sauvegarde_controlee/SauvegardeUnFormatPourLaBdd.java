@@ -26,8 +26,7 @@ abstract class SauvegardeUnFormatPourLaBdd {
 									String listeners,
 									String playcount);
 
-	protected abstract void sauverArtiste(String pk,
-									String coord_artiste,
+	protected abstract void sauverArtiste(String coord_artiste,
 									String pkImagesCetArtiste, 
 									String pkAudimatCetArtiste,
 									String pkWikiCetArtiste) ;
@@ -41,8 +40,7 @@ abstract class SauvegardeUnFormatPourLaBdd {
 
 	protected abstract void sauverSimilartist(String artiste1, String artiste2);
 
-	protected abstract void sauverChanson(String pk, 
-									String coord_chanson,
+	protected abstract void sauverChanson(String coord_chanson,
 									String duree, 
 									String pkImages, 
 									String pkAudimat, 
@@ -53,8 +51,7 @@ abstract class SauvegardeUnFormatPourLaBdd {
 
 	protected abstract void sauverChansonTag(String chanson, String tag);
 
-	protected abstract void sauverTag(String pk,
-									String coord_tag,
+	protected abstract void sauverTag(String coord_tag,
 									String reach,
 									String tagging,
 									String pkWiki);
@@ -66,11 +63,12 @@ abstract class SauvegardeUnFormatPourLaBdd {
 
 	protected abstract void sauverChansonAlbum(String album, String chanson);
 
-	protected abstract void sauverAlbum(String pk, 
-									String coord_album, 
+	protected abstract void sauverAlbum(String coord_album, 
 									String string,
 									String pkImages, 
 									String pkAudimat, 
 									String pkWiki, 
 									String artiste);
+
+	public abstract void sauverAlbumTag(String album, String tag);
 }

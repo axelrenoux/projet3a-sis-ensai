@@ -93,7 +93,7 @@ class SauvegardeBddFormatXmlFichierTxt extends SauvegardeUnFormatPourLaBdd{
 	}
 
 	@Override
-	protected void sauverArtiste(String pk, String coord_artiste,
+	protected void sauverArtiste(String coord_artiste,
 			String pkImagesCetArtiste, String pkAudimatCetArtiste,
 			String pkWikiCetArtiste) {
 		// TODO Auto-generated method stub
@@ -115,7 +115,7 @@ class SauvegardeBddFormatXmlFichierTxt extends SauvegardeUnFormatPourLaBdd{
 	}
 
 	@Override
-	protected void sauverChanson(String pk, String coord_chanson, String duree,
+	protected void sauverChanson(String coord_chanson, String duree,
 			String pkImages, String pkAudimat, String pkWiki, String pkArtiste) {
 		// TODO Auto-generated method stub
 		
@@ -134,7 +134,7 @@ class SauvegardeBddFormatXmlFichierTxt extends SauvegardeUnFormatPourLaBdd{
 	}
 
 	@Override
-	protected void sauverTag(String pk, String coord_tag, String reach,
+	protected void sauverTag(String coord_tag, String reach,
 			String tagging, String pkWiki) {
 		// TODO Auto-generated method stub
 		
@@ -153,7 +153,7 @@ class SauvegardeBddFormatXmlFichierTxt extends SauvegardeUnFormatPourLaBdd{
 	}
 
 	@Override
-	protected void sauverAlbum(String pk, String coord_album, String string,
+	protected void sauverAlbum(String coord_album, String string,
 			String pkImages, String pkAudimat, String pkWiki, String artiste) {
 		// TODO Auto-generated method stub
 		
@@ -167,6 +167,12 @@ class SauvegardeBddFormatXmlFichierTxt extends SauvegardeUnFormatPourLaBdd{
 
 	@Override
 	protected void reecrireDonneesExistantes() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void sauverAlbumTag(String album, String tag) {
 		// TODO Auto-generated method stub
 		
 	}

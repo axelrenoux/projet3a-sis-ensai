@@ -2,18 +2,15 @@ package bdd.chargement;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import bdd.sqlviajdbc.ControlAccesSQLViaJDBC;
-
-
-import exceptions.ConnectionException;
 import exceptions.QueryException;
 import exceptions.UrlReserveeException;
 
 public class ChargementEtControleUrlExistantes extends ChargementBDD{
-	private static List<String> urlExistantes=new ArrayList<String>();
+	private static Map<String,Integer> urlExistantes=new HashMap<String,Integer>();
 	
 	/**
 	 * Cette méthode n'est pas utiliser pour charger la base de donnée.
@@ -25,20 +22,17 @@ public class ChargementEtControleUrlExistantes extends ChargementBDD{
 	public static void chargerUrl() {
 		ResultSet resultat;
 		try {
-			ControlAccesSQLViaJDBC.connecter();
-			String recherche="SELECT DISTINCT url FROM ID_NAME_URL";
+			String recherche="SELECT DISTINCT url,cle_primaire FROM ID_NAME_URL";
 			resultat = ControlAccesSQLViaJDBC.executerRequeteAvecRetour(recherche);
 			while(resultat.next()){
-				urlExistantes.add(resultat.getString("url"));
+				urlExistantes.put(resultat.getString("url"),resultat.getInt("cle_primaire"));
 			}
-			ControlAccesSQLViaJDBC.fermerBDD();
 		}/*
 		*XXX il est supposé que si l'on arrive pas à se connecter à la base de donnée,
 		*	cela vaudra aussi bien pour enregistrer les données que pour vérifier les url
 		*	
 		*TODO vérifier que ce pré-supposé n'est pas trop risqué
 		*/ 
-		catch (ConnectionException e) {e.printStackTrace();} 
 		catch (QueryException e) {e.printStackTrace();}
 		catch (SQLException e) {e.printStackTrace();}
 	}
@@ -46,8 +40,8 @@ public class ChargementEtControleUrlExistantes extends ChargementBDD{
 	/**
 	 * @see ControleSauvegardeUnFormatPourLaBdd.sauverCoord(...)
 	 */
-	public static void registerUrl(String newUrl) throws UrlReserveeException{
-		if(!verifierDispoUrl(newUrl)){
+	public static void registerUrl(String newUrl,int cle) throws UrlReserveeException{
+		if(cle!=verifierDispoUrl(newUrl,cle)){
 			throw new UrlReserveeException(newUrl);
 		}else{
 			
@@ -55,18 +49,23 @@ public class ChargementEtControleUrlExistantes extends ChargementBDD{
 	}
 	
 	/**
+	 * Regarde si l'url est déjà présente dans la base. Si oui, renvoie la clé correspondante
+	 * 
 	 * @see UrlReserveeException : controle supplémentaire, au cas où...
 	 */
-	public static boolean verifierDispoUrl(String url){
+	public static int verifierDispoUrl(String url,int cle){
 		if(urlExistantes.isEmpty()){
 			chargerUrl();
+		}
+		if(urlExistantes.containsKey(url)){
+			cle=urlExistantes.get(url);
 		}
 		/*
 		 * XXX vérifier si contains prends en compte le contenu ou l'adresse mémoire.
 		 * Si c'est le contenu, il devrait pouvoir reconnaitre deux String égaux.
 		 * Si c'est l'adresse mémoire, ce controle sera inneficient !
-		 * Mais ce n'est pas si grave vu qu'on a un second controle... 
+		 * Et le second controle aussi vu qu'il s'appuie aussi sur cette méthode
 		 */
-		return !urlExistantes.contains(url);
+		return cle;
 	}
 }

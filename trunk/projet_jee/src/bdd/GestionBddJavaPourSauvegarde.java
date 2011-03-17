@@ -7,6 +7,7 @@ import java.util.Map;
 
 import bdd.chargement.ChargementEtControleUrlExistantes;
 import bdd.sauvegarde_controlee.ControleSauvegardeUnFormatPourLaBdd;
+import bdd.sqlviajdbc.ControlAccesSQLViaJDBC;
 
 import metier.Tag;
 import metier.Wiki;
@@ -74,19 +75,26 @@ public class GestionBddJavaPourSauvegarde {
 		}
 		formatSauv.ecrireConclusion();
 		formatSauv.setNbObsExistantes(primarykey);
+		ControlAccesSQLViaJDBC.fermerBDD();
 	}
 
 	private static void sauver(Chanson laChanson) {
+		//On se prémunit contre les NullPointerException
 		if(laChanson==null){
 			laChanson=new Chanson();
 		}
-		if(!clesPrimairesChansons.containsKey(laChanson)//Pour eviter les doublons 
-				&& ChargementEtControleUrlExistantes.verifierDispoUrl(laChanson.getUrl())){
+		//On attribue une clé à la chanson
+		int clefProposee=incrementerClesPrimaires();
+		int clefRetenue=ChargementEtControleUrlExistantes.verifierDispoUrl(laChanson.getUrl(),clefProposee);
+		//On veut eviter les doublons en mémoire
+		boolean continuerCreation=!clesPrimairesChansons.containsKey(laChanson);
+		if(continuerCreation){
+			clesPrimairesChansons.put(laChanson,clefRetenue);
+			continuerCreation=(clefRetenue==clefProposee);
+		}
+		//On veut eviter les doublons dans la bdd
+		if(continuerCreation){
 			try{
-				//On attribue une clé à la chanson
-				int clefCetteChanson=incrementerClesPrimaires();
-				clesPrimairesChansons.put(laChanson,clefCetteChanson);
-				
 				//On sauvegarde le wiki
 				Wiki leWiki=laChanson.getWiki();
 				if(leWiki==null){
@@ -137,8 +145,7 @@ public class GestionBddJavaPourSauvegarde {
 				
 				
 				//On sauvegarde les coordonnées de la chanson
-				int pkCoord=incrementerClesPrimaires();
-				formatSauv.sauverCoord(pkCoord,
+				formatSauv.sauverCoord(clefRetenue,
 								laChanson.getID(),
 								laChanson.getName(),
 								laChanson.getUrl());
@@ -148,8 +155,7 @@ public class GestionBddJavaPourSauvegarde {
 							url VARCHAR2(256))*/
 				
 				//on sauvegarde la chanson
-				formatSauv.sauverChanson(clefCetteChanson,
-										pkCoord,
+				formatSauv.sauverChanson(clefRetenue,
 										laChanson.getDuree(),
 										pkImages,
 										pkAudimat,
@@ -170,7 +176,7 @@ public class GestionBddJavaPourSauvegarde {
 							leTag=new Tag();
 						}
 						sauver(leTag);
-						formatSauv.sauverChansonTag(clefCetteChanson,
+						formatSauv.sauverChansonTag(clefRetenue,
 													clesPrimairesTags.get(leTag));
 						/*CORRESP_CHANSON_TAG(chanson INTEGER references CHANSON(cle_primaire),
 											tag INTEGER references TAG(cle_primaire))*/
@@ -183,7 +189,7 @@ public class GestionBddJavaPourSauvegarde {
 						}
 						sauver(lAlbum);
 						formatSauv.sauverChansonAlbum(clesPrimairesAlbums.get(lAlbum),
-													clefCetteChanson);
+													clefRetenue);
 						/*CORRESP_CHANSON_ALBUM(album INTEGER references ALBUM(cle_primaire),
 												chanson INTEGER references CHANSON(cle_primaire))*/
 					}//endFor
@@ -200,17 +206,23 @@ public class GestionBddJavaPourSauvegarde {
 		}//endIf	
 	}//finSauver(Chanson)
 	
-
 	private static void sauver(Artiste lArtiste){
+		//On se prémunit contre les NullPointerException
 		if(lArtiste==null){
 			lArtiste=new Artiste();
 		}
-		if(!clesPrimairesArtistes.containsKey(lArtiste)//Pour eviter les doublons 
-				&& ChargementEtControleUrlExistantes.verifierDispoUrl(lArtiste.getUrl())){//idem
+		//On attribue une clé à l'artiste
+		int clefProposee=incrementerClesPrimaires();
+		int clefRetenue=ChargementEtControleUrlExistantes.verifierDispoUrl(lArtiste.getUrl(),clefProposee);
+		//On veut eviter les doublons en mémoire
+		boolean continuerCreation=!clesPrimairesArtistes.containsKey(lArtiste);
+		if(continuerCreation){
+			clesPrimairesArtistes.put(lArtiste,clefRetenue);
+			continuerCreation=(clefRetenue==clefProposee);
+		}
+		//On veut eviter les doublons dans la bdd
+		if(continuerCreation){
 			try{
-				//On attribue une clé à l'artiste
-				int clefCetArtiste=incrementerClesPrimaires();
-				clesPrimairesArtistes.put(lArtiste,clefCetArtiste);
 				//Pour pouvoir retrouver l'artiste pour les correspondances avec albums etc
 				//On sauvegarde le wiki
 				Wiki leWiki=lArtiste.getWiki();
@@ -254,8 +266,7 @@ public class GestionBddJavaPourSauvegarde {
 						imageMega VARCHAR2(256))*/
 				
 				//On sauvegarde les coordonnées de la chanson
-				int pkCoord=incrementerClesPrimaires();
-				formatSauv.sauverCoord(pkCoord,
+				formatSauv.sauverCoord(clefRetenue,
 								lArtiste.getID(),
 								lArtiste.getName(),
 								lArtiste.getUrl());
@@ -265,8 +276,7 @@ public class GestionBddJavaPourSauvegarde {
 							url VARCHAR2(256))*/
 				
 				//Et on sauvegarde l'artiste
-				formatSauv.sauverArtiste(clefCetArtiste,
-										pkCoord,
+				formatSauv.sauverArtiste(clefRetenue,
 										pkImages,
 										pkAudimat,
 										pkWiki);
@@ -284,7 +294,7 @@ public class GestionBddJavaPourSauvegarde {
 						}
 						sauver(autreArtiste);
 						//Ainsi les deux artistes sont FORCEMENT déjà enregistré quand on arrive à ce point.
-						formatSauv.sauverSimilartist(clefCetArtiste,
+						formatSauv.sauverSimilartist(clefRetenue,
 													clesPrimairesArtistes.get(autreArtiste));
 						/*ARTISTES_SIMILAIRES(artiste1 INTEGER references ARTISTE(cle_primaire),
 											artiste2 INTEGER references ARTISTE(cle_primaire))*/
@@ -296,7 +306,7 @@ public class GestionBddJavaPourSauvegarde {
 							leTag=new Tag();
 						}
 						sauver(leTag);
-						formatSauv.sauverArtisteTag(clefCetArtiste,
+						formatSauv.sauverArtisteTag(clefRetenue,
 													clesPrimairesTags.get(leTag));
 						/*CORRESP_ARTISTE_TAG(artiste INTEGER references ARTISTE(cle_primaire),
 											tag INTEGER references TAG(cle_primaire))*/
@@ -315,16 +325,22 @@ public class GestionBddJavaPourSauvegarde {
 	}//endSauver(Artiste)
 
 	private static void sauver(Tag leTag) {
+		//On se prémunit contre les NullPointerException
 		if(leTag==null){
 			leTag=new Tag();
 		}
-		if(!clesPrimairesTags.containsKey(leTag)//Pour eviter les doublons 
-				&& ChargementEtControleUrlExistantes.verifierDispoUrl(leTag.getUrl())){//idem
+		//On attribue une clé à la chanson
+		int clefProposee=incrementerClesPrimaires();
+		int clefRetenue=ChargementEtControleUrlExistantes.verifierDispoUrl(leTag.getUrl(),clefProposee);
+		//On veut eviter les doublons en mémoire
+		boolean continuerCreation=!clesPrimairesTags.containsKey(leTag);
+		if(continuerCreation){
+			clesPrimairesTags.put(leTag,clefRetenue);
+			continuerCreation=(clefRetenue==clefProposee);
+		}
+		//On veut eviter les doublons dans la bdd
+		if(continuerCreation){
 			try{
-				//On attribue une clé au tag
-				int clefCeTag=incrementerClesPrimaires();
-				clesPrimairesTags.put(leTag,clefCeTag);
-				
 				//On sauvegarde le wiki
 				Wiki leWiki=leTag.getWiki();
 				if(leWiki==null){
@@ -344,9 +360,8 @@ public class GestionBddJavaPourSauvegarde {
 						contenu VARCHAR2(2048))*/
 				
 				//On sauvegarde les coordonnées du tag
-				int pkCoord=incrementerClesPrimaires();
-				formatSauv.sauverCoord(pkCoord,
-								String.valueOf(clefCeTag),
+				formatSauv.sauverCoord(clefRetenue,
+								String.valueOf(clefRetenue),
 								leTag.getName(),
 								leTag.getUrl());
 				/*ID_NAME_URL(cle_primaire INTEGER,
@@ -355,8 +370,7 @@ public class GestionBddJavaPourSauvegarde {
 							url VARCHAR2(256))*/			
 				
 				//On sauvegarde le tag
-				formatSauv.sauverTag(clefCeTag,
-									pkCoord,
+				formatSauv.sauverTag(clefRetenue,
 									leTag.getReach(),
 									leTag.getTagging(),
 									pkWiki);
@@ -380,16 +394,22 @@ public class GestionBddJavaPourSauvegarde {
 	}//finSauver(Tag)
 	
 	private static void sauver(Album lAlbum) {
+		//On se prémunit contre les NullPointerException
 		if(lAlbum==null){
 			lAlbum=new Album();
 		}
-		if(!clesPrimairesAlbums.containsKey(lAlbum)//Pour eviter les doublons 
-				&& ChargementEtControleUrlExistantes.verifierDispoUrl(lAlbum.getUrl())){//idem
+		//On attribue une clé à la chanson
+		int clefProposee=incrementerClesPrimaires();
+		int clefRetenue=ChargementEtControleUrlExistantes.verifierDispoUrl(lAlbum.getUrl(),clefProposee);
+		//On veut eviter les doublons en mémoire
+		boolean continuerCreation=!clesPrimairesAlbums.containsKey(lAlbum);
+		if(continuerCreation){
+			clesPrimairesAlbums.put(lAlbum,clefRetenue);
+			continuerCreation=(clefRetenue==clefProposee);
+		}
+		//On veut eviter les doublons dans la bdd
+		if(continuerCreation){
 			try{
-				//On attribue une clé à l'album
-				int clefCetAlbum=incrementerClesPrimaires();
-				clesPrimairesAlbums.put(lAlbum,clefCetAlbum);
-				
 				//On sauvegarde le wiki
 				Wiki leWiki=lAlbum.getWiki();
 				if(leWiki==null){
@@ -441,8 +461,7 @@ public class GestionBddJavaPourSauvegarde {
 				sauver(lArtiste);
 				
 				//On sauvegarde les coordonnées de la chanson
-				int pkCoord=incrementerClesPrimaires();
-				formatSauv.sauverCoord(pkCoord,
+				formatSauv.sauverCoord(clefRetenue,
 								lAlbum.getID(),
 								lAlbum.getName(),
 								lAlbum.getUrl());
@@ -452,8 +471,7 @@ public class GestionBddJavaPourSauvegarde {
 							url VARCHAR2(256))*/
 				
 				//on sauvegarde la chanson
-				formatSauv.sauverAlbum(clefCetAlbum,
-										pkCoord,
+				formatSauv.sauverAlbum(clefRetenue,
 										lAlbum.getDate(),
 										pkImages,
 										pkAudimat,
@@ -467,7 +485,18 @@ public class GestionBddJavaPourSauvegarde {
 								wiki INTEGER references WIKI(cle_primaire),
 								artiste INTEGER references ARTISTE(cle_primaire),
 								PRIMARY KEY(cle_primaire))*/
-				//XXX Un album n'a pas de tags?
+				if(lAlbum.getToptags()!=null){
+					for(Tag leTag:lAlbum.getToptags()){
+						if(leTag==null){
+							leTag=new Tag();
+						}
+						sauver(leTag);
+						formatSauv.sauverAlbumTag(clefRetenue,
+													clesPrimairesTags.get(leTag));
+						/*CORRESP_ALBUM_TAG(album INTEGER references ALBUM(cle_primaire),
+											tag INTEGER references TAG(cle_primaire))*/
+					}//endFor
+				}//endif
 			}//endTry
 			catch(UrlReserveeException e){
 				//Normalement le controle est déjà fait dans le if, mais on ne sait jamais

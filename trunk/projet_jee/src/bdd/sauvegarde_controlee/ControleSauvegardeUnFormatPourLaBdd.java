@@ -87,12 +87,11 @@ public abstract class ControleSauvegardeUnFormatPourLaBdd {
 		sauveur.sauverAudimat(controle(pk),controle(listeners),controle(playcount));
 	}
 
-	public void sauverArtiste(int pk,
-									int coord_artiste,
+	public void sauverArtiste(int coord_artiste,
 									int pkImagesCetArtiste, 
 									int pkAudimatCetArtiste,
 									int pkWikiCetArtiste) {
-		sauveur.sauverArtiste(controle(pk),controle(coord_artiste),controle(pkImagesCetArtiste),controle(pkAudimatCetArtiste),controle(pkWikiCetArtiste));
+		sauveur.sauverArtiste(controle(coord_artiste),controle(pkImagesCetArtiste),controle(pkAudimatCetArtiste),controle(pkWikiCetArtiste));
 	}
 
 	public void sauverImages(int pkImagesCetArtiste,
@@ -108,14 +107,13 @@ public abstract class ControleSauvegardeUnFormatPourLaBdd {
 		sauveur.sauverSimilartist(controle(artiste1),controle(artiste2));
 	}
 
-	public void sauverChanson(int pk, 
-									int coord_chanson,
+	public void sauverChanson(int coord_chanson,
 									Double duree, 
 									int pkImages, 
 									int pkAudimat, 
 									int pkWiki,
 									int pkArtiste){
-		sauveur.sauverChanson(controle(pk),controle(coord_chanson),controle(duree),controle(pkImages),controle(pkAudimat),controle(pkWiki),controle(pkArtiste));
+		sauveur.sauverChanson(controle(coord_chanson),controle(duree),controle(pkImages),controle(pkAudimat),controle(pkWiki),controle(pkArtiste));
 	}
 
 	public void sauverArtisteTag(Integer artiste, Integer tag){
@@ -126,19 +124,18 @@ public abstract class ControleSauvegardeUnFormatPourLaBdd {
 		sauveur.sauverChansonTag(controle(chanson),controle(tag));
 	}
 
-	public void sauverTag(int pk,
-									int coord_tag,
+	public void sauverTag(int coord_tag,
 									Double reach,
 									Double tagging,
 									int pkWiki){
-		sauveur.sauverTag(controle(pk),controle(coord_tag),controle(reach),controle(tagging),controle(pkWiki));
+		sauveur.sauverTag(controle(coord_tag),controle(reach),controle(tagging),controle(pkWiki));
 	}
 
 	public void sauverCoord(int pk, 
 									String id, 
 									String name, 
 									String url) throws UrlReserveeException{
-		ChargementEtControleUrlExistantes.registerUrl(url);
+		ChargementEtControleUrlExistantes.registerUrl(url,pk);
 		sauveur.sauverCoord(controle(pk),controle(id),controle(name),controle(url));
 	}
 
@@ -146,14 +143,13 @@ public abstract class ControleSauvegardeUnFormatPourLaBdd {
 		sauveur.sauverChansonAlbum(controle(album),controle(chanson));
 	}
 
-	public void sauverAlbum(int pk, 
-									int coord_album, 
+	public void sauverAlbum(int coord_album, 
 									Date date_sortie,
 									int pkImages, 
 									int pkAudimat, 
 									int pkWiki, 
 									Integer artiste){
-		sauveur.sauverAlbum(controle(pk),controle(coord_album),controle(date_sortie),controle(pkImages),controle(pkAudimat),controle(pkWiki),controle(artiste));
+		sauveur.sauverAlbum(controle(coord_album),controle(date_sortie),controle(pkImages),controle(pkAudimat),controle(pkWiki),controle(artiste));
 	}
 
 	public SauvegardeUnFormatPourLaBdd getSauveur() {
@@ -166,4 +162,8 @@ public abstract class ControleSauvegardeUnFormatPourLaBdd {
 
 	public abstract int getNbObsExistantes(boolean recreerLesTables);
 	public abstract void setNbObsExistantes(int primarykey);
+
+	public void sauverAlbumTag(Integer album, Integer tag){
+		sauveur.sauverAlbumTag(controle(album),controle(tag));
+	}
 }
