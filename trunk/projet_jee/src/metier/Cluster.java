@@ -2,6 +2,7 @@ package metier;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map.Entry;
 
 /**
  * @author Administrateur
@@ -49,8 +50,6 @@ public class Cluster implements ComposantCluster {
 		+ this.getContenu();
 		return str;
 	}
-	
-	
 	
 	/********************************************************************/
 	/******************      getters / setters       ********************/
