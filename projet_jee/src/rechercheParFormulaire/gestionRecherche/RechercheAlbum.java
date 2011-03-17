@@ -11,7 +11,7 @@ import metier.Cluster;
 import metier.oeuvres.Album;
 import metier.oeuvres.Artiste;
 
-public class RechercheAlbum extends Recherche {
+public class RechercheAlbum {
 	
 	/********************************************************************/
 	/*************************      attributs       *********************/
@@ -124,7 +124,8 @@ public class RechercheAlbum extends Recherche {
 		
 		//il faudra ici aller cherche en base les albums repondant au mot cle
 		
-		return CalculateurDeClusters.getInstanceunique().calculerCustersAlbumNiveau1(resultats);
+		return CalculateurDeClusters.getInstanceunique().
+		calculerClustersAlbum(resultats);
 		
 	}
 	
