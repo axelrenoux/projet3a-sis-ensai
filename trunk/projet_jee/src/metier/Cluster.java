@@ -89,7 +89,7 @@ public class Cluster implements ComposantCluster {
 			s += delta * (x - mean);
 		}
 		
-		return (s / n);
+		return (s / n-1);
 
 
 	}
