@@ -50,10 +50,10 @@ import rechercheParFormulaire.gestionRecherche.GestionnaireFormulaire;
 
 			if(success){
 				//on attribue les resultats à la page de resultats
-				vueAffichageResultat.getGestionnaireAffichageResultat().setClustersAlbum(gestionnaireFormulaire.lancerRechercheAlbum(motCle));;
-				vueAffichageResultat.getGestionnaireAffichageResultat().setClustersArtiste(gestionnaireFormulaire.lancerRechercheArtiste(motCle));;
-				vueAffichageResultat.getGestionnaireAffichageResultat().setClustersChanson(gestionnaireFormulaire.lancerRechercheChanson(motCle));;
-				
+				vueAffichageResultat.setClustersAlbum(gestionnaireFormulaire.lancerRechercheAlbum(motCle));;
+				vueAffichageResultat.setClustersArtiste(gestionnaireFormulaire.lancerRechercheArtiste(motCle));;
+				vueAffichageResultat.setClustersChanson(gestionnaireFormulaire.lancerRechercheChanson(motCle));;
+				vueAffichageResultat.init();
 				//return "confirmation";
 				return "success";
 			}
