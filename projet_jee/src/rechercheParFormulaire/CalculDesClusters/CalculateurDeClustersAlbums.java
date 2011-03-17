@@ -145,6 +145,12 @@ public class CalculateurDeClustersAlbums {
 		else return "hiver";
 	}
 	
+	
+	public String miseEnClasseArtiste(){
+		
+	}
+	
+	
 	/********************************************************************/
 	/******************      getters / setters       ********************/
 	/********************************************************************/
