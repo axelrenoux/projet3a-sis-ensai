@@ -1,4 +1,4 @@
-package bdd;
+package bdd.chargement;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

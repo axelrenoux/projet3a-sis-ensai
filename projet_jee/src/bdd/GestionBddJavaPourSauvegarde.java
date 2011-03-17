@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import bdd.chargement.ChargementEtControleUrlExistantes;
 import bdd.sauvegarde_controlee.ControleSauvegardeUnFormatPourLaBdd;
 
 import metier.Tag;

@@ -1,4 +1,4 @@
- package bdd;
+ package bdd.chargement;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
