@@ -1,4 +1,4 @@
-package bdd;
+package bdd.chargement;
 
 /**
  * Pour l'instant avoir un héritage commun n'a pas ajouté de valeur aux classes filles de cette classe.

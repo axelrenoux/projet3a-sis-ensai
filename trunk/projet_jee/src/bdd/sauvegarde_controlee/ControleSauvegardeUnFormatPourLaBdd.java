@@ -2,7 +2,7 @@ package bdd.sauvegarde_controlee;
 
 import java.sql.Date;
 
-import bdd.ChargementEtControleUrlExistantes;
+import bdd.chargement.ChargementEtControleUrlExistantes;
 
 import controleur.UtilitaireDate;
 import exceptions.UrlReserveeException;

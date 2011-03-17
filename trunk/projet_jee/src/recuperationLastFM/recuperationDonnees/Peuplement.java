@@ -1,28 +1,28 @@
 package recuperationLastFM.recuperationDonnees;
 
-import java.sql.Date;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
-import metier.Tag;
-
-import controleur.Controleur;
-
-import bdd.ChargementBDDdepuisOracle;
 import bdd.GestionBddJavaPourSauvegarde;
+import bdd.chargement.ChargementBDDdepuisOracle;
 import bdd.sauvegarde_controlee.ControleSauvegardeBddFormatOracle;
 import bdd.sauvegarde_controlee.ControleSauvegardeUnFormatPourLaBdd;
+import controleur.Controleur;
 
 public class Peuplement {
 	
 	public static void aFaireTournerTouteLaNuit(){
 		List<String> recherche=new ArrayList<String>();
-		recherche.add("Marie");
-		recherche.add("Mary");
+		recherche.add("sheffield");
+		recherche.add("rennes");
+		recherche.add("strapontin");
+		recherche.add("ordinateur");
+		recherche.add("believe");
+		recherche.add("cher");
+		recherche.add("hitmachine");
+		recherche.add("toi");
 		recherche.add("Christine");
 		recherche.add("Tiny");
-		recherche.add("Mary");
 		recherche.add("Ronan");
 		recherche.add("Renan");
 		recherche.add("Axel");
@@ -30,20 +30,18 @@ public class Peuplement {
 		recherche.add("love");
 		recherche.add("black");
 		recherche.add("best");
-		recherche.add("hitmachine");
 		recherche.add("free");
-		recherche.add("toi");
 		recherche.add("rock");
+		recherche.add("Marie");
+		recherche.add("Mary");
 		aFaireTournerTouteLaNuit(recherche);
 	}
 	
 	public static void aFaireTournerTouteLaNuit(List<String> motsClef){
 		ControleSauvegardeUnFormatPourLaBdd formatSauvegarde=new ControleSauvegardeBddFormatOracle();
-		boolean recreerLesTables=true;
-		ChargementBDDdepuisOracle.charger();
-		GestionBddJavaPourSauvegarde.decomposerAvantSauvegardeGereePar(formatSauvegarde, recreerLesTables);
-		recreerLesTables=false;
+		boolean recreerLesTables=false;
 		RecupDonnees recup = new RecupDonnees();
+		ChargementBDDdepuisOracle.charger();
 		for(String recherche:motsClef){
 			viderControleur();
 			recup.rechercher(recherche);
