@@ -51,6 +51,44 @@ public class Cluster implements ComposantCluster {
 		return str;
 	}
 	
+	public ArrayList<Integer> tailleCluster(Cluster cluster){
+		ArrayList<Integer> listeTaille = new ArrayList<Integer>();
+		
+		for(Entry<String, ComposantCluster> entry : cluster.getContenu().entrySet()) {
+			HashMap<String, ComposantCluster> mapInter = entry.getValue().getContenu();
+			for(Entry<String, ComposantCluster> entry2 : mapInter.entrySet()) {
+			    listeTaille.add(entry2.getValue().getContenu().size());
+			    System.out.println("####################################");
+			    System.out.println(entry2.getValue().getContenu());
+			}
+		}
+		 
+		return listeTaille;
+	}
+	
+	public float varianceCluster(Cluster cluster){
+		ArrayList<Integer> listeTaille = tailleCluster(cluster);
+		float nbTotalOeuvre = 0;
+		float moyenneTheorique = 0;
+		float variance = 0;
+		
+		for (Integer i : listeTaille){
+			nbTotalOeuvre+= listeTaille.get(i);
+			System.out.println(nbTotalOeuvre);
+			System.out.println(listeTaille.get(i));
+		}
+		
+		moyenneTheorique = nbTotalOeuvre / listeTaille.size();
+		System.out.println(moyenneTheorique);
+		
+		for (Integer j : listeTaille){
+			variance+= ((listeTaille.get(j) - moyenneTheorique)*(listeTaille.get(j) - moyenneTheorique));
+		}
+		
+		return variance;
+		
+	}
+	
 	/********************************************************************/
 	/******************      getters / setters       ********************/
 	/********************************************************************/
