@@ -7,9 +7,7 @@ import metier.Cluster;
 import rechercheParFormulaire.CalculDesClusters.CalculateurDeClusters;
 import rechercheParFormulaire.gestionRecherche.RechercheAlbum;
 import recuperationLastFM.recuperationDonnees.RecupDonnees;
-import bdd.ChargementBDDOracleDepuisTxt;
-import bdd.ChargementBDDdepuisOracle;
-import bdd.ControleSauvegardeBddFormatOracle;
+
 import bdd.GestionBddJavaPourSauvegarde;
 import controleur.Controleur;
 
