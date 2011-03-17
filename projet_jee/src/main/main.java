@@ -1,15 +1,7 @@
 package main;
 
-import java.util.ArrayList;
-
 import metier.Cluster;
-
-import rechercheParFormulaire.CalculDesClusters.CalculateurDeClusters;
 import rechercheParFormulaire.gestionRecherche.RechercheAlbum;
-import recuperationLastFM.recuperationDonnees.RecupDonnees;
-
-import bdd.GestionBddJavaPourSauvegarde;
-import controleur.Controleur;
 
 public class main {
 
@@ -27,6 +19,7 @@ public class main {
 		Cluster c = r.lancerRecherche("a");
 		System.out.println("***************************");
 		System.out.println(c);
+		System.out.println(c.varianceCluster());
 		
 	}
 
