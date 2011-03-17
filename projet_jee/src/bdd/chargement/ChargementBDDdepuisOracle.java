@@ -40,7 +40,7 @@ public class ChargementBDDdepuisOracle extends ChargementBDD {
 
 	public static void chargerListeArtistes() throws ChargementException{
 		ResultSet resultat;
-		String recherche="SELECT DISTINCT art.cle_primaire as clef , " +
+		String recherche="SELECT DISTINCT inu.cle_primaire as clef , " +
 								"inu.name as name , " +
 								"inu.url as url , " +
 								"i.imagesmall as iSmall , " +
@@ -96,7 +96,7 @@ public class ChargementBDDdepuisOracle extends ChargementBDD {
 	
 	public static void chargerListeAlbums() throws ChargementException{
 		ResultSet resultat;
-		String recherche="SELECT DISTINCT alb.cle_primaire as clef , " +
+		String recherche="SELECT DISTINCT inu.cle_primaire as clef , " +
 								"inu.name as name , " +
 								"alb.artiste as clefArtiste , " +
 								"inu.id as id , " +
@@ -159,7 +159,7 @@ public class ChargementBDDdepuisOracle extends ChargementBDD {
 	
 	public static void chargerListeChansons() throws ChargementException{
 		ResultSet resultat;
-		String recherche="SELECT DISTINCT c.cle_primaire as clef , " +
+		String recherche="SELECT DISTINCT inu.cle_primaire as clef , " +
 								"inu.name as name , " +
 								"inu.url as url , " +
 								"c.duree as duree , "+
@@ -208,7 +208,7 @@ public class ChargementBDDdepuisOracle extends ChargementBDD {
 	
 	public static void chargerListeTags() throws ChargementException{
 		ResultSet resultat;
-		String recherche="SELECT DISTINCT t.cle_primaire as clef , " +
+		String recherche="SELECT DISTINCT inu.cle_primaire as clef , " +
 								"inu.name as name , " +
 								"inu.url as url , " +
 								"t.reach as reach , " +
