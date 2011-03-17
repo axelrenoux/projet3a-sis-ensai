@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import bdd.sqlviajdbc.ControlAccesSQLViaJDBC;
@@ -17,7 +18,7 @@ import controleur.Controleur;
 import exceptions.ChargementException;
 import exceptions.QueryException;
 
-public class ChargementBDDdepuisOracle extends ChargementBDD {
+public class ChargementRechercheSeulement extends ChargementBDD {
 	//Les endroits où charger nos données
 	private static Controleur leControleur=Controleur.getInstanceuniquecontroleur();
 	
@@ -27,18 +28,26 @@ public class ChargementBDDdepuisOracle extends ChargementBDD {
 	private static Map<Integer,Album> albums=new HashMap<Integer,Album>();
 	private static Map<Integer,Tag> tags=new HashMap<Integer,Tag>();
 
-	public static void charger(){
-			try {
-				chargerListeTags();
-				chargerListeArtistes();
-				chargerListeAlbums();
-				chargerListeChansons();
-				chargerCorrespondances();
-			} catch (ChargementException e) {e.printStackTrace();}
-			ControlAccesSQLViaJDBC.fermerBDD();
+	public static void charger(String artiste, String album,String chanson, String tag){
+		try {
+			chargerListeTags(tag,"");
+			chargerListeArtistes(artiste,"");
+			chargerListeAlbums(album,"");
+			chargerListeChansons(chanson,"");
+		} catch (ChargementException e) {e.printStackTrace();}
+		ControlAccesSQLViaJDBC.fermerBDD();
 	}
-
-	public static void chargerListeArtistes() throws ChargementException{
+	
+	private static String conditionName(String nomCherche){
+		String laCondition="";
+		if(nomCherche!="")	laCondition=" and inu.name='"+nomCherche+"' ";
+		return laCondition;
+	}
+	
+	
+	
+ 	public static void chargerListeArtistes(String nomCherche,String autresConditions) throws ChargementException{
+ 		String conditionInuName=conditionName(nomCherche);
 		ResultSet resultat;
 		String recherche="SELECT DISTINCT art.cle_primaire as clef , " +
 								"inu.name as name , " +
@@ -57,7 +66,8 @@ public class ChargementBDDdepuisOracle extends ChargementBDD {
 				" WHERE art.id_name_url = inu.cle_primaire" +
 					" and art.images = i.cle_primaire" +
 					" and art.audimat = aud.cle_primaire" +
-					" and art.wiki = w.cle_primaire";
+					" and art.wiki = w.cle_primaire"+
+					conditionInuName+autresConditions;
 		try {
 			resultat = ControlAccesSQLViaJDBC.executerRequeteAvecRetour(recherche);
 		} catch (QueryException e1) {
@@ -94,7 +104,8 @@ public class ChargementBDDdepuisOracle extends ChargementBDD {
 		}
 	}
 	
-	public static void chargerListeAlbums() throws ChargementException{
+	public static void chargerListeAlbums(String nomCherche,String autresConditions) throws ChargementException{
+ 		String conditionInuName=conditionName(nomCherche);
 		ResultSet resultat;
 		String recherche="SELECT DISTINCT alb.cle_primaire as clef , " +
 								"inu.name as name , " +
@@ -116,7 +127,8 @@ public class ChargementBDDdepuisOracle extends ChargementBDD {
 				" WHERE alb.id_name_url = inu.cle_primaire" +
 					" and alb.images = i.cle_primaire" +
 					" and alb.audimat = aud.cle_primaire" +
-					" and alb.wiki = w.cle_primaire";
+					" and alb.wiki = w.cle_primaire"+
+					conditionInuName+autresConditions;
 		try {
 			resultat = ControlAccesSQLViaJDBC.executerRequeteAvecRetour(recherche);
 		} catch (QueryException e1) {
@@ -157,7 +169,8 @@ public class ChargementBDDdepuisOracle extends ChargementBDD {
 		}
 	}
 	
-	public static void chargerListeChansons() throws ChargementException{
+	public static void chargerListeChansons(String nomCherche,String autresConditions) throws ChargementException{
+ 		String conditionInuName=conditionName(nomCherche);
 		ResultSet resultat;
 		String recherche="SELECT DISTINCT c.cle_primaire as clef , " +
 								"inu.name as name , " +
@@ -172,7 +185,8 @@ public class ChargementBDDdepuisOracle extends ChargementBDD {
 				" FROM CHANSON c , WIKI w , AUDIMAT aud , ID_NAME_URL inu "+
 				" WHERE c.id_name_url = inu.cle_primaire" +
 					" and c.audimat = aud.cle_primaire" +
-					" and c.wiki = w.cle_primaire";
+					" and c.wiki = w.cle_primaire"+
+					conditionInuName+autresConditions;
 		try {
 			resultat = ControlAccesSQLViaJDBC.executerRequeteAvecRetour(recherche);
 		} catch (QueryException e1) {
@@ -206,7 +220,8 @@ public class ChargementBDDdepuisOracle extends ChargementBDD {
 		}
 	}
 	
-	public static void chargerListeTags() throws ChargementException{
+	public static void chargerListeTags(String nomCherche,String autresConditions) throws ChargementException{
+ 		String conditionInuName=conditionName(nomCherche);
 		ResultSet resultat;
 		String recherche="SELECT DISTINCT t.cle_primaire as clef , " +
 								"inu.name as name , " +
@@ -218,7 +233,8 @@ public class ChargementBDDdepuisOracle extends ChargementBDD {
 								"w.contenu as contenuWiki"+
 						" FROM TAG t, WIKI w, ID_NAME_URL inu"+
 						" WHERE t.id_name_url = inu.cle_primaire" +
-						" AND t.wiki = w.cle_primaire ";
+						" AND t.wiki = w.cle_primaire "+
+						conditionInuName+autresConditions;
 		try {
 			resultat = ControlAccesSQLViaJDBC.executerRequeteAvecRetour(recherche);
 		} catch (QueryException e1) {
@@ -244,7 +260,7 @@ public class ChargementBDDdepuisOracle extends ChargementBDD {
 		}
 	}
 	
-	public static void chargerCorrespondances() throws ChargementException{
+	/*public static void chargerCorrespondances() throws ChargementException{
 		ResultSet resultat;
 		String rechercheSimArtiste="SELECT DISTINCT " +
 				"artiste1 , artiste2 from ARTISTES_SIMILAIRES";
@@ -267,8 +283,6 @@ public class ChargementBDDdepuisOracle extends ChargementBDD {
 				Artiste autreArtiste=artistes.get(resultat.getInt("artiste2"));
 				lArtiste.getArtistesSimilaires().add(autreArtiste);
 				autreArtiste.getArtistesSimilaires().add(lArtiste);
-				/*FIXME Du coup on devrait avoir systématiquement des doublons
-				je ne corrige pas afin de pouvoir tester si notre repérage de doublons fonctionne*/
 			}
 		} catch (SQLException e) {
 			throw new ChargementException(e);
@@ -327,5 +341,5 @@ public class ChargementBDDdepuisOracle extends ChargementBDD {
 		} catch (SQLException e) {
 			throw new ChargementException(e);
 		}
-	}
+	}*/
 }

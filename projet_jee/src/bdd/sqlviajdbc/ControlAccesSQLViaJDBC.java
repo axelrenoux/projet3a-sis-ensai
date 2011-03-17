@@ -15,16 +15,21 @@ import exceptions.TransactionException;
 import exceptions.UpdateException;
 
 public class ControlAccesSQLViaJDBC{
+	private static boolean estConnecte=false;
 	
 	//Constructeur
 	public ControlAccesSQLViaJDBC() {}
 
-	public static void connecter() throws ConnectionException{
+	private static void connecter() throws ConnectionException{
 		SQLViaJDBC.connecter();
+		estConnecte=true;
 	}
 	
-	public static void fermerBDD() throws ConnectionException{
-		SQLViaJDBC.fermerBDD();
+	public static void fermerBDD() {
+		try{
+			SQLViaJDBC.fermerBDD();
+			estConnecte=false;
+		}catch(ConnectionException e){e.printStackTrace();}
 	}
 	/**
 	 * On aurait voulu forcer l'utilisateur à passer par des méthodes spécifiques pour créer ou supprimer des tables
@@ -34,7 +39,7 @@ public class ControlAccesSQLViaJDBC{
 	 * @throws UpdateException
 	 * @throws MethodeDeRequeteErroneeException
 	 */
-	public static void executerRequeteSansRetour(String requeteSQL) throws UpdateException{
+	public static void executerRequeteSansRetour(final String requeteSQL) throws UpdateException{
 		/*String reqVerif=requeteSQL.toLowerCase().replaceAll("{2,}"," ");
 		if (reqVerif.contains("drop table")){
 			throw new MethodeDeRequeteErroneeException("Veuillez la fonction supprimerTable pour cela");
@@ -42,19 +47,23 @@ public class ControlAccesSQLViaJDBC{
 		else if (reqVerif.contains("create table")){
 			throw new MethodeDeRequeteErroneeException("Veuillez la fonction creerTable pour cela");
 		}else{*/
+			if(!estConnecte){try{connecter();}catch(ConnectionException e){e.printStackTrace();}}
 			SQLViaJDBC.executerRequeteSansRetour(requeteSQL);
 		//}
 	}
 	
 	public static ResultSet executerRequeteAvecRetour(final String requeteSQL) throws QueryException {
+		if(!estConnecte){try{connecter();}catch(ConnectionException e){e.printStackTrace();}}
 		return SQLViaJDBC.executerRequeteAvecRetour(requeteSQL);
 	}
 	
 	public static void commit() throws TransactionException {
+		if(!estConnecte){try{connecter();}catch(ConnectionException e){e.printStackTrace();}}
 		SQLViaJDBC.commit();
 	}
 	
 	public static void rollBack() throws TransactionException {
+		if(!estConnecte){try{connecter();}catch(ConnectionException e){e.printStackTrace();}}
 		SQLViaJDBC.rollBack();
 	}
 }

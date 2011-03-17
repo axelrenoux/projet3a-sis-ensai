@@ -8,7 +8,6 @@ import java.io.PrintWriter;
 
 import bdd.sqlviajdbc.ControlAccesSQLViaJDBC;
 
-import exceptions.ConnectionException;
 import exceptions.UpdateException;
 
 /**
@@ -29,8 +28,6 @@ class SauvegardeBddFormatOracle extends SauvegardeUnFormatPourLaBdd{
 		}
 		try {fluxSortie = new PrintWriter(new FileWriter("requetesSQL.txt"));} 
 		catch (IOException e1) {e1.printStackTrace();}
-		try {ControlAccesSQLViaJDBC.connecter();}
-		catch (ConnectionException e) {e.printStackTrace();}
 		if(lesTablesExistent){
 			reecrireDonneesExistantes();
 		}
@@ -50,16 +47,14 @@ class SauvegardeBddFormatOracle extends SauvegardeUnFormatPourLaBdd{
 	
 	@Override
 	protected void ecrireConclusion() {
-		try {ControlAccesSQLViaJDBC.fermerBDD();}
-		catch (ConnectionException e) {e.printStackTrace();}
 		fluxSortie.close();
 	}
 	
 	@Override
-	protected void sauverWiki(String pk, String id_wiki, String dateprotectedation,
+	protected void sauverWiki(String pk, String id_wiki, String datepublication,
 			String resume, String contenu) {
-		requeteSQL="INSERT INTO WIKI(cle_primaire, id_wiki, dateprotectedation, resume, contenu)"+
-				"values("+pk+","+id_wiki+","+dateprotectedation+","+resume+","+contenu+")";
+		requeteSQL="INSERT INTO WIKI(cle_primaire, id_wiki, datepublication, resume, contenu)"+
+				"values("+pk+","+id_wiki+","+datepublication+","+resume+","+contenu+")";
 		ajouterLigne(requeteSQL);
 		
 	}
@@ -72,10 +67,10 @@ class SauvegardeBddFormatOracle extends SauvegardeUnFormatPourLaBdd{
 	}
 
 	@Override
-	protected void sauverArtiste(String pk, String coord_artiste,
+	protected void sauverArtiste(String coord_artiste,
 			String images, String audimat, String wiki) {
-		requeteSQL="INSERT INTO ARTISTE(cle_primaire,id_name_url,images,audimat,wiki)"+
-				"values("+pk+","+coord_artiste+","+images+","+audimat+","+wiki+")";
+		requeteSQL="INSERT INTO ARTISTE(id_name_url,images,audimat,wiki)"+
+				"values("+coord_artiste+","+images+","+audimat+","+wiki+")";
 		ajouterLigne(requeteSQL);
 	}
 
@@ -96,10 +91,10 @@ class SauvegardeBddFormatOracle extends SauvegardeUnFormatPourLaBdd{
 	}
 
 	@Override
-	protected void sauverChanson(String pk, String coord_chanson, String duree,
+	protected void sauverChanson(String coord_chanson, String duree,
 			String pkImages, String pkAudimat, String pkWiki, String pkArtiste) {
-		requeteSQL="INSERT INTO CHANSON(cle_primaire,id_name_url,duree,images,audimat,wiki,artiste)"+
-				"values("+pk+","+coord_chanson+","+duree+","+pkImages+","+pkAudimat+","+pkWiki+","+pkArtiste+")";
+		requeteSQL="INSERT INTO CHANSON(id_name_url,duree,images,audimat,wiki,artiste)"+
+				"values("+coord_chanson+","+duree+","+pkImages+","+pkAudimat+","+pkWiki+","+pkArtiste+")";
 		ajouterLigne(requeteSQL);
 	}
 
@@ -118,10 +113,10 @@ class SauvegardeBddFormatOracle extends SauvegardeUnFormatPourLaBdd{
 	}
 
 	@Override
-	protected void sauverTag(String pk, String coord_tag, String reach, String tagging,
+	protected void sauverTag(String coord_tag, String reach, String tagging,
 			String pkWiki) {
-		requeteSQL="INSERT INTO TAG(cle_primaire,id_name_url,reach,taggings,wiki)"+
-				"values("+pk+","+coord_tag+","+reach+","+tagging+","+pkWiki+")";
+		requeteSQL="INSERT INTO TAG(id_name_url,reach,taggings,wiki)"+
+				"values("+coord_tag+","+reach+","+tagging+","+pkWiki+")";
 		ajouterLigne(requeteSQL);
 	}
 
@@ -140,13 +135,20 @@ class SauvegardeBddFormatOracle extends SauvegardeUnFormatPourLaBdd{
 	}
 
 	@Override
-	protected void sauverAlbum(String pk, String coord_album, String date_sortie,
+	protected void sauverAlbum(String coord_album, String date_sortie,
 			String pkImages, String pkAudimat, String pkWiki, String artiste) {
-		requeteSQL="INSERT INTO ALBUM(cle_primaire,id_name_url,date_sortie,images,audimat,wiki,artiste)"+
-				"values("+pk+","+coord_album+","+date_sortie+","+pkImages+","+pkAudimat+","+pkWiki+","+artiste+")";
+		requeteSQL="INSERT INTO ALBUM(id_name_url,date_sortie,images,audimat,wiki,artiste)"+
+				"values("+coord_album+","+date_sortie+","+pkImages+","+pkAudimat+","+pkWiki+","+artiste+")";
 		ajouterLigne(requeteSQL);
 	}
 
+	@Override
+	public void sauverAlbumTag(String album, String tag) {
+		requeteSQL="INSERT INTO CORRESP_ALBUM_TAG(album,tag)"+
+				"values("+album+","+tag+")";
+		ajouterLigne(requeteSQL);
+	}
+	
 	@Override
 	protected void creerTables(){
 		ajouterLigne("drop table ARTISTES_SIMILAIRES");
@@ -189,57 +191,53 @@ class SauvegardeBddFormatOracle extends SauvegardeUnFormatPourLaBdd{
 		ajouterLigne(
 		"create table WIKI(cle_primaire INTEGER,"+
 						"id_wiki VARCHAR2(256),"+
-						"dateprotectedation date,"+
+						"datepublication date,"+
 						"resume VARCHAR2(4000),"+
 						"contenu VARCHAR2(4000)," +
 						"PRIMARY KEY(cle_primaire))");
 		ajouterLigne(
-		"create table ARTISTE(cle_primaire INTEGER,"+
-							"id_name_url INTEGER references ID_NAME_URL(cle_primaire)," +
+		"create table ARTISTE(id_name_url INTEGER references ID_NAME_URL(cle_primaire)," +
 							"images INTEGER references IMAGES(cle_primaire),"+
 							"audimat INTEGER references AUDIMAT(cle_primaire),"+
 							"wiki INTEGER references WIKI(cle_primaire)," +
-							"PRIMARY KEY(cle_primaire))");
+							"PRIMARY KEY(id_name_url))");
 		ajouterLigne(
-		"create table CHANSON(cle_primaire INTEGER,"+
-							"id_name_url INTEGER references ID_NAME_URL(cle_primaire)," +
+		"create table CHANSON(id_name_url INTEGER references ID_NAME_URL(cle_primaire)," +
 							"duree FLOAT,"+
 							"images INTEGER references IMAGES(cle_primaire),"+
 							"audimat INTEGER references AUDIMAT(cle_primaire),"+
 							"wiki INTEGER references WIKI(cle_primaire),"+
-							"artiste INTEGER references ARTISTE(cle_primaire),"+
-							"PRIMARY KEY(cle_primaire))");
+							"artiste INTEGER references ARTISTE(id_name_url),"+
+							"PRIMARY KEY(id_name_url))");
 		ajouterLigne(
-		"create table ALBUM(cle_primaire INTEGER,"+
-							"id_name_url INTEGER references ID_NAME_URL(cle_primaire)," +
+		"create table ALBUM(id_name_url INTEGER references ID_NAME_URL(cle_primaire)," +
 							"date_sortie date,"+//le mot-clé 'date' étant réservé, notre colonne ne peut pas s'appeler ainsi
 							"images INTEGER references IMAGES(cle_primaire),"+
 							"audimat INTEGER references AUDIMAT(cle_primaire),"+
 							"wiki INTEGER references WIKI(cle_primaire)," +
-							"artiste INTEGER references ARTISTE(cle_primaire),"+
-							"PRIMARY KEY(cle_primaire))");
+							"artiste INTEGER references ARTISTE(id_name_url),"+
+							"PRIMARY KEY(id_name_url))");
 		ajouterLigne(
-		"create table TAG(cle_primaire INTEGER,"+
-							"id_name_url INTEGER references ID_NAME_URL(cle_primaire)," +
+		"create table TAG(id_name_url INTEGER references ID_NAME_URL(cle_primaire)," +
 							"reach FLOAT,"+
 							"taggings FLOAT," +
 							"wiki INTEGER references WIKI(cle_primaire),"+
-							"PRIMARY KEY(cle_primaire))");
+							"PRIMARY KEY(id_name_url))");
 		ajouterLigne(
-		"create table ARTISTES_SIMILAIRES(artiste1 INTEGER references ARTISTE(cle_primaire),"+
-										"artiste2 INTEGER references ARTISTE(cle_primaire))");
+		"create table ARTISTES_SIMILAIRES(artiste1 INTEGER references ARTISTE(id_name_url),"+
+										"artiste2 INTEGER references ARTISTE(id_name_url))");
 		ajouterLigne(
-		"create table CORRESP_ARTISTE_TAG(artiste INTEGER references ARTISTE(cle_primaire),"+
-										"tag INTEGER references TAG(cle_primaire))");
+		"create table CORRESP_ARTISTE_TAG(artiste INTEGER references ARTISTE(id_name_url),"+
+										"tag INTEGER references TAG(id_name_url))");
 		ajouterLigne(
-		"create table CORRESP_CHANSON_TAG(chanson INTEGER references CHANSON(cle_primaire),"+
-										"tag INTEGER references TAG(cle_primaire))");
+		"create table CORRESP_CHANSON_TAG(chanson INTEGER references CHANSON(id_name_url),"+
+										"tag INTEGER references TAG(id_name_url))");
 		ajouterLigne(
-		"create table CORRESP_ALBUM_TAG(tag INTEGER references TAG(cle_primaire),"+
-										"album INTEGER references ALBUM(cle_primaire))");
+		"create table CORRESP_ALBUM_TAG(tag INTEGER references TAG(id_name_url),"+
+										"album INTEGER references ALBUM(id_name_url))");
 		ajouterLigne(
-		"create table CORRESP_CHANSON_ALBUM(album INTEGER references ALBUM(cle_primaire),"+
-										"chanson INTEGER references CHANSON(cle_primaire))");
+		"create table CORRESP_CHANSON_ALBUM(album INTEGER references ALBUM(id_name_url),"+
+										"chanson INTEGER references CHANSON(id_name_url))");
 	}
 
 	@Override
