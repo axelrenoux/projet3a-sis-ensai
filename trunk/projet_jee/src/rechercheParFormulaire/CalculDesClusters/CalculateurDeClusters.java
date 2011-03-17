@@ -255,7 +255,7 @@ public class CalculateurDeClusters {
 			classe="avant les années 60";
 		}
 
-		System.out.println("classe " + classe);
+		
 		return  classe;
 	}
 	
