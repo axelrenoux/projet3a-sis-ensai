@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
+import metier.Cluster;
 import metier.oeuvres.Album;
 import metier.oeuvres.Artiste;
 import metier.oeuvres.Chanson;
@@ -16,7 +17,7 @@ import metier.oeuvres.Chanson;
  */
 @ManagedBean
 @SessionScoped
-public class GestionFormulaire {
+public class GestionnaireFormulaire {
 	
 	/********************************************************************/
 	/*************************      attributs       *********************/
@@ -25,9 +26,9 @@ public class GestionFormulaire {
 	private RechercheAlbum rechercheAlbum = new RechercheAlbum();
 	private RechercheArtiste rechercheArtiste = new RechercheArtiste();
 	private RechercheChanson rechercheChanson = new RechercheChanson();
-	private ArrayList<Album> resultatsAlbum = new ArrayList<Album>();
-	private ArrayList<Artiste> resultatsArtiste = new ArrayList<Artiste>();
-	private ArrayList<Chanson> resultatsChanson = new ArrayList<Chanson>();
+	private Cluster resultatsAlbum;
+	private Cluster resultatsArtiste;
+	private Cluster resultatsChanson;
 
 
 	/********************************************************************/
@@ -37,22 +38,16 @@ public class GestionFormulaire {
 	
 	
 	
-	public ArrayList<Album> lancerRechercheAlbum() {
-		
-		return rechercheAlbum.lancerRecherche();
-		
+	public Cluster lancerRechercheAlbum(String motCle) {
+		return rechercheAlbum.lancerRecherche(motCle);
 	}
 	
-	public ArrayList<Artiste> lancerRechercheArtiste() {
-		
-		return rechercheArtiste.lancerRecherche();
-		
+	public Cluster lancerRechercheArtiste(String motCle) {
+		return rechercheArtiste.lancerRecherche(motCle);
 	}
 	
-	public ArrayList<Chanson> lancerRechercheChanson() {
-		
-		return rechercheChanson.lancerRecherche();
-		
+	public Cluster lancerRechercheChanson(String motCle) {
+		return rechercheChanson.lancerRecherche(motCle);
 	}
 	
 	
@@ -99,57 +94,6 @@ public class GestionFormulaire {
 
 
 
-
-	public ArrayList<Album> getResultatsAlbum() {
-		return resultatsAlbum;
-	}
-
-
-
-
-
-	public void setResultatsAlbum(ArrayList<Album> resultatsAlbum) {
-		this.resultatsAlbum = resultatsAlbum;
-	}
-
-
-
-
-
-	public ArrayList<Artiste> getResultatsArtiste() {
-		return resultatsArtiste;
-	}
-
-
-
-
-
-	public void setResultatsArtiste(ArrayList<Artiste> resultatsArtiste) {
-		this.resultatsArtiste = resultatsArtiste;
-	}
-
-
-
-
-
-	public ArrayList<Chanson> getResultatsChanson() {
-		return resultatsChanson;
-	}
-
-
-
-
-
-	public void setResultatsChanson(ArrayList<Chanson> resultatsChanson) {
-		this.resultatsChanson = resultatsChanson;
-	}
-
-
-
-
-
-	
-	
 	
 
 }

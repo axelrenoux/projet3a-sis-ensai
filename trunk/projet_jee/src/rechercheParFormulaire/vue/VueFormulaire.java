@@ -5,7 +5,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
-import rechercheParFormulaire.gestionRecherche.GestionFormulaire;
+import rechercheParFormulaire.gestionRecherche.GestionnaireFormulaire;
 
 
 	/**
@@ -21,14 +21,13 @@ import rechercheParFormulaire.gestionRecherche.GestionFormulaire;
 		/*************************      attributs       *********************/
 		/********************************************************************/
 		
-		@ManagedProperty(value="#{vueConfirmation}")
-		private VueConfirmation vueConfirmation;
-		@ManagedProperty(value="#{gestionFormulaire}")
-		private GestionFormulaire gestionFormulaire;
+
+		@ManagedProperty(value="#{gestionnaireFormulaire}")
+		private GestionnaireFormulaire gestionnaireFormulaire;
 		@ManagedProperty(value="#{vueAffichageResultat}")
 		private VueAffichageResultat vueAffichageResultat;
 		
-		private String motcle;
+		private String motCle;
 		
 		/********************************************************************/
 		/************************      methodes      ************************/
@@ -42,7 +41,7 @@ import rechercheParFormulaire.gestionRecherche.GestionFormulaire;
 			
 			boolean success = false;			
 
-			if(!motcle.isEmpty()){
+			if(!motCle.isEmpty()){
 				/*gestionFormulaire.getRechercheAlbum().setMotCle(motcle);
 				gestionFormulaire.getRechercheArtiste().setMotCle(motcle);
 				gestionFormulaire.getRechercheChanson().setMotCle(motcle);*/
@@ -51,9 +50,9 @@ import rechercheParFormulaire.gestionRecherche.GestionFormulaire;
 
 			if(success){
 				//on attribue les resultats à la page de resultats
-				vueAffichageResultat.setResultatsAlbum(gestionFormulaire.lancerRechercheAlbum());;
-				vueAffichageResultat.setResultatsArtiste(gestionFormulaire.lancerRechercheArtiste());;
-				vueAffichageResultat.setResultatsChanson(gestionFormulaire.lancerRechercheChanson());;
+				vueAffichageResultat.getGestionnaireAffichageResultat().setClustersAlbum(gestionnaireFormulaire.lancerRechercheAlbum(motCle));;
+				vueAffichageResultat.getGestionnaireAffichageResultat().setClustersArtiste(gestionnaireFormulaire.lancerRechercheArtiste(motCle));;
+				vueAffichageResultat.getGestionnaireAffichageResultat().setClustersChanson(gestionnaireFormulaire.lancerRechercheChanson(motCle));;
 				
 				//return "confirmation";
 				return "success";
@@ -83,35 +82,30 @@ import rechercheParFormulaire.gestionRecherche.GestionFormulaire;
 
 
 
-		public VueConfirmation getVueConfirmation() {
-			return vueConfirmation;
+		 
+
+	 
+
+
+		public GestionnaireFormulaire getGestionnaireFormulaire() {
+			return gestionnaireFormulaire;
 		}
 
 
-		public void setVueConfirmation(VueConfirmation vueConfirmation) {
-			this.vueConfirmation = vueConfirmation;
-		}
-
-
-		public GestionFormulaire getGestionFormulaire() {
-			return gestionFormulaire;
-		}
-
-
-		public void setGestionFormulaire(GestionFormulaire gestionFormulaire) {
-			this.gestionFormulaire = gestionFormulaire;
+		public void setGestionnaireFormulaire(
+				GestionnaireFormulaire gestionnaireFormulaire) {
+			this.gestionnaireFormulaire = gestionnaireFormulaire;
 		}
 
 
 
 
-		public String getMotcle() {
-			return motcle;
+		public String getMotCle() {
+			return motCle;
 		}
 
-
-		public void setMotcle(String motcle) {
-			this.motcle = motcle;
+		public void setMotCle(String motCle) {
+			this.motCle = motCle;
 		}
 
 

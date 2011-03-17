@@ -35,14 +35,17 @@ public class CalculateurDeClusters {
 	/************************      methodes      ************************/
 	/********************************************************************/
 
-	public Cluster calculerCustersAlbumNiveau1(ArrayList<Album> albums){
+
+	/**************************    albums    ****************************/
+	
+	public Cluster calculerClustersAlbum(ArrayList<Album> albums){
 		Cluster clusterGeneral = new Cluster();
 		HashMap<ComposantCluster,ArrayList<Album>> affectationAlbumSousCluster = new HashMap<ComposantCluster,ArrayList<Album>>();
 		//affectationAlbumSousCluster va permettre l'affectation des albums dans les sous-clusters
 		
 		//premier decoupage
 		//on affecte chaque album a un sous-cluster de cluster general
-		//et on créé on fur et a mesure les sous-clusters de cluster general
+		//et on crée au fur et a mesure les sous-clusters de cluster general
 		for(Album a : albums){
 			//selon le 1er axe: exemple annee
 			String valeurAxe = miseEnClassesAnnees(a.getDate());
@@ -65,21 +68,18 @@ public class CalculateurDeClusters {
 		
 		//on cree les sous-clusters de niveau 2 pour chaque sous-cluster de niveau 1
 		for(Entry<ComposantCluster, ArrayList<Album>> currentEntry : affectationAlbumSousCluster.entrySet()){
-			calculerCustersAlbumNiveau2(currentEntry.getKey(),currentEntry.getValue());
+			calculerClustersAlbumNiveau2(currentEntry.getKey(),currentEntry.getValue());
 		}
 		
 		return clusterGeneral;
 	}
 	
 	
-	public void calculerCustersAlbumNiveau2(ComposantCluster sousCluster1,ArrayList<Album> albums){
-		
-		HashMap<ComposantCluster,ArrayList<Album>> affectationAlbumSousCluster = new HashMap<ComposantCluster,ArrayList<Album>>();
-		//affectationAlbumSousCluster va permettre l'affectation des albums dans les sous-clusters
+	public void calculerClustersAlbumNiveau2(ComposantCluster sousCluster1,ArrayList<Album> albums){
 		
 		//deuxieme decoupage
 		//on ajoute chaque album au contenu d'un sous-cluster de sous-cluster1
-		//et on créé on fur et a mesure les sous-clusters de sous-cluster1
+		//et on crée au fur et a mesure les sous-clusters de sous-cluster1
 		for(Album a : albums){
 			//selon le 2eme axe: exemple saison
 			String valeurAxe = miseEnSaison(a.getDate());
@@ -96,19 +96,129 @@ public class CalculateurDeClusters {
 	}
 	
 	
+	/**************************    artistes    ****************************/
 	
+	 
 	
-	public Cluster calculerCustersArtiste(ArrayList<Artiste> artistes){
-		Cluster cluster = new Cluster();
-		return cluster;
+	public Cluster calculerClustersArtiste(ArrayList<Artiste> artistes){
+		Cluster clusterGeneral = new Cluster();
+		HashMap<ComposantCluster,ArrayList<Artiste>> affectationArtisteSousCluster = new HashMap<ComposantCluster,ArrayList<Artiste>>();
+		//affectationArtisteSousCluster va permettre l'affectation des artistes dans les sous-clusters
+		
+		//premier decoupage
+		//on affecte chaque artiste a un sous-cluster de cluster general
+		//et on crée au fur et a mesure les sous-clusters de cluster general
+		for(Artiste a : artistes){
+			//selon le 1er axe: exemple 
+			String valeurAxe = a.getListeners()+"";
+			//si le clusterGeneral ne contient aucun cluster pour cette valeur
+			if(!clusterGeneral.getContenu().containsKey(valeurAxe)){
+				//on cree le sous-cluster de niveau 1
+				ComposantCluster c = new Cluster(valeurAxe);
+				clusterGeneral.getContenu().put(valeurAxe, c);
+				//on cree une nouvelle liste d'artistes à affecter à ce nouveau sous_cluster
+				//a laquelle on ajoute l'artiste courant
+				ArrayList<Artiste> sesArtistes= new ArrayList<Artiste>();
+				sesArtistes.add(a);
+				affectationArtisteSousCluster.put(c, sesArtistes);
+			}else{
+				ComposantCluster c = clusterGeneral.getContenu().get(valeurAxe);
+				//sinon, on ajoute juste l'artiste à la liste des artistes  à affecter à ce cluster
+				affectationArtisteSousCluster.get(c).add(a);
+			}
+		}
+		
+		//on cree les sous-clusters de niveau 2 pour chaque sous-cluster de niveau 1
+		for(Entry<ComposantCluster, ArrayList<Artiste>> currentEntry : affectationArtisteSousCluster.entrySet()){
+			calculerClustersArtisteNiveau2(currentEntry.getKey(),currentEntry.getValue());
+		}
+		
+		return clusterGeneral;
 	}
 	
-	public Cluster calculerCustersChanson(ArrayList<Chanson> chansons){
-		Cluster cluster = new Cluster();
-		return cluster;
+	
+	public void calculerClustersArtisteNiveau2(ComposantCluster sousCluster1,ArrayList<Artiste> artistes){
+		
+		//deuxieme decoupage
+		//on ajoute chaque album au contenu d'un sous-cluster de sous-cluster1
+		//et on créé on fur et a mesure les sous-clusters de sous-cluster1
+		for(Artiste a : artistes){
+			//selon le 2eme axe: exemple  
+			String valeurAxe = a.getPlaycount()+"";
+			//si le clusterGeneral ne contient aucun cluster pour cette valeur
+			if(!sousCluster1.getContenu().containsKey(valeurAxe)){
+				//on cree le sous-cluster de niveau 2
+				ComposantCluster c = new Cluster(valeurAxe);
+				sousCluster1.getContenu().put(valeurAxe, c);
+			}
+			//on ajoute l'artiste au sous-cluster de niveau 2 qui correspond
+			ComposantCluster sousClusterNiveau2 = sousCluster1.getContenu().get(valeurAxe);
+			sousClusterNiveau2.getContenu().put(sousCluster1.getNom()+" & "+sousClusterNiveau2.getNom(),a);
+		}
 	}
 	
 	
+	/**************************    chanson    ****************************/
+	
+	 
+	public Cluster calculerClustersChanson(ArrayList<Chanson> chansons){
+		Cluster clusterGeneral = new Cluster();
+		HashMap<ComposantCluster,ArrayList<Chanson>> affectationChansonSousCluster = new HashMap<ComposantCluster,ArrayList<Chanson>>();
+		//affectationChansonSousCluster va permettre l'affectation des Chansons dans les sous-clusters
+		
+		//premier decoupage
+		//on affecte chaque Chanson a un sous-cluster de cluster general
+		//et on crée au fur et a mesure les sous-clusters de cluster general
+		for(Chanson a : chansons){
+			//selon le 1er axe: exemple 
+			String valeurAxe = a.getDuree()+"";
+			//si le clusterGeneral ne contient aucun cluster pour cette valeur
+			if(!clusterGeneral.getContenu().containsKey(valeurAxe)){
+				//on cree le sous-cluster de niveau 1
+				ComposantCluster c = new Cluster(valeurAxe);
+				clusterGeneral.getContenu().put(valeurAxe, c);
+				//on cree une nouvelle liste de chansons à affecter à ce nouveau sous_cluster
+				//a laquelle on ajoute la chanson courante
+				ArrayList<Chanson> sesChansons= new ArrayList<Chanson>();
+				sesChansons.add(a);
+				affectationChansonSousCluster.put(c, sesChansons);
+			}else{
+				ComposantCluster c = clusterGeneral.getContenu().get(valeurAxe);
+				//sinon, on ajoute juste la chanson à la liste des chansons  à affecter à ce cluster
+				affectationChansonSousCluster.get(c).add(a);
+			}
+		}
+		
+		//on cree les sous-clusters de niveau 2 pour chaque sous-cluster de niveau 1
+		for(Entry<ComposantCluster, ArrayList<Chanson>> currentEntry : affectationChansonSousCluster.entrySet()){
+			calculerClustersChansonNiveau2(currentEntry.getKey(),currentEntry.getValue());
+		}
+		
+		return clusterGeneral;
+	}
+	
+	
+	public void calculerClustersChansonNiveau2(ComposantCluster sousCluster1,ArrayList<Chanson> chansons){
+		
+		//deuxieme decoupage
+		//on ajoute chaque album au contenu d'un sous-cluster de sous-cluster1
+		//et on créé on fur et a mesure les sous-clusters de sous-cluster1
+		for(Chanson ch : chansons){
+			//selon le 2eme axe: exemple saison
+			String valeurAxe = ch.getListeners()+"";
+			//si le clusterGeneral ne contient aucun cluster pour cette valeur
+			if(!sousCluster1.getContenu().containsKey(valeurAxe)){
+				//on cree le sous-cluster de niveau 2
+				ComposantCluster c = new Cluster(valeurAxe);
+				sousCluster1.getContenu().put(valeurAxe, c);
+			}
+			//on ajoute la chanson au sous-cluster de niveau 2 qui correspond
+			ComposantCluster sousClusterNiveau2 = sousCluster1.getContenu().get(valeurAxe);
+			sousClusterNiveau2.getContenu().put(sousCluster1.getNom()+" & "+sousClusterNiveau2.getNom(),ch);
+		}
+	}
+	
+	/****************** valeurs des differents axes   ************************/
 	
 	public String miseEnClassesAnnees(Date date){
 		String classe = "";

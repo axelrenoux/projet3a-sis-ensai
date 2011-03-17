@@ -2,10 +2,13 @@ package rechercheParFormulaire.gestionRecherche;
 
 import java.util.ArrayList;
 
+import rechercheParFormulaire.CalculDesClusters.CalculateurDeClusters;
+
+import metier.Cluster;
 import metier.oeuvres.Album;
 import metier.oeuvres.Artiste;
 
-public class RechercheArtiste extends Recherche {
+public class RechercheArtiste{
 	
 	/********************************************************************/
 	/*************************      attributs       *********************/
@@ -35,7 +38,7 @@ public class RechercheArtiste extends Recherche {
 	}
 	
 	
-	public ArrayList lancerRecherche(String motCle) {
+	public Cluster lancerRecherche(String motCle) {
 		resultats = new ArrayList<Artiste>();
 		Artiste a1 = new Artiste();
 		Artiste a2 = new Artiste();
@@ -48,7 +51,8 @@ public class RechercheArtiste extends Recherche {
 		resultats.add(a1);
 		resultats.add(a2);
 		
-		return resultats;
+		return CalculateurDeClusters.getInstanceunique().
+		calculerClustersArtiste(resultats);
 	}
 	
 	public String retournerTypeAffichage(){
