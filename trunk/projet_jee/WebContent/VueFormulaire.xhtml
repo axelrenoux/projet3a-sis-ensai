@@ -12,7 +12,7 @@
         	<p:panel header="Saisie de la recherche" toggleable="true">
 	        	<h:panelGrid columns="2" columnClasses="column" cellpadding="5"> 
 		        	<h:outputLabel value = "Recherche"/>
-		        	<h:inputText value="#{vueFormulaire.motcle}"/>
+		        	<h:inputText value="#{vueFormulaire.motCle}"/>
 		        	<p:messages id="msgs" showDetail="true"/>
 					<p:commandButton value ="C'est parti !" action="#{vueFormulaire.lancerRecherche}" 
 							update="msgs" ajax="false"/>
