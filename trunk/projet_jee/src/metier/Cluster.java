@@ -1,8 +1,13 @@
 package metier;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map.Entry;
+
+import metier.oeuvres.Album;
+import metier.oeuvres.Chanson;
+import metier.oeuvres.Oeuvre;
 
 /**
  * @author Administrateur
@@ -115,12 +120,6 @@ public class Cluster implements ComposantCluster {
 	public void setNomCluster(String nomCluster) {
 		this.nomCluster = nomCluster;
 	}
-
-
-
-
-
-
 
 
 }
