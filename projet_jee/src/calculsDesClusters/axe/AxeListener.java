@@ -97,13 +97,13 @@ public void setMesQuarts(ArrayList<Double> mesQuarts) {
 			String classe =" ";
 			double List=oeuvre.getListeners();
 			if (List<=this.mesQuarts.get(0)){
-				classe="Dans le Premier quartile";
+				classe="entre 0 et " +this.mesQuarts.get(0) ;
 			}else if(this.mesQuarts.get(0)<List && List<=this.mesQuarts.get(1)){
-				classe = "Dans le deuxieme quartile";
+				classe = "entre"+this.mesQuarts.get(0) + "et" +this.mesQuarts.get(1) ;
 			}else if(this.mesQuarts.get(1)<List && List<=this.mesQuarts.get(2)){
-				classe = "Dans le troisieme quartile";
+				classe = "entre"+this.mesQuarts.get(1) + "et" +this.mesQuarts.get(2) ;
 			}else if (List>this.mesQuarts.get(2)){
-				classe = "Dans le quatrieme quartile";
+				classe = "Supérieur à" +this.mesQuarts.get(2);
 			}	
 			return classe;
 		}
