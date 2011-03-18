@@ -8,7 +8,23 @@
 
 <ui:composition template="/modeleFormulaire.xhtml">
 	<ui:define name="contenu">
-	Choisissez un critère pour affiner votre recherche
+	
+	<h:form>
+	
+	<h:outputLabel
+					style="font-size: 16; text-align:center; font-family: Segoe UI, Helvetica, Arial, sans-serif;"> 
+							Affinez vos critères ou faites une nouvelle recherche : 
+	</h:outputLabel>
+	
+	<p:commandButton value="Nouvelle recherche"
+									image="ui-icon ui-icon-circle-arrow-w" 
+									action="#{vueAffichageResultat.retourDebut}" 
+									update="msgs" ajax="false"/>
+									
+									
+									
+	</h:form>						
+	
 		
 		<p:panel id="monPanel">
 
@@ -20,6 +36,7 @@
 							Choisissez le type de recherche que vous  souhaitez faire, et affinez vos critères
 				</h:outputLabel>
 			</center>
+			
 			<center>
 				<h:outputLabel
 					rendered="#{vueAffichageResultat.etape2}"
@@ -27,12 +44,19 @@
 							Choisissez un second critère pour affiner votre recherche
 				</h:outputLabel>
 			</center>
+			
+			
+			
+				
 
 
-			<h:panelGrid columns="3" style="width:1200px;height:600px;"
+			<h:panelGrid columns="4" style="width:1200px;height:600px;"
 				columnClasses="column" cellpadding="5">
-
+				
+			
+				
 				<h:form>
+					 
 
 					<!--                     affichage de l'etape 1                        -->
 					<!--                       si recherche un album                    -->
@@ -45,22 +69,24 @@
 							selectionMode="single" 
 							rendered="#{vueAffichageResultat.etape1}">
 
-							<f:facet name="header">
-								<h:outputLabel style="font-size: 18;">
-						 			Trouver un album
-						 		</h:outputLabel>
-							</f:facet>
-
 							<p:column>
 								<f:facet name="header">  
 			                  	Name
 					          	</f:facet>
 								<h:outputText value="#{cluster.nomCluster}" />
 							</p:column>
+							
+							<f:facet name="header">
+								<h:outputLabel style="font-size: 18;">
+						 			Trouver un album
+						 		</h:outputLabel>
+							</f:facet>
+
+							
 
 							<f:facet name="footer">
 								<p:commandButton value="Continuer"
-									image="ui-icon ui-icon-search" update="monPanel"
+									image="ui-icon ui-icon-circle-arrow-e" update="monPanel"
 									action="#{vueAffichageResultat.affinerRechercheAlbum1}" />
 							</f:facet>
 						</p:dataTable>
@@ -71,6 +97,7 @@
 
 
 				<h:form>
+					 
 							
 					<p:panel style="width:300px;height:600px;">
 						
@@ -88,7 +115,7 @@
 
 							<f:facet name="footer">
 								<p:commandButton value="Continuer"
-									image="ui-icon ui-icon-search" update="monPanel"
+									image="ui-icon ui-icon-circle-arrow-e" update="monPanel"
 									action="#{vueAffichageResultat.affinerRechercheArtiste1}" />
 							</f:facet>
 							
@@ -143,7 +170,7 @@
 								<h:panelGrid columns="2" cellpadding="5">
 				
 								<p:commandButton value="Retour"
-											image="ui-icon ui-icon-search" update="monPanel"
+											image="ui-icon ui-icon-circle-arrow-w" update="monPanel"
 											action="#{vueAffichageResultat.retourEtape1}" />
 								<p:commandButton value="Trouver"
 									image="ui-icon ui-icon-search" update="monPanel"
@@ -174,7 +201,7 @@
  							<f:facet name="footer">
 								<h:panelGrid columns="2" cellpadding="5">
 									<p:commandButton value="Retour"
-												image="ui-icon ui-icon-search" update="monPanel"
+												image="ui-icon ui-icon-circle-arrow-w" update="monPanel"
 												action="#{vueAffichageResultat.retourEtape1}" />
 									<p:commandButton value="Trouver"
 										image="ui-icon ui-icon-search" update="monPanel"
@@ -219,7 +246,7 @@
 							<f:facet name="footer">
 								<h:panelGrid columns="2" cellpadding="5">
 									<p:commandButton value="Retour"
-												image="ui-icon ui-icon-search" update="monPanel"
+												image="ui-icon ui-icon-circle-arrow-w" update="monPanel"
 												action="#{vueAffichageResultat.retourEtape1}" />
 									<p:commandButton value="Trouver"
 										image="ui-icon ui-icon-search" update="monPanel"
@@ -230,7 +257,7 @@
 							
 							<f:facet name="header">
 								<h:outputLabel style="font-size: 18;">
-									Trouver une chanson  
+									Trouver une chanson   3
 								</h:outputLabel>
 							</f:facet>
 							
@@ -277,7 +304,7 @@
 							
 							<f:facet name="footer">
 								<p:commandButton value="Retour"
-											image="ui-icon ui-icon-search" update="monPanel"
+											image="ui-icon ui-icon-circle-arrow-w" update="monPanel"
 											action="#{vueAffichageResultat.retourEtapeAlbum2}" />
 							</f:facet>
 							
@@ -331,7 +358,7 @@
 							
 							<f:facet name="footer">
 								<p:commandButton value="Retour"
-											image="ui-icon ui-icon-search" update="monPanel"
+											image="ui-icon ui-icon-circle-arrow-w" update="monPanel"
 											action="#{vueAffichageResultat.retourEtapeArtiste2}" />
 							</f:facet>
 							
@@ -371,7 +398,7 @@
 							
 							<f:facet name="footer">
 								<p:commandButton value="Retour"
-											image="ui-icon ui-icon-search" update="monPanel"
+											image="ui-icon ui-icon-circle-arrow-w" update="monPanel"
 											action="#{vueAffichageResultat.retourEtapeChanson2}" />
 							</f:facet>
 
@@ -381,8 +408,16 @@
 
 					</p:panel>
 				</h:form>
-
+					<!--                     affichage de l'etape 1                       -->
+					<!--                     si recherche une chanson                     -->
+						
+	
+	
+	  		
+				
 				<h:form>
+				 
+							
 
 					<p:panel style="width:300px;height:600px;">
 						<p:dataTable var="cluster"
@@ -396,7 +431,7 @@
 
 							<f:facet name="footer">
 								<p:commandButton value="Continuer"
-									image="ui-icon ui-icon-search" update="monPanel"
+									image="ui-icon ui-icon-circle-arrow-e" update="monPanel"
 									action="#{vueAffichageResultat.affinerRechercheChanson1}" />
 							</f:facet>
 
@@ -410,7 +445,7 @@
 							
 							<f:facet name="header">
 								<h:outputLabel style="font-size: 18;">
-									Trouver une chanson
+									Trouver une chanson 1
 								</h:outputLabel>
 							</f:facet>
 
@@ -420,57 +455,9 @@
 
 				</h:form>
 						
-						
-		<!--                     affichage de l'etape 1                       -->
-		<!--                     si recherche une chanson                     -->
-						
-						<h:form>
-
-					<p:panel style="width:300px;height:600px;">
-						<p:dataTable var="cluster"
-							value="#{vueAffichageResultat.clustersChansonsNiveau1}"
-							selection="#{vueAffichageResultat.clusterChansonNiveau1Choisi}"
-							selectionMode="single">
-
-							<f:facet name="footer">
-								<p:commandButton value="Continuer"
-									image="ui-icon ui-icon-search" update="monPanel"
-									action="#{vueAffichageResultat.affinerRechercheChanson1}" />
-							</f:facet>
-							
-							
-							<p:column>
-								<f:facet name="header">  
-		                  	Name
-				          	</f:facet>
-								<h:outputText value="#{cluster.nomCluster}" />
-							</p:column>
-							
-							
-							<f:facet name="header">
-								<h:outputLabel style="font-size: 18;">
-									Trouver une chanson 
-								</h:outputLabel>
-							</f:facet>
-							
-							
-						</p:dataTable>
-					</p:panel>
-
-
-
-				</h:form>
-
 
 			</h:panelGrid>
-
-
-
-
-
-
-
-
+ 
 
 		</p:panel>
 	</ui:define>
