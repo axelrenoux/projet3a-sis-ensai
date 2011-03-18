@@ -3,31 +3,35 @@ package calculsDesClusters.axe;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import metier.Cluster;
 import metier.oeuvres.Album;
 import metier.oeuvres.Oeuvre;
-import rechercheParFormulaire.gestionRecherche.RechercheAlbum;
 
 public class AxeListener implements Axe {
 
-	@Override
-	public String CalculAxe(Oeuvre oeuvre) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+private ArrayList<Double> mesQuarts;
+
+	public ArrayList<Double> getMesQuarts() {
+	return mesQuarts;
+}
+
+public void setMesQuarts(ArrayList<Double> mesQuarts) {
+	this.mesQuarts = mesQuarts;
+}
+
 	/**
 	 * Méthodes pour calculer les quartiles des oeuvres
 	 */
 
-		public double[] QuartClusterOeuvreLs (ArrayList<Oeuvre> ClOeuvre) throws Exception{
-			double[] ListeQuart = null;
+		public ArrayList<Double> QuartClusterOeuvreLs (ArrayList<Oeuvre> ClOeuvre) throws Exception{
+			
+			ArrayList<Double> ListeQuart = null;
 			ArrayList<Double> ListeLs = new ArrayList<Double>();
 						for(Oeuvre loeuvre :ClOeuvre){
 							ListeLs.add(loeuvre.getListeners());
 						}
 			Collections.sort(ListeLs);
 			ListeQuart=Quartiles(ListeLs);
-		
+			setMesQuarts(ListeQuart);
 			return ListeQuart;
 		}
 		
@@ -47,7 +51,7 @@ public class AxeListener implements Axe {
 		} 
 
 		//fonction pour le calcul des quartiles
-		public static double[] Quartiles(ArrayList<Double> values) throws Exception
+		public static ArrayList<Double> Quartiles(ArrayList<Double> values) throws Exception
 		{
 			if (values.size() < 3)
 				throw new Exception("This method is not designed to handle lists with fewer than 3 elements.");
@@ -56,8 +60,13 @@ public class AxeListener implements Axe {
 
 			ArrayList<Double> lowerHalf = GetValuesLessThan(values, median, true);
 			ArrayList<Double> upperHalf = GetValuesGreaterThan(values, median, true);
-
-			return new double[] {Median(lowerHalf), median, Median(upperHalf)};
+			
+			ArrayList<Double> Sol = new ArrayList<Double>(); 
+			Sol.add(Median(lowerHalf));
+			Sol.add(median);
+			Sol.add(Median(upperHalf));
+			
+			return Sol;
 		}
 
 		//fonction récupérant les valeurs supérieures à la médiane
@@ -83,7 +92,23 @@ public class AxeListener implements Axe {
 
 			return modValues;
 		}
-		public static void main(String[] args) throws Exception {
+		@Override
+		public String CalculAxe(Oeuvre oeuvre) {
+			String classe =" ";
+			double List=oeuvre.getListeners();
+			if (List<=this.mesQuarts.get(0)){
+				classe="Dans le Premier quartile";
+			}else if(this.mesQuarts.get(0)<List && List<=this.mesQuarts.get(1)){
+				classe = "Dans le deuxieme quartile";
+			}else if(this.mesQuarts.get(1)<List && List<=this.mesQuarts.get(2)){
+				classe = "Dans le troisieme quartile";
+			}else if (List>this.mesQuarts.get(2)){
+				classe = "Dans le quatrieme quartile";
+			}	
+			return classe;
+		}
+
+	/*	public static void main(String[] args) throws Exception {
 			
 			Album a = new Album();
 			a.setListeners(10);
@@ -95,6 +120,8 @@ public class AxeListener implements Axe {
 			d.setListeners(15);
 			Album e = new Album();
 			e.setListeners(20);
+			Album f = new Album();
+			f.setListeners(7);
 		
 			ArrayList<Oeuvre> monoeuvre = new ArrayList<Oeuvre>();
 			monoeuvre.add(a);
@@ -102,12 +129,14 @@ public class AxeListener implements Axe {
 			monoeuvre.add(c);
 			monoeuvre.add(d);
 			monoeuvre.add(e);
+			monoeuvre.add(f);
 			
 			AxeListener axe = new AxeListener();
-			double[] my= axe.QuartClusterOeuvreLs(monoeuvre);
-			for (int i=0;i<3 ; i++){
-			System.out.println(my[i]);
-			}
-		}
+			ArrayList<Double>  my= axe.QuartClusterOeuvreLs(monoeuvre);
+			
+			System.out.println(my);
+			System.out.println(axe.CalculAxe(f));
+			
+		}*/
 
 }
