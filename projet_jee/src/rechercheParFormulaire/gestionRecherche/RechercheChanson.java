@@ -2,7 +2,8 @@ package rechercheParFormulaire.gestionRecherche;
 
 import java.util.ArrayList;
 
-import rechercheParFormulaire.CalculDesClusters.CalculateurDeClusters;
+import calculsDesClusters.calcul.CalculateurDeClusters;
+
 
 import metier.Cluster;
 import metier.oeuvres.Artiste;

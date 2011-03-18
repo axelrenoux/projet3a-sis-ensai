@@ -4,11 +4,11 @@ import java.util.ArrayList;
 
 import metier.Cluster;
 import metier.oeuvres.Album;
-import rechercheParFormulaire.CalculDesClusters.CalculateurDeClustersAlbums;
-import calculsDesClusters.Axe;
-import calculsDesClusters.AxeAnnee;
-import calculsDesClusters.AxeArtiste;
-import calculsDesClusters.AxeSaison;
+import calculsDesClusters.axe.Axe;
+import calculsDesClusters.axe.AxeAnnee;
+import calculsDesClusters.axe.AxeArtiste;
+import calculsDesClusters.axe.AxeSaison;
+import calculsDesClusters.calcul.CalculateurDeClustersAlbums;
 import controleur.UtilitaireDate;
 import exceptions.ExceptionDate;
 
