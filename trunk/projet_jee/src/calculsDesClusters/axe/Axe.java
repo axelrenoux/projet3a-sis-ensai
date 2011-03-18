@@ -6,6 +6,5 @@ public interface Axe {
 	
 	public String CalculAxe(Oeuvre oeuvre);
 	
-	
 
 }
