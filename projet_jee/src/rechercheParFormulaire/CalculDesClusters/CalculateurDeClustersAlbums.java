@@ -8,6 +8,7 @@ import java.util.Map.Entry;
 import metier.Cluster;
 import metier.ComposantCluster;
 import metier.oeuvres.Album;
+import calculsDesClusters.Axe;
 
 
 
@@ -35,7 +36,7 @@ public class CalculateurDeClustersAlbums {
 
 	/**************************    albums    ****************************/
 	
-	public Cluster calculerClustersAlbum(ArrayList<Album> albums){
+	public Cluster calculerClustersAlbum(Axe axe1, Axe axe2, ArrayList<Album> albums){
 		Cluster clusterGeneral = new Cluster();
 		HashMap<ComposantCluster,ArrayList<Album>> affectationAlbumSousCluster = new HashMap<ComposantCluster,ArrayList<Album>>();
 		//affectationAlbumSousCluster va permettre l'affectation des albums dans les sous-clusters
@@ -45,7 +46,7 @@ public class CalculateurDeClustersAlbums {
 		//et on crée au fur et a mesure les sous-clusters de cluster general
 		for(Album a : albums){
 			//selon le 1er axe: exemple annee
-			String valeurAxe = miseEnClassesAnnees(a.getDate());
+			String valeurAxe = axe1.CalculAxe(a);
 			//si le clusterGeneral ne contient aucun cluster pour cette valeur
 			if(!clusterGeneral.getContenu().containsKey(valeurAxe)){
 				//on cree le sous-cluster de niveau 1
@@ -65,21 +66,21 @@ public class CalculateurDeClustersAlbums {
 		
 		//on cree les sous-clusters de niveau 2 pour chaque sous-cluster de niveau 1
 		for(Entry<ComposantCluster, ArrayList<Album>> currentEntry : affectationAlbumSousCluster.entrySet()){
-			calculerClustersAlbumNiveau2(currentEntry.getKey(),currentEntry.getValue());
+			calculerClustersAlbumNiveau2(axe2, currentEntry.getKey(),currentEntry.getValue());
 		}
 		
 		return clusterGeneral;
 	}
 	
 	
-	public void calculerClustersAlbumNiveau2(ComposantCluster sousCluster1,ArrayList<Album> albums){
+	public void calculerClustersAlbumNiveau2(Axe axe, ComposantCluster sousCluster1,ArrayList<Album> albums){
 		
 		//deuxieme decoupage
 		//on ajoute chaque album au contenu d'un sous-cluster de sous-cluster1
 		//et on crée au fur et a mesure les sous-clusters de sous-cluster1
 		for(Album a : albums){
 			//selon le 2eme axe: exemple saison
-			String valeurAxe = miseEnSaison(a.getDate());
+			String valeurAxe = axe.CalculAxe(a);
 			//si le clusterGeneral ne contient aucun cluster pour cette valeur
 			if(!sousCluster1.getContenu().containsKey(valeurAxe)){
 				//on cree le sous-cluster de niveau 2
@@ -145,10 +146,6 @@ public class CalculateurDeClustersAlbums {
 		else return "hiver";
 	}
 	
-	
-	public String miseEnClasseArtiste(){
-		
-	}
 	
 	
 	/********************************************************************/
