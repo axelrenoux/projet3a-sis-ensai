@@ -1,4 +1,4 @@
-package calculsDesClusters;
+package calculsDesClusters.axe;
 
 import java.sql.Date;
 

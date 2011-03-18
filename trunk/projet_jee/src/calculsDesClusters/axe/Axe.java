@@ -1,4 +1,4 @@
-package calculsDesClusters;
+package calculsDesClusters.axe;
 
 import metier.oeuvres.Oeuvre;
 
