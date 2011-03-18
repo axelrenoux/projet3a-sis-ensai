@@ -7,60 +7,35 @@ package comparaison;
  * 
  * @author adapté à partir de http://www25.brinkster.com/denshade/NeedlemanWunsch.java.htm
  *
+ *****************	TESTS	******************
+ *	Taux proximité rap % raï : 0.6666667
+ *	Taux proximité rap % rock : 0.30555555
+ *
+ *	Taux proximité rock indépendant % ROCK INDEPENDANT : 1.0
+ *	Taux proximité rock % rock : 1.0
+ *
+ *	Taux proximité pop rock % rock : 0.9166667
+ *	Taux proximité rock indépendant % rock : 0.75
+ *	Taux proximité rock % rock psychédélique : 0.7083333
+ *
+ *	Taux proximité rock indépendant % rock psychédélique : 0.4375
+ *	Taux proximité pop rock % ska rock : 0.625
  */
 public class ComparaisonUtilisee extends FonctionDeRapprochement {
 
 	private static int coutAbsence=-1;
 	
-	@Override
-	protected double appliquer(String chaine1, String chaine2){
-          System.out.println(bonusEstIdentique(0,0));
-          System.out.println(bonusEstIdentique(1,0));
+	protected float appliquer(String chaine1, String chaine2){
           int[][] ar = calculateMatrix(chaine1.toCharArray(), chaine2.toCharArray());
-          System.out.println("Matrice de correspondances entre '"+chaine1+"' et '"+chaine2+"' :");
+          /*System.out.println("Matrice de correspondances entre '"+chaine1+"' et '"+chaine2+"' :");
           for (int y = 0; y < ar.length; y++){
               System.out.println("");
               for (int x = 0; x < ar[y].length; x++) System.out.print(ar[y][x] +"\t ");
           }
-          System.out.println("");
-          getAlignments(ar, chaine1.toCharArray(), chaine2.toCharArray(), chaine1, chaine2);
-	      return ar[chaine1.length()+1][chaine2.length()+1];
-	  }
-	  public static void getAlignments(int[][] ar, char[] A, char[] B, String sA, String sB){
-	      String alA = "";
-	      String alB = "";        
-	      int i = sA.length();
-	      int j = sB.length();
-	      while (i > 0 && j > 0){
-	          int score = ar[i][j];
-	          int scorediag = ar[i-1][j-1];
-	          int scoreup = ar[i][j-1];
-	          int scoreleft = ar[i-1][j];
-	          if (score == scorediag + bonusEstIdentique(A[i-1], B[j-1])){
-	              alA = sA.charAt(i-1) + alA;
-	              alB = sB.charAt(j-1) + alB;
-	              i--;j--;                
-	          }else if (score == scoreleft + coutAbsence){
-	              alA = sA.charAt(i-1) + alA;
-	              alB = "-" + alB;
-	              i--;
-	          }else if(score == scoreup + coutAbsence){
-	              alA = "-" + alA;
-	              alB = sB.charAt(j-1) + alB;
-	              j--;
-	          }
-	      }
-	      while(i > 0){
-	          alA = sA.charAt(i - 1) + alA;
-	          alB = "-" + alB;
-	          i--;            
-	      }while(j > 0){
-	          alA = "-" + alA;
-	          alB = sB.charAt(j - 1) + alB;
-	          j--;            
-	      }
-	      System.out.println(alA+"\n");
-	      System.out.println(alB+"\n");
+          System.out.println("");*/
+          float similitude=((float) ar[chaine1.length()][chaine2.length()])/(12*Math.min(chaine1.length(),chaine2.length()));
+          System.out.println("Taux proximité "+chaine1+" % "+chaine2+" : "+similitude);
+	      return similitude;
 	  }
 	  
 	  public static int[][] calculateMatrix(char[] source, char[] dest){
@@ -81,7 +56,9 @@ public class ComparaisonUtilisee extends FonctionDeRapprochement {
 	  
 	  public static int bonusEstIdentique(int first, int second){
 		  int bonusEstIdentique=0;
-		  if(first==second) bonusEstIdentique=3;
+		  if(first==second	||	UtilitaireMethodesDeComparaison.sontEquivalentsCaracteres((char)first,(char)second)){
+			  bonusEstIdentique=12;
+		  }
 	      return bonusEstIdentique;
 	  }
 }

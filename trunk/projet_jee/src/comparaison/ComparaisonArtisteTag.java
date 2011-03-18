@@ -8,7 +8,7 @@ import exceptions.JaroException;
 public class ComparaisonArtisteTag extends FonctionDeRapprochement {
 	
 	@Override
-	protected double appliquer(String chaine1, String chaine2) throws JaroException {		
+	protected float appliquer(String chaine1, String chaine2) throws JaroException {		
 		try{
 			LinkedList<String> listeMots1 = UtilitaireMethodesDeComparaison.creerListeDeMotsEnMinuscules(chaine1);
 			LinkedList<String> listeMots2 = UtilitaireMethodesDeComparaison.creerListeDeMotsEnMinuscules(chaine2);
@@ -54,10 +54,10 @@ public class ComparaisonArtisteTag extends FonctionDeRapprochement {
 			for(String mot2 : listeMots2){
 				longueurChaine2 += mot2.length();
 			}
-			return ((valeurChaine1 / (float) (longueurChaine1+1) ) + (valeurChaine2 / (float) (longueurChaine2+1) ) ) / 2.;
+			return (float) ((valeurChaine1 / (longueurChaine1+1) ) + (valeurChaine2 / (longueurChaine2+1) ) ) / 2;
 		}
 		catch(ChaineVideException e){
-			return 1.;
+			return 1;
 		}
 	}
 }
