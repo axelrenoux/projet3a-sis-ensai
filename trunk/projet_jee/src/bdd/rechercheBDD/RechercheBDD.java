@@ -1,4 +1,4 @@
-package recherche;
+package bdd.rechercheBDD;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,7 +11,7 @@ import bdd.sqlviajdbc.ControlAccesSQLViaJDBC;
 import controleur.Controleur;
 import exceptions.ChargementException;
 
-public abstract class Recherche {//
+public abstract class RechercheBDD {//
 	
 	//Nos données en Java, associées à leurs clés primaires
 	private Map<Integer,Artiste> artistes=new HashMap<Integer,Artiste>();
@@ -19,27 +19,23 @@ public abstract class Recherche {//
 	private Map<Integer,Album> albums=new HashMap<Integer,Album>();
 	private Map<Integer,Tag> tags=new HashMap<Integer,Tag>();
 	
-	public Recherche(String mot){
-		charger(mot.toUpperCase());
-	}
-	
-	public void charger(String mot){
+	public void charger(String artiste, String album, String chanson, String tag){
 		try {
-			chargerListeTags(mot);
-			chargerListeChansons(mot);
-			chargerListeArtistes(mot);
-			chargerListeAlbums(mot);
+			chargerListeTags(tag);
+			chargerListeChansons(chanson);
+			chargerListeArtistes(artiste);
+			chargerListeAlbums(album);
 		} catch (ChargementException e) {e.printStackTrace();}
 		ControlAccesSQLViaJDBC.fermerBDD();
 	}
 
-	protected abstract void chargerListeAlbums(String mot) throws ChargementException;
+	protected abstract void chargerListeAlbums(String album) throws ChargementException;
 
-	protected abstract void chargerListeArtistes(String mot) throws ChargementException;
+	protected abstract void chargerListeArtistes(String artiste) throws ChargementException;
 
-	protected abstract void chargerListeTags(String mot) throws ChargementException;
+	protected abstract void chargerListeTags(String tag) throws ChargementException;
 
-	protected abstract void chargerListeChansons(String mot) throws ChargementException;
+	protected abstract void chargerListeChansons(String chanson) throws ChargementException;
 
 
 	public Map<Integer, Artiste> getArtistes() {

@@ -1,8 +1,10 @@
- package recherche;
+ package bdd.rechercheBDD;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import bdd.sqlviajdbc.ControlAccesSQLViaJDBC;
 
@@ -11,13 +13,15 @@ import metier.Wiki;
 import metier.oeuvres.Album;
 import metier.oeuvres.Artiste;
 import metier.oeuvres.Chanson;
+import controleur.Controleur;
 import exceptions.ChargementException;
 import exceptions.QueryException;
 
-public class RechercheAlbum extends Recherche{
+public class RechercheAlbumBDD extends RechercheBDD{
 	
-	public RechercheAlbum(String ch){
-		super(ch);
+	public RechercheAlbumBDD(String ch){
+		super();
+		charger("",ch,"","");
 	}	
 	
 	@Override
@@ -36,7 +40,7 @@ public class RechercheAlbum extends Recherche{
 								"w.datepublication as dateWiki , "+
 								"w.resume as resumeWiki , "+
 								"w.contenu as contenuWiki"+
-				" FROM ARTISTE art , WIKI w , IMAGES i , AUDIMAT aud , ID_NAME_URL inu , ALBUM alb , " +
+				" FROM ARTISTE art , WIKI w , IMAGES i , AUDIMAT aud , ID_NAME_URL inu , ALBUM alb , ID_NAME_URL inu2" +
 				" ID_NAME_URL inu2 , ARTISTES_SIMILAIRES s" +
 				" WHERE art.id_name_url = inu.cle_primaire" +
 					" and art.images = i.cle_primaire" +
@@ -45,7 +49,7 @@ public class RechercheAlbum extends Recherche{
 					
 					" and alb.artiste = inu.cle_primaire " +
 					" and alb.id_name_url = inu2.cle_primaire " +
-					" and upper(inu2.name) LIKE '%"+nomCherche+"%'";
+					" and inu2.name='"+nomCherche+"' ";
 		
 		try {
 			resultat = ControlAccesSQLViaJDBC.executerRequeteAvecRetour(recherche);
@@ -101,7 +105,7 @@ public class RechercheAlbum extends Recherche{
 					" and alb.audimat = aud.cle_primaire" +
 					" and alb.wiki = w.cle_primaire" +
 					
-					" and upper(inu.name) LIKE '%"+nomCherche+"%'";
+					" and inu.name = '"+nomCherche+"'";
 		try {
 			resultat = ControlAccesSQLViaJDBC.executerRequeteAvecRetour(recherche);
 		} catch (QueryException e1) {
@@ -156,7 +160,7 @@ public class RechercheAlbum extends Recherche{
 
 					" and corr.chanson = inu.cle_primaire" +
 					" and corr.album = inu2.cle_primaire" +
-					" and upper(inu2.name) LIKE '%"+nomCherche+"%'";
+					" and inu2.name = '"+nomCherche+"'";
 		try {
 			resultat = ControlAccesSQLViaJDBC.executerRequeteAvecRetour(recherche);
 		} catch (QueryException e1) {
@@ -194,13 +198,13 @@ public class RechercheAlbum extends Recherche{
 								"w.datepublication as dateWiki , "+
 								"w.resume as resumeWiki , "+
 								"w.contenu as contenuWiki"+
-						" FROM TAG t, WIKI w, ID_NAME_URL inu , ID_NAME_URL inu2 , CORRESP_ALBUM_TAG corr"+
+						" FROM TAG t, WIKI w, ID_NAME_URL inu , ID_NAME_URL inu2 , CORRESP_ARTISTE_TAG as corr"+
 						" WHERE t.id_name_url = inu.cle_primaire" +
 						" AND t.wiki = w.cle_primaire " +
 						
 						" AND corr.tag = inu.cle_primaire " +
 						" AND corr.album = inu2.cle_primaire" +
-						" AND upper(inu2.name) LIKE '%"+nomCherche+"%'";
+						" AND inu2.name = '"+nomCherche+"'";
 		try {
 			resultat = ControlAccesSQLViaJDBC.executerRequeteAvecRetour(recherche);
 		} catch (QueryException e1) {

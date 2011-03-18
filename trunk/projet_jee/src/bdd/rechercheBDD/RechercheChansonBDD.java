@@ -1,23 +1,23 @@
-package recherche;
+ package bdd.rechercheBDD;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
-import bdd.sqlviajdbc.ControlAccesSQLViaJDBC;
 
 import metier.Tag;
 import metier.Wiki;
 import metier.oeuvres.Album;
 import metier.oeuvres.Artiste;
 import metier.oeuvres.Chanson;
+import bdd.sqlviajdbc.ControlAccesSQLViaJDBC;
 import exceptions.ChargementException;
 import exceptions.QueryException;
 
-public class RechercheArtiste extends Recherche{
+public class RechercheChansonBDD extends RechercheBDD {
 	
-	public RechercheArtiste(String ch){
-		super(ch);
+	public RechercheChansonBDD(String ch){
+		super();
+		charger("","",ch,"");
 	}	
 	
 	protected void chargerListeArtistes(String nomCherche) throws ChargementException{
@@ -36,13 +36,14 @@ public class RechercheArtiste extends Recherche{
 								"w.resume as resumeWiki , "+
 								"w.contenu as contenuWiki"+
 				" FROM ARTISTE art , WIKI w , IMAGES i , AUDIMAT aud , ID_NAME_URL inu , " +
-						" ID_NAME_URL inu2 , ARTISTES_SIMILAIRES s" +
+						" ID_NAME_URL inu2 , CHANSON c" +
 				" WHERE art.id_name_url = inu.cle_primaire" +
 					" and art.images = i.cle_primaire" +
 					" and art.audimat = aud.cle_primaire" +
-					" and art.wiki = w.cle_primaire"+
+					" and art.wiki = w.cle_primaire" +
 					
-					" and upper(inu.name) LIKE '%"+nomCherche+"%'";
+					" and c.artiste = inu2.cle_primaire" +
+					" and inu2.name = '"+nomCherche+"'" ;
 		try {
 			resultat = ControlAccesSQLViaJDBC.executerRequeteAvecRetour(recherche);
 		} catch (QueryException e1) {
@@ -72,7 +73,7 @@ public class RechercheArtiste extends Recherche{
 		}
 	}
 	
- 	protected void chargerListeAlbums(String nomCherche) throws ChargementException{
+	protected void chargerListeAlbums(String nomCherche) throws ChargementException{
 		ResultSet resultat;
 		String recherche="SELECT DISTINCT inu.cle_primaire as clef , " +
 								"inu.name as name , " +
@@ -90,14 +91,16 @@ public class RechercheArtiste extends Recherche{
 								"w.datepublication as dateWiki , "+
 								"w.resume as resumeWiki , "+
 								"w.contenu as contenuWiki"+
-				" FROM ALBUM alb , WIKI w , IMAGES i , AUDIMAT aud , ID_NAME_URL inu , ID_NAME_URL inu2 "+
+				" FROM ALBUM alb , WIKI w , IMAGES i , AUDIMAT aud , ID_NAME_URL inu , " +
+				" CORRESP_CHANSON_ALBUM corr , ID_NAME_URL inu2 "+
 				" WHERE alb.id_name_url = inu.cle_primaire" +
 					" and alb.images = i.cle_primaire" +
 					" and alb.audimat = aud.cle_primaire" +
 					" and alb.wiki = w.cle_primaire" +
 					
-					" and alb.artiste = inu2.cle_primaire" +
-					" and upper(inu2.name) LIKE '%"+nomCherche+"%'";
+					" and inu.cle_primaire = corr.album " +
+					" and corr.chanson = inu2.cle_primaire " +
+					" and inu2.name = '"+nomCherche+"' ) ";
 		try {
 			resultat = ControlAccesSQLViaJDBC.executerRequeteAvecRetour(recherche);
 		} catch (QueryException e1) {
@@ -110,7 +113,7 @@ public class RechercheArtiste extends Recherche{
 									resultat.getString("contenuWiki"));
 				Artiste lArtiste=getArtistes().get(resultat.getInt("clefArtiste"));
 				add(resultat.getInt("clef"),
-					new Album(resultat.getString("name"),
+						new Album(resultat.getString("name"),
 						lArtiste,
 						resultat.getString("id"),
 						resultat.getString("url"),
@@ -132,7 +135,7 @@ public class RechercheArtiste extends Recherche{
 	}
 	
 	protected void chargerListeChansons(String nomCherche) throws ChargementException{
- 		ResultSet resultat;
+		ResultSet resultat;
 		String recherche="SELECT DISTINCT inu.cle_primaire as clef , " +
 								"inu.name as name , " +
 								"inu.url as url , " +
@@ -143,13 +146,12 @@ public class RechercheArtiste extends Recherche{
 								"w.datepublication as dateWiki , " +
 								"w.resume as resumeWiki , " +
 								"w.contenu as contenuWiki" +
-				" FROM CHANSON c , WIKI w , AUDIMAT aud , ID_NAME_URL inu ,ID_NAME_URL inu2 "+
-				" WHERE c.id_name_url = inu.cle_primaire" +
-					" and c.audimat = aud.cle_primaire" +
-					" and c.wiki = w.cle_primaire"+
+				" FROM CHANSON c , WIKI w , AUDIMAT aud , ID_NAME_URL inu "+
+				" WHERE c.id_name_url = inu.cle_primaire " +
+					" and c.audimat = aud.cle_primaire " +
+					" and c.wiki = w.cle_primaire " +
 					
-					" and c.artiste = inu2.cle_primaire" +
-					" and upper(inu2.name) LIKE '%"+nomCherche+"%'";
+					" and inu.name = '"+nomCherche+"'";
 		try {
 			resultat = ControlAccesSQLViaJDBC.executerRequeteAvecRetour(recherche);
 		} catch (QueryException e1) {
@@ -180,20 +182,20 @@ public class RechercheArtiste extends Recherche{
 	protected void chargerListeTags(String nomCherche) throws ChargementException{
 		ResultSet resultat;
 		String recherche="SELECT DISTINCT inu.cle_primaire as clef , " +
-								"inu.name as name , " +
-								"inu.url as url , " +
-								"t.reach as reach , " +
-								"t.taggings as taggings , " +
-								"w.datepublication as dateWiki , "+
-								"w.resume as resumeWiki , "+
-								"w.contenu as contenuWiki"+
-						" FROM TAG t , WIKI w , ID_NAME_URL inu , ID_NAME_URL inu2 , CORRESP_ARTISTE_TAG corr"+
-						" WHERE t.id_name_url = inu.cle_primaire" +
-						" AND t.wiki = w.cle_primaire " +
+								" inu.name as name , " +
+								" inu.url as url , " +
+								" t.reach as reach , " +
+								" t.taggings as taggings , " +
+								" w.datepublication as dateWiki , "+
+								" w.resume as resumeWiki , "+
+								" w.contenu as contenuWiki "+
+						" FROM TAG t , WIKI w , ID_NAME_URL inu , CORRESP_CHANSON_TAG corr , ID_NAME_URL inu2 "+
+						" WHERE t.id_name_url = inu.cle_primaire " +
+						" AND t.wiki = w.cle_primaire "+
 						
 						" AND inu.cle_primaire = corr.tag " +
-						" AND inu2.cle_primaire = corr.artiste " +
-						" AND upper(inu2.name) LIKE '%"+nomCherche+"%'";
+						" AND corr.chanson = inu2.cle_primaire " +
+						" AND inu2.name = '"+nomCherche+"'";
 		try {
 			resultat = ControlAccesSQLViaJDBC.executerRequeteAvecRetour(recherche);
 		} catch (QueryException e1) {
