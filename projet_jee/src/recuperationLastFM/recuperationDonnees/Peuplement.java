@@ -12,10 +12,10 @@ public class Peuplement {
 	
 	public static void aFaireTournerTouteLaNuit(){
 		List<String> recherche=new ArrayList<String>();
-		recherche.add("rennes");
+		/*recherche.add("rennes");
 		recherche.add("sheffield");
 		recherche.add("strapontin");
-		recherche.add("ordinateur");
+		recherche.add("ordinateur");*/
 		recherche.add("believe");
 		recherche.add("cher");
 		recherche.add("hitmachine");
@@ -37,11 +37,20 @@ public class Peuplement {
 	}
 	
 	public static void aFaireTournerTouteLaNuit(List<String> motsClef){
+		//On initialise les tables
+		viderControleur();
+		RecupDonnees recup = new RecupDonnees();
+		boolean recreerLesTables=true;
+		ControleSauvegardeUnFormatPourLaBdd formatSauvegarde=new ControleSauvegardeBddFormatOracle();
+		//GestionBddJavaPourSauvegarde.decomposerAvantSauvegardeGereePar(formatSauvegarde, recreerLesTables);
+		
+		//On effectue successivement toutes les recherches demandées
 		for(String recherche:motsClef){
 			viderControleur();
-			RecupDonnees recup = new RecupDonnees();		recup.rechercher(recherche);
-			boolean recreerLesTables=false;
-			ControleSauvegardeUnFormatPourLaBdd formatSauvegarde=new ControleSauvegardeBddFormatOracle();
+			recup = new RecupDonnees();
+			recup.rechercher(recherche);
+			recreerLesTables=false;
+			formatSauvegarde=new ControleSauvegardeBddFormatOracle();
 			GestionBddJavaPourSauvegarde.decomposerAvantSauvegardeGereePar(formatSauvegarde, recreerLesTables);
 		}
 	}

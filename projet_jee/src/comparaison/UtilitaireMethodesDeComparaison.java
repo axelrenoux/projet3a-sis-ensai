@@ -1,9 +1,6 @@
 package comparaison;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
 
 import exceptions.ChaineVideException;
 import exceptions.JaroException;
@@ -160,6 +157,8 @@ public class UtilitaireMethodesDeComparaison {
 	 * @return
 	 */
 	public static boolean sontEquivalentsCaracteres(Character caractere1, Character caractere2){
+		caractere1=Character.toUpperCase(caractere1);
+		caractere2=Character.toUpperCase(caractere2);
 		boolean sontEquivalents = false;
 		if(caractere1.equals(caractere2)){
 			sontEquivalents = true;
@@ -322,33 +321,5 @@ public class UtilitaireMethodesDeComparaison {
 		}
 		listeDeMots.add(new String(chaine.substring(i, chaine.length()).toLowerCase()));
 		return listeDeMots;
-	}
-
-	/**
-	 * 
-	 * @param result
-	 * @return
-	 */
-	public static List<List<String>> resultSetToLinkedList(ResultSet result) {
-		List<List<String>> listeResultat = new LinkedList<List<String>>();
-		try {
-			while(result.next()){
-				LinkedList<String> ligneCourante = new LinkedList<String>();
-				int i = 1;
-				boolean aLaFin = false;
-				while(!aLaFin){
-					try{
-						ligneCourante.add(result.getString(i));
-					}
-					catch(SQLException e){
-						aLaFin = true;
-					}
-					i++;
-				}
-				listeResultat.add(ligneCourante);
-			}
-		} catch (SQLException e) {
-		}
-		return listeResultat;
 	}
 }

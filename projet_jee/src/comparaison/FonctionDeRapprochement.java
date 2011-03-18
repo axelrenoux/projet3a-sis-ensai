@@ -14,7 +14,7 @@ import exceptions.JaroException;
  */
 public abstract class FonctionDeRapprochement{
 	
-	public double appliquer(ObjetAComparer a,ObjetAComparer b){
+	public float appliquer(ObjetAComparer a,ObjetAComparer b){
 		try{
 			return appliquer(a.getName(),b.getName());
 		}
@@ -26,5 +26,5 @@ public abstract class FonctionDeRapprochement{
 	/**
 	 * Fonction de rapprochement donnant un score de similarité entre deux String
 	 */
-	protected abstract double appliquer(String chaine1,String chaine2) throws JaroException;
+	protected abstract float appliquer(String chaine1,String chaine2) throws JaroException;
 }

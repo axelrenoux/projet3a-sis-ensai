@@ -8,7 +8,7 @@ import exceptions.JaroException;
 public class ComparaisonAlbumChanson extends FonctionDeRapprochement {
 
 	@Override
-	protected double appliquer(String chaine1, String chaine2) throws JaroException{
+	protected float appliquer(String chaine1, String chaine2) throws JaroException{
 		try{
 			LinkedList<String> listeMots1 = UtilitaireMethodesDeComparaison.creerListeDeMotsEnMinuscules(chaine1);
 			LinkedList<String> listeMots2 = UtilitaireMethodesDeComparaison.creerListeDeMotsEnMinuscules(chaine2);
@@ -38,10 +38,10 @@ public class ComparaisonAlbumChanson extends FonctionDeRapprochement {
 				}
 				listeQgrams2 = listeQGrams2NonAssociés;
 			}
-	        return nbQGramsCommuns / (float) maxQGramsCommuns;
+	        return nbQGramsCommuns / maxQGramsCommuns;
 		}
         catch(ChaineVideException e){
-			return 1.;
+			return 1;
 		}
 	}
 	
