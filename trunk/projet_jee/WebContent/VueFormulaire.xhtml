@@ -9,15 +9,23 @@
 <ui:composition template="/modeleFormulaire.xhtml">
 	<ui:define name="contenu">
         <h:form >
-        	<p:panel header="Saisie de la recherche" toggleable="true">
-	        	<h:panelGrid columns="2" columnClasses="column" cellpadding="5"> 
-		        	<h:outputLabel value = "Recherche"/>
-		        	<h:inputText value="#{vueFormulaire.motCle}"/>
-		        	<p:messages id="msgs" showDetail="true"/>
-					<p:commandButton value ="C'est parti !" action="#{vueFormulaire.lancerRecherche}" 
-							update="msgs" ajax="false"/>
-				</h:panelGrid>
-			</p:panel>			
+        	<table style="height: 100%; width: 100%">
+			<tr>
+				<td style="width: 200px;"></td>
+				<td style="width: 400px;">
+		        	<p:panel header="Saisie de la recherche" toggleable="true">
+			        	<h:panelGrid columns="2" columnClasses="column" cellpadding="5"> 
+				        	<h:outputLabel value = "Recherche"/>
+				        	<h:inputText value="#{vueFormulaire.motCle}"/>
+				        	<p:messages id="msgs" showDetail="true"/>
+							<p:commandButton value ="C'est parti !" action="#{vueFormulaire.lancerRecherche}" 
+									update="msgs" ajax="false"/>
+						</h:panelGrid>
+					</p:panel>	
+				</td>
+				<td style="width: 200px;"></td>
+			</tr>
+			</table>		
  		</h:form> 
 	</ui:define>
 </ui:composition>
