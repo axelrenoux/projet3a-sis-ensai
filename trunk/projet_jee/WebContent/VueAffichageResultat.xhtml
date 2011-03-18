@@ -13,13 +13,19 @@
 	
 	<h:outputLabel
 					style="font-size: 16; text-align:center; font-family: Segoe UI, Helvetica, Arial, sans-serif;"> 
-							Affinez vos critères ou faites une nouvelle recherche : 
+							Affinez vos critères et visualiser vos résultats ou 
 	</h:outputLabel>
 	
+	
+	<p:commandLink action="retourDebut" style="color:#ab5ddd; margin-right:20px;" ajax="false">  
+        <h:outputText style="font-size: 16; text-align:center; font-family: Segoe UI, Helvetica, Arial, sans-serif;"
+        value="faites une nouvelle recherche" />  
+   </p:commandLink>
+
+
 	<p:commandButton value="Nouvelle recherche"
 									image="ui-icon ui-icon-circle-arrow-w" 
-									action="#{vueAffichageResultat.retourDebut}" 
-									update="msgs" ajax="false"/>
+									action="retourDebut" ajax="false"/>
 									
 									
 									
@@ -67,7 +73,9 @@
 							value="#{vueAffichageResultat.clustersAlbumsNiveau1}"
 							selection="#{vueAffichageResultat.clusterAlbumNiveau1Choisi}"
 							selectionMode="single" 
-							rendered="#{vueAffichageResultat.etape1}">
+							rendered="#{vueAffichageResultat.etape1}"
+							style="width:280px;">
+							
 
 							<p:column>
 								<f:facet name="header">  
