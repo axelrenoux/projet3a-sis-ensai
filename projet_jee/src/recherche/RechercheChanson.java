@@ -16,8 +16,7 @@ import exceptions.QueryException;
 public class RechercheChanson extends Recherche {
 	
 	public RechercheChanson(String ch){
-		super();
-		charger("","",ch,"");
+		super(ch);
 	}	
 	
 	protected void chargerListeArtistes(String nomCherche) throws ChargementException{
@@ -43,7 +42,7 @@ public class RechercheChanson extends Recherche {
 					" and art.wiki = w.cle_primaire" +
 					
 					" and c.artiste = inu2.cle_primaire" +
-					" and inu2.name = '"+nomCherche+"'" ;
+					" and inu2.name LIKE '%"+nomCherche+"%'" ;
 		try {
 			resultat = ControlAccesSQLViaJDBC.executerRequeteAvecRetour(recherche);
 		} catch (QueryException e1) {
@@ -100,7 +99,7 @@ public class RechercheChanson extends Recherche {
 					
 					" and inu.cle_primaire = corr.album " +
 					" and corr.chanson = inu2.cle_primaire " +
-					" and inu2.name = '"+nomCherche+"' ) ";
+					" and inu2.name LIKE '%"+nomCherche+"%'";
 		try {
 			resultat = ControlAccesSQLViaJDBC.executerRequeteAvecRetour(recherche);
 		} catch (QueryException e1) {
@@ -151,7 +150,7 @@ public class RechercheChanson extends Recherche {
 					" and c.audimat = aud.cle_primaire " +
 					" and c.wiki = w.cle_primaire " +
 					
-					" and inu.name = '"+nomCherche+"'";
+					" and inu.name LIKE '%"+nomCherche+"%'";
 		try {
 			resultat = ControlAccesSQLViaJDBC.executerRequeteAvecRetour(recherche);
 		} catch (QueryException e1) {
@@ -195,7 +194,7 @@ public class RechercheChanson extends Recherche {
 						
 						" AND inu.cle_primaire = corr.tag " +
 						" AND corr.chanson = inu2.cle_primaire " +
-						" AND inu2.name = '"+nomCherche+"'";
+						" AND inu2.name LIKE '%"+nomCherche+"%'";
 		try {
 			resultat = ControlAccesSQLViaJDBC.executerRequeteAvecRetour(recherche);
 		} catch (QueryException e1) {

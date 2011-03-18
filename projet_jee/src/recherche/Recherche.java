@@ -19,23 +19,27 @@ public abstract class Recherche {//
 	private Map<Integer,Album> albums=new HashMap<Integer,Album>();
 	private Map<Integer,Tag> tags=new HashMap<Integer,Tag>();
 	
-	public void charger(String artiste, String album, String chanson, String tag){
+	public Recherche(String mot){
+		charger(mot.toUpperCase());
+	}
+	
+	public void charger(String mot){
 		try {
-			chargerListeTags(tag);
-			chargerListeChansons(chanson);
-			chargerListeArtistes(artiste);
-			chargerListeAlbums(album);
+			chargerListeTags(mot);
+			chargerListeChansons(mot);
+			chargerListeArtistes(mot);
+			chargerListeAlbums(mot);
 		} catch (ChargementException e) {e.printStackTrace();}
 		ControlAccesSQLViaJDBC.fermerBDD();
 	}
 
-	protected abstract void chargerListeAlbums(String album) throws ChargementException;
+	protected abstract void chargerListeAlbums(String mot) throws ChargementException;
 
-	protected abstract void chargerListeArtistes(String artiste) throws ChargementException;
+	protected abstract void chargerListeArtistes(String mot) throws ChargementException;
 
-	protected abstract void chargerListeTags(String tag) throws ChargementException;
+	protected abstract void chargerListeTags(String mot) throws ChargementException;
 
-	protected abstract void chargerListeChansons(String chanson) throws ChargementException;
+	protected abstract void chargerListeChansons(String mot) throws ChargementException;
 
 
 	public Map<Integer, Artiste> getArtistes() {
