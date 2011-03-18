@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import metier.Cluster;
 import metier.oeuvres.Album;
 import rechercheParFormulaire.CalculDesClusters.CalculateurDeClustersAlbums;
+import calculsDesClusters.Axe;
+import calculsDesClusters.AxeAnnee;
+import calculsDesClusters.AxeArtiste;
+import calculsDesClusters.AxeSaison;
 import controleur.UtilitaireDate;
 import exceptions.ExceptionDate;
 
@@ -124,8 +128,11 @@ public class RechercheAlbum {
 		
 		
 		//il faudra ici aller cherche en base les albums repondant au mot cle
+		Axe axe1Date = new AxeAnnee();
+		Axe axe2Saison = new AxeArtiste();
+		
 		return CalculateurDeClustersAlbums.getInstanceunique().
-		calculerClustersAlbum(resultats);
+		calculerClustersAlbum(axe1Date,axe2Saison,resultats);
 		
 	}
 	
