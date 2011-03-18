@@ -4,9 +4,7 @@ import metier.ComposantCluster;
 
 public interface Oeuvre extends ComposantCluster {
 
- 
- public double getListeners();
- public double getPlaycount();
-	
+	public double getListeners();
+	public double getPlaycount();
 
 }
