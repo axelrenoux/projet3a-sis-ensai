@@ -9,9 +9,17 @@ import metier.oeuvres.Oeuvre;
 
 public class AxePlaycount implements Axe{
 
+	private ArrayList<Double> mesQuarts;
+
+	public ArrayList<Double> getMesQuarts() {
+		return mesQuarts;
+	}
+	public void setMesQuarts(ArrayList<Double> mesQuarts) {
+		this.mesQuarts = mesQuarts;
+	}
 	//La méthode retourne les quartiles à 0,25 ; 0,5 ; 0,75 pour les Playcount de chansons
-	public double[] QuartClusterOeuvrePl (ArrayList<Oeuvre> ClOeuvre) throws Exception{
-		double[] ListeQuart = null;
+	public ArrayList<Double> QuartClusterOeuvrePl (ArrayList<Oeuvre> ClOeuvre) throws Exception{
+		ArrayList<Double> ListeQuart = null;
 		ArrayList<Double> ListePl = new ArrayList<Double>();
 					for(Oeuvre loeuvre :ClOeuvre){
 						ListePl.add(loeuvre.getPlaycount());
@@ -20,11 +28,7 @@ public class AxePlaycount implements Axe{
 				ListeQuart=Quartiles(ListePl);
 				return ListeQuart;
 			}
-	@Override
-	public String CalculAxe(Oeuvre oeuvre) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 	public static double Median(ArrayList<Double> values)
 	{
 		Collections.sort(values);
@@ -41,7 +45,7 @@ public class AxePlaycount implements Axe{
 	} 
 
 	//fonction pour le calcul des quartiles
-	public static double[] Quartiles(ArrayList<Double> values) throws Exception
+	public static ArrayList<Double> Quartiles(ArrayList<Double> values) throws Exception
 	{
 		if (values.size() < 3)
 			throw new Exception("This method is not designed to handle lists with fewer than 3 elements.");
@@ -51,7 +55,12 @@ public class AxePlaycount implements Axe{
 		ArrayList<Double> lowerHalf = GetValuesLessThan(values, median, true);
 		ArrayList<Double> upperHalf = GetValuesGreaterThan(values, median, true);
 
-		return new double[] {Median(lowerHalf), median, Median(upperHalf)};
+		ArrayList<Double> Sol = new ArrayList<Double>(); 
+		Sol.add(Median(lowerHalf));
+		Sol.add(median);
+		Sol.add(Median(upperHalf));
+		
+		return Sol;
 	}
 
 	//fonction récupérant les valeurs supérieures à la médiane
@@ -77,5 +86,19 @@ public class AxePlaycount implements Axe{
 
 		return modValues;
 	}
-
+	
+	public String CalculAxe(Oeuvre oeuvre) {
+		String classe =" ";
+		double List=oeuvre.getListeners();
+		if (List<=this.mesQuarts.get(0)){
+			classe="entre 0 et " +this.mesQuarts.get(0) ;
+		}else if(this.mesQuarts.get(0)<List && List<=this.mesQuarts.get(1)){
+			classe = "entre"+this.mesQuarts.get(0) + "et" +this.mesQuarts.get(1) ;
+		}else if(this.mesQuarts.get(1)<List && List<=this.mesQuarts.get(2)){
+			classe = "entre"+this.mesQuarts.get(1) + "et" +this.mesQuarts.get(2) ;
+		}else if (List>this.mesQuarts.get(2)){
+			classe = "Supérieur à" +this.mesQuarts.get(2);
+		}	
+		return classe;
+	}
 }
