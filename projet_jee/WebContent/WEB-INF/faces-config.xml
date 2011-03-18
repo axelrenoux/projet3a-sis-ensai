@@ -11,16 +11,22 @@
    		<from-view-id>/VueFormulaire.xhtml</from-view-id>
    		<navigation-case>
    			<from-action>#{vueFormulaire.lancerRecherche}</from-action>
-   			<from-outcome>confirmation</from-outcome>
-   			<to-view-id>/VueConfirmation.xhtml</to-view-id>
-   		</navigation-case>
-   		<navigation-case>
-   			<from-action>#{vueFormulaire.lancerRecherche}</from-action>
    			<from-outcome>success</from-outcome>
    			<to-view-id>/VueAffichageResultat.xhtml</to-view-id>
    		</navigation-case>
-   		
-  
    </navigation-rule>
+   
+   
+   
+    <navigation-rule>
+   		<from-view-id>/VueAffichageResultat.xhtml</from-view-id>
+   		<navigation-case>
+   			<from-action>#{vueAffichageResultat.retourDebut}</from-action>
+   			<from-outcome>sucess</from-outcome>
+   			<to-view-id>/VueFormulaire.xhtml</to-view-id>
+   		</navigation-case>
+   	 </navigation-rule>	
+
+   
    
 </faces-config>
