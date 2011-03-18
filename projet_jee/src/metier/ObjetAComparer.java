@@ -19,10 +19,10 @@ public abstract class ObjetAComparer {
 		this(new ComparaisonUtilisee());
 	}
 	
-	public List<ObjetAComparer> doublonsProbables(double seuil) {
+	public List<ObjetAComparer> getDoublonsProbables() {
 		List<ObjetAComparer> listeSimilaires=new ArrayList<ObjetAComparer>();
 		for(ObjetAComparer candidat:getObjetsDeCeType()){
-			if(fonctionDeRapprochement.appliquer(this, candidat)>seuil){
+			if(fonctionDeRapprochement.sontSimilaires(this, candidat)){
 				listeSimilaires.add(candidat);
 			}
 		}
