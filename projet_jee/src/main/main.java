@@ -1,6 +1,7 @@
 package main;
 
 import bdd.chargement.ChargementBDDOracleDepuisTxt;
+import bdd.rechercheBDD.RechercheAlbumBDD;
 import metier.Cluster;
 import rechercheParFormulaire.gestionRecherche.RechercheAlbum;
 
@@ -22,6 +23,10 @@ public class main {
 		//System.out.println(c);
 		//System.out.println(c.varianceCluster());
 		//ChargementBDDOracleDepuisTxt.charger();
+		
+		RechercheAlbumBDD reach = new RechercheAlbumBDD("ordinateur");
+		System.out.println(reach.getAlbums());
+		
 	}
 
 
