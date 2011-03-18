@@ -152,6 +152,41 @@ public class VueAffichageResultat {
 		etape3chanson = true;
 	}
 
+	
+	
+	/**
+	 * 
+	 */
+	public void retourEtape1(){
+		reinitialisationEtapes();
+		etape1 = true;
+	}
+
+	/**
+	 * 
+	 */
+	public void retourEtapeArtiste2(){
+		reinitialisationEtapes();
+		etape2artiste = true;
+	}
+	
+	
+	/**
+	 * 
+	 */
+	public void retourEtapeAlbum2(){
+		reinitialisationEtapes();
+		etape2album = true;
+	}
+	
+	
+	/**
+	 * 
+	 */
+	public void retourEtapeChanson2(){
+		reinitialisationEtapes();
+		etape2chanson = true;
+	}
 
 
 	public void reinitialisationEtapes(){
@@ -163,6 +198,11 @@ public class VueAffichageResultat {
 		etape3artiste = false;
 		etape3chanson = false;
 	}
+	
+	
+	
+	
+	
 	/********************************************************************/
 	/******************      getters / setters       ********************/
 	/********************************************************************/
