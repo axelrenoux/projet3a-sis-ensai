@@ -13,8 +13,9 @@ import exceptions.JaroException;
  * 
  */
 public abstract class FonctionDeRapprochement{
+	private double seuil=0.7;
 	
-	public float appliquer(ObjetAComparer a,ObjetAComparer b){
+	private float appliquer(ObjetAComparer a,ObjetAComparer b){
 		try{
 			return appliquer(a.getName(),b.getName());
 		}
@@ -27,4 +28,16 @@ public abstract class FonctionDeRapprochement{
 	 * Fonction de rapprochement donnant un score de similarité entre deux String
 	 */
 	protected abstract float appliquer(String chaine1,String chaine2) throws JaroException;
+
+	public boolean sontSimilaires(ObjetAComparer ref,ObjetAComparer candidat){
+		return (appliquer(ref,candidat)>seuil);
+	}
+
+	public double getSeuil() {
+		return seuil;
+	}
+
+	public void setSeuil(double seuil) {
+		this.seuil = seuil;
+	}
 }
