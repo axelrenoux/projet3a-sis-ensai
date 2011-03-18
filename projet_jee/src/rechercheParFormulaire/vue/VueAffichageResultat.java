@@ -93,7 +93,8 @@ public class VueAffichageResultat {
 		clustersArtistesNiveau1 = gestionnaireAffichageResultat.retournerClustersArtisteNiveau1(clustersArtiste);
 		clustersChansonsNiveau1 = gestionnaireAffichageResultat.retournerClustersChansonNiveau1(clustersChanson);
 
-	 
+		reinitialisationEtapes();
+		etape1 = true;
 
 	}
 
@@ -198,6 +199,14 @@ public class VueAffichageResultat {
 		etape3artiste = false;
 		etape3chanson = false;
 	}
+	
+	
+	
+	public String retourDebut(){
+		System.out.println("‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡");
+		return "success";
+	}
+	
 	
 	
 	
