@@ -8,7 +8,7 @@ import java.util.Map.Entry;
 import metier.Cluster;
 import metier.ComposantCluster;
 import metier.oeuvres.Album;
-import calculsDesClusters.Axe;
+import calculsDesClusters.axe.Axe;
 
 
 
