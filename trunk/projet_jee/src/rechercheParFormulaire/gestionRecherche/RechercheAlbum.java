@@ -6,7 +6,7 @@ import metier.Cluster;
 import metier.oeuvres.Album;
 import calculsDesClusters.axe.Axe;
 import calculsDesClusters.axe.AxeAnnee;
-import calculsDesClusters.axe.AxeArtiste;
+import calculsDesClusters.axe.AxeOeuvre;
 import calculsDesClusters.axe.AxeSaison;
 import calculsDesClusters.calcul.CalculateurDeClustersAlbums;
 import controleur.UtilitaireDate;
@@ -129,7 +129,7 @@ public class RechercheAlbum {
 		
 		//il faudra ici aller cherche en base les albums repondant au mot cle
 		Axe axe1Date = new AxeAnnee();
-		Axe axe2Saison = new AxeArtiste();
+		Axe axe2Saison = new AxeOeuvre();
 		
 		return CalculateurDeClustersAlbums.getInstanceunique().
 		calculerClustersAlbum(axe1Date,axe2Saison,resultats);
