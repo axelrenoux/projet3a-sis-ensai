@@ -38,7 +38,7 @@ public class ChargementBDDdepuisOracle extends ChargementBDD {
 			ControlAccesSQLViaJDBC.fermerBDD();
 	}
 
-	public static void chargerListeArtistes() throws ChargementException{
+	protected static void chargerListeArtistes() throws ChargementException{
 		ResultSet resultat;
 		String recherche="SELECT DISTINCT inu.cle_primaire as clef , " +
 								"inu.name as name , " +
@@ -94,7 +94,7 @@ public class ChargementBDDdepuisOracle extends ChargementBDD {
 		}
 	}
 	
-	public static void chargerListeAlbums() throws ChargementException{
+	protected static void chargerListeAlbums() throws ChargementException{
 		ResultSet resultat;
 		String recherche="SELECT DISTINCT inu.cle_primaire as clef , " +
 								"inu.name as name , " +
@@ -157,7 +157,7 @@ public class ChargementBDDdepuisOracle extends ChargementBDD {
 		}
 	}
 	
-	public static void chargerListeChansons() throws ChargementException{
+	protected static void chargerListeChansons() throws ChargementException{
 		ResultSet resultat;
 		String recherche="SELECT DISTINCT inu.cle_primaire as clef , " +
 								"inu.name as name , " +
@@ -206,7 +206,7 @@ public class ChargementBDDdepuisOracle extends ChargementBDD {
 		}
 	}
 	
-	public static void chargerListeTags() throws ChargementException{
+	protected static void chargerListeTags() throws ChargementException{
 		ResultSet resultat;
 		String recherche="SELECT DISTINCT inu.cle_primaire as clef , " +
 								"inu.name as name , " +
@@ -244,7 +244,7 @@ public class ChargementBDDdepuisOracle extends ChargementBDD {
 		}
 	}
 	
-	public static void chargerCorrespondances() throws ChargementException{
+	protected static void chargerCorrespondances() throws ChargementException{
 		ResultSet resultat;
 		String rechercheSimArtiste="SELECT DISTINCT " +
 				"artiste1 , artiste2 from ARTISTES_SIMILAIRES";
