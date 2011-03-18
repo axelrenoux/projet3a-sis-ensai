@@ -13,18 +13,20 @@
 		<p:panel id="monPanel">
 
 
-			<center><h:outputLabel
-				rendered="#{vueAffichageResultat.etape1}"
-				style="font-size: 20; text-align:center; font-family: Segoe UI, Helvetica, Arial, sans-serif;"> 
-									Choisissez le type de recherche que vous  souhaitez faire, et affinez vos critères
-									
-						</h:outputLabel></center>
-			<center><h:outputLabel
-				rendered="#{vueAffichageResultat.etape2}"
-				style="font-size: 20; text-align:center; font-family: Segoe UI, Helvetica, Arial, sans-serif;"> 
-									Choisissez un second critère pour affiner votre recherche
-									
-						</h:outputLabel></center>
+			<center>
+				<h:outputLabel
+					rendered="#{vueAffichageResultat.etape1}"
+					style="font-size: 20; text-align:center; font-family: Segoe UI, Helvetica, Arial, sans-serif;"> 
+							Choisissez le type de recherche que vous  souhaitez faire, et affinez vos critères
+				</h:outputLabel>
+			</center>
+			<center>
+				<h:outputLabel
+					rendered="#{vueAffichageResultat.etape2}"
+					style="font-size: 20; text-align:center; font-family: Segoe UI, Helvetica, Arial, sans-serif;"> 
+							Choisissez un second critère pour affiner votre recherche
+				</h:outputLabel>
+			</center>
 
 
 			<h:panelGrid columns="3" style="width:1200px;height:600px;"
@@ -80,24 +82,28 @@
 							value="#{vueAffichageResultat.clustersArtistesNiveau1}"
 							selection="#{vueAffichageResultat.clusterArtisteNiveau1Choisi}"
 							selectionMode="single" rendered="#{vueAffichageResultat.etape1}">
-							<f:facet name="header">
-								<h:outputLabel style="font-size: 18;">
-					 			Trouver un artiste
-					 		</h:outputLabel>
-							</f:facet>
+							
 
-							<p:column>
-								<f:facet name="header">  
-		                  	Name
-				          	</f:facet>
-								<h:outputText value="#{cluster.nomCluster}" />
-							</p:column>
+							
 
 							<f:facet name="footer">
 								<p:commandButton value="Continuer"
 									image="ui-icon ui-icon-search" update="monPanel"
 									action="#{vueAffichageResultat.affinerRechercheArtiste1}" />
 							</f:facet>
+							
+							<f:facet name="header">
+								<h:outputLabel style="font-size: 18;">
+					 			Trouver un artiste
+					 			</h:outputLabel>
+							</f:facet>
+							
+							<p:column>
+								<f:facet name="header">  
+		                  			Name
+				          		</f:facet>
+								<h:outputText value="#{cluster.nomCluster}" />
+							</p:column>
 						</p:dataTable>
 
 
@@ -112,10 +118,10 @@
 
 
 						<center>
-						<h:outputLabel rendered="#{vueAffichageResultat.etape2album}"
-								style="font-size: 20; text-align:center; font-family: Segoe UI, Helvetica, Arial, sans-serif;"> 
-										Vous recherche un album, 1er critère : #{vueAffichageResultat.clusterAlbumNiveau1Choisi.nomCluster}		
-						</h:outputLabel>
+							<h:outputLabel rendered="#{vueAffichageResultat.etape2album}"
+									style="font-size: 20; text-align:center; font-family: Segoe UI, Helvetica, Arial, sans-serif;"> 
+											Vous recherche un album, 1er critère : #{vueAffichageResultat.clusterAlbumNiveau1Choisi.nomCluster}		
+							</h:outputLabel>
 						</center>
 						
 						<p:dataTable var="cluster"
@@ -123,26 +129,35 @@
 							selection="#{vueAffichageResultat.clusterAlbumNiveau2Choisi}"
 							selectionMode="single"
 							rendered="#{vueAffichageResultat.etape2album}">
-							<f:facet name="header">
-								<h:outputLabel style="font-size: 18;">
-					 			Trouver un album
-					 		</h:outputLabel>
-							</f:facet>
-
+							
+							 
 							<p:column>
 								<f:facet name="header">  
-		                  	Name
-				          	</f:facet>
+		                  			Name
+				          		</f:facet>
 								<h:outputText value="#{cluster.nomCluster}" />
 							</p:column>
 
+							
 							<f:facet name="footer">
+								<h:panelGrid columns="2" cellpadding="5">
+				
+								<p:commandButton value="Retour"
+											image="ui-icon ui-icon-search" update="monPanel"
+											action="#{vueAffichageResultat.retourEtape1}" />
 								<p:commandButton value="Trouver"
 									image="ui-icon ui-icon-search" update="monPanel"
 									action="#{vueAffichageResultat.affinerRechercheAlbum2}" />
+								</h:panelGrid>
 							</f:facet>
-
-
+							
+							
+							<f:facet name="header">
+								<h:outputLabel style="font-size: 18;">
+					 			Trouver un album
+					 			</h:outputLabel>
+							</f:facet>
+							
 						</p:dataTable>
 
 
@@ -155,23 +170,31 @@
 							selection="#{vueAffichageResultat.clusterArtisteNiveau2Choisi}"
 							selectionMode="single"
 							rendered="#{vueAffichageResultat.etape2artiste}">
-							<f:facet name="header">
-								<h:outputLabel style="font-size: 18;">
-					 			Trouver un artiste
-					 		</h:outputLabel>
+ 		
+ 							<f:facet name="footer">
+								<h:panelGrid columns="2" cellpadding="5">
+									<p:commandButton value="Retour"
+												image="ui-icon ui-icon-search" update="monPanel"
+												action="#{vueAffichageResultat.retourEtape1}" />
+									<p:commandButton value="Trouver"
+										image="ui-icon ui-icon-search" update="monPanel"
+										action="#{vueAffichageResultat.affinerRechercheArtiste2}" />
+								</h:panelGrid>
 							</f:facet>
-
+							
+							
 							<p:column>
 								<f:facet name="header">  
-		                  	Name
-				          	</f:facet>
+		                  			Name
+				          		</f:facet>
 								<h:outputText value="#{cluster.nomCluster}" />
 							</p:column>
-
-							<f:facet name="footer">
-								<p:commandButton value="Trouver"
-									image="ui-icon ui-icon-search" update="monPanel"
-									action="#{vueAffichageResultat.affinerRechercheArtiste2}" />
+							
+							
+							<f:facet name="header">
+								<h:outputLabel style="font-size: 18;">
+					 				Trouver un artiste
+					 			</h:outputLabel>
 							</f:facet>
 
 						</p:dataTable>
@@ -183,25 +206,38 @@
 							selection="#{vueAffichageResultat.clusterChansonNiveau2Choisi}"
 							selectionMode="single"
 							rendered="#{vueAffichageResultat.etape2chanson}">
+							
+							<p:column>
+								<f:facet name="header">  
+		                  			Name
+				          		</f:facet>
+								<h:outputText value="#{cluster.nomCluster}" />
+							</p:column>
+							
+							
+							
+							<f:facet name="footer">
+								<h:panelGrid columns="2" cellpadding="5">
+									<p:commandButton value="Retour"
+												image="ui-icon ui-icon-search" update="monPanel"
+												action="#{vueAffichageResultat.retourEtape1}" />
+									<p:commandButton value="Trouver"
+										image="ui-icon ui-icon-search" update="monPanel"
+										action="#{vueAffichageResultat.affinerRechercheChanson2}" />
+								</h:panelGrid>
+							</f:facet>
+							
+							
 							<f:facet name="header">
 								<h:outputLabel style="font-size: 18;">
 									Trouver une chanson  
 								</h:outputLabel>
 							</f:facet>
-							<p:column>
-								<f:facet name="header">  
-		                  	Name
-				          	</f:facet>
-								<h:outputText value="#{cluster.nomCluster}" />
-							</p:column>
+							
+							
 
 
-
-							<f:facet name="footer">
-								<p:commandButton value="Trouver"
-									image="ui-icon ui-icon-search" update="monPanel"
-									action="#{vueAffichageResultat.affinerRechercheChanson2}" />
-							</f:facet>
+							
 
 						</p:dataTable>
 
@@ -213,34 +249,44 @@
 						<p:dataTable var="album"
 							value="#{vueAffichageResultat.resultatAlbums}"
 							rendered="#{vueAffichageResultat.etape3album}">
-							<f:facet name="header">
-								<h:outputLabel style="font-size: 18;">
-					 			Les albums qui répondent à votre recherche
-					 		</h:outputLabel>
-							</f:facet>
-
+							
+							
+							
 							<p:column>
 								<f:facet name="header">  
-		                  	Name
-				          	</f:facet>
+		                  			Name
+				          		</f:facet>
 								<h:outputText value="#{album.name}" />
 							</p:column>
 
 
 							<p:column>
 								<f:facet name="header">  
-		                  	Image
-				          	</f:facet>
+		                  			Image
+				          		</f:facet>
 								<h:outputText value="#{album.imageLarge}" />
 							</p:column>
 
 
 							<p:column>
 								<f:facet name="header">  
-		                  	Image
-				          	</f:facet>
+		                  			Image
+				          		</f:facet>
 								<p:graphicImage value="#{album.imageLarge}" />
 							</p:column>
+							
+							<f:facet name="footer">
+								<p:commandButton value="Retour"
+											image="ui-icon ui-icon-search" update="monPanel"
+											action="#{vueAffichageResultat.retourEtapeAlbum2}" />
+							</f:facet>
+							
+							<f:facet name="header">
+								<h:outputLabel style="font-size: 18;">
+					 				Les albums qui répondent à votre recherche
+					 			</h:outputLabel>
+							</f:facet>
+							
 
 						</p:dataTable>
 
@@ -251,23 +297,19 @@
 						<p:dataTable var="artiste"
 							value="#{vueAffichageResultat.resultatArtistes}"
 							rendered="#{vueAffichageResultat.etape3artiste}">
-							<f:facet name="header">
-								<h:outputLabel style="font-size: 18;">
-					 			Les artistes qui répondent à votre recherche
-					 		</h:outputLabel>
-							</f:facet>
+							
 
 							<p:column>
 								<f:facet name="header">  
-		                  	Name
-				          	</f:facet>
+		                  			Name
+				          		</f:facet>
 								<h:outputText value="#{artiste.name}" />
 							</p:column>
 
 							<p:column>
 								<f:facet name="header">  
-		                  	Image
-				          	</f:facet>
+		                  			Image
+				          		</f:facet>
 								<h:outputText value="#{artiste.imageLarge}" />
 							</p:column>
 
@@ -275,10 +317,25 @@
 
 							<p:column>
 								<f:facet name="header">  
-		                  	Image
-				          	</f:facet>
+		                  			Image
+				          		</f:facet>
 								<p:graphicImage value="#{artiste.imageLarge}" />
 							</p:column>
+							
+							<f:facet name="header">
+								<h:outputLabel style="font-size: 18;">
+					 				Les artistes qui répondent à votre recherche
+					 			</h:outputLabel>
+							</f:facet>
+							
+							
+							<f:facet name="footer">
+								<p:commandButton value="Retour"
+											image="ui-icon ui-icon-search" update="monPanel"
+											action="#{vueAffichageResultat.retourEtapeArtiste2}" />
+							</f:facet>
+							
+							
 
 						</p:dataTable>
 
@@ -289,14 +346,11 @@
 						<p:dataTable var="chanson"
 							value="#{vueAffichageResultat.resultatChansons}"
 							rendered="#{vueAffichageResultat.etape3chanson}">
-							<f:facet name="header">
-								<h:outputLabel style="font-size: 18;">Les chansons qui répondent à votre recherche</h:outputLabel>
-							</f:facet>
+							
 							<p:column>
-								<f:facet name="header">  
-		                  	Name
-				          	</f:facet>
-								<h:outputText value="#{chanson.name}" />
+								<f:facet name="header">
+									<h:outputText value="#{chanson.name}" />
+								</f:facet>
 							</p:column>
 
 
@@ -312,7 +366,14 @@
 		                  	Image
 				          	</f:facet>
 								<p:graphicImage value="#{chanson.imageLarge}" />
-							</p:column> -->
+							</p:column>
+							
+							
+							<f:facet name="footer">
+								<p:commandButton value="Retour"
+											image="ui-icon ui-icon-search" update="monPanel"
+											action="#{vueAffichageResultat.retourEtapeChanson2}" />
+							</f:facet>
 
 
 						</p:dataTable>
@@ -323,36 +384,41 @@
 
 				<h:form>
 
-							<p:panel style="width:300px;height:600px;" >
-								<p:dataTable var="cluster"
-									value="#{vueAffichageResultat.clustersChansonsNiveau1}"
-									selection="#{vueAffichageResultat.clusterChansonNiveau1Choisi}"
-									selectionMode="single"
-									rendered="#{vueAffichageResultat.etape1}">
-									<f:facet name="header">
-										<h:outputLabel style="font-size: 18;">
+					<p:panel style="width:300px;height:600px;">
+						<p:dataTable var="cluster"
+							value="#{vueAffichageResultat.clustersChansonsNiveau1}"
+							selection="#{vueAffichageResultat.clusterChansonNiveau1Choisi}"
+							selectionMode="single" rendered="#{vueAffichageResultat.etape1}">
+
+							
+
+
+
+							<f:facet name="footer">
+								<p:commandButton value="Continuer"
+									image="ui-icon ui-icon-search" update="monPanel"
+									action="#{vueAffichageResultat.affinerRechercheChanson1}" />
+							</f:facet>
+
+
+							<p:column>
+								<f:facet name="header">  
+		                  			Name
+				          		</f:facet>
+								<h:outputText value="#{cluster.nomCluster}" />
+							</p:column>	
+							
+							<f:facet name="header">
+								<h:outputLabel style="font-size: 18;">
 									Trouver une chanson
 								</h:outputLabel>
-									</f:facet>
-									<p:column>
-										<f:facet name="header">  
-		                  	Name
-				          	</f:facet>
-										<h:outputText value="#{cluster.nomCluster}" />
-									</p:column>
+							</f:facet>
 
 
+						</p:dataTable>
+					</p:panel>
 
-									<f:facet name="footer">
-										<p:commandButton value="Continuer"
-											image="ui-icon ui-icon-search" update="monPanel"
-											action="#{vueAffichageResultat.affinerRechercheChanson1}" />
-									</f:facet>
-
-								</p:dataTable>
-							</p:panel>
-						
-						</h:form>
+				</h:form>
 						
 						
 		<!--                     affichage de l'etape 1                       -->
@@ -360,37 +426,40 @@
 						
 						<h:form>
 
-							<p:panel style="width:300px;height:600px;" >
-								<p:dataTable var="cluster"
-									value="#{vueAffichageResultat.clustersChansonsNiveau1}"
-									selection="#{vueAffichageResultat.clusterChansonNiveau1Choisi}"
-									selectionMode="single">
-									<f:facet name="header">
-										<h:outputLabel style="font-size: 18;">
-									Trouver une chanson 
-								</h:outputLabel>
-									</f:facet>
-									<p:column>
-										<f:facet name="header">  
+					<p:panel style="width:300px;height:600px;">
+						<p:dataTable var="cluster"
+							value="#{vueAffichageResultat.clustersChansonsNiveau1}"
+							selection="#{vueAffichageResultat.clusterChansonNiveau1Choisi}"
+							selectionMode="single">
+
+							<f:facet name="footer">
+								<p:commandButton value="Continuer"
+									image="ui-icon ui-icon-search" update="monPanel"
+									action="#{vueAffichageResultat.affinerRechercheChanson1}" />
+							</f:facet>
+							
+							
+							<p:column>
+								<f:facet name="header">  
 		                  	Name
 				          	</f:facet>
-										<h:outputText value="#{cluster.nomCluster}" />
-									</p:column>
-
-
-
-									<f:facet name="footer">
-										<p:commandButton value="Continuer"
-											image="ui-icon ui-icon-search" update="monPanel"
-											action="#{vueAffichageResultat.affinerRechercheChanson1}" />
-									</f:facet>
-
-								</p:dataTable>
-							</p:panel>
+								<h:outputText value="#{cluster.nomCluster}" />
+							</p:column>
 							
 							
+							<f:facet name="header">
+								<h:outputLabel style="font-size: 18;">
+									Trouver une chanson 
+								</h:outputLabel>
+							</f:facet>
 							
-						</h:form>
+							
+						</p:dataTable>
+					</p:panel>
+
+
+
+				</h:form>
 
 
 			</h:panelGrid>
