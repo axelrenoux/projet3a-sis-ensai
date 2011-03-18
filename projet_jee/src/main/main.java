@@ -1,5 +1,6 @@
 package main;
 
+import bdd.chargement.ChargementBDDOracleDepuisTxt;
 import metier.Cluster;
 import rechercheParFormulaire.gestionRecherche.RechercheAlbum;
 
@@ -15,12 +16,12 @@ public class main {
 		
 		//test pour la creation des axes
 		
-		RechercheAlbum r = new RechercheAlbum();
-		Cluster c = r.lancerRecherche("a");
+		//RechercheAlbum r = new RechercheAlbum();
+		//Cluster c = r.lancerRecherche("a");
 		System.out.println("***************************");
-		System.out.println(c);
-		System.out.println(c.varianceCluster());
-		
+		//System.out.println(c);
+		//System.out.println(c.varianceCluster());
+		//ChargementBDDOracleDepuisTxt.charger();
 	}
 
 
