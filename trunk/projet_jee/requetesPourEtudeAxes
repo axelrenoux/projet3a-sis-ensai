@@ -3,7 +3,7 @@ create view vCORRESP_Album_TAGTOP1 as
 select album, min(tag) as tag from CORRESP_album_TAG group by album order by album
 
 select 
-album.cle_primaire as album,
+album.id_name_url as album,
 id_name_url1.name as album,
 artiste,
 date_sortie,
@@ -15,12 +15,12 @@ audimat.playcount
 from album 
 left join (artiste 
 inner join id_name_url id_name_url2 on artiste.id_name_url=id_name_url2.cle_primaire) 
-on artiste.cle_primaire = album.artiste
+on artiste.id_name_url = album.artiste
 left join (vCORRESP_ALBUM_TAGTOP1 
 inner join (tag 
 inner join id_name_url id_name_url3 on tag.id_name_url = id_name_url3.cle_primaire)
-on tag.cle_primaire =  vCORRESP_ALBUM_TAGTOP1.tag)
-on album.cle_primaire = vCORRESP_ALBUM_TAGTOP1.album
+on tag.id_name_url =  vCORRESP_ALBUM_TAGTOP1.tag)
+on album.id_name_url = vCORRESP_ALBUM_TAGTOP1.album
 inner join id_name_url id_name_url1 on album.id_name_url = id_name_url1.cle_primaire
 inner join audimat on album.audimat = audimat.cle_primaire
 
@@ -37,7 +37,7 @@ create view vCORRESP_ARTISTE_TAGTOP1 as
 select artiste, min(tag) as tag from CORRESP_ARTISTE_TAG group by artiste order by artiste
 
 select 
-artiste.cle_primaire as artiste,
+artiste.id_name_url as artiste,
 id_name_url1.name as artiste,
 vartistes_similairestop1.artiste2 as artisteSim,
 id_name_url2.name as artisteSim,
@@ -49,13 +49,13 @@ from artiste
 left join (vartistes_similairestop1 
 inner join (artiste artistesimilaire 
 inner join id_name_url id_name_url2 on artisteSimilaire.id_name_url=id_name_url2.cle_primaire) 
-on artistesimilaire.cle_primaire = vartistes_similairestop1.artiste2) 
-on artiste.cle_primaire = vartistes_similairestop1.artiste1
+on artistesimilaire.id_name_url = vartistes_similairestop1.artiste2) 
+on artiste.id_name_url = vartistes_similairestop1.artiste1
 left join (vCORRESP_ARTISTE_TAGTOP1 
 inner join (tag 
 inner join id_name_url id_name_url3 on tag.id_name_url = id_name_url3.cle_primaire)
-on tag.cle_primaire =  vCORRESP_ARTISTE_TAGTOP1.tag)
-on artiste.cle_primaire = vCORRESP_ARTISTE_TAGTOP1.artiste
+on tag.id_name_url =  vCORRESP_ARTISTE_TAGTOP1.tag)
+on artiste.id_name_url = vCORRESP_ARTISTE_TAGTOP1.artiste
 inner join id_name_url id_name_url1 on artiste.id_name_url = id_name_url1.cle_primaire
 inner join audimat on artiste.audimat = audimat.cle_primaire
 
@@ -68,7 +68,7 @@ create view vCORRESP_Chanson_TAGTOP1 as
 select chanson, min(tag) as tag from CORRESP_chanson_TAG group by chanson order by chanson
 
 select 
-chanson.cle_primaire as chanson,
+chanson.id_name_url as chanson,
 id_name_url1.name as chanson,
 duree,
 id_name_url2.name as artiste,
@@ -80,12 +80,12 @@ audimat.playcount
 from chanson 
 left join (artiste 
 inner join id_name_url id_name_url2 on artiste.id_name_url=id_name_url2.cle_primaire) 
-on artiste.cle_primaire = chanson.artiste
+on artiste.id_name_url = chanson.artiste
 left join (vCORRESP_CHANSON_TAGTOP1 
 inner join (tag 
 inner join id_name_url id_name_url3 on tag.id_name_url = id_name_url3.cle_primaire)
-on tag.cle_primaire =  vCORRESP_CHANSON_TAGTOP1.tag)
-on chanson.cle_primaire = vCORRESP_CHANSON_TAGTOP1.chanson
+on tag.id_name_url =  vCORRESP_CHANSON_TAGTOP1.tag)
+on chanson.id_name_url = vCORRESP_CHANSON_TAGTOP1.chanson
 inner join id_name_url id_name_url1 on chanson.id_name_url = id_name_url1.cle_primaire
 inner join audimat on chanson.audimat = audimat.cle_primaire
  
