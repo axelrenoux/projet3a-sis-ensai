@@ -54,8 +54,8 @@ import rechercheParFormulaire.gestionRecherche.GestionnaireFormulaire;
 				vueAffichageResultat.setClustersArtiste(gestionnaireFormulaire.lancerRechercheArtiste(motCle));;
 				vueAffichageResultat.setClustersChanson(gestionnaireFormulaire.lancerRechercheChanson(motCle));;
 				vueAffichageResultat.init();
-				
-				//return "confirmation";
+
+
 				return "success";
 			}
 			else{

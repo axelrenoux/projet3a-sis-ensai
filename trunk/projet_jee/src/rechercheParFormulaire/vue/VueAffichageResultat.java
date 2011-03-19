@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.Map.Entry;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
 import rechercheParFormulaire.gestionRecherche.GestionnaireAffichageResultat;
 import rechercheParFormulaire.gestionRecherche.GestionnaireFormulaire;
@@ -78,6 +80,15 @@ public class VueAffichageResultat {
 	private boolean etape3artiste=false;
 	private boolean etape3album=false;
 
+	//boolean pour verifier qu'un critere a bien ÈtÈ sÈlectionnÈ
+	private boolean selectionAlbum1NonValide=false;
+	private boolean selectionArtiste1NonValide=false;
+	private boolean selectionChanson1NonValide=false;
+	private boolean selectionAlbum2NonValide=false;
+	private boolean selectionArtiste2NonValide=false;
+	private boolean selectionChanson2NonValide=false;
+	
+	
 
 
 
@@ -92,6 +103,8 @@ public class VueAffichageResultat {
 		clustersAlbumsNiveau1 = gestionnaireAffichageResultat.retournerClustersAlbumNiveau1(clustersAlbum);
 		clustersArtistesNiveau1 = gestionnaireAffichageResultat.retournerClustersArtisteNiveau1(clustersArtiste);
 		clustersChansonsNiveau1 = gestionnaireAffichageResultat.retournerClustersChansonNiveau1(clustersChanson);
+		
+		reinitialisationSelectionsNonValides();
 
 		reinitialisationEtapes();
 		etape1 = true;
@@ -104,53 +117,108 @@ public class VueAffichageResultat {
 	 * methode executee quand l'utilisateur clique sur "affiner sa recherche" d'albums
 	 */
 	public void affinerRechercheAlbum1(){
-		//on cree le cluster suivant
-		clustersAlbumsNiveau2 = gestionnaireAffichageResultat.retournerClustersAlbumNiveau2(clusterAlbumNiveau1Choisi);
-		//on passe a l'Ètape 2:
-		reinitialisationEtapes();
-		etape2album = true;
-		/*System.out.println("a choisi  album");
-		System.out.println(clusterAlbumNiveau1Choisi.getNom());
-		System.out.println(clustersAlbumsNiveau2);*/
-		System.out.println(etape2album);
+		reinitialisationSelectionsNonValides();
+		if(clusterAlbumNiveau1Choisi!=null){
+			//on cree le cluster suivant
+			clustersAlbumsNiveau2 = gestionnaireAffichageResultat.retournerClustersAlbumNiveau2(clusterAlbumNiveau1Choisi);
+			//on passe a l'Ètape 2:
+			reinitialisationEtapes();
+			etape2album = true;
+		}
+		else{
+			
+			selectionAlbum1NonValide= true;
+			addErrorEtape1Album();
+		}
+		
+		
+		
 	}
 	/**
 	 * methode executee quand l'utilisateur clique sur "affiner sa recherche" d'artistes
 	 */
 	public void affinerRechercheArtiste1(){
-		clustersArtistesNiveau2 = gestionnaireAffichageResultat.retournerClustersArtisteNiveau2(clusterArtisteNiveau1Choisi);
-		//on passe a l'Ètape 2:
-		reinitialisationEtapes();
-		etape2artiste = true;
+		reinitialisationSelectionsNonValides();
+		if(clusterArtisteNiveau1Choisi!=null){
+			clustersArtistesNiveau2 = gestionnaireAffichageResultat.retournerClustersArtisteNiveau2(clusterArtisteNiveau1Choisi);
+			//on passe a l'Ètape 2:
+			reinitialisationEtapes();
+			etape2artiste = true;
+			selectionArtiste1NonValide = false;
+		}
+		else{
+			selectionArtiste1NonValide = true;
+			addErrorEtape1Artiste();
+		}
+		
+		
+		
 	}
 	/**
 	 * methode executee quand l'utilisateur clique sur "affiner sa recherche" de chansons
 	 */
 	public void affinerRechercheChanson1(){
-		clustersChansonsNiveau2 = gestionnaireAffichageResultat.retournerClustersChansonNiveau2(clusterChansonNiveau1Choisi);
-		//on passe a l'Ètape 2:
-		reinitialisationEtapes();
-		etape2chanson = true;
+		reinitialisationSelectionsNonValides();
+		if(clusterChansonNiveau1Choisi!=null){
+			clustersChansonsNiveau2 = gestionnaireAffichageResultat.retournerClustersChansonNiveau2(clusterChansonNiveau1Choisi);
+			//on passe a l'Ètape 2:
+			reinitialisationEtapes();
+			etape2chanson = true;
+			selectionChanson1NonValide = false;
+		}
+		else{
+			selectionChanson1NonValide = true;
+			addErrorEtape1Chanson();
+		}
 	}
+		
 
 
 	public void affinerRechercheAlbum2(){
-		resultatAlbums = gestionnaireAffichageResultat.retournerAlbums(clusterAlbumNiveau2Choisi);
-		//on passe a l'Ètape 3:
-		reinitialisationEtapes();
-		etape3album = true;
+		reinitialisationSelectionsNonValides();
+		if(clusterAlbumNiveau2Choisi!=null){
+			resultatAlbums = gestionnaireAffichageResultat.retournerAlbums(clusterAlbumNiveau2Choisi);
+			//on passe a l'Ètape 3:
+			reinitialisationEtapes();
+			etape3album = true;
+			selectionAlbum2NonValide = false;
+		}
+		else{
+			selectionAlbum2NonValide = true;
+			addErrorEtape2Album();
+		}
+		
 	}
 	public void affinerRechercheArtiste2(){
-		resultatArtistes = gestionnaireAffichageResultat.retournerArtistes(clusterArtisteNiveau2Choisi);
-		//on passe a l'Ètape 3:
-		reinitialisationEtapes();
-		etape3artiste = true;
+		reinitialisationSelectionsNonValides();
+		if(clusterArtisteNiveau2Choisi!=null){
+			resultatArtistes = gestionnaireAffichageResultat.retournerArtistes(clusterArtisteNiveau2Choisi);
+			//on passe a l'Ètape 3:
+			reinitialisationEtapes();
+			etape3artiste = true;
+			selectionArtiste2NonValide = false;
+		}
+		else{
+			selectionArtiste2NonValide = true;
+			addErrorEtape2Artiste();
+		}
+		
 	}
 	public void affinerRechercheChanson2(){
-		resultatChansons = gestionnaireAffichageResultat.retournerChansons(clusterChansonNiveau2Choisi);
-		//on passe a l'Ètape 3:
-		reinitialisationEtapes();
-		etape3chanson = true;
+		reinitialisationSelectionsNonValides();
+		if(clusterChansonNiveau2Choisi!=null){
+			resultatChansons = gestionnaireAffichageResultat.retournerChansons(clusterChansonNiveau2Choisi);
+			//on passe a l'Ètape 3:
+			reinitialisationEtapes();
+			etape3chanson = true;
+			selectionChanson2NonValide = false;
+		}
+		else{
+			selectionChanson2NonValide = true;
+			addErrorEtape2Chanson();
+		}
+		
+		
 	}
 
 	
@@ -200,16 +268,56 @@ public class VueAffichageResultat {
 		etape3chanson = false;
 	}
 	
-	
-	
-	public String retourDebut(){
-		System.out.println("‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡");
-		return "success";
+	public void reinitialisationSelectionsNonValides(){
+		selectionAlbum1NonValide = false;
+		selectionAlbum2NonValide = false;
+		selectionArtiste1NonValide = false;
+		selectionArtiste2NonValide = false;
+		selectionChanson1NonValide = false;
+		selectionChanson2NonValide = false;
 	}
 	
 	
 	
+	public String retourDebut(){
+		return "success";
+	}
 	
+	
+	/**
+	 * methodes qui ajoutent un message d'erreur
+	 */
+	public void addErrorEtape1Album() { 
+		FacesContext.getCurrentInstance().
+			addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,
+					"Erreur","Veuillez sÈlectionner un premier critËre pour votre recherche d'album")); 
+	}
+	public void addErrorEtape1Artiste() { 
+		FacesContext.getCurrentInstance().
+			addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,
+					"Erreur","Veuillez sÈlectionner un premier critËre pour votre recherche d'artiste")); 
+	}
+	public void addErrorEtape1Chanson() { 
+		FacesContext.getCurrentInstance().
+			addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,
+					"Erreur","Veuillez sÈlectionner un premier critËre pour votre recherche de chanson"));
+	}
+	public void addErrorEtape2Album() {
+		FacesContext.getCurrentInstance().
+			addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,
+					"Erreur","Veuillez sÈlectionner un deuxiËme critËre pour votre recherche d'album")); 
+	}
+	public void addErrorEtape2Artiste() {
+		FacesContext.getCurrentInstance().
+			addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,
+					"Erreur","Veuillez sÈlectionner un deuxiËme critËre pour votre recherche d'artiste")); 
+	}
+	public void addErrorEtape2Chanson() {
+		FacesContext.getCurrentInstance().
+			addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,
+					"Erreur","Veuillez sÈlectionner un deuxiËme critËre pour votre recherche de chanson")); 
+	}
+
 	
 	
 	/********************************************************************/
@@ -229,59 +337,7 @@ public class VueAffichageResultat {
 		this.gestionnaireAffichageResultat = gestionnaireAffichageResultat;
 	}
 
-	/*public ArrayList<String> getTitresClustersNiveau1Album() {
-		return titresClustersNiveau1Album;
-	}
-
-	public void setTitresClustersNiveau1Album(
-			ArrayList<String> titresClustersNiveau1Album) {
-		this.titresClustersNiveau1Album = titresClustersNiveau1Album;
-	}
-
-	public ArrayList<String> getTitresClustersNiveau1Artiste() {
-		return titresClustersNiveau1Artiste;
-	}
-
-	public void setTitresClustersNiveau1Artiste(
-			ArrayList<String> titresClustersNiveau1Artiste) {
-		this.titresClustersNiveau1Artiste = titresClustersNiveau1Artiste;
-	}
-
-	public ArrayList<String> getTitresClustersNiveau1Chanson() {
-		return titresClustersNiveau1Chanson;
-	}
-
-	public void setTitresClustersNiveau1Chanson(
-			ArrayList<String> titresClustersNiveau1Chanson) {
-		this.titresClustersNiveau1Chanson = titresClustersNiveau1Chanson;
-	}
-
-	public ArrayList<String> getTitresClustersNiveau2Album() {
-		return titresClustersNiveau2Album;
-	}
-
-	public void setTitresClustersNiveau2Album(
-			ArrayList<String> titresClustersNiveau2Album) {
-		this.titresClustersNiveau2Album = titresClustersNiveau2Album;
-	}
-
-	public ArrayList<String> getTitresClustersNiveau2Artiste() {
-		return titresClustersNiveau2Artiste;
-	}
-
-	public void setTitresClustersNiveau2Artiste(
-			ArrayList<String> titresClustersNiveau2Artiste) {
-		this.titresClustersNiveau2Artiste = titresClustersNiveau2Artiste;
-	}
-
-	public ArrayList<String> getTitresClustersNiveau2Chanson() {
-		return titresClustersNiveau2Chanson;
-	}
-
-	public void setTitresClustersNiveau2Chanson(
-			ArrayList<String> titresClustersNiveau2Chanson) {
-		this.titresClustersNiveau2Chanson = titresClustersNiveau2Chanson;
-	}*/
+	
 
 
 
@@ -489,6 +545,79 @@ public class VueAffichageResultat {
 		this.etape3album = etape3album;
 	}
 
+	
+
+	public boolean isSelectionAlbum1NonValide() {
+		return selectionAlbum1NonValide;
+	}
+
+
+
+	public void setSelectionAlbum1NonValide(boolean selectionAlbum1NonValide) {
+		this.selectionAlbum1NonValide = selectionAlbum1NonValide;
+	}
+
+
+
+	public boolean isSelectionArtiste1NonValide() {
+		return selectionArtiste1NonValide;
+	}
+
+
+
+	public void setSelectionArtiste1NonValide(boolean selectionArtiste1NonValide) {
+		this.selectionArtiste1NonValide = selectionArtiste1NonValide;
+	}
+
+
+
+	public boolean isSelectionChanson1NonValide() {
+		return selectionChanson1NonValide;
+	}
+
+
+
+	public void setSelectionChanson1NonValide(boolean selectionChanson1NonValide) {
+		this.selectionChanson1NonValide = selectionChanson1NonValide;
+	}
+
+
+
+	public boolean isSelectionAlbum2NonValide() {
+		return selectionAlbum2NonValide;
+	}
+
+
+
+	public void setSelectionAlbum2NonValide(boolean selectionAlbum2NonValide) {
+		this.selectionAlbum2NonValide = selectionAlbum2NonValide;
+	}
+
+
+
+	public boolean isSelectionArtiste2NonValide() {
+		return selectionArtiste2NonValide;
+	}
+
+
+
+	public void setSelectionArtiste2NonValide(boolean selectionArtiste2NonValide) {
+		this.selectionArtiste2NonValide = selectionArtiste2NonValide;
+	}
+
+
+
+	public boolean isSelectionChanson2NonValide() {
+		return selectionChanson2NonValide;
+	}
+
+
+
+	public void setSelectionChanson2NonValide(boolean selectionChanson2NonValide) {
+		this.selectionChanson2NonValide = selectionChanson2NonValide;
+	}
+
+
 
 	public boolean isEtape2(){
 		if(etape2album || etape2artiste || etape2chanson){
@@ -497,7 +626,21 @@ public class VueAffichageResultat {
 	}
 
 
-
+	public String getLargeurSousPanels(){
+		return "390px";
+	}
+	
+	public String getLargeurDataTables1(){
+		return "350px";
+	}
+	
+	public String getLargeurDataTables2_3(){
+		return "700px";
+	}
+	
+	public String getLargeurSousPanelSeul(){
+		return "900px";
+	}
 
 
 }
