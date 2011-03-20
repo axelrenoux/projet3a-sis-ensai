@@ -84,7 +84,7 @@ public class AxeAnnee implements Axe {
 			classe="avant les années 60";
 		}
 
-		System.out.println("classe " + classe);
+	
 		return classe;
 		
 	}

@@ -89,7 +89,7 @@ public class CalculateurDeClustersAlbums {
 			}
 			//on ajoute l'album au sous-cluster de niveau 2 qui correspond
 			ComposantCluster sousClusterNiveau2 = sousCluster1.getContenu().get(valeurAxe);
-			sousClusterNiveau2.getContenu().put(a.getImageLarge(),a);
+			sousClusterNiveau2.getContenu().put(a.getUrl(),a);//TODO je change par url
 		}
 	}
 	
@@ -130,7 +130,7 @@ public class CalculateurDeClustersAlbums {
 			classe="avant les années 60";
 		}
 
-		System.out.println("classe " + classe);
+		
 		return classe;
 	}
 	

@@ -59,28 +59,39 @@ public class RechercheAlbum {
 		Album a11 = new Album();
 		
 		a1.setName("Sticky Fingers");
-		a1.setImageLarge("http://userserve-ak.last.fm/serve/126/5085382x5.png");
+		a1.setImageLarge("http://userserve-ak.last.fm/serve/126/50853825.png");	
 		a2.setName("The score");
-		a2.setImageLarge("http://userserve-ak.last.fm/serve/126/3257193z3.jpg");
+		a2.setImageLarge("http://userserve-ak.last.fm/serve/126/32571933.jpg");	
 		a3.setName("Nevermind");
-		a3.setImageLarge("http://userserve-ak.last.fm/serve/126/463109h4c9.png");
+		a3.setImageLarge("http://userserve-ak.last.fm/serve/126/463109h49.png");	
 		a4.setName("The score2");
-		a4.setImageLarge("http://userserve-ak.last.fm/serve/126/325h71933.jpg");
+		a4.setImageLarge("http://userserve-ak.last.fm/serve/126/32571933.jpg");		
 		a5.setName("Sticky Fingers2");
-		a5.setImageLarge("http://userserve-ak.last.fm/serve/126/50h853825.png");
+		a5.setImageLarge("http://userserve-ak.last.fm/serve/126/50853825.png");
 		a6.setName("The score3");
-		a6.setImageLarge("http://userserve-ak.last.fm/serve/126/325719g33.jpg");
+		a6.setImageLarge("http://userserve-ak.last.fm/serve/126/32571933.jpg");
 		a7.setName("Sticky Fingers4");
-		a7.setImageLarge("http://userserve-ak.last.fm/serve/126/50g853825.png");
+		a7.setImageLarge("http://userserve-ak.last.fm/serve/126/50853825.png");
 		a8.setName("The score");
-		a8.setImageLarge("http://userserve-ak.last.fm/serve/126/u32571933.jpg");
+		a8.setImageLarge("http://userserve-ak.last.fm/serve/126/32571933.jpg");
 		a9.setName("Sticky Fingers");
-		a9.setImageLarge("http://userserve-ak.last.fm/serve/126/508538g25.png");
+		a9.setImageLarge("http://userserve-ak.last.fm/serve/126/50853825.png");
 		a10.setName("The score");
 		a10.setImageLarge("http://userserve-ak.last.fm/serve/12u6/32571933.jpg");
 		a11.setName("Test");
-		a11.setImageLarge("http://userserve-ak.last.fm/serve/126/3257193ml3.jpg");
+		a11.setImageLarge("http://userserve-ak.last.fm/serve/126/3257193l3.jpg");
 		
+		a1.setUrl("1");
+		a2.setUrl("2");
+		a3.setUrl("3");
+		a4.setUrl("4");
+		a5.setUrl("5");
+		a6.setUrl("6");
+		a7.setUrl("7");
+		a8.setUrl("8");
+		a9.setUrl("9");
+		a10.setUrl("10");
+		a11.setUrl("11");
 		try {
 			a1.setDate(UtilitaireDate.getInstanceunique().
 					transformerEnDateUneDateBDD("16/03/2011"));
@@ -129,7 +140,7 @@ public class RechercheAlbum {
 		
 		//il faudra ici aller cherche en base les albums repondant au mot cle
 		Axe axe1Date = new AxeAnnee();
-		Axe axe2Saison = new AxeOeuvre();
+		Axe axe2Saison = new AxeSaison();
 		
 		return CalculateurDeClustersAlbums.getInstanceunique().
 		calculerClustersAlbum(axe1Date,axe2Saison,resultats);

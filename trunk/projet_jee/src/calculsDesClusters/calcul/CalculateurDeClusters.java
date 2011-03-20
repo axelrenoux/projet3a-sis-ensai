@@ -153,7 +153,7 @@ public class CalculateurDeClusters {
 			}
 			//on ajoute l'artiste au sous-cluster de niveau 2 qui correspond
 			ComposantCluster sousClusterNiveau2 = sousCluster1.getContenu().get(valeurAxe);
-			sousClusterNiveau2.getContenu().put(sousCluster1.getNom()+" & "+sousClusterNiveau2.getNom(),a);
+			sousClusterNiveau2.getContenu().put(a.getUrl(),a);
 		}
 	}
 	
