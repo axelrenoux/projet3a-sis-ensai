@@ -40,8 +40,7 @@ public class RechercheAlbumBDD extends RechercheBDD{
 								"w.datepublication as dateWiki , "+
 								"w.resume as resumeWiki , "+
 								"w.contenu as contenuWiki"+
-				" FROM ARTISTE art , WIKI w , IMAGES i , AUDIMAT aud , ID_NAME_URL inu , ALBUM alb , ID_NAME_URL inu2" +
-				" ID_NAME_URL inu2 , ARTISTES_SIMILAIRES s" +
+				" FROM ARTISTE art , WIKI w , IMAGES i , AUDIMAT aud , ID_NAME_URL inu , ALBUM alb "+ 
 				" WHERE art.id_name_url = inu.cle_primaire" +
 					" and art.images = i.cle_primaire" +
 					" and art.audimat = aud.cle_primaire" +

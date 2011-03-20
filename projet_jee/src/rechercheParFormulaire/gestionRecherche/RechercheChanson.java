@@ -2,7 +2,11 @@ package rechercheParFormulaire.gestionRecherche;
 
 import java.util.ArrayList;
 
+import bdd.rechercheBDD.maClasseAlbum;
+import bdd.rechercheBDD.maClasseChanson;
+
 import calculsDesClusters.calcul.CalculateurDeClusters;
+import exceptions.ChargementException;
 
 
 import metier.Cluster;
@@ -82,8 +86,15 @@ public class RechercheChanson{
 		resultats.add(c4);
 		
 
-		System.out.println(CalculateurDeClusters.getInstanceunique().
-		calculerClustersChanson(resultats));
+		/*maClasseChanson ma = new maClasseChanson();
+		try {
+			resultats = ma.rechercherChansons(motCle);
+		} catch (ChargementException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}*/
+		
+		
 		return CalculateurDeClusters.getInstanceunique().
 		calculerClustersChanson(resultats);
 		

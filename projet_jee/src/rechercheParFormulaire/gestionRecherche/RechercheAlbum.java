@@ -2,6 +2,8 @@ package rechercheParFormulaire.gestionRecherche;
 
 import java.util.ArrayList;
 
+import bdd.rechercheBDD.maClasseAlbum;
+
 import metier.Cluster;
 import metier.oeuvres.Album;
 import calculsDesClusters.axe.Axe;
@@ -10,6 +12,7 @@ import calculsDesClusters.axe.AxeOeuvre;
 import calculsDesClusters.axe.AxeSaison;
 import calculsDesClusters.calcul.CalculateurDeClustersAlbums;
 import controleur.UtilitaireDate;
+import exceptions.ChargementException;
 import exceptions.ExceptionDate;
 
 public class RechercheAlbum {
@@ -23,25 +26,9 @@ public class RechercheAlbum {
 	/************************      methodes      ************************/
 	/********************************************************************/
 
-	//en attendant on met un mock
-	public ArrayList lancerRecherche() {
-		resultats = new ArrayList<Album>();
-		Album a1 = new Album();
-		Album a2 = new Album();
-		
-		a1.setName("Sticky Fingers");
-		a1.setImageLarge("http://userserve-ak.last.fm/serve/126/50853825.png");
-		a2.setName("The score");
-		a2.setImageLarge("http://userserve-ak.last.fm/serve/126/32571933.jpg");
-		
-		resultats.add(a1);
-		resultats.add(a2);
-		
-		return resultats;
-	}
+	 
 	
 	
-	//
 	public Cluster lancerRecherche(String motCle) {
 		
 		//traitement provisoire debut 
@@ -139,6 +126,17 @@ public class RechercheAlbum {
 		
 		
 		//il faudra ici aller cherche en base les albums repondant au mot cle
+		
+		maClasseAlbum ma = new maClasseAlbum();
+		try {
+			resultats = ma.rechercherAlbums(motCle);
+		} catch (ChargementException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
 		Axe axe1Date = new AxeAnnee();
 		Axe axe2Saison = new AxeSaison();
 		

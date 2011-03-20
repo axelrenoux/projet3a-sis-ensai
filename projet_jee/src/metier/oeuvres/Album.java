@@ -48,9 +48,32 @@ public class Album extends ObjetAComparer implements Oeuvre {
 		super();
 	}
 
+//TODO ajouté
+	/**
+	 * @param name
+	 * @param url
+	 * @param date
+	 * @param imageLarge
+	 * @param listeners
+	 * @param playcount
+	 * @param wiki
+	 * @param artiste
+	 */
+	public Album(String name, String url,Date date,
+			String imageLarge,double listeners,
+			double playcount,Wiki wiki, Artiste artiste) {
+		this.name = name;
+		this.url=url;
+		this.date=date;
+		this.artiste = artiste;
+		this.imageLarge=imageLarge;
+		this.listeners=listeners; 
+		this.playcount=playcount; 
+		this.wiki=wiki; 
+	}
 	
 	/**
-	 * constructeur avec les parametres
+	 * constructeur avec tous les parametres
 	 * @param name
 	 * @param artiste
 	 * @param ID
@@ -72,7 +95,6 @@ public class Album extends ObjetAComparer implements Oeuvre {
 			String imageExtraLarge,String imageMega,double listeners,
 			double playcount,ArrayList<Chanson> chansons,
 			ArrayList<Tag> toptags,Wiki wiki) {
-		this();
 		this.name = name;
 		this.artiste=artiste;
 		this.ID = ID;

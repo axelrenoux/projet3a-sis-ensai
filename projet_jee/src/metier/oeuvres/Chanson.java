@@ -49,11 +49,20 @@ public class Chanson extends ObjetAComparer implements Oeuvre{
 	
 	
 	
- 
-	
+	public Chanson(String name, Double duree, String url, String imageLarge, 
+			Artiste artiste,double listeners,double playcount,Wiki wiki) {
+		this.name = name;
+		this.duree = duree;
+		this.url=url;
+		this.imageLarge = imageLarge;
+		this.artiste = artiste;
+		this.listeners=listeners; 
+		this.playcount=playcount; 
+		this.wiki=wiki; 
+	}
 	
 	/**
-	 * constructeur avec parametres
+	 * constructeur avec tous les parametres
 	 * @param name
 	 * @param duree
 	 * @param url
@@ -68,7 +77,6 @@ public class Chanson extends ObjetAComparer implements Oeuvre{
 			Artiste artiste,double listeners,double playcount,
 			ArrayList<Album> albums,
 			ArrayList<Tag> toptags,Wiki wiki) {
-		this();
 		this.name = name;
 		this.duree = duree;
 		this.url=url;
