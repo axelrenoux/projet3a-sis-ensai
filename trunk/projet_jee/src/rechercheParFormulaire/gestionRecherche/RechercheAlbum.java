@@ -130,9 +130,9 @@ public class RechercheAlbum {
 		maClasseAlbum ma = new maClasseAlbum();
 		try {
 			resultats = ma.rechercherAlbums(motCle);
-		} catch (ChargementException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		}
+		catch(Exception e2){
+			System.out.println("erreur 2 " + e2.getLocalizedMessage());
 		}
 		
 		

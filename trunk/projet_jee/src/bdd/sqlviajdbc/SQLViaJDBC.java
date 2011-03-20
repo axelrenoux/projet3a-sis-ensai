@@ -52,6 +52,7 @@ class SQLViaJDBC{
 	 * @throws ConnectionException
 	 */
 	protected static void connecter() throws ConnectionException{
+		System.out.println("connecter()");
 		userIDAcessBDD = "id2853";
 		passWordAccess = "id2853";
 		connecter(userIDAcessBDD,passWordAccess);
@@ -64,7 +65,11 @@ class SQLViaJDBC{
 	 * @throws ConnectionException
 	 */
 	protected static void connecter(String id, String mdp) throws ConnectionException {
+		System.out.println("connecter(  ,  )");
+		
 		try {
+			System.out.println(" m1 ");
+			//TODO plante ici depuis j2EE
 			DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
 		} catch (SQLException e) {
 			throw new ConnectionException(e);
@@ -76,6 +81,7 @@ class SQLViaJDBC{
 		}
 		try {
 			instruction=connection.createStatement();
+			
 		} catch (SQLException e) {
 			throw new ConnectionException(e);
 		}
