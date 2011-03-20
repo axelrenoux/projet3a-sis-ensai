@@ -203,6 +203,7 @@ public class VueAffichageResultat {
 		reinitialisationSelectionsNonValides();
 		if(clusterChansonNiveau1Choisi!=null){
 			clustersChansonsNiveau2 = gestionnaireAffichageResultat.retournerClustersChansonNiveau2(clusterChansonNiveau1Choisi);
+			System.out.println("clustersChansonsNiveau2 vue"+clustersChansonsNiveau2);
 			creerLazyModelChansons2();
 			//on passe a l'étape 2:
 			reinitialisationEtapes();
