@@ -1,24 +1,25 @@
 package rechercheParFormulaire.vue;
 
 import java.util.ArrayList;
-import java.util.Map.Entry;
+import java.util.List;
+import java.util.Map;
 
-import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
+import org.primefaces.model.LazyDataModel;
+
 import rechercheParFormulaire.gestionRecherche.GestionnaireAffichageResultat;
-import rechercheParFormulaire.gestionRecherche.GestionnaireFormulaire;
+
 
 import metier.Cluster;
-import metier.ComposantCluster;
 import metier.oeuvres.Album;
 import metier.oeuvres.Artiste;
 import metier.oeuvres.Chanson;
-import metier.oeuvres.Oeuvre;
+
 
 /**
  * on ajoute ces 2 lignes afin que la classe soit instanciee automatiquement (managedBean)
@@ -90,6 +91,24 @@ public class VueAffichageResultat {
 	
 	
 
+	private LazyDataModel lazyModelAlbums1;
+	private LazyDataModel lazyModelAlbums2;
+	private LazyDataModel lazyModelAlbums3;
+	
+	private LazyDataModel lazyModelArtistes1;
+	private LazyDataModel lazyModelArtistes2;
+	private LazyDataModel lazyModelArtistes3;
+	
+	private LazyDataModel lazyModelChansons1;
+	private LazyDataModel lazyModelChansons2;
+	private LazyDataModel lazyModelChansons3;
+	
+	
+	
+	 
+
+	
+	
 
 
 
@@ -104,6 +123,27 @@ public class VueAffichageResultat {
 		clustersArtistesNiveau1 = gestionnaireAffichageResultat.retournerClustersArtisteNiveau1(clustersArtiste);
 		clustersChansonsNiveau1 = gestionnaireAffichageResultat.retournerClustersChansonNiveau1(clustersChanson);
 		
+		lazyModelAlbums1=null;
+		lazyModelAlbums2=null;
+		lazyModelAlbums3=null;
+		lazyModelArtistes1=null;
+		lazyModelArtistes2=null;
+		lazyModelArtistes3=null;
+		lazyModelChansons1=null;
+		lazyModelChansons2=null;
+		lazyModelChansons3=null;
+		
+		
+		
+		//pour chaque cluster, on cree un lazymodel, pour un affichage optimal 
+		
+		creerLazyModelAlbums1();
+		creerLazyModelArtistes1();
+		creerLazyModelChansons1();
+
+ 
+		  
+		  
 		reinitialisationSelectionsNonValides();
 
 		reinitialisationEtapes();
@@ -119,8 +159,9 @@ public class VueAffichageResultat {
 	public void affinerRechercheAlbum1(){
 		reinitialisationSelectionsNonValides();
 		if(clusterAlbumNiveau1Choisi!=null){
-			//on cree le cluster suivant
+			//on cree le cluster suivant et le lazy model correspondant 
 			clustersAlbumsNiveau2 = gestionnaireAffichageResultat.retournerClustersAlbumNiveau2(clusterAlbumNiveau1Choisi);
+			creerLazyModelAlbums2();
 			//on passe a l'étape 2:
 			reinitialisationEtapes();
 			etape2album = true;
@@ -141,6 +182,7 @@ public class VueAffichageResultat {
 		reinitialisationSelectionsNonValides();
 		if(clusterArtisteNiveau1Choisi!=null){
 			clustersArtistesNiveau2 = gestionnaireAffichageResultat.retournerClustersArtisteNiveau2(clusterArtisteNiveau1Choisi);
+			creerLazyModelArtistes2();
 			//on passe a l'étape 2:
 			reinitialisationEtapes();
 			etape2artiste = true;
@@ -161,6 +203,7 @@ public class VueAffichageResultat {
 		reinitialisationSelectionsNonValides();
 		if(clusterChansonNiveau1Choisi!=null){
 			clustersChansonsNiveau2 = gestionnaireAffichageResultat.retournerClustersChansonNiveau2(clusterChansonNiveau1Choisi);
+			creerLazyModelChansons2();
 			//on passe a l'étape 2:
 			reinitialisationEtapes();
 			etape2chanson = true;
@@ -178,6 +221,7 @@ public class VueAffichageResultat {
 		reinitialisationSelectionsNonValides();
 		if(clusterAlbumNiveau2Choisi!=null){
 			resultatAlbums = gestionnaireAffichageResultat.retournerAlbums(clusterAlbumNiveau2Choisi);
+			creerLazyModelAlbums3();
 			//on passe a l'étape 3:
 			reinitialisationEtapes();
 			etape3album = true;
@@ -193,6 +237,7 @@ public class VueAffichageResultat {
 		reinitialisationSelectionsNonValides();
 		if(clusterArtisteNiveau2Choisi!=null){
 			resultatArtistes = gestionnaireAffichageResultat.retournerArtistes(clusterArtisteNiveau2Choisi);
+			creerLazyModelArtistes3();
 			//on passe a l'étape 3:
 			reinitialisationEtapes();
 			etape3artiste = true;
@@ -206,8 +251,12 @@ public class VueAffichageResultat {
 	}
 	public void affinerRechercheChanson2(){
 		reinitialisationSelectionsNonValides();
+		System.out.println("ùùùù "+clusterChansonNiveau2Choisi);
 		if(clusterChansonNiveau2Choisi!=null){
+			System.out.println("aa");
 			resultatChansons = gestionnaireAffichageResultat.retournerChansons(clusterChansonNiveau2Choisi);
+			System.out.println("bb");
+			creerLazyModelChansons3();
 			//on passe a l'étape 3:
 			reinitialisationEtapes();
 			etape3chanson = true;
@@ -223,40 +272,7 @@ public class VueAffichageResultat {
 
 	
 	
-	/**
-	 * 
-	 */
-	public void retourEtape1(){
-		reinitialisationEtapes();
-		etape1 = true;
-	}
-
-	/**
-	 * 
-	 */
-	public void retourEtapeArtiste2(){
-		reinitialisationEtapes();
-		etape2artiste = true;
-	}
 	
-	
-	/**
-	 * 
-	 */
-	public void retourEtapeAlbum2(){
-		reinitialisationEtapes();
-		etape2album = true;
-	}
-	
-	
-	/**
-	 * 
-	 */
-	public void retourEtapeChanson2(){
-		reinitialisationEtapes();
-		etape2chanson = true;
-	}
-
 
 	public void reinitialisationEtapes(){
 		etape1=false;
@@ -278,6 +294,244 @@ public class VueAffichageResultat {
 	}
 	
 	
+	
+	
+	
+	/**
+	 * creation des LazyDataModel à partir des listes de clusters
+	 */
+	public void creerLazyModelAlbums1(){
+		lazyModelAlbums1 = new LazyDataModel<Cluster>(){
+		@Override
+		public List<Cluster> load(int first, int pageSize, String sortField,
+			boolean sortOrder, Map<String, String> filters) {
+			//logger.log(Level.INFO, "Loading the lazy car data between {0} and {1}", new Object[]{first, (first+pageSize)});
+			List<Cluster> lasyClusterAlbums = new ArrayList<Cluster>();
+			//on determine le nombre max de resultats par page:
+			int size=clustersAlbumsNiveau1.size();
+			if(clustersAlbumsNiveau1.subList(first,size).size()<pageSize){
+				pageSize=clustersAlbumsNiveau1.subList(first,size).size();
+			}
+			lasyClusterAlbums = clustersAlbumsNiveau1.subList(first, first+pageSize);	
+			return lasyClusterAlbums;
+			}
+		};
+		lazyModelAlbums1.setRowCount(clustersAlbumsNiveau1.size());   
+	}
+	
+	
+	public void creerLazyModelArtistes1(){
+		lazyModelArtistes1 = new LazyDataModel<Cluster>(){
+			@Override
+			public List<Cluster> load(int first, int pageSize, String sortField,
+				boolean sortOrder, Map<String, String> filters) {
+				//logger.log(Level.INFO, "Loading the lazy car data between {0} and {1}", new Object[]{first, (first+pageSize)});
+				List<Cluster> lasyClusterArtiste = new ArrayList<Cluster>();
+				//on determine le nombre max de resultats par page:
+				int size=clustersArtistesNiveau1.size();
+				if(clustersArtistesNiveau1.subList(first,size).size()<pageSize){
+					pageSize=clustersArtistesNiveau1.subList(first,size).size();
+				}
+				lasyClusterArtiste = clustersArtistesNiveau1.subList(first, first+pageSize);
+				return lasyClusterArtiste;
+				}
+			};
+			lazyModelArtistes1.setRowCount(clustersArtistesNiveau1.size());  
+	}
+	
+	public void creerLazyModelChansons1(){
+		lazyModelChansons1 = new LazyDataModel<Cluster>(){
+			@Override
+			public List<Cluster> load(int first, int pageSize, String sortField,
+				boolean sortOrder, Map<String, String> filters) {
+				//logger.log(Level.INFO, "Loading the lazy car data between {0} and {1}", new Object[]{first, (first+pageSize)});
+				List<Cluster> lasyClusterChanson = new ArrayList<Cluster>();
+				//on determine le nombre max de resultats par page:
+				int size=clustersChansonsNiveau1.size();
+				if(clustersChansonsNiveau1.subList(first,size).size()<pageSize){
+					pageSize=clustersChansonsNiveau1.subList(first,size).size();
+				}
+				lasyClusterChanson = clustersChansonsNiveau1.subList(first, first+pageSize);
+				return lasyClusterChanson;
+				}
+			};
+			lazyModelChansons1.setRowCount(clustersChansonsNiveau1.size());  
+	}
+	
+	
+	public void creerLazyModelAlbums2(){
+		lazyModelAlbums2 = new LazyDataModel<Cluster>(){
+		@Override
+		public List<Cluster> load(int first, int pageSize, String sortField,
+			boolean sortOrder, Map<String, String> filters) {
+			//logger.log(Level.INFO, "Loading the lazy car data between {0} and {1}", new Object[]{first, (first+pageSize)});
+			List<Cluster> lasyClusterAlbums = new ArrayList<Cluster>();
+			//on determine le nombre max de resultats par page:
+			int size=clustersAlbumsNiveau2.size();
+			if(clustersAlbumsNiveau2.subList(first,size).size()<pageSize){
+				pageSize=clustersAlbumsNiveau2.subList(first,size).size();
+			}
+			lasyClusterAlbums = clustersAlbumsNiveau2.subList(first, first+pageSize);	
+			return lasyClusterAlbums;
+			}
+		};
+		lazyModelAlbums2.setRowCount(clustersAlbumsNiveau2.size());   
+	}
+	
+	
+	public void creerLazyModelArtistes2(){
+		lazyModelArtistes2 = new LazyDataModel<Cluster>(){
+			@Override
+			public List<Cluster> load(int first, int pageSize, String sortField,
+				boolean sortOrder, Map<String, String> filters) {
+				//logger.log(Level.INFO, "Loading the lazy car data between {0} and {1}", new Object[]{first, (first+pageSize)});
+				List<Cluster> lasyClusterArtiste = new ArrayList<Cluster>();
+				//on determine le nombre max de resultats par page:
+				int size=clustersArtistesNiveau2.size();
+				if(clustersArtistesNiveau2.subList(first,size).size()<pageSize){
+					pageSize=clustersArtistesNiveau2.subList(first,size).size();
+				}
+				lasyClusterArtiste = clustersArtistesNiveau2.subList(first, first+pageSize);
+				return lasyClusterArtiste;
+				}
+			};
+			lazyModelArtistes2.setRowCount(clustersArtistesNiveau2.size());  
+	}
+	
+	public void creerLazyModelChansons2(){
+		lazyModelChansons2 = new LazyDataModel<Cluster>(){
+			@Override
+			public List<Cluster> load(int first, int pageSize, String sortField,
+				boolean sortOrder, Map<String, String> filters) {
+				//logger.log(Level.INFO, "Loading the lazy car data between {0} and {1}", new Object[]{first, (first+pageSize)});
+				List<Cluster> lasyClusterChanson = new ArrayList<Cluster>();
+				//on determine le nombre max de resultats par page:
+				int size=clustersChansonsNiveau2.size();
+				if(clustersChansonsNiveau2.subList(first,size).size()<pageSize){
+					pageSize=clustersChansonsNiveau2.subList(first,size).size();
+				}
+				lasyClusterChanson = clustersChansonsNiveau2.subList(first, first+pageSize);
+				return lasyClusterChanson;
+				}
+			};
+			lazyModelChansons2.setRowCount(clustersChansonsNiveau2.size());  
+	}
+	
+	
+	
+	/*public void creerLazyModel(final ArrayList<Cluster> clusters, LazyDataModel lazyModel){
+		lazyModel = new LazyDataModel<Cluster>(){
+			@Override
+			public List<Cluster> load(int first, int pageSize, String sortField,
+				boolean sortOrder, Map<String, String> filters) {
+				//logger.log(Level.INFO, "Loading the lazy car data between {0} and {1}", new Object[]{first, (first+pageSize)});
+				List<Cluster> lasyCluster = new ArrayList<Cluster>();
+				//on determine le nombre max de resultats par page:
+				
+				int size=clusters.size();
+				System.out.println("size " + size);
+				if(clusters.subList(first,size).size()<pageSize){
+					pageSize=clusters.subList(first,size).size();
+				}
+				lasyCluster = clusters.subList(first, first+pageSize);
+				return lasyCluster;
+				}
+			};
+			lazyModel.setRowCount(clusters.size());  
+	}*/
+	
+	
+	public void creerLazyModelAlbums3(){
+		System.out.println("aaaaaaalbum3");
+		lazyModelAlbums3 = new LazyDataModel<Album>(){
+			@Override
+			public List<Album> load(int first, int pageSize, String sortField,
+				boolean sortOrder, Map<String, String> filters) {
+				//logger.log(Level.INFO, "Loading the lazy car data between {0} and {1}", new Object[]{first, (first+pageSize)});
+				List<Album> lasyCluster = new ArrayList<Album>();
+				//on determine le nombre max de resultats par page:
+				int size=resultatAlbums.size();
+				if(resultatAlbums.subList(first,size).size()<pageSize){
+					pageSize=resultatAlbums.subList(first,size).size();
+				}
+				lasyCluster = resultatAlbums.subList(first, first+pageSize);
+				return lasyCluster;
+				}
+			};
+			lazyModelAlbums3.setRowCount(resultatAlbums.size());  
+	}
+	
+	public void creerLazyModelArtistes3(){
+		System.out.println("aaaaaaaartiste3");
+		lazyModelArtistes3 = new LazyDataModel<Artiste>(){
+			@Override
+			public List<Artiste> load(int first, int pageSize, String sortField,
+				boolean sortOrder, Map<String, String> filters) {
+				//logger.log(Level.INFO, "Loading the lazy car data between {0} and {1}", new Object[]{first, (first+pageSize)});
+				List<Artiste> lasyCluster = new ArrayList<Artiste>();
+				//on determine le nombre max de resultats par page:
+				int size=resultatArtistes.size();
+				if(resultatArtistes.subList(first,size).size()<pageSize){
+					pageSize=resultatArtistes.subList(first,size).size();
+				}
+				lasyCluster = resultatArtistes.subList(first, first+pageSize);
+				return lasyCluster;
+				}
+			};
+			lazyModelArtistes3.setRowCount(resultatArtistes.size());  
+	}
+	
+	
+	public void creerLazyModelChansons3(){
+		System.out.println("ccccccccccccchanson3");
+		lazyModelChansons3 = new LazyDataModel<Chanson>(){
+			@Override
+			public List<Chanson> load(int first, int pageSize, String sortField,
+				boolean sortOrder, Map<String, String> filters) {
+				//logger.log(Level.INFO, "Loading the lazy car data between {0} and {1}", new Object[]{first, (first+pageSize)});
+				List<Chanson> lasyCluster = new ArrayList<Chanson>();
+				//on determine le nombre max de resultats par page:
+				int size=resultatChansons.size();
+				if(resultatChansons.subList(first,size).size()<pageSize){
+					pageSize=resultatChansons.subList(first,size).size();
+				}
+				lasyCluster = resultatChansons.subList(first, first+pageSize);
+				return lasyCluster;
+				}
+			};
+			lazyModelChansons3.setRowCount(resultatChansons.size());  
+	}
+	
+	
+	
+	
+	
+	
+	/**
+	 *  methodes de navigation
+	 */
+	public void retourEtape1(){
+		reinitialisationEtapes();
+		etape1 = true;
+	}
+
+	
+	public void retourEtapeArtiste2(){
+		reinitialisationEtapes();
+		etape2artiste = true;
+	}
+	
+	
+	public void retourEtapeAlbum2(){
+		reinitialisationEtapes();
+		etape2album = true;
+	}
+
+	public void retourEtapeChanson2(){
+		reinitialisationEtapes();
+		etape2chanson = true;
+	}
+
 	
 	public String retourDebut(){
 		return "success";
@@ -319,7 +573,11 @@ public class VueAffichageResultat {
 	}
 
 	
+  
 	
+	
+
+
 	/********************************************************************/
 	/******************      getters / setters       ********************/
 	/********************************************************************/
@@ -641,6 +899,118 @@ public class VueAffichageResultat {
 	public String getLargeurSousPanelSeul(){
 		return "900px";
 	}
+
+
+
+	public LazyDataModel getLazyModelAlbums1() {
+		return lazyModelAlbums1;
+	}
+
+
+
+	public void setLazyModelAlbums1(LazyDataModel lazyModelAlbums1) {
+		this.lazyModelAlbums1 = lazyModelAlbums1;
+	}
+
+
+
+	public LazyDataModel getLazyModelAlbums2() {
+		return lazyModelAlbums2;
+	}
+
+
+
+	public void setLazyModelAlbums2(LazyDataModel lazyModelAlbums2) {
+		this.lazyModelAlbums2 = lazyModelAlbums2;
+	}
+
+
+
+	public LazyDataModel getLazyModelAlbums3() {
+		return lazyModelAlbums3;
+	}
+
+
+
+	public void setLazyModelAlbums3(LazyDataModel lazyModelAlbums3) {
+		this.lazyModelAlbums3 = lazyModelAlbums3;
+	}
+
+
+
+	public LazyDataModel getLazyModelArtistes1() {
+		return lazyModelArtistes1;
+	}
+
+
+
+	public void setLazyModelArtistes1(LazyDataModel lazyModelArtistes1) {
+		this.lazyModelArtistes1 = lazyModelArtistes1;
+	}
+
+
+
+	public LazyDataModel getLazyModelArtistes2() {
+		return lazyModelArtistes2;
+	}
+
+
+
+	public void setLazyModelArtistes2(LazyDataModel lazyModelArtistes2) {
+		this.lazyModelArtistes2 = lazyModelArtistes2;
+	}
+
+
+
+	public LazyDataModel getLazyModelArtistes3() {
+		return lazyModelArtistes3;
+	}
+
+
+
+	public void setLazyModelArtistes3(LazyDataModel lazyModelArtistes3) {
+		this.lazyModelArtistes3 = lazyModelArtistes3;
+	}
+
+
+
+	public LazyDataModel getLazyModelChansons1() {
+		return lazyModelChansons1;
+	}
+
+
+
+	public void setLazyModelChansons1(LazyDataModel lazyModelChansons1) {
+		this.lazyModelChansons1 = lazyModelChansons1;
+	}
+
+
+
+	public LazyDataModel getLazyModelChansons2() {
+		return lazyModelChansons2;
+	}
+
+
+
+	public void setLazyModelChansons2(LazyDataModel lazyModelChansons2) {
+		this.lazyModelChansons2 = lazyModelChansons2;
+	}
+
+
+
+	public LazyDataModel getLazyModelChansons3() {
+		return lazyModelChansons3;
+	}
+
+
+
+	public void setLazyModelChansons3(LazyDataModel lazyModelChansons3) {
+		this.lazyModelChansons3 = lazyModelChansons3;
+	}
+
+
+
+	 
 
 
 }

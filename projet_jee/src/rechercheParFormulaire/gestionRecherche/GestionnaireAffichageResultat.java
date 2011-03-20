@@ -103,7 +103,12 @@ public class GestionnaireAffichageResultat {
 		ArrayList<Album> resultatAlbums= new ArrayList<Album>();
 		for(Entry<String,ComposantCluster> currentEntry : 
 			clusterAlbumNiveau2Choisi.getContenu().entrySet()){
-			resultatAlbums.add((Album)currentEntry.getValue());
+			try{
+				resultatAlbums.add((Album)currentEntry.getValue());
+			}
+			catch(ClassCastException c){
+					System.out.println("problème de cast dans le clusters de d'albums");
+				}
 		}
 		return resultatAlbums;
 	}
@@ -112,7 +117,13 @@ public class GestionnaireAffichageResultat {
 		ArrayList<Artiste> resultatArtistes= new ArrayList<Artiste>();
 		for(Entry<String,ComposantCluster> currentEntry : 
 			clusterArtisteNiveau2Choisi.getContenu().entrySet()){
-			resultatArtistes.add((Artiste)currentEntry.getValue());
+			try{
+				resultatArtistes.add((Artiste)currentEntry.getValue());				
+			}
+			catch(ClassCastException c){
+					System.out.println("problème de cast dans le clusters de d'artistes");
+			}
+			
 		}
 		return resultatArtistes;
 	}
@@ -122,7 +133,12 @@ public class GestionnaireAffichageResultat {
 		ArrayList<Chanson> resultatChansons= new ArrayList<Chanson>();
 		for(Entry<String,ComposantCluster> currentEntry : 
 			clusterChansonNiveau2Choisi.getContenu().entrySet()){
+			try{
 			resultatChansons.add((Chanson)currentEntry.getValue());
+			}
+			catch(ClassCastException c){
+				System.out.println("problème de cast dans le clusters de chansons");
+			}
 		}
 		return resultatChansons;
 	}
