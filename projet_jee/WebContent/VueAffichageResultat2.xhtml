@@ -74,12 +74,12 @@
 							value="#{vueAffichageResultat.lazyModelAlbums1}"
 							selection="#{vueAffichageResultat.clusterAlbumNiveau1Choisi}"
 							selectionMode="single" 
-							style="width:'#{vueAffichageResultat.largeurDataTables1}';"
-							paginator="true" 
+							style="width:'#{vueAffichageResultat.largeurDataTables1}';"  
+							paginator="true"
 							rows="10" 
-							lazy="true"  
-							paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"  
-							rowsPerPageTemplate="5,10,15"  
+									lazy="true"  
+									paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"  
+									rowsPerPageTemplate="5,10,15"  
 							>
 							
 							<f:facet name="header">
@@ -127,11 +127,11 @@
 							selection="#{vueAffichageResultat.clusterArtisteNiveau1Choisi}"
 							selectionMode="single" 
 							style="width:'#{vueAffichageResultat.largeurDataTables1}';"
-							paginator="true" 
+							paginator="true"
 							rows="10" 
-							lazy="true"  
-							paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"  
-							rowsPerPageTemplate="5,10,15"  
+									lazy="true"  
+									paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"  
+									rowsPerPageTemplate="5,10,15" 
 							>   
 
 						
@@ -173,7 +173,7 @@
 							selection="#{vueAffichageResultat.clusterChansonNiveau1Choisi}"
 							selectionMode="single" 
 							style="width:'#{vueAffichageResultat.largeurDataTables1}';"
-							paginator="true" 
+							paginator="true"
 							rows="10" 
 							lazy="true"  
 							paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"  
@@ -243,16 +243,11 @@
 								<center>
 								<p:messages showDetail="true" rendered="#{vueAffichageResultat.selectionAlbum2NonValide}"/>
 								<p:dataTable var="cluster"
-									value="#{vueAffichageResultat.lazyModelAlbums2}"
+									value="#{vueAffichageResultat.clustersAlbumsNiveau2}"
 									selection="#{vueAffichageResultat.clusterAlbumNiveau2Choisi}"
 									selectionMode="single"
 									rendered="#{vueAffichageResultat.etape2album}"
 									style="width:'#{vueAffichageResultat.largeurDataTables2_3}';"
-									paginator="true" 
-									rows="10" 
-									lazy="true"  
-									paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"  
-									rowsPerPageTemplate="5,10,15"  
 									>
 									
 									 <f:facet name="header">
@@ -288,16 +283,11 @@
 								<center>
 								<p:messages showDetail="true" rendered="#{vueAffichageResultat.selectionArtiste2NonValide}"/>
 								<p:dataTable var="cluster"
-									value="#{vueAffichageResultat.lazyModelArtistes2}"
+									value="#{vueAffichageResultat.clustersArtistesNiveau2}"
 									selection="#{vueAffichageResultat.clusterArtisteNiveau2Choisi}"
 									selectionMode="single"
 									rendered="#{vueAffichageResultat.etape2artiste}"
 									style="width:'#{vueAffichageResultat.largeurDataTables2_3}';"
-									paginator="true" 
-									rows="10" 
-									lazy="true"  
-									paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"  
-									rowsPerPageTemplate="5,10,15"  
 									>
 		 		
 		 							<f:facet name="header">
@@ -331,15 +321,11 @@
 								<center>
 								<p:messages showDetail="true" rendered="#{vueAffichageResultat.selectionChanson2NonValide}"/>
 								<p:dataTable var="cluster"
-									value="#{vueAffichageResultat.lazyModelChansons2}"
+									value="#{vueAffichageResultat.clustersChansonsNiveau2}"
 									selection="#{vueAffichageResultat.clusterChansonNiveau2Choisi}"
 									selectionMode="single"
 									rendered="#{vueAffichageResultat.etape2chanson}"
 									style="width:'#{vueAffichageResultat.largeurDataTables2_3}';"
-									rows="10" 
-									lazy="true"  
-									paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"  
-									rowsPerPageTemplate="5,10,15"  
 									>
 									
 									<f:facet name="header">
@@ -373,14 +359,10 @@
 <!-- etape 3 album -->
 								<center>
 								<p:dataTable var="album"
-									value="#{vueAffichageResultat.lazyModelAlbums3}"
+									value="#{vueAffichageResultat.resultatAlbums}"
 									rendered="#{vueAffichageResultat.etape3album}"
 									style="width:'#{vueAffichageResultat.largeurDataTables2_3}';"
-									rows="10" 
-									lazy="true"  
-									paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"  
-									rowsPerPageTemplate="5,10,15"  
-									>
+								>
 									
 									<f:facet name="header">
 										<h:outputLabel style="font-size: 18;">
@@ -443,13 +425,9 @@
 <!-- etape 3 artiste -->
 								<center>
 								<p:dataTable var="artiste"
-									value="#{vueAffichageResultat.lazyModelArtistes3}"
+									value="#{vueAffichageResultat.resultatArtistes}"
 									rendered="#{vueAffichageResultat.etape3artiste}"
 									style="width:'#{vueAffichageResultat.largeurDataTables2_3}';"
-									rows="10" 
-									lazy="true"  
-									paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"  
-									rowsPerPageTemplate="5,10,15"  
 									>
 		
 									<f:facet name="header">
@@ -497,13 +475,9 @@
 <!-- etape 3 chanson -->
 								<center>
 								<p:dataTable var="chanson"
-									value="#{vueAffichageResultat.lazyModelChansons3}"
+									value="#{vueAffichageResultat.resultatChansons}"
 									rendered="#{vueAffichageResultat.etape3chanson}"
 									style="width:'#{vueAffichageResultat.largeurDataTables2_3}';"
-									rows="10" 
-									lazy="true"  
-									paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"  
-									rowsPerPageTemplate="5,10,15"  
 									>
 									
 									<f:facet name="header">

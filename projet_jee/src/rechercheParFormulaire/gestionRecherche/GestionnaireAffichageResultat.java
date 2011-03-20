@@ -90,11 +90,13 @@ public class GestionnaireAffichageResultat {
 	}
 	
 	public ArrayList<Cluster>  retournerClustersChansonNiveau2(Cluster clusterChansonNiveau1Choisi){
+		System.out.println("clusterChansonNiveau1Choisi "+clusterChansonNiveau1Choisi);
 		ArrayList<Cluster> clustersChansonsNiveau2= new ArrayList<Cluster>();
 		for(Entry<String,ComposantCluster> currentEntry : 
 			clusterChansonNiveau1Choisi.getContenu().entrySet()){
 			clustersChansonsNiveau2.add((Cluster)currentEntry.getValue());
 		}
+		System.out.println("clustersChansonsNiveau2 "+clustersChansonsNiveau2);
 		return clustersChansonsNiveau2;
 	}
 	
@@ -130,6 +132,7 @@ public class GestionnaireAffichageResultat {
 
 
 	public ArrayList<Chanson> retournerChansons(Cluster clusterChansonNiveau2Choisi){
+		System.out.println("clusterChansonNiveau2Choisi "+clusterChansonNiveau2Choisi);
 		ArrayList<Chanson> resultatChansons= new ArrayList<Chanson>();
 		for(Entry<String,ComposantCluster> currentEntry : 
 			clusterChansonNiveau2Choisi.getContenu().entrySet()){

@@ -73,7 +73,7 @@ public class CalculateurDeClustersChansons {
 		//on ajoute chaque chanson au contenu d'un sous-cluster de sous-cluster1
 		//et on créé on fur et a mesure les sous-clusters de sous-cluster1
 		for(Chanson ch : chansons){
-			//selon le 2eme axe: exemple saison
+			//selon le 2eme axe: 
 			String valeurAxe = ch.getListeners()+"";
 			//si le clusterGeneral ne contient aucun cluster pour cette valeur
 			if(!sousCluster1.getContenu().containsKey(valeurAxe)){

@@ -82,7 +82,8 @@ public class RechercheChanson{
 		resultats.add(c4);
 		
 
-		
+		System.out.println(CalculateurDeClusters.getInstanceunique().
+		calculerClustersChanson(resultats));
 		return CalculateurDeClusters.getInstanceunique().
 		calculerClustersChanson(resultats);
 		

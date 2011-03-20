@@ -165,7 +165,6 @@ public class CalculateurDeClusters {
 		Cluster clusterGeneral = new Cluster();
 		HashMap<ComposantCluster,ArrayList<Chanson>> affectationChansonSousCluster = new HashMap<ComposantCluster,ArrayList<Chanson>>();
 		//affectationChansonSousCluster va permettre l'affectation des Chansons dans les sous-clusters
-		
 		//premier decoupage
 		//on affecte chaque Chanson a un sous-cluster de cluster general
 		//et on crée au fur et a mesure les sous-clusters de cluster general
@@ -199,7 +198,6 @@ public class CalculateurDeClusters {
 	
 	
 	public void calculerClustersChansonNiveau2(ComposantCluster sousCluster1,ArrayList<Chanson> chansons){
-		
 		//deuxieme decoupage
 		//on ajoute chaque chanson au contenu d'un sous-cluster de sous-cluster1
 		//et on créé on fur et a mesure les sous-clusters de sous-cluster1
@@ -214,7 +212,7 @@ public class CalculateurDeClusters {
 			}
 			//on ajoute la chanson au sous-cluster de niveau 2 qui correspond
 			ComposantCluster sousClusterNiveau2 = sousCluster1.getContenu().get(valeurAxe);
-			sousClusterNiveau2.getContenu().put(sousCluster1.getNom()+" & "+sousClusterNiveau2.getNom(),ch);
+			sousClusterNiveau2.getContenu().put(ch.getUrl(),ch);
 		}
 	}
 	
