@@ -1,8 +1,19 @@
 package main;
 
+import java.util.ArrayList;
+
+import exceptions.ChargementException;
+
 import bdd.chargement.ChargementBDDOracleDepuisTxt;
 import bdd.rechercheBDD.RechercheAlbumBDD;
+import bdd.rechercheBDD.RechercheArtisteBDD;
+import bdd.rechercheBDD.maClasseAlbum;
+import bdd.rechercheBDD.maClasseArtiste;
+import bdd.rechercheBDD.maClasseChanson;
 import metier.Cluster;
+import metier.oeuvres.Album;
+import metier.oeuvres.Artiste;
+import metier.oeuvres.Chanson;
 import rechercheParFormulaire.gestionRecherche.RechercheAlbum;
 
 public class main {
@@ -24,9 +35,19 @@ public class main {
 		//System.out.println(c.varianceCluster());
 		//ChargementBDDOracleDepuisTxt.charger();
 		
-		RechercheAlbumBDD reach = new RechercheAlbumBDD("ordinateur");
-		System.out.println(reach.getAlbums());
+		//RechercheArtisteBDD reach = new RechercheArtisteBDD("cher");
+		//System.out.println(reach.getAlbums());
 		
+		
+		ArrayList<Chanson> c=null;
+		maClasseChanson mc = new maClasseChanson();
+		try {
+			c = mc.rechercherChansons("LIVE");
+		} catch (ChargementException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println(c);
 	}
 
 

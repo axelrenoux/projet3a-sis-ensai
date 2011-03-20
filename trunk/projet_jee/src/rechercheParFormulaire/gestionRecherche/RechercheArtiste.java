@@ -2,8 +2,12 @@ package rechercheParFormulaire.gestionRecherche;
 
 import java.util.ArrayList;
 
+import bdd.rechercheBDD.maClasseAlbum;
+import bdd.rechercheBDD.maClasseArtiste;
+
 import calculsDesClusters.calcul.CalculateurDeClusters;
 import calculsDesClusters.calcul.CalculateurDeClustersArtistes;
+import exceptions.ChargementException;
 
 
 import metier.Cluster;
@@ -57,6 +61,13 @@ public class RechercheArtiste{
 		resultats.add(a3);
 		resultats.add(a4);
 		
+		/*maClasseArtiste ma = new maClasseArtiste();
+		try {
+			resultats = ma.rechercherArtistes(motCle);
+		} catch (ChargementException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}*/
 		
 		return CalculateurDeClusters.getInstanceunique().
 		calculerClustersArtiste(resultats);

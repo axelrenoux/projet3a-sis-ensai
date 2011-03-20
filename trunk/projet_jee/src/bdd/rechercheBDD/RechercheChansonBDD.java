@@ -35,8 +35,7 @@ public class RechercheChansonBDD extends RechercheBDD {
 								"w.datepublication as dateWiki , "+
 								"w.resume as resumeWiki , "+
 								"w.contenu as contenuWiki"+
-				" FROM ARTISTE art , WIKI w , IMAGES i , AUDIMAT aud , ID_NAME_URL inu , " +
-						" ID_NAME_URL inu2 , CHANSON c" +
+				" FROM ARTISTE art , WIKI w , IMAGES i , AUDIMAT aud , ID_NAME_URL inu , CHANSON c" +
 				" WHERE art.id_name_url = inu.cle_primaire" +
 					" and art.images = i.cle_primaire" +
 					" and art.audimat = aud.cle_primaire" +

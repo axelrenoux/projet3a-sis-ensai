@@ -48,13 +48,29 @@ public class Artiste extends ObjetAComparer implements Oeuvre{
 		super();
 	}
 	
+	//TODO ajoute
+	public Artiste(String name){
+		this.name = name;
+	}
 	
-	
+
+	public Artiste(String name, String url,
+			String imageLarge,double listeners,
+			double playcount,Wiki wiki) {
+		this();
+		this.name = name;
+		this.url=url;
+		this.imageLarge=imageLarge;
+		this.listeners=listeners; 
+		this.playcount=playcount; 
+		this.wiki=wiki; 
+	}
+
  
 	
 	
 	/**
-	 * constructeur avec les parametres
+	 * constructeur avec tous les parametres
 	 * @param name
 	 * @param url
 	 * @param imageSmall
@@ -73,7 +89,6 @@ public class Artiste extends ObjetAComparer implements Oeuvre{
 			String imageExtraLarge,String imageMega,double listeners,
 			double playcount,ArrayList<Artiste> artistesSimilaires,
 			ArrayList<Tag> toptags,Wiki wiki) {
-		this();
 		this.name = name;
 		this.url=url;
 		this.imageSmall=imageSmall;
