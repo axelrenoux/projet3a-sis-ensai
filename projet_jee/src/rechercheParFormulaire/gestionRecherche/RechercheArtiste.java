@@ -69,7 +69,7 @@ public class RechercheArtiste{
 			e.printStackTrace();
 		}*/
 		
-		return CalculateurDeClusters.getInstanceunique().
+		return CalculateurDeClustersArtistes.getInstanceunique().
 		calculerClustersArtiste(resultats);
 	}
 	
