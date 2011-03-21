@@ -16,10 +16,14 @@ public class Peuplement {
 		recherche.add("sheffield");
 		recherche.add("strapontin");
 		recherche.add("ordinateur");*/
-		recherche.add("believe");
-		recherche.add("cher");
-		recherche.add("hitmachine");
-		recherche.add("toi");
+		recherche.add("serviette");
+		recherche.add("bonhomme");
+		recherche.add("mousse");
+		recherche.add("hotel");
+		recherche.add("trust");
+		recherche.add("mozart");
+		recherche.add("carnaval");
+		recherche.add("dance");
 		recherche.add("Christine");
 		recherche.add("Tiny");
 		recherche.add("Ronan");

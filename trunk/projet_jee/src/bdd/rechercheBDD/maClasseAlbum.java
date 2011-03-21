@@ -4,15 +4,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import exceptions.ChargementException;
-import exceptions.QueryException;
-
-import metier.Tag;
 import metier.Wiki;
 import metier.oeuvres.Album;
 import metier.oeuvres.Artiste;
-import metier.oeuvres.Chanson;
 import bdd.sqlviajdbc.ControlAccesSQLViaJDBC;
+import exceptions.ChargementException;
+import exceptions.QueryException;
 
 public class maClasseAlbum {
 
@@ -26,12 +23,7 @@ public class maClasseAlbum {
 
 	//resultat = ControlAccesSQLViaJDBC.executerRequeteAvecRetour(recherche);
 
-
-
-
 	public ArrayList<Album> rechercherAlbums(String motcle) throws ChargementException{
-		ArrayList<Album> albumsrecherches = new ArrayList<Album>();
-		ResultSet resultat;
 		String recherche=
 			"SELECT DISTINCT  "+  
 			" inu.name as nameAlbum ,   "+ 
@@ -54,6 +46,39 @@ public class maClasseAlbum {
 			"		on art.id_name_url = alb.artiste  "+
 			"  WHERE (UPPER(inu.name) LIKE UPPER('%"+ motcle +"%')    "+
 			"      or UPPER(inu2.name) LIKE UPPER('%"+ motcle +"%')) ";
+			return communRechercherAlbums(recherche);
+		}
+	
+	public ArrayList<Album> rechercherAlbumsEtendu(String motcle) throws ChargementException{
+		String recherche=
+			"SELECT DISTINCT  "+  
+			" inu.name as nameAlbum ,   "+ 
+			" inu.url as url ,    "+
+			" inu2.name as nameArtiste ,    "+
+			" alb.date_sortie as datesortie ,   "+
+			" i.imageLarge as iL ,    "+
+			" aud.listeners as list ,    "+
+			" aud.playcount as playc ,    "+
+			" w.datepublication as dateWiki ,   "+
+			" w.resume as resumeWiki ,   "+
+			" w.contenu as contenuWiki  "+
+			" FROM ALBUM alb "+
+			"  INNER JOIN WIKI w on alb.wiki = w.cle_primaire   "+
+			"  INNER JOIN IMAGES i ON alb.images = i.cle_primaire   "+
+			"  INNER JOIN AUDIMAT aud on  alb.audimat = aud.cle_primaire "+
+			"  INNER JOIN ID_NAME_URL inu on alb.id_name_url = inu.cle_primaire    "+
+			"  INNER JOIN (ARTISTE art  "+
+			"		 INNER JOIN ID_NAME_URL inu2 on art.id_name_url = inu2.cle_primaire) "+
+			"		on art.id_name_url = alb.artiste  "+
+			"  WHERE (inu.cle_primaire IN ("+ConditionsRechercherEtendu.getClesAlbum(motcle)+")    "+
+			"      or inu2.cle_primaire IN ("+ConditionsRechercherEtendu.getClesAlbum(motcle)+")) ";
+			return communRechercherAlbums(recherche);
+		}
+
+
+	private ArrayList<Album> communRechercherAlbums(String recherche) throws ChargementException{
+		ArrayList<Album> albumsrecherches = new ArrayList<Album>();
+		ResultSet resultat;
 		try {
 			resultat = ControlAccesSQLViaJDBC.executerRequeteAvecRetour(recherche);
 		} catch (QueryException e1) {
@@ -97,8 +122,6 @@ public class maClasseAlbum {
 	 * @throws ChargementException
 	 */
 	public ArrayList<Album> rechercherAlbumsChanson(String chanson) throws ChargementException{
-		ArrayList<Album> albumsChansonrecherches = new ArrayList<Album>();
-		ResultSet resultat;
 		String recherche=
 			" SELECT DISTINCT      "+
 			" inu.name as nameAlbum ,  "+   
@@ -125,6 +148,42 @@ public class maClasseAlbum {
 			"	on ch.id_name_url = cca.chanson)    "+
 			" on cca.album = alb.id_name_url   "+
 			" WHERE UPPER(inu3.name)  = UPPER('%"+chanson+"%')";
+		return communRechercherAlbumsChanson(recherche);
+	}
+	
+	public ArrayList<Album> rechercherAlbumsChansonEtendu(String chanson) throws ChargementException{
+		String recherche=
+			" SELECT DISTINCT      "+
+			" inu.name as nameAlbum ,  "+   
+			" inu.url as url ,      "+
+			" inu2.name as nameArtiste ,      "+
+			" alb.date_sortie as datesortie ,    "+ 
+			" i.imageLarge as iL ,      "+
+			" aud.listeners as list ,      "+
+			" aud.playcount as playc ,      "+
+			" w.datepublication as dateWiki ,     "+
+			" w.resume as resumeWiki ,     "+
+			" w.contenu as contenuWiki    "+
+			" FROM ALBUM alb   "+
+			" INNER JOIN WIKI w on alb.wiki = w.cle_primaire     "+
+			" INNER JOIN IMAGES i ON alb.images = i.cle_primaire     "+
+			" INNER JOIN AUDIMAT aud on  alb.audimat = aud.cle_primaire   "+
+			" INNER JOIN ID_NAME_URL inu on alb.id_name_url = inu.cle_primaire     "+ 
+			" INNER JOIN (ARTISTE art    "+
+			"	INNER JOIN ID_NAME_URL inu2 on art.id_name_url = inu2.cle_primaire)   "+
+			"	on art.id_name_url = alb.artiste     "+
+			" INNER JOIN (CORRESP_CHANSON_ALBUM cca    "+
+			"	INNER JOIN (CHANSON ch    "+
+			"		INNER JOIN id_name_url inu3 on inu3.cle_primaire = ch.id_name_url)   "+ 
+			"	on ch.id_name_url = cca.chanson)    "+
+			" on cca.album = alb.id_name_url   "+
+			" WHERE inu3.cle_primaire IN ("+ConditionsRechercherEtendu.getClesChanson(chanson)+")";
+		return communRechercherAlbumsChanson(recherche);
+	}
+	
+	private ArrayList<Album> communRechercherAlbumsChanson(String recherche) throws ChargementException{
+		ArrayList<Album> albumsChansonrecherches = new ArrayList<Album>();
+		ResultSet resultat;
 		try {
 			resultat = ControlAccesSQLViaJDBC.executerRequeteAvecRetour(recherche);
 		} catch (QueryException e1) {
@@ -156,7 +215,6 @@ public class maClasseAlbum {
 	
 	
 	
-	
 	//TODO a tester 
 	/**
 	 * methode qui renvoie les albums d'un artiste? 
@@ -165,8 +223,6 @@ public class maClasseAlbum {
 	 * @throws ChargementException
 	 */
 	public ArrayList<Album> rechercherAlbumsArtiste(String nomartiste) throws ChargementException{
-		ArrayList<Album> albumsChansonrecherches = new ArrayList<Album>();
-		ResultSet resultat;
 		String recherche=
 			"SELECT DISTINCT  "+  
 			" inu.name as nameAlbum ,   "+ 
@@ -188,6 +244,37 @@ public class maClasseAlbum {
 			"		 INNER JOIN ID_NAME_URL inu2 on art.id_name_url = inu2.cle_primaire) "+
 			"		on art.id_name_url = alb.artiste  "+
 			"  WHERE UPPER(inu2.name) = UPPER('%"+ nomartiste +"%')) ";
+		return communRechercherAlbumsArtiste(recherche);
+	}
+	
+	public ArrayList<Album> rechercherAlbumsArtisteEtendu(String nomartiste) throws ChargementException{
+		String recherche=
+			"SELECT DISTINCT  "+  
+			" inu.name as nameAlbum ,   "+ 
+			" inu.url as url ,    "+
+			" inu2.name as nameArtiste ,    "+
+			" alb.date_sortie as datesortie ,   "+
+			" i.imageLarge as iL ,    "+
+			" aud.listeners as list ,    "+
+			" aud.playcount as playc ,    "+
+			" w.datepublication as dateWiki ,   "+
+			" w.resume as resumeWiki ,   "+
+			" w.contenu as contenuWiki  "+
+			" FROM ALBUM alb "+
+			"  INNER JOIN WIKI w on alb.wiki = w.cle_primaire   "+
+			"  INNER JOIN IMAGES i ON alb.images = i.cle_primaire   "+
+			"  INNER JOIN AUDIMAT aud on  alb.audimat = aud.cle_primaire "+
+			"  INNER JOIN ID_NAME_URL inu on alb.id_name_url = inu.cle_primaire    "+
+			"  INNER JOIN (ARTISTE art  "+
+			"		 INNER JOIN ID_NAME_URL inu2 on art.id_name_url = inu2.cle_primaire) "+
+			"		on art.id_name_url = alb.artiste  "+
+			"  WHERE inu2.cle_primaire IN ("+ ConditionsRechercherEtendu.getClesArtiste(nomartiste) +")) ";
+		return communRechercherAlbumsArtiste(recherche);
+	}
+	
+	private ArrayList<Album> communRechercherAlbumsArtiste(String recherche) throws ChargementException{
+		ArrayList<Album> albumsChansonrecherches = new ArrayList<Album>();
+		ResultSet resultat;
 		try {
 			resultat = ControlAccesSQLViaJDBC.executerRequeteAvecRetour(recherche);
 		} catch (QueryException e1) {
@@ -216,8 +303,6 @@ public class maClasseAlbum {
 		}
 		return albumsChansonrecherches;
 	}
-	
-	
 	
 	
 	public static maClasseAlbum getInstance() {
