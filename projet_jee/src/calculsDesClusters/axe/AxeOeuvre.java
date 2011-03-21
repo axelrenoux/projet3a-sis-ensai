@@ -8,5 +8,11 @@ public class AxeOeuvre implements Axe{
 	public String CalculAxe(Oeuvre oeuvre) {
 		return oeuvre.getNom();
 	}
-
+	
+	
+	@Override
+	public String getType() {
+		// TODO Auto-generated method stub
+		return " ";
+	}
 }

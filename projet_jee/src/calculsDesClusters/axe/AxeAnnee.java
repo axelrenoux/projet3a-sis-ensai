@@ -88,5 +88,12 @@ public class AxeAnnee implements Axe {
 		return classe;
 		
 	}
+	
+	
+	@Override
+	public String getType() {
+		// TODO Auto-generated method stub
+		return "Année";
+	}
 
 }
