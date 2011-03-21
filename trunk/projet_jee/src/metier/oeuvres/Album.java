@@ -419,7 +419,7 @@ public class Album extends ObjetAComparer implements Oeuvre {
 	}
 
 
-	
 
-
+	@Override
+	protected String getNomTableBDD(){return "ALBUM";}
 }

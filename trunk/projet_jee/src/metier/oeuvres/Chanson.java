@@ -477,4 +477,8 @@ public class Chanson extends ObjetAComparer implements Oeuvre{
 	public Collection<Chanson> getObjetsDeCeType() {
 		return Controleur.getInstanceuniquecontroleur().getListeChansons().values();
 	}
+	
+
+	@Override
+	protected String getNomTableBDD(){return "CHANSON";}
 }

@@ -34,7 +34,7 @@ public class ComparaisonUtilisee extends FonctionDeRapprochement {
           }
           System.out.println("");*/
           float similitude=((float) ar[chaine1.length()][chaine2.length()])/(12*Math.min(chaine1.length(),chaine2.length()));
-          System.out.println("Taux proximité "+chaine1+" % "+chaine2+" : "+similitude);
+          //System.out.println("Taux proximité "+chaine1+" % "+chaine2+" : "+similitude);
 	      return similitude;
 	  }
 	  

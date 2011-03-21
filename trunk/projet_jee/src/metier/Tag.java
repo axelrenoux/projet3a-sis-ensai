@@ -3,11 +3,11 @@
 import java.util.ArrayList;
 import java.util.Collection;
 
-import comparaison.FonctionDeRapprochement;
-
 import metier.oeuvres.Album;
 import metier.oeuvres.Artiste;
 import metier.oeuvres.Chanson;
+
+import comparaison.FonctionDeRapprochement;
 
 import controleur.Controleur;
 
@@ -223,4 +223,9 @@ public class Tag extends ObjetAComparer{
 	public Collection<Tag> getObjetsDeCeType() {
 		return Controleur.getInstanceuniquecontroleur().getListeTags().values();
 	}
+
+	
+	
+	@Override
+	protected String getNomTableBDD(){return "TAG";}
 }

@@ -70,7 +70,7 @@ class SQLViaJDBC{
 		try {
 			System.out.println(" m1 ");
 			//TODO plante ici depuis j2EE
-			DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
+			DriverManager.registerDriver(new oracle.jdbc.OracleDriver());
 		} catch (SQLException e) {
 			throw new ConnectionException(e);
 		}
