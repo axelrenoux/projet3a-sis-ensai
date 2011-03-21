@@ -53,7 +53,6 @@ public class ControlAccesSQLViaJDBC{
 	}
 	
 	public static ResultSet executerRequeteAvecRetour(final String requeteSQL) throws QueryException {
-		System.out.println("iiiiiiiiiiiiiiiiiiiiii " +estConnecte);
 		if(!estConnecte){try{connecter();}catch(ConnectionException e){e.printStackTrace();}}
 		return SQLViaJDBC.executerRequeteAvecRetour(requeteSQL);
 	}
