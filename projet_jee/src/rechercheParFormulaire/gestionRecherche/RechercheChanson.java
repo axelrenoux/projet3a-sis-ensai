@@ -6,6 +6,7 @@ import bdd.rechercheBDD.maClasseAlbum;
 import bdd.rechercheBDD.maClasseChanson;
 
 import calculsDesClusters.calcul.CalculateurDeClusters;
+import calculsDesClusters.calcul.CalculateurDeClustersChansons;
 import exceptions.ChargementException;
 
 
@@ -95,7 +96,7 @@ public class RechercheChanson{
 		}*/
 		
 		
-		return CalculateurDeClusters.getInstanceunique().
+		return CalculateurDeClustersChansons.getInstanceunique().
 		calculerClustersChanson(resultats);
 		
 	}
