@@ -449,4 +449,8 @@ public class Artiste extends ObjetAComparer implements Oeuvre{
 	public Collection<Artiste> getObjetsDeCeType() {
 		return Controleur.getInstanceuniquecontroleur().getListeArtistes().values();
 	}
+	
+
+	@Override
+	protected String getNomTableBDD(){return "ARTISTE";}
 }
