@@ -25,5 +25,11 @@ public class AxeSaison implements Axe{
 		if(d.getMonth()+1<10 && d.getMonth()+1>3) return "été";
 		else return "hiver";
 	}
+	
+	@Override
+	public String getType() {
+		// TODO Auto-generated method stub
+		return "saison";
+	}
 
 }

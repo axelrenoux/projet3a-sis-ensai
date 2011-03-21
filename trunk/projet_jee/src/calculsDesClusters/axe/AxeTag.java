@@ -9,4 +9,10 @@ public class AxeTag implements Axe {
 		return oeuvre.getToptags().get(0).getName();
 	}
 
+	
+	@Override
+	public String getType() {
+		// TODO Auto-generated method stub
+		return "Tag";
+	}
 }
