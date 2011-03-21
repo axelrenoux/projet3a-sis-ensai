@@ -3,6 +3,8 @@ package recuperationLastFM.recuperationDonnees;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.http.impl.conn.tsccm.WaitingThread;
+
 import bdd.GestionBddJavaPourSauvegarde;
 import bdd.sauvegarde_controlee.ControleSauvegardeBddFormatOracle;
 import bdd.sauvegarde_controlee.ControleSauvegardeUnFormatPourLaBdd;
@@ -56,6 +58,10 @@ public class Peuplement {
 			recreerLesTables=false;
 			formatSauvegarde=new ControleSauvegardeBddFormatOracle();
 			GestionBddJavaPourSauvegarde.decomposerAvantSauvegardeGereePar(formatSauvegarde, recreerLesTables);
+			//On fait une pose de 20 minutes entre chaque mot-clé recherché
+			try {
+				Thread.sleep(20*60000);
+			} catch (InterruptedException e) {e.printStackTrace();}
 		}
 	}
 	
