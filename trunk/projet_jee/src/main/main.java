@@ -39,15 +39,47 @@ public class main {
 		//System.out.println(reach.getAlbums());
 		
 		
-		ArrayList<Chanson> c=null;
-		maClasseChanson mc = new maClasseChanson();
+		ArrayList<Album> c=null;
+		maClasseAlbum mc = maClasseAlbum.getInstance();
 		try {
-			c = mc.rechercherChansons("LIVE");
+			c = mc.rechercherAlbums("LIVE");
 		} catch (ChargementException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		System.out.println(c);
+		System.out.println(c.size());
+		
+		ArrayList<Artiste> ar=null;
+		maClasseArtiste mar = maClasseArtiste.getInstance();
+		try {
+			ar = mar.rechercherArtistes("re");
+		} catch (ChargementException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println(ar);
+		
+		
+		ArrayList<Chanson> ch=null;
+		maClasseChanson mcc = maClasseChanson.getInstance();
+		try {
+			ch = mcc.rechercherChansons("re");
+		} catch (ChargementException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println(ch);
+		
+		/*for (Album ch:c){
+			if (ch.getDate()!=null){
+				System.out.println(ch.getDate());
+				System.out.println(ch.getDate().getDate() + " " +
+						ch.getDate().getMonth()+ " " + 
+						(ch.getDate().getYear()+1900));
+			}
+		}*/
+		
 	}
 
 
