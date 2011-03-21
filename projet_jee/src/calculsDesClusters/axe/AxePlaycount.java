@@ -131,4 +131,11 @@ public class AxePlaycount implements Axe{
 		System.out.println(axe.CalculAxe(f));
 
 	}*/
+	
+	
+	@Override
+	public String getType() {
+		// TODO Auto-generated method stub
+		return "Nombre d'écoutes";
+	}
 }
