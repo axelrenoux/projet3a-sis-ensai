@@ -136,9 +136,11 @@ public class RechercheAlbum {
 		}
 		
 		
-		
+		//inserer un traitement qui calcule tous les clusters possibles puis 
+		//qui calcule les variances pour chaque découpage et sélectionne le meilleur
 		Axe axe1Date = new AxeAnnee();
 		Axe axe2Saison = new AxeSaison();
+		
 		
 		return CalculateurDeClustersAlbums.getInstanceunique().
 		calculerClustersAlbum(axe1Date,axe2Saison,resultats);
