@@ -65,10 +65,7 @@ class SQLViaJDBC{
 	 * @throws ConnectionException
 	 */
 	protected static void connecter(String id, String mdp) throws ConnectionException {
-		System.out.println("connecter(  ,  )");
-		
 		try {
-			System.out.println(" m1 ");
 			//TODO plante ici depuis j2EE
 			DriverManager.registerDriver(new oracle.jdbc.OracleDriver());
 		} catch (SQLException e) {
