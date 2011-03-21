@@ -15,23 +15,23 @@ import exceptions.JaroException;
 public abstract class FonctionDeRapprochement{
 	private double seuil=0.7;
 	
-	private float appliquer(ObjetAComparer a,ObjetAComparer b){
-		try{
-			return appliquer(a.getName(),b.getName());
-		}
-		catch (JaroException e) {
-			return 0;
-		}
-	}
-	
 	/**
 	 * Fonction de rapprochement donnant un score de similarité entre deux String
 	 */
-	protected abstract float appliquer(String chaine1,String chaine2) throws JaroException;
-
 	public boolean sontSimilaires(ObjetAComparer ref,ObjetAComparer candidat){
-		return (appliquer(ref,candidat)>seuil);
+		return sontSimilaires(ref.getName(),candidat.getName());
 	}
+	
+	public boolean sontSimilaires(String ref,String candidat){
+		try{
+			return (appliquer(ref,candidat)>seuil);
+		}
+		catch (JaroException e) {
+			return false;
+		}
+	}
+
+	protected abstract float appliquer(String chaine1,String chaine2) throws JaroException;
 
 	public double getSeuil() {
 		return seuil;
