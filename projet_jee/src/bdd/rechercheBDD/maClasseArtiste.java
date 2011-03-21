@@ -4,15 +4,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import metier.Wiki;
+import metier.oeuvres.Artiste;
 import bdd.sqlviajdbc.ControlAccesSQLViaJDBC;
 import exceptions.ChargementException;
 import exceptions.QueryException;
-
-import metier.Tag;
-import metier.Wiki;
-import metier.oeuvres.Album;
-import metier.oeuvres.Artiste;
-import metier.oeuvres.Chanson;
 
 public class maClasseArtiste {
 
@@ -23,10 +19,7 @@ public class maClasseArtiste {
 	private maClasseArtiste() {
 	}
 	
-	
 	public ArrayList<Artiste> rechercherArtistes(String motcle) throws ChargementException{
-		ArrayList<Artiste> artistesrecherches = new ArrayList<Artiste>();
-		ResultSet resultat;
 		String recherche=
 			" SELECT DISTINCT    "+
 			" inu.name as nameArtiste ,    "+
@@ -43,6 +36,32 @@ public class maClasseArtiste {
 			" INNER JOIN AUDIMAT aud on aud.cle_primaire = art.audimat "+
 			" INNER JOIN ID_NAME_URL inu ON art.id_name_url = inu.cle_primaire "+  
 			" WHERE UPPER(inu.name) LIKE UPPER('%"+motcle+"%')";
+		return communRechercherArtistes(recherche);
+	}
+	
+	public ArrayList<Artiste> rechercherArtistesEtendu(String motcle) throws ChargementException{
+		String recherche=
+			" SELECT DISTINCT    "+
+			" inu.name as nameArtiste ,    "+
+			" inu.url as url ,   "+ 
+			" i.imageLarge as iL ,   "+ 
+			" aud.listeners as list ,    "+
+			" aud.playcount as playc ,    "+
+			" w.datepublication as dateWiki ,   "+
+			" w.resume as resumeWiki , "+  
+			" w.contenu as contenuWiki  "+
+			" FROM ARTISTE art "+
+			" INNER JOIN WIKI w on w.cle_primaire = art.wiki " +
+			" INNER JOIN IMAGES i on i.cle_primaire = art.imageS "+
+			" INNER JOIN AUDIMAT aud on aud.cle_primaire = art.audimat "+
+			" INNER JOIN ID_NAME_URL inu ON art.id_name_url = inu.cle_primaire "+
+			" WHERE inu.cle_primaire IN ("+ConditionsRechercherEtendu.getClesArtiste(motcle)+")";  
+		return communRechercherArtistes(recherche);
+	}
+	
+	private ArrayList<Artiste> communRechercherArtistes(String recherche) throws ChargementException{
+		ArrayList<Artiste> artistesrecherches = new ArrayList<Artiste>();
+		ResultSet resultat;
 		try {
 			resultat = ControlAccesSQLViaJDBC.executerRequeteAvecRetour(recherche);
 		} catch (QueryException e1) {
@@ -75,8 +94,6 @@ public class maClasseArtiste {
 		}
 		return artistesrecherches;
 	}
-	
-
 	
 	
 	public ArrayList<Artiste> rechercherArtistesSimilaires(String artiste1) throws ChargementException{
