@@ -125,7 +125,7 @@ public class RechercheAlbum {
 		
 		//il faudra ici aller cherche en base les albums repondant au mot cle
 		
-		maClasseAlbum ma = new maClasseAlbum();
+		maClasseAlbum ma = maClasseAlbum.getInstance();
 		try {
 			resultats = ma.rechercherAlbums(motCle);
 		}
