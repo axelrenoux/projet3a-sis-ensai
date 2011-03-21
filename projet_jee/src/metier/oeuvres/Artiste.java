@@ -180,12 +180,18 @@ public class Artiste extends ObjetAComparer implements Oeuvre{
 		+ "image small " + imageSmall + "\n "
 		+ "image mega " + imageMega + "\n ";
 		
-		try{
-				descrip+="nb artistes sim "+ artistesSimilaires.size()+ "\n ";
-				descrip+="nb tags "+ toptags.size()+ "\n ";
-				descrip+="resume wiki "+ wiki.getResume()+ "\n ";
+		if(artistesSimilaires!=null && artistesSimilaires.size()>0){
+			descrip+="nb artistes sim "+ artistesSimilaires.size()+" ";
+			for (Artiste a: artistesSimilaires){
+				descrip+=a.getName()+" ";
+			}
+			descrip+=" \n ";
 		}
-		catch (NullPointerException e){
+		if(toptags!=null && toptags.size()>0){	
+			descrip+="nb tags "+ toptags.size()+ "\n ";
+		}
+		if(wiki!=null){
+			descrip+="resume wiki "+ wiki.getResume()+ "\n ";
 		}
 		return descrip;	
 	}
