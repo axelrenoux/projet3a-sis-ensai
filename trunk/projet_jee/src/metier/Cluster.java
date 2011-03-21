@@ -86,7 +86,7 @@ public class Cluster implements ComposantCluster {
 		double mean = 0;
 		double s = 0.0;
 
-		//permet de calculer la variance de taille entre les clusters
+		//permet de calculer la variance d'effectifs entre les sous-clusters
 		for (double x : listeTaille) {
 			n++;
 			double delta = x - mean;
