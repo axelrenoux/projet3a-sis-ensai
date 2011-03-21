@@ -7,6 +7,12 @@ public class CoupleAxe {
 	private double variance;
 	
 	
+	
+	public CoupleAxe(Axe axe1, Axe axe2) {
+		super();
+		this.axe1 = axe1;
+		this.axe2 = axe2;
+	}
 	public Axe getAxe1() {
 		return axe1;
 	}
