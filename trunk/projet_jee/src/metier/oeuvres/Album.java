@@ -352,13 +352,6 @@ public class Album extends ObjetAComparer implements Oeuvre {
 	}
 
 
-
-	 
-
-	 
-
-
-
 	public ArrayList<Chanson> getChansons() {
 		return chansons;
 	}
@@ -416,6 +409,9 @@ public class Album extends ObjetAComparer implements Oeuvre {
 	public Collection<Album> getObjetsDeCeType() {
 		return Controleur.getInstanceuniquecontroleur().getListeAlbums().values();
 	}
+
+
+	
 
 
 }
