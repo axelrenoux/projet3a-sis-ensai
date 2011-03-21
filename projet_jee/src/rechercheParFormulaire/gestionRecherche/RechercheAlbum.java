@@ -1,18 +1,16 @@
 package rechercheParFormulaire.gestionRecherche;
 
 import java.util.ArrayList;
-
-import bdd.rechercheBDD.maClasseAlbum;
+import java.util.HashMap;
+import java.util.Map.Entry;
 
 import metier.Cluster;
+import metier.ComposantCluster;
 import metier.oeuvres.Album;
-import calculsDesClusters.axe.Axe;
-import calculsDesClusters.axe.AxeAnnee;
-import calculsDesClusters.axe.AxeOeuvre;
-import calculsDesClusters.axe.AxeSaison;
+import bdd.rechercheBDD.maClasseAlbum;
+import calculsDesClusters.axe.CoupleAxe;
 import calculsDesClusters.calcul.CalculateurDeClustersAlbums;
 import controleur.UtilitaireDate;
-import exceptions.ChargementException;
 import exceptions.ExceptionDate;
 
 public class RechercheAlbum {
@@ -136,14 +134,16 @@ public class RechercheAlbum {
 		}
 		
 		
-		//inserer un traitement qui calcule tous les clusters possibles puis 
-		//qui calcule les variances pour chaque découpage et sélectionne le meilleur
-		Axe axe1Date = new AxeAnnee();
-		Axe axe2Saison = new AxeSaison();
+		HashMap<CoupleAxe,Cluster> listeClusterPossible = CalculateurDeClustersAlbums.getInstanceunique().calculEnsembleClustersAlbums(resultats);
+		Cluster meilleurCluster = new Cluster();
 		
-		
-		return CalculateurDeClustersAlbums.getInstanceunique().
-		calculerClustersAlbum(axe1Date,axe2Saison,resultats);
+		for(Entry<CoupleAxe, Cluster> entry : listeClusterPossible.entrySet()) {
+			if (entry.getKey().getVariance() < meilleurCluster.varianceCluster()){
+				meilleurCluster = entry.getValue();
+			}
+		}
+			
+		return meilleurCluster;
 		
 	}
 	
