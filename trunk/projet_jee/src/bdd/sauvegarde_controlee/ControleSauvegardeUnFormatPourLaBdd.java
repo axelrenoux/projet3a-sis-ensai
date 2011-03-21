@@ -161,6 +161,7 @@ public abstract class ControleSauvegardeUnFormatPourLaBdd {
 	}
 
 	public abstract int getNbObsExistantes(boolean recreerLesTables);
+	
 	public abstract void setNbObsExistantes(int primarykey);
 
 	public void sauverAlbumTag(Integer album, Integer tag){

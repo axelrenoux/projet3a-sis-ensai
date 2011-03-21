@@ -7,7 +7,6 @@ import java.util.Map;
 
 import bdd.chargement.ChargementEtControleUrlExistantes;
 import bdd.sauvegarde_controlee.ControleSauvegardeUnFormatPourLaBdd;
-import bdd.sqlviajdbc.ControlAccesSQLViaJDBC;
 
 import metier.Tag;
 import metier.Wiki;
@@ -75,7 +74,6 @@ public class GestionBddJavaPourSauvegarde {
 		}
 		formatSauv.ecrireConclusion();
 		formatSauv.setNbObsExistantes(primarykey);
-		ControlAccesSQLViaJDBC.fermerBDD();
 	}
 
 	private static void sauver(Chanson laChanson) {

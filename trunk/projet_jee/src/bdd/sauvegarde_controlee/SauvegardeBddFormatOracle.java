@@ -47,6 +47,7 @@ class SauvegardeBddFormatOracle extends SauvegardeUnFormatPourLaBdd{
 	
 	@Override
 	protected void ecrireConclusion() {
+		ControlAccesSQLViaJDBC.fermerBDD();
 		fluxSortie.close();
 	}
 	
