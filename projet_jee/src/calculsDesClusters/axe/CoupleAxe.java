@@ -13,6 +13,9 @@ public class CoupleAxe {
 		this.axe1 = axe1;
 		this.axe2 = axe2;
 	}
+	public CoupleAxe() {
+		// TODO Auto-generated constructor stub
+	}
 	public Axe getAxe1() {
 		return axe1;
 	}
