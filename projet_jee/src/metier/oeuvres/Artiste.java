@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 
+import comparaison.FonctionDeRapprochement;
+
 import metier.ComposantCluster;
 import metier.ObjetAComparer;
 import metier.Tag;
@@ -44,8 +46,14 @@ public class Artiste extends ObjetAComparer implements Oeuvre{
 	 * constructeur vide
 	 */
 	public Artiste() {
-		//super(new ComparaisonArtisteTag());
 		super();
+	}
+	
+	/**
+	 * pour utiliser une autre fonction de rapprochement
+	 */
+	public Artiste(FonctionDeRapprochement fct) {
+		super(fct);
 	}
 	
 	//TODO ajoute

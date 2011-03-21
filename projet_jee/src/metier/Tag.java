@@ -3,6 +3,8 @@
 import java.util.ArrayList;
 import java.util.Collection;
 
+import comparaison.FonctionDeRapprochement;
+
 import metier.oeuvres.Album;
 import metier.oeuvres.Artiste;
 import metier.oeuvres.Chanson;
@@ -34,13 +36,21 @@ public class Tag extends ObjetAComparer{
 	 * constructeur vide
 	 */
 	public Tag() {
-		//super(new ComparaisonArtisteTag());
 		super();
 		listeArtistes = new ArrayList<Artiste>();
 		listeAlbums = new ArrayList<Album>();
 		listeChansons = new ArrayList<Chanson>();
 	}
 	
+	/**
+	 * pour utiliser une autre fonction de rapprochement
+	 */
+	public Tag(FonctionDeRapprochement fct) {
+		super(fct);
+		listeArtistes = new ArrayList<Artiste>();
+		listeAlbums = new ArrayList<Album>();
+		listeChansons = new ArrayList<Chanson>();
+	}
 	
 	
 	 

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 
+import comparaison.FonctionDeRapprochement;
+
 import metier.ComposantCluster;
 import metier.ObjetAComparer;
 import metier.Tag;
@@ -43,10 +45,15 @@ public class Chanson extends ObjetAComparer implements Oeuvre{
 	 * constructeur vide
 	 */
 	public Chanson() {
-		//super(new ComparaisonAlbumChanson());
 		super();
 	}
 	
+	/**
+	 * pour utiliser une autre fonction de rapprochement
+	 */
+	public Chanson(FonctionDeRapprochement fct) {
+		super(fct);
+	}
 	
 	
 	public Chanson(String name, Double duree, String url, String imageLarge, 
