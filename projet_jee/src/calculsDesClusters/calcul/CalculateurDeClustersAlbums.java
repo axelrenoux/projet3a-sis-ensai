@@ -1,6 +1,5 @@
 package calculsDesClusters.calcul;
 
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
@@ -9,6 +8,11 @@ import metier.Cluster;
 import metier.ComposantCluster;
 import metier.oeuvres.Album;
 import calculsDesClusters.axe.Axe;
+import calculsDesClusters.axe.AxeAnnee;
+import calculsDesClusters.axe.AxeListener;
+import calculsDesClusters.axe.AxePlaycount;
+import calculsDesClusters.axe.AxeSaison;
+import calculsDesClusters.axe.CoupleAxe;
 
 
 
@@ -17,10 +21,10 @@ public class CalculateurDeClustersAlbums {
 	/********************************************************************/
 	/*************************      attributs       *********************/
 	/********************************************************************/
-	
+
 	private static final CalculateurDeClustersAlbums instanceUnique = new CalculateurDeClustersAlbums();
 
-	
+
 	/********************************************************************/
 	/**********************      constructeurs      *********************/
 	/********************************************************************/
@@ -35,12 +39,12 @@ public class CalculateurDeClustersAlbums {
 
 
 	/**************************    albums    ****************************/
-	
+
 	public Cluster calculerClustersAlbum(Axe axe1, Axe axe2, ArrayList<Album> albums){
 		Cluster clusterGeneral = new Cluster();
 		HashMap<ComposantCluster,ArrayList<Album>> affectationAlbumSousCluster = new HashMap<ComposantCluster,ArrayList<Album>>();
 		//affectationAlbumSousCluster va permettre l'affectation des albums dans les sous-clusters
-		
+
 		//premier decoupage
 		//on affecte chaque album a un sous-cluster de cluster general
 		//et on crée au fur et a mesure les sous-clusters de cluster general
@@ -63,18 +67,18 @@ public class CalculateurDeClustersAlbums {
 				affectationAlbumSousCluster.get(c).add(a);
 			}
 		}
-		
+
 		//on cree les sous-clusters de niveau 2 pour chaque sous-cluster de niveau 1
 		for(Entry<ComposantCluster, ArrayList<Album>> currentEntry : affectationAlbumSousCluster.entrySet()){
 			calculerClustersAlbumNiveau2(axe2, currentEntry.getKey(),currentEntry.getValue());
 		}
-		
+
 		return clusterGeneral;
 	}
-	
-	
+
+
 	public void calculerClustersAlbumNiveau2(Axe axe, ComposantCluster sousCluster1,ArrayList<Album> albums){
-		
+
 		//deuxieme decoupage
 		//on ajoute chaque album au contenu d'un sous-cluster de sous-cluster1
 		//et on crée au fur et a mesure les sous-clusters de sous-cluster1
@@ -92,28 +96,53 @@ public class CalculateurDeClustersAlbums {
 			sousClusterNiveau2.getContenu().put(a.getUrl(),a);//TODO je change par url
 		}
 	}
-	
-	
-	public ArrayList<Cluster> calculEnsembleClustersAlbums(ArrayList<Album> albums){
+
+
+	public HashMap<CoupleAxe,Cluster> calculEnsembleClustersAlbums(ArrayList<Album> albums){
+
+		HashMap<CoupleAxe, Cluster> listeCluster = new HashMap<CoupleAxe, Cluster>();
+		CoupleAxe currentCouple = new CoupleAxe();
+		Cluster currentCluster = new Cluster();
 		
-		
-		
-		
-		return null;
+		Axe axeAnnee = new AxeAnnee();
+		Axe axeSaison = new AxeSaison();
+		Axe axeListeners = new AxeListener();
+		Axe axePlaycount = new AxePlaycount();
+
+		ArrayList<Axe> listePremierAxe = new ArrayList<Axe>();
+		listePremierAxe.add(axeAnnee);	
+		listePremierAxe.add(axeSaison);
+		listePremierAxe.add(axeListeners);
+		listePremierAxe.add(axePlaycount);
+		ArrayList<Axe> listeDeuxiemeAxe = new ArrayList<Axe>();
+
+		for (Axe a : listePremierAxe){
+			listeDeuxiemeAxe = listePremierAxe;
+			listeDeuxiemeAxe.remove(a);
+			for (Axe b : listeDeuxiemeAxe){
+				currentCluster = calculerClustersAlbum(a,b,albums);
+				currentCouple.setAxe1(a);
+				currentCouple.setAxe2(b);
+				currentCouple.setVariance(currentCluster.varianceCluster());
+				listeCluster.put(currentCouple, currentCluster);
+			}
+		}
+
+		return listeCluster;
 	}
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
 	/********************************************************************/
 	/******************      getters / setters       ********************/
 	/********************************************************************/
 
-	 
+
 	public static CalculateurDeClustersAlbums getInstanceunique() {
 		return instanceUnique;
 	}
-	
+
 }
