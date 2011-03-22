@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.thoughtworks.xstream.XStream;
 
-import bdd.rechercheBDD.maClasseAlbum;
 
 import metier.Cluster;
 import metier.oeuvres.Album;
@@ -135,12 +134,22 @@ public class RechercheAlbum {
 		
 		/*maClasseAlbum ma = new maClasseAlbum();
 		try {
+
+			ar = mar.rechercherAlbums(motCle);
+		} catch (ChargementException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+
 			resultats = ma.rechercherAlbums(motCle);
+
 		}
+
+
 		catch(Exception e2){
 			System.out.println("erreur 2 " + e2.getLocalizedMessage());
 		}*/
 		
+
 		
 		
 		Axe axe1Date = new AxeAnnee();
