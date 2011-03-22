@@ -152,7 +152,7 @@ public class GestionnaireAffichageResultat {
 	}
 	
 
-	public ArrayList<Chanson> recupererLesChanson(Album album){
+	public ArrayList<Chanson> recupererLesChansons(Album album){
 		ArrayList<Chanson> chansons = null;
 		try {
 			chansons= RechercheChansonBDD.getInstance().rechercherChansonAlbum(album.getName());
@@ -162,6 +162,18 @@ public class GestionnaireAffichageResultat {
 		}
 		return chansons;
 	}
+	
+	public ArrayList<Album> recupererLesAlbums(Chanson chanson){
+		ArrayList<Album> albums = null;
+		try {
+			albums= RechercheAlbumBDD.getInstance().rechercherAlbumsChanson(chanson.getID());
+		} catch (ChargementException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return albums;
+	}
+	
 	
 	
 	/********************************************************************/
