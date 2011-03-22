@@ -69,6 +69,7 @@ public class Cluster implements ComposantCluster {
 				listeTaille.add(entry2.getValue().getContenu().size());
 			}
 		}
+		System.out.println(listeTaille);
 		return listeTaille;
 
 	}
