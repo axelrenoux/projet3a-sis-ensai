@@ -56,8 +56,9 @@ public class Chanson extends ObjetAComparer implements Oeuvre{
 	}
 	
 	
-	public Chanson(String name, Double duree, String url, String imageLarge, 
+	public Chanson(String inu, String name, Double duree, String url, String imageLarge, 
 			Artiste artiste,double listeners,double playcount,Wiki wiki) {
+		this.ID = inu;
 		this.name = name;
 		this.duree = duree;
 		this.url=url;
@@ -170,16 +171,24 @@ public class Chanson extends ObjetAComparer implements Oeuvre{
 		+ "playcount " + playcount + "\n "
 		+ "image mega " + imageMega + "\n ";
 		
-		
-		try{
-				descrip+="artiste "+ artiste.getName()+ "\n ";
-				descrip+="nb albums "+ albums.size()+ "\n ";
-				descrip+="nb tags "+ toptags.size()+ "\n ";
-				descrip+="resume wiki "+ wiki.getResume()+ "\n ";
+		if(artiste!=null){
+			descrip+="artiste "+ artiste.getName()+ "\n ";
 		}
-		catch (NullPointerException e){
+		if(albums!=null && albums.size()>0){
+			descrip+="nb albums "+ albums.size()+" ";
+			for(Album a : albums){
+				descrip+=a.getName() + ", ";
+			}
+			descrip+=" \n ";
 		}
-		return descrip;	
+		if(toptags!=null && toptags.size()>0){
+			descrip+="nb tags "+ toptags.size()+ " ";
+			for(Tag t : toptags){
+				descrip+=t.getName() + ", ";
+			}
+			descrip+=" \n ";
+		}	
+		return descrip;
 	}
 	
 	
