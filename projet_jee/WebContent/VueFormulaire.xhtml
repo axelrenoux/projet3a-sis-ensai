@@ -10,31 +10,28 @@
 	<ui:define name="title">Nouvelle recherche</ui:define>
 	<ui:define name="contenu">
         <h:form >
-        	<table style="height: 100%; width: 100%">
-			<tr>
-				<td style="width: 200px;"></td>
-				<td style="width: 400px;">
-		        	<p:panel header="Saisie de la recherche" toggleable="true">
+        			<center>
+		        	<p:panel header="Saisie de la recherche" toggleable="true" >
 			        	<h:panelGrid columns="2" columnClasses="column" cellpadding="5"> 
-				        	<h:outputLabel value = "Recherche"/>
+				        	<h:outputLabel value = "Saisir un mot clé"/>
 				        	<h:inputText value="#{vueFormulaire.motCle}"/>
-				        	<p:messages id="msgs" showDetail="true"/>
-							<p:commandButton value ="C'est parti !" action="#{vueFormulaire.lancerRecherche}" 
-									update="msgs" ajax="false"/>
-									
+				        	<h:outputLabel value = "Choisir un mode d'affichage du résultat"/>
+				        			
 							<h:selectOneRadio
 								 value="#{vueFormulaire.retourChoisi}">
 								  <f:selectItems
 								   value="#{vueFormulaire.retoursPossibles}" />
 							</h:selectOneRadio>
-
-
+							
+							<p:messages id="msgs" showDetail="true"/>
+							<p:commandButton value ="C'est parti !" action="#{vueFormulaire.lancerRecherche}" 
+									update="msgs" ajax="false"/>
+									
 						</h:panelGrid>
-					</p:panel>	
-				</td>
-				<td style="width: 200px;"></td>
-			</tr>
-			</table>		
+					</p:panel>
+					</center>	
+			
+					
  		</h:form> 
 	</ui:define>
 </ui:composition>
