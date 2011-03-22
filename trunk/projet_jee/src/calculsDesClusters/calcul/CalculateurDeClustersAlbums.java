@@ -7,6 +7,7 @@ import java.util.Map.Entry;
 import metier.Cluster;
 import metier.ComposantCluster;
 import metier.oeuvres.Album;
+import metier.oeuvres.Oeuvre;
 import calculsDesClusters.axe.Axe;
 import calculsDesClusters.axe.AxeAnnee;
 import calculsDesClusters.axe.AxeListener;
@@ -45,6 +46,10 @@ public class CalculateurDeClustersAlbums {
 		
 		Cluster clusterGeneral = new Cluster();
 		HashMap<ComposantCluster,ArrayList<Album>> affectationAlbumSousCluster = new HashMap<ComposantCluster,ArrayList<Album>>();
+		ArrayList<Oeuvre> listeOeuvre = new ArrayList<Oeuvre>();
+		listeOeuvre.addAll(albums);
+		axe1.setOeuvres(listeOeuvre);
+		axe2.setOeuvres(listeOeuvre);
 		//affectationAlbumSousCluster va permettre l'affectation des albums dans les sous-clusters
 
 		//premier decoupage
@@ -120,18 +125,27 @@ public class CalculateurDeClustersAlbums {
 		listePremierAxe.add(axeTag);
 		ArrayList<Axe> listeDeuxiemeAxe = new ArrayList<Axe>();
 
-		for (Axe a : listePremierAxe){
-			listeDeuxiemeAxe = listePremierAxe;
-			listeDeuxiemeAxe.remove(a);
-			for (Axe b : listeDeuxiemeAxe){
+		for(int i=0;i<listePremierAxe.size()-1;i++){
+			for(int j=i+1;j<listeDeuxiemeAxe.size();j++){
+				Axe a = listePremierAxe.get(i);
+				Axe b = listeDeuxiemeAxe.get(j);
+				System.out.println(a);
+				System.out.println(b);
 				currentCluster = calculerClustersAlbum(a,b,albums);
+				System.out.println("§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§");
 				currentCouple.setAxe1(a);
 				currentCouple.setAxe2(b);
 				currentCouple.setVariance(currentCluster.varianceCluster());
-				listeCluster.put(currentCouple, currentCluster);
+				//listeCluster.put(currentCouple, currentCluster);
+				listeCluster.put(new CoupleAxe(a, b), calculerClustersAlbum(a,b,albums));
+				
 			}
 		}
-
+		
+		for(Entry<CoupleAxe, Cluster> entry : listeCluster.entrySet()) {
+			entry.getKey().setVariance(entry.getValue().varianceCluster());
+			System.out.println(entry.getKey().getVariance());
+		}
 		return listeCluster;
 	}
 
