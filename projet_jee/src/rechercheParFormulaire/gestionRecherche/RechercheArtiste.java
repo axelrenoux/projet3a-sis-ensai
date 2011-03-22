@@ -105,7 +105,6 @@ public class RechercheArtiste{
 				System.out.println(entry2.getKey().getVariance());
 			}
 		}
-		//System.out.println(meilleurCluster);
 		
 		return meilleurCluster;
 		
