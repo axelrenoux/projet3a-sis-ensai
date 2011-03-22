@@ -98,7 +98,6 @@ public class RechercheArtiste{
 			break;
 		}
 		for(Entry<CoupleAxe, Cluster> entry2 : listeClusterPossible.entrySet()) {
-			
 
 			if (entry2.getKey().getVariance() < meilleurCluster.varianceCluster()){
 				meilleurCluster = entry2.getValue();
@@ -109,9 +108,6 @@ public class RechercheArtiste{
 		//System.out.println(meilleurCluster);
 		
 		return meilleurCluster;
-		
-
-
 		
 	}
 	
