@@ -894,7 +894,7 @@ public class VueAffichageResultat {
 	}
 	
 	public String getLargeurDataTables2_3(){
-		return "700px";
+		return "1000px";
 	}
 	
 	public String getLargeurSousPanelSeul(){
