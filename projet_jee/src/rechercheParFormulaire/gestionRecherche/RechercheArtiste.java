@@ -1,11 +1,15 @@
 package rechercheParFormulaire.gestionRecherche;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map.Entry;
 
 import bdd.rechercheBDD.maClasseAlbum;
 import bdd.rechercheBDD.maClasseArtiste;
 
+import calculsDesClusters.axe.CoupleAxe;
 import calculsDesClusters.calcul.CalculateurDeClusters;
+import calculsDesClusters.calcul.CalculateurDeClustersAlbums;
 import calculsDesClusters.calcul.CalculateurDeClustersArtistes;
 import exceptions.ChargementException;
 
@@ -69,8 +73,19 @@ public class RechercheArtiste{
 			e.printStackTrace();
 		}*/
 		
-		return CalculateurDeClustersArtistes.getInstanceunique().
-		calculerClustersArtiste(resultats);
+
+		HashMap<CoupleAxe,Cluster> listeClusterPossible = CalculateurDeClustersArtistes.getInstanceunique().calculEnsembleClustersArtistes(resultats);
+		Cluster meilleurCluster = new Cluster();
+		
+		for(Entry<CoupleAxe, Cluster> entry : listeClusterPossible.entrySet()) {
+			if (entry.getKey().getVariance() < meilleurCluster.varianceCluster()){
+				meilleurCluster = entry.getValue();
+			}
+		}
+			
+		return meilleurCluster;
+
+
 	}
 	
 	public String retournerTypeAffichage(){
