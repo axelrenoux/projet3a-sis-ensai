@@ -105,21 +105,19 @@ public class CalculateurDeClustersChansons {
 	public HashMap<CoupleAxe,Cluster> calculEnsembleClustersChansons(ArrayList<Chanson> chansons){
 
 		HashMap<CoupleAxe, Cluster> listeCluster = new HashMap<CoupleAxe, Cluster>();
-		CoupleAxe currentCouple = new CoupleAxe();
-		Cluster currentCluster = new Cluster();
 		
 		Axe axeListeners = new AxeListener();
 		Axe axePlaycount = new AxePlaycount();
-		Axe axeAlbumDeChanson = new AxeAlbumDeChanson();
+		//Axe axeAlbumDeChanson = new AxeAlbumDeChanson();
 		Axe axeDuree = new AxeDuree();
-		Axe axeTag = new AxeTag();
+		//Axe axeTag = new AxeTag();
 
 		ArrayList<Axe> listePremierAxe = new ArrayList<Axe>();
 		listePremierAxe.add(axeListeners);
 		listePremierAxe.add(axePlaycount);
-		listePremierAxe.add(axeAlbumDeChanson);
+		//listePremierAxe.add(axeAlbumDeChanson);
 		listePremierAxe.add(axeDuree);
-		listePremierAxe.add(axeTag);
+		//listePremierAxe.add(axeTag);
 		ArrayList<Axe> listeDeuxiemeAxe = new ArrayList<Axe>();
 		listeDeuxiemeAxe = listePremierAxe;
 
@@ -128,21 +126,15 @@ public class CalculateurDeClustersChansons {
 			for(int j=i+1;j<listeDeuxiemeAxe.size();j++){
 				Axe a = listePremierAxe.get(i);
 				Axe b = listeDeuxiemeAxe.get(j);
-				System.out.println(a);
-				System.out.println(b);
-				currentCluster = calculerClustersChanson(a,b,chansons);
-				System.out.println("§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§");
-				currentCouple.setAxe1(a);
-				currentCouple.setAxe2(b);
-				currentCouple.setVariance(currentCluster.varianceCluster());
-				//listeCluster.put(currentCouple, currentCluster);
-				listeCluster.put(new CoupleAxe(a, b), calculerClustersChanson(a,b,chansons));
-				
+				listeCluster.put(new CoupleAxe(a, b), calculerClustersChanson(a,b,chansons));		
 			}
 		}
 		
 		for(Entry<CoupleAxe, Cluster> entry : listeCluster.entrySet()) {
 			entry.getKey().setVariance(entry.getValue().varianceCluster());
+			System.out.println("§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§");
+			System.out.println(entry.getKey().getAxe1());
+			System.out.println(entry.getKey().getAxe2());
 			System.out.println(entry.getKey().getVariance());
 		}
 		return listeCluster;
