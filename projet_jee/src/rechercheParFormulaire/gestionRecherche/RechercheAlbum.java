@@ -137,7 +137,7 @@ public class RechercheAlbum {
 		ArrayList<Album> ar=null;
 		RechercheAlbumBDD mar = RechercheAlbumBDD.getInstance();
 		try {
-			ar = mar.rechercherAlbums("live");
+			ar = mar.rechercherAlbums("ar");
 		} catch (ChargementException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -147,14 +147,12 @@ public class RechercheAlbum {
 		HashMap<CoupleAxe,Cluster> listeClusterPossible = CalculateurDeClustersAlbums.getInstanceunique().calculEnsembleClustersAlbums(ar);
 
 		
-
 		Cluster meilleurCluster = new Cluster();
 		
 		for(Entry<CoupleAxe, Cluster> entry : listeClusterPossible.entrySet()) {
 			meilleurCluster = entry.getValue();
 			break;
 		}
-
 		for(Entry<CoupleAxe, Cluster> entry2 : listeClusterPossible.entrySet()) {
 			
 			if (entry2.getKey().getVariance() < meilleurCluster.varianceCluster()){
