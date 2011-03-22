@@ -1,7 +1,7 @@
 package main;
 
 import metier.Cluster;
-import rechercheParFormulaire.gestionRecherche.RechercheAlbum;
+import rechercheParFormulaire.gestionRecherche.RechercheArtiste;
 
 public class main {
 
@@ -48,7 +48,7 @@ public class main {
 		System.out.println(ar);
 		System.out.println(ar.size());*/
 		
-		RechercheAlbum r = new RechercheAlbum();
+		RechercheArtiste r = new RechercheArtiste();
 		Cluster c = r.lancerRecherche("LIVE");
 
 		/*ArrayList<Chanson> ch=null;
