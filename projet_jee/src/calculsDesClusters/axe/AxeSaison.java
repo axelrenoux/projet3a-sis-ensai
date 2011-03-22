@@ -13,12 +13,6 @@ public class AxeSaison implements Axe{
 	 * @param d
 	 * @return
 	 */
-	public String miseEnSaison(Date d){
-		if(d.getMonth()+1<10 && d.getMonth()+1>3) return "été";
-		else return "hiver";
-	}
-
-	@Override
 	public String CalculAxe(Oeuvre oeuvre) {
 		Album a = (Album) oeuvre;
 		if (a.getDate() != null){
