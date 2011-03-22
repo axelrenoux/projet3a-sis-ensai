@@ -90,7 +90,6 @@ public class RechercheArtiste{
 
 		HashMap<CoupleAxe,Cluster> listeClusterPossible = CalculateurDeClustersArtistes.getInstanceunique().calculEnsembleClustersArtistes(ar);
 
-		/*HashMap<CoupleAxe,Cluster> listeClusterPossible = CalculateurDeClustersArtistes.getInstanceunique().calculEnsembleClustersArtistes(resultats);
 
 		Cluster meilleurCluster = new Cluster();
 		
@@ -110,11 +109,7 @@ public class RechercheArtiste{
 		//System.out.println(meilleurCluster);
 		
 		return meilleurCluster;
-
-
-		return meilleurCluster;*/
 		
-		return CalculateurDeClusters.getInstanceunique().calculerClustersArtiste(resultats);
 
 
 		
