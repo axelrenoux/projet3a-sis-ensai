@@ -1,19 +1,6 @@
 package main;
 
-import java.util.ArrayList;
-
-import exceptions.ChargementException;
-
-import bdd.chargement.ChargementBDDOracleDepuisTxt;
-import bdd.rechercheBDD.RechercheAlbumBDD;
-import bdd.rechercheBDD.RechercheArtisteBDD;
-import bdd.rechercheBDD.RechercheChansonBDD;
-import bdd.rechercheBDDOLD.RechercheAlbumBDDOld;
-import bdd.rechercheBDDOLD.RechercheArtisteBDDOld;
 import metier.Cluster;
-import metier.oeuvres.Album;
-import metier.oeuvres.Artiste;
-import metier.oeuvres.Chanson;
 import rechercheParFormulaire.gestionRecherche.RechercheAlbum;
 
 public class main {
@@ -50,7 +37,7 @@ public class main {
 		System.out.println(c);
 		System.out.println(c.size());*/
 		
-		ArrayList<Artiste> ar=null;
+		/*ArrayList<Artiste> ar=null;
 		RechercheArtisteBDD mar = RechercheArtisteBDD.getInstance();
 		try {
 			ar = mar.rechercherArtistes("re");
@@ -59,8 +46,11 @@ public class main {
 			e.printStackTrace();
 		}
 		System.out.println(ar);
+		System.out.println(ar.size());*/
 		
-		
+		RechercheAlbum r = new RechercheAlbum();
+		Cluster c = r.lancerRecherche("LIVE");
+
 		/*ArrayList<Chanson> ch=null;
 		RechercheChansonBDD mcc = RechercheChansonBDD.getInstance();
 		try {
