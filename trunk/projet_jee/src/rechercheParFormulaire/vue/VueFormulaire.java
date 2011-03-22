@@ -29,6 +29,8 @@ import rechercheParFormulaire.gestionRecherche.GestionnaireFormulaire;
 		private GestionnaireFormulaire gestionnaireFormulaire;
 		@ManagedProperty(value="#{vueAffichageResultat}")
 		private VueAffichageResultat vueAffichageResultat;
+		@ManagedProperty(value="#{vueAffichageResultatXML}")
+		private VueAffichageResultatXML vueAffichageResultatXML;
 		private String retourChoisi;
 		private ArrayList<String> retoursPossibles;  
 		private String motCle;
@@ -62,17 +64,22 @@ import rechercheParFormulaire.gestionRecherche.GestionnaireFormulaire;
 
 			if(success){
 				if(!retourChoisi.equals("")){
-					//on attribue les resultats à la page de resultats
-					vueAffichageResultat.setClustersAlbum(gestionnaireFormulaire.lancerRechercheAlbum(motCle));;
-					vueAffichageResultat.setClustersArtiste(gestionnaireFormulaire.lancerRechercheArtiste(motCle));;
-					vueAffichageResultat.setClustersChanson(gestionnaireFormulaire.lancerRechercheChanson(motCle));;
-					vueAffichageResultat.init();
 					//si l'utilisateur a choisi de consulter les résultats via "un fichier XML"...
 					if(retourChoisi.equals(retoursPossibles.get(0))){
+						//on attribue les resultats à la page de resultats
+						vueAffichageResultatXML.setClustersAlbum(gestionnaireFormulaire.lancerRechercheAlbum(motCle));;
+						vueAffichageResultatXML.setClustersArtiste(gestionnaireFormulaire.lancerRechercheArtiste(motCle));;
+						vueAffichageResultatXML.setClustersChanson(gestionnaireFormulaire.lancerRechercheChanson(motCle));;
+						vueAffichageResultatXML.init();
 						return "xml";
 					}
 					//et s'il a choisi de consulter les résultats via "une interface graphique"...
 					else {
+						//on attribue les resultats à la page de resultats
+						vueAffichageResultat.setClustersAlbum(gestionnaireFormulaire.lancerRechercheAlbum(motCle));;
+						vueAffichageResultat.setClustersArtiste(gestionnaireFormulaire.lancerRechercheArtiste(motCle));;
+						vueAffichageResultat.setClustersChanson(gestionnaireFormulaire.lancerRechercheChanson(motCle));;
+						vueAffichageResultat.init();
 						return "j2ee";
 					}
 				}
@@ -151,6 +158,18 @@ import rechercheParFormulaire.gestionRecherche.GestionnaireFormulaire;
 		}
 
 
+
+
+		public VueAffichageResultatXML getVueAffichageResultatXML() {
+			return vueAffichageResultatXML;
+		}
+
+
+		public void setVueAffichageResultatXML(VueAffichageResultatXML vueAffichageResultatXML) {
+			this.vueAffichageResultatXML = vueAffichageResultatXML;
+		}
+		
+		
 		public String getRetourChoisi() {
 			return retourChoisi;
 		}
