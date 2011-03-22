@@ -124,7 +124,9 @@ public class CalculateurDeClustersAlbums {
 		listePremierAxe.add(axePlaycount);
 		listePremierAxe.add(axeTag);
 		ArrayList<Axe> listeDeuxiemeAxe = new ArrayList<Axe>();
+		listeDeuxiemeAxe = listePremierAxe;
 
+		
 		for(int i=0;i<listePremierAxe.size()-1;i++){
 			for(int j=i+1;j<listeDeuxiemeAxe.size();j++){
 				Axe a = listePremierAxe.get(i);
@@ -146,6 +148,7 @@ public class CalculateurDeClustersAlbums {
 			entry.getKey().setVariance(entry.getValue().varianceCluster());
 			System.out.println(entry.getKey().getVariance());
 		}
+
 		return listeCluster;
 	}
 
