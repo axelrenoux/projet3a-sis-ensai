@@ -111,7 +111,7 @@ class SQLViaJDBC{
 		try {
 			instruction.executeUpdate(requeteSQL);
 		} catch (SQLException e) {
-			throw new UpdateException(e);
+			throw new UpdateException(requeteSQL);
 		}
 	}
 	

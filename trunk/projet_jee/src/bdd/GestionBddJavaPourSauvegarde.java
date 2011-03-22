@@ -384,6 +384,7 @@ public class GestionBddJavaPourSauvegarde {
 									reach FLOAT,
 									taggings FLOAT,
 									wiki INTEGER references WIKI(cle_primaire))*/
+					//XXX informations complémentaires qu'on peut obtenir : liste d'artistes, d'album et de chanson contenant ce tag
 				}//endTry
 				catch(UrlReserveeException e){
 					//Normalement le controle est déjà fait dans le if, mais on ne sait jamais
