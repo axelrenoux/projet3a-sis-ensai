@@ -94,7 +94,7 @@ public class RechercheChansonBDD {
 			}
 			for (Chanson ch : chansonsrecherchees){
 				ch.setToptags(RechercheTagBDD.getInstance().rechercherTagsChanson(ch));
-				ch.setAlbums(RechercheAlbumBDD.getInstance().rechercherAlbumsChanson(ch.getID()));
+				//ch.setAlbums(RechercheAlbumBDD.getInstance().rechercherAlbumsChanson(ch.getID()));
 			}
 		} catch (SQLException e) {
 			throw new ChargementException(e);
