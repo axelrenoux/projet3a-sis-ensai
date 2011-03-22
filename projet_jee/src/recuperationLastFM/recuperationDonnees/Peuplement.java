@@ -17,10 +17,10 @@ public class Peuplement {
 		/*recherche.add("rennes");
 		recherche.add("sheffield");
 		recherche.add("strapontin");
-		recherche.add("ordinateur");*/
 		recherche.add("serviette");
 		recherche.add("bonhomme");
-		recherche.add("mousse");
+		recherche.add("mousse");*/
+		recherche.add("ordinateur");
 		recherche.add("hotel");
 		recherche.add("trust");
 		recherche.add("mozart");
