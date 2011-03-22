@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletResponse;
 
+import bdd.rechercheBDD.RechercheAlbumBDD;
+
 import com.thoughtworks.xstream.XStream;
 
 
@@ -132,22 +134,17 @@ public class RechercheAlbum {
 		
 		//il faudra ici aller cherche en base les albums repondant au mot cle
 		
-		/*maClasseAlbum ma = new maClasseAlbum();
+		RechercheAlbumBDD ma = RechercheAlbumBDD.getInstance();
 		try {
 
-			ar = mar.rechercherAlbums(motCle);
+			resultats = ma.rechercherAlbums(motCle);
 		} catch (ChargementException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-
-			resultats = ma.rechercherAlbums(motCle);
-
 		}
-
-
 		catch(Exception e2){
 			System.out.println("erreur 2 " + e2.getLocalizedMessage());
-		}*/
+		}
 		
 
 		
@@ -155,7 +152,7 @@ public class RechercheAlbum {
 		Axe axe1Date = new AxeAnnee();
 		Axe axe2Saison = new AxeSaison();
 		
-		Cluster cluster = CalculateurDeClustersAlbums.getInstanceunique().
+		/*Cluster cluster = CalculateurDeClustersAlbums.getInstanceunique().
 		calculerClustersAlbum(axe1Date,axe2Saison,resultats);
 		
 		XStream stream = new XStream();		
@@ -174,10 +171,11 @@ public class RechercheAlbum {
 		} catch (IOException e) {
 		    e.printStackTrace();
 		}
-
+*/
 		
 		
-		return cluster;
+		return CalculateurDeClustersAlbums.getInstanceunique().
+		calculerClustersAlbum(axe1Date,axe2Saison,resultats);
 		
 	}
 	
