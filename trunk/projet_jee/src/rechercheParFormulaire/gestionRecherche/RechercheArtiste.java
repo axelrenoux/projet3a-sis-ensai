@@ -78,7 +78,7 @@ public class RechercheArtiste{
 		ArrayList<Artiste> ar=null;
 		RechercheArtisteBDD mar = RechercheArtisteBDD.getInstance();
 		try {
-			ar = mar.rechercherArtistes("ar");
+			ar = mar.rechercherArtistes("re");
 		} catch (ChargementException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
