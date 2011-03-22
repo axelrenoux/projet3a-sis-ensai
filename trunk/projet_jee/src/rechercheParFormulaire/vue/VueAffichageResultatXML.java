@@ -1,24 +1,17 @@
 package rechercheParFormulaire.vue;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.io.IOException;
 
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-
-import org.primefaces.model.LazyDataModel;
-
-import rechercheParFormulaire.gestionRecherche.GestionnaireAffichageResultat;
-
+import javax.servlet.http.HttpServletResponse;
 
 import metier.Cluster;
-import metier.oeuvres.Album;
-import metier.oeuvres.Artiste;
-import metier.oeuvres.Chanson;
+import rechercheParFormulaire.gestionRecherche.GestionnaireAffichageResultat;
+
+import com.thoughtworks.xstream.XStream;
 
 
 /**
@@ -48,16 +41,6 @@ public class VueAffichageResultatXML {
 	private Cluster clustersAlbum;
 	private Cluster clustersArtiste;
 	private Cluster clustersChanson;
-
-
-
-	private ArrayList<Cluster> clustersAlbumsNiveau1;
-	private ArrayList<Cluster> clustersArtistesNiveau1;
-	private ArrayList<Cluster> clustersChansonsNiveau1;
-
- 
- 
- 
 	
 
 
@@ -67,93 +50,49 @@ public class VueAffichageResultatXML {
 	/********************************************************************/
 
 
-	public void init() {
-		 
-		clustersAlbumsNiveau1 = gestionnaireAffichageResultat.retournerClustersAlbumNiveau1(clustersAlbum);
-		clustersArtistesNiveau1 = gestionnaireAffichageResultat.retournerClustersArtisteNiveau1(clustersArtiste);
-		clustersChansonsNiveau1 = gestionnaireAffichageResultat.retournerClustersChansonNiveau1(clustersChanson);
+	public void init() {}
 
+
+	public void affichage(Cluster cluster){
+		XStream stream= new XStream();
+		try {
+			FacesContext ctx = FacesContext.getCurrentInstance();
+			final HttpServletResponse resp = (HttpServletResponse)ctx.getExternalContext().getResponse();
+			resp.setContentType("text/xml");
+			stream.toXML(cluster, resp.getOutputStream());
+			resp.getOutputStream().flush();
+			resp.getOutputStream().close();
+			ctx.responseComplete();
+		}catch(IOException e){e.printStackTrace();}
 	}
 
-
-
 	public void affichageAlbums(){
-		
+		affichage(clustersAlbum);
 	}
 	
 	public void affichageArtistes(){
-		
+		affichage(clustersArtiste);
 	}
 
 	public void affichageChansons(){
-	
+		affichage(clustersChanson);
 	}
 	
-	
-	
- 
-	
- 
-	
+
 	
 	/**
 	 *  methodes de navigation
 	 */
- 
-
-	
 	public String retourDebut(){
 		return "success";
 	}
-	
-	
-	/**
-	 * methodes qui ajoutent un message d'erreur
-	 */
-	public void addErrorEtape1Album() { 
-		FacesContext.getCurrentInstance().
-			addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,
-					"Erreur","Veuillez sélectionner un premier critère pour votre recherche d'album")); 
-	}
-	public void addErrorEtape1Artiste() { 
-		FacesContext.getCurrentInstance().
-			addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,
-					"Erreur","Veuillez sélectionner un premier critère pour votre recherche d'artiste")); 
-	}
-	public void addErrorEtape1Chanson() { 
-		FacesContext.getCurrentInstance().
-			addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,
-					"Erreur","Veuillez sélectionner un premier critère pour votre recherche de chanson"));
-	}
-	public void addErrorEtape2Album() {
-		FacesContext.getCurrentInstance().
-			addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,
-					"Erreur","Veuillez sélectionner un deuxième critère pour votre recherche d'album")); 
-	}
-	public void addErrorEtape2Artiste() {
-		FacesContext.getCurrentInstance().
-			addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,
-					"Erreur","Veuillez sélectionner un deuxième critère pour votre recherche d'artiste")); 
-	}
-	public void addErrorEtape2Chanson() {
-		FacesContext.getCurrentInstance().
-			addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,
-					"Erreur","Veuillez sélectionner un deuxième critère pour votre recherche de chanson")); 
-	}
 
 	
-  
 	
-	
-
 
 	/********************************************************************/
 	/******************      getters / setters       ********************/
 	/********************************************************************/
-
-
-
-
 
 	public GestionnaireAffichageResultat getGestionnaireAffichageResultat() {
 		return gestionnaireAffichageResultat;
@@ -162,36 +101,6 @@ public class VueAffichageResultatXML {
 	public void setGestionnaireAffichageResultat(
 			GestionnaireAffichageResultat gestionnaireAffichageResultat) {
 		this.gestionnaireAffichageResultat = gestionnaireAffichageResultat;
-	}
-
-	
-
-
-
-	public ArrayList<Cluster> getClustersAlbumsNiveau1() {
-		return clustersAlbumsNiveau1;
-	}
-
-	public void setClustersAlbumsNiveau1(ArrayList<Cluster> clustersAlbumsNiveau1) {
-		this.clustersAlbumsNiveau1 = clustersAlbumsNiveau1;
-	}
-
-	public ArrayList<Cluster> getClustersArtistesNiveau1() {
-		return clustersArtistesNiveau1;
-	}
-
-	public void setClustersArtistesNiveau1(
-			ArrayList<Cluster> clustersArtistesNiveau1) {
-		this.clustersArtistesNiveau1 = clustersArtistesNiveau1;
-	}
-
-	public ArrayList<Cluster> getClustersChansonsNiveau1() {
-		return clustersChansonsNiveau1;
-	}
-
-	public void setClustersChansonsNiveau1(
-			ArrayList<Cluster> clustersChansonsNiveau1) {
-		this.clustersChansonsNiveau1 = clustersChansonsNiveau1;
 	}
 
 	public Cluster getClustersAlbum() {
@@ -217,10 +126,4 @@ public class VueAffichageResultatXML {
 	public void setClustersChanson(Cluster clustersChanson) {
 		this.clustersChanson = clustersChanson;
 	}
-
-	
-
-	 
-
-
 }
