@@ -8,7 +8,8 @@ import metier.oeuvres.Oeuvre;
 
 public class AxeListener implements Axe {
 
-	private ArrayList<Double> mesQuarts;
+	private ArrayList<Double> mesQuarts = new ArrayList<Double>();
+	private ArrayList<Oeuvre> oeuvres;
 
 	public ArrayList<Double> getMesQuarts() {
 		return mesQuarts;
@@ -95,7 +96,10 @@ public class AxeListener implements Axe {
 	@Override
 	public String CalculAxe(Oeuvre oeuvre) {
 		String classe =" ";
+		
 		double List=oeuvre.getListeners();
+		
+		
 		if (List<=this.mesQuarts.get(0)){
 			classe="entre 0 et " +this.mesQuarts.get(0) ;
 		}else if(this.mesQuarts.get(0)<List && List<=this.mesQuarts.get(1)){
@@ -139,10 +143,26 @@ public class AxeListener implements Axe {
 
 		}*/
 
-		
-		@Override
-			public String getType() {
-				// TODO Auto-generated method stub
-				return "nombre d'auditeurs";
-			}
+
+	@Override
+	public String getType() {
+		// TODO Auto-generated method stub
+		return "nombre d'auditeurs";
+	}
+	
+	@Override
+	public ArrayList<Oeuvre> getOeuvres() {
+		return oeuvres;
+	}
+	
+	@Override
+	public void setOeuvres(ArrayList<Oeuvre> oeuvres) {
+		this.oeuvres = oeuvres;	
+		try {
+			this.mesQuarts = QuartClusterOeuvreLs(oeuvres);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }

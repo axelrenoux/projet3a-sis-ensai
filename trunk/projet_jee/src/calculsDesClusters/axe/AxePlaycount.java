@@ -8,7 +8,8 @@ import metier.oeuvres.Oeuvre;
 
 public class AxePlaycount implements Axe{
 
-	private ArrayList<Double> mesQuarts;
+	private ArrayList<Double> mesQuarts = new ArrayList<Double>();
+	private ArrayList<Oeuvre> oeuvres;
 
 	public ArrayList<Double> getMesQuarts() {
 		return mesQuarts;
@@ -137,5 +138,21 @@ public class AxePlaycount implements Axe{
 	public String getType() {
 		// TODO Auto-generated method stub
 		return "Nombre d'écoutes";
+	}
+	
+	@Override
+	public ArrayList<Oeuvre> getOeuvres() {
+		return oeuvres;
+	}
+	
+	@Override
+	public void setOeuvres(ArrayList<Oeuvre> oeuvres) {
+		this.oeuvres = oeuvres;	
+		try {
+			this.mesQuarts = QuartClusterOeuvrePl(oeuvres);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

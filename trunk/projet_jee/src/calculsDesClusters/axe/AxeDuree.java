@@ -1,10 +1,13 @@
 package calculsDesClusters.axe;
 
+import java.util.ArrayList;
+
 import metier.oeuvres.Chanson;
 import metier.oeuvres.Oeuvre;
 
 public class AxeDuree implements Axe{
 	
+	private ArrayList<Oeuvre> oeuvres;
 	//la duree est exprimee en millisecondes
 
 	@Override
@@ -35,6 +38,16 @@ public class AxeDuree implements Axe{
 		}
 		
 		return classe;
+	}
+	
+	@Override
+	public ArrayList<Oeuvre> getOeuvres() {
+		return oeuvres;
+	}
+	
+	@Override
+	public void setOeuvres(ArrayList<Oeuvre> oeuvres) {
+		this.oeuvres = oeuvres;	
 	}
 
 }

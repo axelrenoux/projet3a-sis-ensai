@@ -1,13 +1,14 @@
 package calculsDesClusters.axe;
 
 import java.sql.Date;
+import java.util.ArrayList;
 
 import metier.oeuvres.Album;
 import metier.oeuvres.Oeuvre;
 
 public class AxeAnnee implements Axe {
 	
-
+	private ArrayList<Oeuvre> oeuvres;
 
 	@Override
 	public String CalculAxe(Oeuvre oeuvre) {
@@ -64,6 +65,16 @@ public class AxeAnnee implements Axe {
 	public String getType() {
 		// TODO Auto-generated method stub
 		return "Année";
+	}
+	
+	@Override
+	public ArrayList<Oeuvre> getOeuvres() {
+		return oeuvres;
+	}
+	
+	@Override
+	public void setOeuvres(ArrayList<Oeuvre> oeuvres) {
+		this.oeuvres = oeuvres;	
 	}
 
 }
