@@ -16,14 +16,29 @@ import bdd.sqlviajdbc.ControlAccesSQLViaJDBC;
 
 public class RechercheAlbumBDD {
 
+	
+	/********************************************************************/
+	/*************************      attributs       *********************/
+	/********************************************************************/
+	
+	
 	private final static RechercheAlbumBDD instance = new RechercheAlbumBDD();
+	
+	
+	/********************************************************************/
+	/**********************      constructeurs      *********************/
+	/********************************************************************/
 	
 	private RechercheAlbumBDD(){
 	}
 
 	 
 
-
+	/********************************************************************/
+	/************************      methodes      ************************/
+	/********************************************************************/
+	
+	
 	/**
 	 * methode qui recherche en bdd tous les albums dont le nom contient
 	 * le mot clé saisi ou dont le nom de l'artiste contient le mot clé saisi 
@@ -154,7 +169,7 @@ public class RechercheAlbumBDD {
 	
 	
 	
-	//TODO a tester 
+	//TODO pas utilisee pour le moment
 	/**
 	 * methode qui renvoie les albums d'un artiste? 
 	 * @param chanson
@@ -216,7 +231,10 @@ public class RechercheAlbumBDD {
 	
 	
 	
-	
+	/********************************************************************/
+	/******************      getters / setters       ********************/
+	/********************************************************************/
+
 	public static RechercheAlbumBDD getInstance() {
 		return instance;
 	}
