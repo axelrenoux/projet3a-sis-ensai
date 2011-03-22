@@ -104,14 +104,14 @@ public class CalculateurDeClustersChansons {
 		
 		Axe axeListeners = new AxeListener();
 		Axe axePlaycount = new AxePlaycount();
-		Axe axeChanson = new AxeAlbumDeChanson();
+		Axe axeAlbumDeChanson = new AxeAlbumDeChanson();
 		Axe axeDuree = new AxeDuree();
 		Axe axeTag = new AxeTag();
 
 		ArrayList<Axe> listePremierAxe = new ArrayList<Axe>();
 		listePremierAxe.add(axeListeners);
 		listePremierAxe.add(axePlaycount);
-		listePremierAxe.add(axeChanson);
+		listePremierAxe.add(axeAlbumDeChanson);
 		listePremierAxe.add(axeDuree);
 		listePremierAxe.add(axeTag);
 		ArrayList<Axe> listeDeuxiemeAxe = new ArrayList<Axe>();
