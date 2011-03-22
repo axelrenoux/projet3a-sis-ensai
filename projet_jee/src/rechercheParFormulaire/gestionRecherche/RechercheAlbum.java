@@ -7,12 +7,19 @@ import java.util.Map.Entry;
 import metier.Cluster;
 import metier.ComposantCluster;
 import metier.oeuvres.Album;
+import metier.oeuvres.Artiste;
 import bdd.rechercheBDD.RechercheAlbumBDD;
+
+import bdd.rechercheBDD.RechercheArtisteBDD;
+
 import calculsDesClusters.axe.AxeAnnee;
 import calculsDesClusters.axe.AxeSaison;
+
 import calculsDesClusters.axe.CoupleAxe;
 import calculsDesClusters.calcul.CalculateurDeClustersAlbums;
+import calculsDesClusters.calcul.CalculateurDeClustersArtistes;
 import controleur.UtilitaireDate;
+import exceptions.ChargementException;
 import exceptions.ExceptionDate;
 
 public class RechercheAlbum {
@@ -30,7 +37,7 @@ public class RechercheAlbum {
 	
 	
 	public Cluster lancerRecherche(String motCle) {
-		
+		/*
 		//traitement provisoire debut 
 		resultats = new ArrayList<Album>();
 		Album a1 = new Album();
@@ -124,31 +131,50 @@ public class RechercheAlbum {
 		
 		//traitement provisoire debut
 		
-		
+		*/
 		//il faudra ici aller cherche en base les albums repondant au mot cle
 		
-		RechercheAlbumBDD ma = RechercheAlbumBDD.getInstance();
+		ArrayList<Album> ar=null;
+		RechercheAlbumBDD mar = RechercheAlbumBDD.getInstance();
 		try {
-			resultats = ma.rechercherAlbums(motCle);
-		}
-		catch(Exception e2){
-			System.out.println("erreur 2 " + e2.getLocalizedMessage());
+			ar = mar.rechercherAlbums("live");
+		} catch (ChargementException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		
+
+		HashMap<CoupleAxe,Cluster> listeClusterPossible = CalculateurDeClustersAlbums.getInstanceunique().calculEnsembleClustersAlbums(ar);
+
 		/*
 		HashMap<CoupleAxe,Cluster> listeClusterPossible = CalculateurDeClustersAlbums.getInstanceunique().calculEnsembleClustersAlbums(resultats);
+
 		Cluster meilleurCluster = new Cluster();
 		
 		for(Entry<CoupleAxe, Cluster> entry : listeClusterPossible.entrySet()) {
-			if (entry.getKey().getVariance() < meilleurCluster.varianceCluster()){
-				meilleurCluster = entry.getValue();
+			meilleurCluster = entry.getValue();
+			break;
+		}
+
+		for(Entry<CoupleAxe, Cluster> entry2 : listeClusterPossible.entrySet()) {
+			
+			if (entry2.getKey().getVariance() < meilleurCluster.varianceCluster()){
+				meilleurCluster = entry2.getValue();
+				System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+				System.out.println(entry2.getKey().getVariance());
 			}
 		}
+		//System.out.println(meilleurCluster);
+		
+		return meilleurCluster;
+
 		
 		return meilleurCluster;*/
 		
 		return CalculateurDeClustersAlbums.getInstanceunique()
 			.calculerClustersAlbum(new AxeAnnee(), new AxeSaison(), resultats);
+
+
 		
 	}
 	
