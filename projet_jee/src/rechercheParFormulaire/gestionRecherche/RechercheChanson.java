@@ -1,11 +1,15 @@
 package rechercheParFormulaire.gestionRecherche;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map.Entry;
 
 import bdd.rechercheBDD.maClasseAlbum;
 import bdd.rechercheBDD.maClasseChanson;
 
+import calculsDesClusters.axe.CoupleAxe;
 import calculsDesClusters.calcul.CalculateurDeClusters;
+import calculsDesClusters.calcul.CalculateurDeClustersArtistes;
 import calculsDesClusters.calcul.CalculateurDeClustersChansons;
 import exceptions.ChargementException;
 
@@ -95,9 +99,16 @@ public class RechercheChanson{
 			e.printStackTrace();
 		}*/
 		
+		HashMap<CoupleAxe,Cluster> listeClusterPossible = CalculateurDeClustersChansons.getInstanceunique().calculEnsembleClustersChansons(resultats);
+		Cluster meilleurCluster = new Cluster();
 		
-		return CalculateurDeClustersChansons.getInstanceunique().
-		calculerClustersChanson(resultats);
+		for(Entry<CoupleAxe, Cluster> entry : listeClusterPossible.entrySet()) {
+			if (entry.getKey().getVariance() < meilleurCluster.varianceCluster()){
+				meilleurCluster = entry.getValue();
+			}
+		}
+			
+		return meilleurCluster;
 		
 	}
 	
