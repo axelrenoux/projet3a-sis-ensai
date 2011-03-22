@@ -121,19 +121,30 @@ public class CalculateurDeClustersChansons {
 		listePremierAxe.add(axeDuree);
 		listePremierAxe.add(axeTag);
 		ArrayList<Axe> listeDeuxiemeAxe = new ArrayList<Axe>();
+		listeDeuxiemeAxe = listePremierAxe;
 
-		for (Axe a : listePremierAxe){
-			listeDeuxiemeAxe = listePremierAxe;
-			listeDeuxiemeAxe.remove(a);
-			for (Axe b : listeDeuxiemeAxe){
+		
+		for(int i=0;i<listePremierAxe.size()-1;i++){
+			for(int j=i+1;j<listeDeuxiemeAxe.size();j++){
+				Axe a = listePremierAxe.get(i);
+				Axe b = listeDeuxiemeAxe.get(j);
+				System.out.println(a);
+				System.out.println(b);
 				currentCluster = calculerClustersChanson(a,b,chansons);
+				System.out.println("§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§");
 				currentCouple.setAxe1(a);
 				currentCouple.setAxe2(b);
 				currentCouple.setVariance(currentCluster.varianceCluster());
-				listeCluster.put(currentCouple, currentCluster);
+				//listeCluster.put(currentCouple, currentCluster);
+				listeCluster.put(new CoupleAxe(a, b), calculerClustersChanson(a,b,chansons));
+				
 			}
 		}
-
+		
+		for(Entry<CoupleAxe, Cluster> entry : listeCluster.entrySet()) {
+			entry.getKey().setVariance(entry.getValue().varianceCluster());
+			System.out.println(entry.getKey().getVariance());
+		}
 		return listeCluster;
 	}
 	
