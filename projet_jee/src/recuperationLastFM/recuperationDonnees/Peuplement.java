@@ -25,16 +25,11 @@ public class Peuplement {
 		recherche.add("taupe");
 		recherche.add("zelda");
 		recherche.add("donjon");
-		recherche.add("");
-		recherche.add("mousse");
-		recherche.add("ordinateur");
-		recherche.add("rennes");
-		recherche.add("sheffield");
-		recherche.add("strapontin");
-		recherche.add("serviette");
-		recherche.add("bonhomme");
-		recherche.add("mousse");
-		recherche.add("ordinateur");
+		recherche.add("2+Many+DJ");
+		recherche.add("ez3kiel");
+		recherche.add("les+croquants");
+		recherche.add("lady+gaga");
+		recherche.add("shakira");
 		aFaireTournerTouteLaNuit(recherche);
 	}
 	
@@ -51,7 +46,7 @@ public class Peuplement {
 			//viderControleur();
 			recup = new RecupDonnees();
 			recup.rechercher(recherche);
-			//recreerLesTables=false;
+			recreerLesTables=false;
 			formatSauvegarde=new ControleSauvegardeBddFormatOracle();
 			GestionBddJavaPourSauvegarde.decomposerAvantSauvegardeGereePar(formatSauvegarde, recreerLesTables);
 			//On fait une pose de 20 minutes entre chaque mot-clé recherché

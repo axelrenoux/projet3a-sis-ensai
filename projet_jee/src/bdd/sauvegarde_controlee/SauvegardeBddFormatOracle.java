@@ -40,7 +40,10 @@ class SauvegardeBddFormatOracle extends SauvegardeUnFormatPourLaBdd{
 	protected void ajouterLigne(String ligne) {
 		//On envoie la requête au serveur Oracle en local
 		try {ControlAccesSQLViaJDBC.executerRequeteSansRetour(ligne);} 
-		catch (UpdateException e) {e.printStackTrace();}
+		catch (UpdateException e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+		}
 		//Et on l'écrit en parallèle dans un fichier txt partagé, pour que les autres aussi puissent peupler leur bdd
 		fluxSortie.println(ligne);
 	}
