@@ -37,8 +37,6 @@ public class AxeListener implements Axe {
 				i++;
 			}
 		}
-		System.out.println(i/ListeLs.size());
-		System.out.println(ListeLs.size());
 		ListeQuart=Quartiles(ListeLs);
 		setMesQuarts(ListeQuart);
 		return ListeQuart;
@@ -69,9 +67,6 @@ public class AxeListener implements Axe {
 
 		ArrayList<Double> lowerHalf = GetValuesLessThan(values, median, true);
 		ArrayList<Double> upperHalf = GetValuesGreaterThan(values, median, true);
-		System.out.println(values);
-		System.out.println(median);
-		System.out.println(upperHalf);
 		ArrayList<Double> Sol = new ArrayList<Double>(); 
 		Sol.add(Median(lowerHalf));
 		Sol.add(median);
@@ -121,8 +116,7 @@ public class AxeListener implements Axe {
 		}else if (List>this.mesQuarts.get(2)){
 			classe = "Supérieur à " +this.mesQuarts.get(2);
 		}	
-		//System.out.println("###################################");
-		//System.out.println(mesQuarts) ;
+
 		
 		return classe;
 	}
@@ -174,9 +168,7 @@ public class AxeListener implements Axe {
 	public void setOeuvres(ArrayList<Oeuvre> oeuvres) {
 		this.oeuvres = oeuvres;	
 		try {
-			System.out.println("###################################");
 			this.mesQuarts = QuartClusterOeuvreLs(oeuvres);
-			System.out.println(mesQuarts);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
