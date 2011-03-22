@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 
 import bdd.rechercheBDD.RechercheAlbumBDD;
+import bdd.rechercheBDD.RechercheArtisteBDD;
 import bdd.rechercheBDD.RechercheChansonBDD;
 
 import calculsDesClusters.axe.AxeListener;
@@ -32,8 +33,8 @@ public class RechercheChanson{
 	/********************************************************************/
 
 	//en attendant on met un mock
-	public ArrayList lancerRecherche() {
-		resultats = new ArrayList<Chanson>();
+	public Cluster lancerRecherche(String motCle) {
+		/*resultats = new ArrayList<Chanson>();
 		Chanson c1 = new Chanson();
 		Chanson c2 = new Chanson();
 		Chanson c3 = new Chanson();
@@ -92,7 +93,7 @@ public class RechercheChanson{
 		resultats.add(c3);
 		resultats.add(c4);
 		
-
+*/
 		/*maClasseChanson ma = new maClasseChanson();
 		try {
 			resultats = ma.rechercherChansons(motCle);
@@ -101,22 +102,33 @@ public class RechercheChanson{
 			e.printStackTrace();
 		}*/
 		
-		/*HashMap<CoupleAxe,Cluster> listeClusterPossible = CalculateurDeClustersChansons.getInstanceunique().calculEnsembleClustersChansons(resultats);
+		ArrayList<Chanson> ar=null;
+		RechercheChansonBDD mar = RechercheChansonBDD.getInstance();
+		try {
+			ar = mar.rechercherChansons(motCle);
+		} catch (ChargementException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		HashMap<CoupleAxe,Cluster> listeClusterPossible = CalculateurDeClustersChansons.getInstanceunique().calculEnsembleClustersChansons(ar);
+
+
 		Cluster meilleurCluster = new Cluster();
 		
 		for(Entry<CoupleAxe, Cluster> entry : listeClusterPossible.entrySet()) {
-			if (entry.getKey().getVariance() < meilleurCluster.varianceCluster()){
-				meilleurCluster = entry.getValue();
+			meilleurCluster = entry.getValue();
+			break;
+		}
+		for(Entry<CoupleAxe, Cluster> entry2 : listeClusterPossible.entrySet()) {
+
+			if (entry2.getKey().getVariance() < meilleurCluster.varianceCluster()){
+				meilleurCluster = entry2.getValue();
 			}
 		}
-			
-		return meilleurCluster;*/
-		
-		//return CalculateurDeClustersChansons.getInstanceunique()
-		//.calculerClustersChanson(new AxeListener(), new AxePlaycount(), resultats);
-
-		return CalculateurDeClusters.getInstanceunique().calculerClustersChanson(resultats);
-
+		System.out.println("meilleur cluster : " + meilleurCluster.varianceCluster());
+		System.out.println(meilleurCluster.tailleCluster());
+		return meilleurCluster;
 	}
 	
 	public String retournerTypeAffichage(){
