@@ -372,12 +372,29 @@
 
 <!-- etape 3 album -->
 								<center>
+								<p:panel 
+									style="width:'#{vueAffichageResultat.largeurDataTables2_3}';"
+									rendered = "#{!empty vueAffichageResultat.albumChoisi}"
+									header ="Quelques informations complémentaires sur #{vueAffichageResultat.albumChoisi.name}">
+									
+									<h:panelGrid columns="2" columnClasses="column" cellpadding="5">
+										<h:outputText value="résumé : "/>  
+										<h:outputText value="#{vueAffichageResultat.albumChoisi.wiki.resume}" />  
+										<h:outputText value="informations: "/>  
+										<h:outputText value="#{vueAffichageResultat.albumChoisi.wiki.contenu}" />  
+									</h:panelGrid>
+									<p:commandButton value="Afficher les chansons de l'album"
+												image="ui-icon ui-icon-search" update="monPanel"
+												action="#{vueAffichageResultat.afficherLesChansons}" />
+								</p:panel>
 								<p:dataTable var="album"
 									value="#{vueAffichageResultat.lazyModelAlbums3}"
 									rendered="#{vueAffichageResultat.etape3album}"
 									style="width:'#{vueAffichageResultat.largeurDataTables2_3}';"
 									paginator="true" 
 									selectionMode="single" 
+									selection="#{vueAffichageResultat.albumChoisi}"
+									update="monPanel"
 									rows="10" 
 									lazy="true"  
 									paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"  
@@ -425,6 +442,16 @@
 										<h:outputText value="#{album.playcount}" />
 									</p:column>
 									
+									<p:column>
+										<f:facet name="header">  
+				                  			Lien vers l'album sur last.fm
+						          		</f:facet>
+						          		<a href="#{album.url}" target="_blank"
+						          		style="color:#ab5ddd; margin-right:20px;" ajax="false">
+						          			vers last.fm
+						          		</a> 
+						          		
+									</p:column>
 									
 		
 									<p:column>
@@ -432,10 +459,7 @@
 				                  			Image
 						          		</f:facet>
 										<p:graphicImage value="#{album.imageLarge}" 
-										  alt="image non disponible" />
-										
-							 				
-							 			
+										  alt="image non disponible" />	
 									</p:column>
 									
 									
@@ -443,21 +467,33 @@
 										<p:commandButton value="Retour"
 													image="ui-icon ui-icon-circle-arrow-w" update="monPanel"
 													action="#{vueAffichageResultat.retourEtapeAlbum2}" />
-										<p:commandButton value="Plus d'infos sur cet album"
-												image="ui-icon ui-icon-search" update="monPanel"
-												action="#{vueAffichageResultat.affinerRechercheAlbum3}" />
 									</f:facet>
 
 								</p:dataTable>
 								</center>
 <!-- etape 3 artiste -->
+
 								<center>
+								<p:panel 
+									style="width:'#{vueAffichageResultat.largeurDataTables2_3}';"
+									rendered = "#{!empty vueAffichageResultat.artisteChoisi}"
+									header ="Quelques informations complémentaires sur #{vueAffichageResultat.artisteChoisi.name}">
+									
+									<h:panelGrid columns="2" columnClasses="column" cellpadding="5">
+										<h:outputText value="résumé : "/>  
+										<h:outputText value="#{vueAffichageResultat.artisteChoisi.wiki.resume}" />  
+										<h:outputText value="informations: "/>  
+										<h:outputText value="#{vueAffichageResultat.artisteChoisi.wiki.contenu}" />  
+									</h:panelGrid>
+								</p:panel>
 								<p:dataTable var="artiste"
 									value="#{vueAffichageResultat.lazyModelArtistes3}"
 									rendered="#{vueAffichageResultat.etape3artiste}"
 									style="width:'#{vueAffichageResultat.largeurDataTables2_3}';"
 									paginator="true" 
+									selection="#{vueAffichageResultat.artisteChoisi}"
 									selectionMode="single" 
+									update="monPanel"
 									rows="10" 
 									lazy="true"  
 									paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"  
@@ -490,37 +526,61 @@
 						          		</f:facet>
 										<h:outputText value="#{artiste.playcount}" />
 									</p:column>
+									
+									<p:column>
+										<f:facet name="header">  
+				                  			Lien vers l'artiste sur last.fm
+						          		</f:facet>
+										<p:commandLink action="#{artiste.url}" 
+						          		style="color:#ab5ddd; margin-right:20px;" ajax="false">  
+       										<h:outputText value="vers last.fm"/>  
+  		 								</p:commandLink>
+									</p:column>
+									
+									
 		
 									<p:column>
 										<f:facet name="header">  
 				                  			Image
 						          		</f:facet>
-										<p:graphicImage value="#{artiste.imageLarge}" />
+										<p:graphicImage value="#{artiste.imageLarge}" 
+										 alt="image non disponible" />
 									</p:column>
 									
 									<f:facet name="footer">
 										<p:commandButton value="Retour"
 													image="ui-icon ui-icon-circle-arrow-w" update="monPanel"
 													action="#{vueAffichageResultat.retourEtapeArtiste2}" />
-										<p:commandButton value="Plus d'infos sur cet artiste"
-												image="ui-icon ui-icon-search" update="monPanel"
-												action="#{vueAffichageResultat.affinerRechercheArtiste3}" />
 									</f:facet>
 									
 								</p:dataTable>
 								</center>
-<!-- etape 3 chanson -->
+<!-- etape 3 chanson -->		
 								<center>
+								<p:panel 
+									style="width:'#{vueAffichageResultat.largeurDataTables2_3}';"
+									rendered = "#{!empty vueAffichageResultat.chansonChoisie}"
+									header ="Quelques informations complémentaires sur #{vueAffichageResultat.chansonChoisie.name}">
+									<h:panelGrid columns="2" columnClasses="column" cellpadding="5">
+										<h:outputText value="résumé : "/>   
+										<h:outputText value="#{vueAffichageResultat.chansonChoisie.wiki.resume}" />  
+										<h:outputText value="informations : "/>  
+										<h:outputText value="#{vueAffichageResultat.chansonChoisie.wiki.contenu}" />  
+									</h:panelGrid>
+								</p:panel>
+
 								<p:dataTable var="chanson"
 									value="#{vueAffichageResultat.lazyModelChansons3}"
 									rendered="#{vueAffichageResultat.etape3chanson}"
 									style="width:'#{vueAffichageResultat.largeurDataTables2_3}';"
 									paginator="true" 
+									selection="#{vueAffichageResultat.chansonChoisie}"
 									selectionMode="single" 
 									rows="10" 
 									lazy="true"  
 									paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"  
 									rowsPerPageTemplate="5,10,15"  
+									update="monPanel"
 									>
 									
 									<f:facet name="header">
@@ -566,33 +626,46 @@
 						          		</f:facet>
 										<h:outputText value="#{chanson.playcount}" />
 									</p:column>
+									
+									<p:column>
+										<f:facet name="header">  
+				                  			Lien vers la chanson sur last.fm
+						          		</f:facet>
+										<p:commandLink action="#{chanson.url}" 
+						          		style="color:#ab5ddd; margin-right:20px;" ajax="false">  
+       										<h:outputText value="vers last.fm"/>  
+  		 								</p:commandLink>
+									</p:column>
+									
+									
 		
 									<p:column>
 										<f:facet name="header">  
 				                  	Image
 						          	</f:facet>
-										<p:graphicImage value="#{chanson.imageLarge}" />
+										<p:graphicImage value="#{chanson.imageLarge}" 
+										 alt="image non disponible" />
 									</p:column>
 															
 									<f:facet name="footer">
 										<p:commandButton value="Retour"
 													image="ui-icon ui-icon-circle-arrow-w" update="monPanel"
 													action="#{vueAffichageResultat.retourEtapeChanson2}" />
-										<p:commandButton value="Plus d'infos sur cette chanson"
-												image="ui-icon ui-icon-search" update="monPanel"
-												action="#{vueAffichageResultat.affinerRechercheChanson3}" />
 									</f:facet>
-
 								</p:dataTable>
 								</center>
+
+								
+								
+								
+								
+							
 							</p:panel>
 						</h:form>
 					
 					</td>
 				</tr>
 			</table>
- 
-
 		</p:panel>
 	</ui:define>
 </ui:composition>
