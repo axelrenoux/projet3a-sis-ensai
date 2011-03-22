@@ -34,7 +34,7 @@ public class RechercheArtiste{
 	
 	
 	public Cluster lancerRecherche(String motCle) {
-		resultats = new ArrayList<Artiste>();
+		/*resultats = new ArrayList<Artiste>();
 		Artiste a1 = new Artiste();
 		Artiste a2 = new Artiste();
 		Artiste a3 = new Artiste();
@@ -65,7 +65,7 @@ public class RechercheArtiste{
 		resultats.add(a1);
 		resultats.add(a2);
 		resultats.add(a3);
-		resultats.add(a4);
+		resultats.add(a4);*/
 		
 		/*maClasseArtiste ma = new maClasseArtiste();
 		try {
@@ -74,20 +74,48 @@ public class RechercheArtiste{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}*/
+
+		ArrayList<Artiste> ar=null;
+		RechercheArtisteBDD mar = RechercheArtisteBDD.getInstance();
+		try {
+			ar = mar.rechercherArtistes("ar");
+		} catch (ChargementException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//System.out.println(ar);
+		//System.out.println(ar.size());
 		
 
+<<<<<<< .mine
+		HashMap<CoupleAxe,Cluster> listeClusterPossible = CalculateurDeClustersArtistes.getInstanceunique().calculEnsembleClustersArtistes(ar);
+=======
 		/*HashMap<CoupleAxe,Cluster> listeClusterPossible = CalculateurDeClustersArtistes.getInstanceunique().calculEnsembleClustersArtistes(resultats);
+>>>>>>> .r312
 		Cluster meilleurCluster = new Cluster();
 		
 		for(Entry<CoupleAxe, Cluster> entry : listeClusterPossible.entrySet()) {
-			if (entry.getKey().getVariance() < meilleurCluster.varianceCluster()){
-				meilleurCluster = entry.getValue();
+			meilleurCluster = entry.getValue();
+			break;
+		}
+		for(Entry<CoupleAxe, Cluster> entry2 : listeClusterPossible.entrySet()) {
+			
+<<<<<<< .mine
+			if (entry2.getKey().getVariance() < meilleurCluster.varianceCluster()){
+				meilleurCluster = entry2.getValue();
+				System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+				System.out.println(entry2.getKey().getVariance());
 			}
 		}
-			
+		//System.out.println(meilleurCluster);
+		
+		return meilleurCluster;
+
+=======
 		return meilleurCluster;*/
 		
 		return CalculateurDeClusters.getInstanceunique().calculerClustersArtiste(resultats);
+>>>>>>> .r312
 
 		
 	}
