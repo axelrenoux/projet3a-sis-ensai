@@ -21,6 +21,14 @@
 				        	<p:messages id="msgs" showDetail="true"/>
 							<p:commandButton value ="C'est parti !" action="#{vueFormulaire.lancerRecherche}" 
 									update="msgs" ajax="false"/>
+									
+							<h:selectOneRadio
+								 value="#{vueFormulaire.retourChoisi}">
+								  <f:selectItems
+								   value="#{vueFormulaire.retoursPossibles}" />
+							</h:selectOneRadio>
+
+
 						</h:panelGrid>
 					</p:panel>	
 				</td>
