@@ -87,11 +87,11 @@ public class RechercheArtiste{
 		//System.out.println(ar.size());
 		
 
-<<<<<<< .mine
+
 		HashMap<CoupleAxe,Cluster> listeClusterPossible = CalculateurDeClustersArtistes.getInstanceunique().calculEnsembleClustersArtistes(ar);
-=======
+
 		/*HashMap<CoupleAxe,Cluster> listeClusterPossible = CalculateurDeClustersArtistes.getInstanceunique().calculEnsembleClustersArtistes(resultats);
->>>>>>> .r312
+
 		Cluster meilleurCluster = new Cluster();
 		
 		for(Entry<CoupleAxe, Cluster> entry : listeClusterPossible.entrySet()) {
@@ -100,7 +100,7 @@ public class RechercheArtiste{
 		}
 		for(Entry<CoupleAxe, Cluster> entry2 : listeClusterPossible.entrySet()) {
 			
-<<<<<<< .mine
+
 			if (entry2.getKey().getVariance() < meilleurCluster.varianceCluster()){
 				meilleurCluster = entry2.getValue();
 				System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
@@ -111,11 +111,11 @@ public class RechercheArtiste{
 		
 		return meilleurCluster;
 
-=======
+
 		return meilleurCluster;*/
 		
 		return CalculateurDeClusters.getInstanceunique().calculerClustersArtiste(resultats);
->>>>>>> .r312
+
 
 		
 	}
