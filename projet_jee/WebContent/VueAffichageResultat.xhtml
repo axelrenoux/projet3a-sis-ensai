@@ -372,21 +372,8 @@
 
 <!-- etape 3 album -->
 								<center>
-								<p:panel 
-									style="width:'#{vueAffichageResultat.largeurDataTables2_3}';"
-									rendered = "#{!empty vueAffichageResultat.albumChoisi}"
-									header ="Quelques informations complémentaires sur #{vueAffichageResultat.albumChoisi.name}">
+							
 									
-									<h:panelGrid columns="2" columnClasses="column" cellpadding="5">
-										<h:outputText value="résumé : "/>  
-										<h:outputText value="#{vueAffichageResultat.albumChoisi.wiki.resume}" />  
-										<h:outputText value="informations: "/>  
-										<h:outputText value="#{vueAffichageResultat.albumChoisi.wiki.contenu}" />  
-									</h:panelGrid>
-									<p:commandButton value="Afficher les chansons de l'album"
-												image="ui-icon ui-icon-search" update="monPanel"
-												action="#{vueAffichageResultat.afficherLesChansons}" />
-								</p:panel>
 								<p:dataTable var="album"
 									value="#{vueAffichageResultat.lazyModelAlbums3}"
 									rendered="#{vueAffichageResultat.etape3album}"
@@ -395,11 +382,17 @@
 									selectionMode="single" 
 									selection="#{vueAffichageResultat.albumChoisi}"
 									update="monPanel"
+									onRowSelectComplete="DialogAlbum.show()"  						
 									rows="10" 
 									lazy="true"  
 									paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"  
-									rowsPerPageTemplate="5,10,15"  
-									>
+									rowsPerPageTemplate="5,10,15" 
+									
+									 rowSelectListener="#{vueAffichageResultat.onRowSelect}"  
+					                 onRowSelectUpdate="Dalbum"  
+					                 >  
+									
+									
 									
 									<f:facet name="header">
 										<h:outputLabel style="font-size: 18;">
@@ -474,18 +467,7 @@
 <!-- etape 3 artiste -->
 
 								<center>
-								<p:panel 
-									style="width:'#{vueAffichageResultat.largeurDataTables2_3}';"
-									rendered = "#{!empty vueAffichageResultat.artisteChoisi}"
-									header ="Quelques informations complémentaires sur #{vueAffichageResultat.artisteChoisi.name}">
-									
-									<h:panelGrid columns="2" columnClasses="column" cellpadding="5">
-										<h:outputText value="résumé : "/>  
-										<h:outputText value="#{vueAffichageResultat.artisteChoisi.wiki.resume}" />  
-										<h:outputText value="informations: "/>  
-										<h:outputText value="#{vueAffichageResultat.artisteChoisi.wiki.contenu}" />  
-									</h:panelGrid>
-								</p:panel>
+								
 								<p:dataTable var="artiste"
 									value="#{vueAffichageResultat.lazyModelArtistes3}"
 									rendered="#{vueAffichageResultat.etape3artiste}"
@@ -493,11 +475,14 @@
 									paginator="true" 
 									selection="#{vueAffichageResultat.artisteChoisi}"
 									selectionMode="single" 
+									onRowSelectComplete="DialogArtiste.show()"
 									update="monPanel"
 									rows="10" 
 									lazy="true"  
 									paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"  
 									rowsPerPageTemplate="5,10,15"  
+									onRowSelectUpdate="Dartiste" 
+									
 									>
 		
 									<f:facet name="header">
@@ -557,23 +542,14 @@
 								</center>
 <!-- etape 3 chanson -->		
 								<center>
-								<p:panel 
-									style="width:'#{vueAffichageResultat.largeurDataTables2_3}';"
-									rendered = "#{!empty vueAffichageResultat.chansonChoisie}"
-									header ="Quelques informations complémentaires sur #{vueAffichageResultat.chansonChoisie.name}">
-									<h:panelGrid columns="2" columnClasses="column" cellpadding="5">
-										<h:outputText value="résumé : "/>   
-										<h:outputText value="#{vueAffichageResultat.chansonChoisie.wiki.resume}" />  
-										<h:outputText value="informations : "/>  
-										<h:outputText value="#{vueAffichageResultat.chansonChoisie.wiki.contenu}" />  
-									</h:panelGrid>
-								</p:panel>
+								
 
 								<p:dataTable var="chanson"
 									value="#{vueAffichageResultat.lazyModelChansons3}"
 									rendered="#{vueAffichageResultat.etape3chanson}"
 									style="width:'#{vueAffichageResultat.largeurDataTables2_3}';"
 									paginator="true" 
+									onRowSelectComplete="DialogChanson.show()"
 									selection="#{vueAffichageResultat.chansonChoisie}"
 									selectionMode="single" 
 									rows="10" 
@@ -581,6 +557,7 @@
 									paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"  
 									rowsPerPageTemplate="5,10,15"  
 									update="monPanel"
+									onRowSelectUpdate="Dchanson" 
 									>
 									
 									<f:facet name="header">
@@ -654,11 +631,107 @@
 									</f:facet>
 								</p:dataTable>
 								</center>
-
 								
 								
 								
 								
+									
+									<center>
+									<p:dialog id="Dalbum" header="Informations complémentaires sur #{vueAffichageResultat.albumChoisi.name}" 
+									widgetVar="DialogAlbum" width="700" height="400">
+										<table>
+											<tr>
+												<td width="100%"><h:panelGrid columns="2"
+													columnClasses="column" cellpadding="5">
+													<h:outputText value="résumé : " />
+													<h:outputText
+														value="#{vueAffichageResultat.albumChoisi.wiki.resume}" />
+													<h:outputText value="informations: " />
+													<h:outputText
+														value="#{vueAffichageResultat.albumChoisi.wiki.contenu}" />
+													</h:panelGrid>
+												</td>
+											</tr>
+											<tr>
+												<td width="100%">
+													<p:dataTable var="chanson" modal="true"
+													value="#{vueAffichageResultat.albumChoisi.chansons}"
+													style="width:400;">
+														<p:column>
+															<f:facet name="header">
+																	titre
+																	<h:outputText value="#{chanson.name}" />
+															</f:facet>
+														</p:column>
+		
+														<p:column>
+															<f:facet name="header">
+																	duree
+																	<h:outputText value="#{chanson.duree}" />
+															</f:facet>
+														</p:column>
+													</p:dataTable>
+												</td>
+											</tr>
+										</table>
+									</p:dialog>
+									
+									
+									<p:dialog id="Dartiste" header="Informations complémentaires sur #{vueAffichageResultat.albumChoisi.name}" 
+									widgetVar="DialogArtiste" width="700" height="400">
+										<table>
+											<tr>
+												<td width="100%"><h:panelGrid columns="2"
+													columnClasses="column" cellpadding="5">
+													<h:outputText value="résumé : " />
+													<h:outputText
+														value="#{vueAffichageResultat.artisteChoisi.wiki.resume}" />
+													<h:outputText value="informations: " />
+													<h:outputText
+														value="#{vueAffichageResultat.artisteChoisi.wiki.contenu}" />
+													</h:panelGrid>
+												</td>
+											</tr>
+										</table>
+									</p:dialog>
+									
+									
+									
+								<p:dialog  id="Dchanson"
+								header="Informations complémentaires sur #{vueAffichageResultat.chansonChoisie.name}" 
+								widgetVar="DialogChanson" width="700" height="400">
+										<table>
+											<tr>
+												<td width="100%">
+													<h:panelGrid columns="2"
+														columnClasses="column" cellpadding="5">
+														<h:outputText value="résumé : " />
+														<h:outputText
+															value="#{vueAffichageResultat.chansonChoisie.wiki.resume}" />
+														<h:outputText value="informations: " />
+														<h:outputText
+															value="#{vueAffichageResultat.chansonChoisie.wiki.contenu}" />
+													</h:panelGrid>
+												</td>
+											</tr>
+											<tr>
+												<td width="100%">
+													<p:dataTable var="album" modal="true"
+													value="#{vueAffichageResultat.albumsChansonChoisie}"
+													style="width:400;">
+														<p:column>
+															<f:facet name="header">
+																	titre
+																	<h:outputText value="#{album.name}" />
+															</f:facet>
+														</p:column>
+													</p:dataTable>
+												</td>
+											</tr>
+										</table>
+									</p:dialog>
+									</center>
+									
 							
 							</p:panel>
 						</h:form>

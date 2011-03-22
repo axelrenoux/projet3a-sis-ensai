@@ -10,6 +10,8 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
+import org.primefaces.event.SelectEvent;
+import org.primefaces.event.UnselectEvent;
 import org.primefaces.model.LazyDataModel;
 
 import rechercheParFormulaire.gestionRecherche.GestionnaireAffichageResultat;
@@ -95,6 +97,8 @@ public class VueAffichageResultat {
 	private Album albumChoisi;
 	private Artiste artisteChoisi;
 	
+	private ArrayList<Chanson> chansonsAlbumChoisi;
+	private ArrayList<Album> albumsChansonChoisie;
 
 	private LazyDataModel lazyModelAlbums1;
 	private LazyDataModel lazyModelAlbums2;
@@ -289,6 +293,8 @@ public class VueAffichageResultat {
 		chansonChoisie =null;
 		artisteChoisi = null;
 		albumChoisi = null;
+		chansonsAlbumChoisi = null;
+		albumsChansonChoisie = null;
 	}
 	
 	public void reinitialisationSelectionsNonValides(){
@@ -301,7 +307,36 @@ public class VueAffichageResultat {
 	}
 	
 	
+	public void afficherChansonsAlbum(SelectEvent event){
+		chansonsAlbumChoisi = gestionnaireAffichageResultat.recupererLesChansons(albumChoisi);
+		System.out.println("chansons????????? " + chansonsAlbumChoisi);
+	}
 	
+	public void afficherAlbumsChanson(SelectEvent event){
+		albumsChansonChoisie = gestionnaireAffichageResultat.recupererLesAlbums(chansonChoisie);
+		System.out.println("albums????????? " + albumsChansonChoisie);
+	}
+	
+	
+ 
+	
+	public void onRowSelect(SelectEvent event) {   
+		//chansonsAlbumChoisi = gestionnaireAffichageResultat.recupererLesChansons(((Album) event.getObject()));
+		System.out.println("chansons????????? " + albumChoisi.getChansons());
+		System.out.println("album choisi? " + albumChoisi);
+	   }   
+	
+	public void onRowUnselect(UnselectEvent event) {   
+		//chansonsAlbumChoisi = gestionnaireAffichageResultat.recupererLesChansons(((Album) event.getObject()));
+		System.out.println("chansons????????? " + albumChoisi.getChansons());
+		
+	}   
+	
+
+		
+		
+		
+		
 	
 	
 	/**
@@ -900,11 +935,11 @@ public class VueAffichageResultat {
 	}
 	
 	public String getLargeurDataTables2_3(){
-		return "1000px";
+		return "1100px";
 	}
 	
 	public String getLargeurSousPanelSeul(){
-		return "900px";
+		return "1150px";
 	}
 
 
@@ -1050,6 +1085,30 @@ public class VueAffichageResultat {
 
 	public void setArtisteChoisi(Artiste artisteChoisi) {
 		this.artisteChoisi = artisteChoisi;
+	}
+
+
+
+	public ArrayList<Chanson> getChansonsAlbumChoisi() {
+		return chansonsAlbumChoisi;
+	}
+
+
+
+	public void setChansonsAlbumChoisi(ArrayList<Chanson> chansonsAlbumChoisi) {
+		this.chansonsAlbumChoisi = chansonsAlbumChoisi;
+	}
+
+
+
+	public ArrayList<Album> getAlbumsChansonChoisie() {
+		return albumsChansonChoisie;
+	}
+
+
+
+	public void setAlbumsChansonChoisie(ArrayList<Album> albumsChansonChoisie) {
+		this.albumsChansonChoisie = albumsChansonChoisie;
 	}
 
 
