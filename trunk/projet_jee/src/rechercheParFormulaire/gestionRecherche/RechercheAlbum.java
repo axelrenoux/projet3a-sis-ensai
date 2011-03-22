@@ -7,7 +7,7 @@ import java.util.Map.Entry;
 import metier.Cluster;
 import metier.ComposantCluster;
 import metier.oeuvres.Album;
-import bdd.rechercheBDD.maClasseAlbum;
+import bdd.rechercheBDD.RechercheAlbumBDD;
 import calculsDesClusters.axe.CoupleAxe;
 import calculsDesClusters.calcul.CalculateurDeClustersAlbums;
 import controleur.UtilitaireDate;
@@ -125,7 +125,7 @@ public class RechercheAlbum {
 		
 		//il faudra ici aller cherche en base les albums repondant au mot cle
 		
-		maClasseAlbum ma = maClasseAlbum.getInstance();
+		RechercheAlbumBDD ma = RechercheAlbumBDD.getInstance();
 		try {
 			resultats = ma.rechercherAlbums(motCle);
 		}
