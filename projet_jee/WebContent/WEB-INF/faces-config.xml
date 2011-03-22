@@ -11,8 +11,13 @@
    		<from-view-id>/VueFormulaire.xhtml</from-view-id>
    		<navigation-case>
    			<from-action>#{vueFormulaire.lancerRecherche}</from-action>
-   			<from-outcome>success</from-outcome>
+   			<from-outcome>j2ee</from-outcome>
    			<to-view-id>/VueAffichageResultat.xhtml</to-view-id>
+   		</navigation-case>
+   		<navigation-case>
+   			<from-action>#{vueFormulaire.lancerRecherche}</from-action>
+   			<from-outcome>xml</from-outcome>
+   			<to-view-id>/VueAffichageResultatXML.xhtml</to-view-id>
    		</navigation-case>
    </navigation-rule>
    
