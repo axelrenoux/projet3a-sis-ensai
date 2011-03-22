@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
-import bdd.rechercheBDD.maClasseAlbum;
-import bdd.rechercheBDD.maClasseChanson;
+import bdd.rechercheBDD.RechercheAlbumBDD;
+import bdd.rechercheBDD.RechercheChansonBDD;
 
 import calculsDesClusters.axe.CoupleAxe;
 import calculsDesClusters.calcul.CalculateurDeClusters;
