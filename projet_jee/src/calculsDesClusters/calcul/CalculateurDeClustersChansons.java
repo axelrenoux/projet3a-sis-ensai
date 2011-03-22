@@ -4,8 +4,19 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
+import calculsDesClusters.axe.Axe;
+import calculsDesClusters.axe.AxeAlbumDeChanson;
+import calculsDesClusters.axe.AxeAnnee;
+import calculsDesClusters.axe.AxeDuree;
+import calculsDesClusters.axe.AxeListener;
+import calculsDesClusters.axe.AxePlaycount;
+import calculsDesClusters.axe.AxeSaison;
+import calculsDesClusters.axe.AxeTag;
+import calculsDesClusters.axe.CoupleAxe;
+
 import metier.Cluster;
 import metier.ComposantCluster;
+import metier.oeuvres.Album;
 import metier.oeuvres.Chanson;
 
 
@@ -30,7 +41,7 @@ public class CalculateurDeClustersChansons {
 	/************************      methodes      ************************/
 	/********************************************************************/
 
-	public Cluster calculerClustersChanson(ArrayList<Chanson> chansons){
+	public Cluster calculerClustersChanson(Axe axe1, Axe axe2,ArrayList<Chanson> chansons){
 		Cluster clusterGeneral = new Cluster();
 		HashMap<ComposantCluster,ArrayList<Chanson>> affectationChansonSousCluster = new HashMap<ComposantCluster,ArrayList<Chanson>>();
 		//affectationChansonSousCluster va permettre l'affectation des Chansons dans les sous-clusters
@@ -39,7 +50,7 @@ public class CalculateurDeClustersChansons {
 		//et on crée au fur et a mesure les sous-clusters de cluster general
 		for(Chanson a : chansons){
 			//selon le 1er axe: exemple 
-			String valeurAxe = a.getDuree()+"";
+			String valeurAxe = axe1.CalculAxe(a);
 			//si le clusterGeneral ne contient aucun cluster pour cette valeur
 			if(!clusterGeneral.getContenu().containsKey(valeurAxe)){
 				//on cree le sous-cluster de niveau 1
@@ -59,20 +70,20 @@ public class CalculateurDeClustersChansons {
 		
 		//on cree les sous-clusters de niveau 2 pour chaque sous-cluster de niveau 1
 		for(Entry<ComposantCluster, ArrayList<Chanson>> currentEntry : affectationChansonSousCluster.entrySet()){
-			calculerClustersChansonNiveau2(currentEntry.getKey(),currentEntry.getValue());
+			calculerClustersChansonNiveau2(axe2,currentEntry.getKey(),currentEntry.getValue());
 		}
 		
 		return clusterGeneral;
 	}
 	
 	
-	public void calculerClustersChansonNiveau2(ComposantCluster sousCluster1,ArrayList<Chanson> chansons){
+	public void calculerClustersChansonNiveau2(Axe axe, ComposantCluster sousCluster1,ArrayList<Chanson> chansons){
 		//deuxieme decoupage
 		//on ajoute chaque chanson au contenu d'un sous-cluster de sous-cluster1
 		//et on créé on fur et a mesure les sous-clusters de sous-cluster1
 		for(Chanson ch : chansons){
 			//selon le 2eme axe: exemple saison
-			String valeurAxe = ch.getListeners()+"";
+			String valeurAxe = axe.CalculAxe(ch);
 			//si le clusterGeneral ne contient aucun cluster pour cette valeur
 			if(!sousCluster1.getContenu().containsKey(valeurAxe)){
 				//on cree le sous-cluster de niveau 2
@@ -83,6 +94,41 @@ public class CalculateurDeClustersChansons {
 			ComposantCluster sousClusterNiveau2 = sousCluster1.getContenu().get(valeurAxe);
 			sousClusterNiveau2.getContenu().put(ch.getUrl(),ch);
 		}
+	}
+	
+	public HashMap<CoupleAxe,Cluster> calculEnsembleClustersChansons(ArrayList<Chanson> chansons){
+
+		HashMap<CoupleAxe, Cluster> listeCluster = new HashMap<CoupleAxe, Cluster>();
+		CoupleAxe currentCouple = new CoupleAxe();
+		Cluster currentCluster = new Cluster();
+		
+		Axe axeListeners = new AxeListener();
+		Axe axePlaycount = new AxePlaycount();
+		Axe axeChanson = new AxeAlbumDeChanson();
+		Axe axeDuree = new AxeDuree();
+		Axe axeTag = new AxeTag();
+
+		ArrayList<Axe> listePremierAxe = new ArrayList<Axe>();
+		listePremierAxe.add(axeListeners);
+		listePremierAxe.add(axePlaycount);
+		listePremierAxe.add(axeChanson);
+		listePremierAxe.add(axeDuree);
+		listePremierAxe.add(axeTag);
+		ArrayList<Axe> listeDeuxiemeAxe = new ArrayList<Axe>();
+
+		for (Axe a : listePremierAxe){
+			listeDeuxiemeAxe = listePremierAxe;
+			listeDeuxiemeAxe.remove(a);
+			for (Axe b : listeDeuxiemeAxe){
+				currentCluster = calculerClustersChanson(a,b,chansons);
+				currentCouple.setAxe1(a);
+				currentCouple.setAxe2(b);
+				currentCouple.setVariance(currentCluster.varianceCluster());
+				listeCluster.put(currentCouple, currentCluster);
+			}
+		}
+
+		return listeCluster;
 	}
 	
 	/********************************************************************/

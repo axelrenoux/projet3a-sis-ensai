@@ -4,8 +4,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
+import calculsDesClusters.axe.Axe;
+import calculsDesClusters.axe.AxeAnnee;
+import calculsDesClusters.axe.AxeListener;
+import calculsDesClusters.axe.AxePlaycount;
+import calculsDesClusters.axe.AxeSaison;
+import calculsDesClusters.axe.AxeTag;
+import calculsDesClusters.axe.CoupleAxe;
+
 import metier.Cluster;
 import metier.ComposantCluster;
+import metier.oeuvres.Album;
 import metier.oeuvres.Artiste;
 
 
@@ -32,7 +41,7 @@ public class CalculateurDeClustersArtistes {
 
 	 
 	
-	public Cluster calculerClustersArtiste(ArrayList<Artiste> artistes){
+	public Cluster calculerClustersArtiste(Axe axe1, Axe axe2,ArrayList<Artiste> artistes){
 		Cluster clusterGeneral = new Cluster();
 		HashMap<ComposantCluster,ArrayList<Artiste>> affectationArtisteSousCluster = new HashMap<ComposantCluster,ArrayList<Artiste>>();
 		//affectationArtisteSousCluster va permettre l'affectation des artistes dans les sous-clusters
@@ -42,7 +51,7 @@ public class CalculateurDeClustersArtistes {
 		//et on crée au fur et a mesure les sous-clusters de cluster general
 		for(Artiste a : artistes){
 			//selon le 1er axe: exemple 
-			String valeurAxe = a.getListeners()+"";
+			String valeurAxe = axe1.CalculAxe(a);
 			//si le clusterGeneral ne contient aucun cluster pour cette valeur
 			if(!clusterGeneral.getContenu().containsKey(valeurAxe)){
 				//on cree le sous-cluster de niveau 1
@@ -62,21 +71,21 @@ public class CalculateurDeClustersArtistes {
 		
 		//on cree les sous-clusters de niveau 2 pour chaque sous-cluster de niveau 1
 		for(Entry<ComposantCluster, ArrayList<Artiste>> currentEntry : affectationArtisteSousCluster.entrySet()){
-			calculerClustersArtisteNiveau2(currentEntry.getKey(),currentEntry.getValue());
+			calculerClustersArtisteNiveau2(axe2, currentEntry.getKey(),currentEntry.getValue());
 		}
 		
 		return clusterGeneral;
 	}
 	
 	
-	public void calculerClustersArtisteNiveau2(ComposantCluster sousCluster1,ArrayList<Artiste> artistes){
+	public void calculerClustersArtisteNiveau2(Axe axe, ComposantCluster sousCluster1,ArrayList<Artiste> artistes){
 		
 		//deuxieme decoupage
 		//on ajoute chaque artiste au contenu d'un sous-cluster de sous-cluster1
 		//et on créé on fur et a mesure les sous-clusters de sous-cluster1
 		for(Artiste a : artistes){
 			//selon le 2eme axe: exemple  
-			String valeurAxe = a.getPlaycount()+"";
+			String valeurAxe = axe.CalculAxe(a);
 			//si le clusterGeneral ne contient aucun cluster pour cette valeur
 			if(!sousCluster1.getContenu().containsKey(valeurAxe)){
 				//on cree le sous-cluster de niveau 2
@@ -89,7 +98,40 @@ public class CalculateurDeClustersArtistes {
 		}
 	}
 	
+	public HashMap<CoupleAxe,Cluster> calculEnsembleClustersArtistes(ArrayList<Artiste> artistes){
 
+		HashMap<CoupleAxe, Cluster> listeCluster = new HashMap<CoupleAxe, Cluster>();
+		CoupleAxe currentCouple = new CoupleAxe();
+		Cluster currentCluster = new Cluster();
+		
+		Axe axeListeners = new AxeListener();
+		Axe axePlaycount = new AxePlaycount();
+		Axe axeTag = new AxeTag();
+
+		ArrayList<Axe> listePremierAxe = new ArrayList<Axe>();
+
+		listePremierAxe.add(axeListeners);
+		listePremierAxe.add(axePlaycount);
+		listePremierAxe.add(axeTag);
+		
+		ArrayList<Axe> listeDeuxiemeAxe = new ArrayList<Axe>();
+
+		for (Axe a : listePremierAxe){
+			listeDeuxiemeAxe = listePremierAxe;
+			listeDeuxiemeAxe.remove(a);
+			for (Axe b : listeDeuxiemeAxe){
+				currentCluster = calculerClustersArtiste(a,b,artistes);
+				currentCouple.setAxe1(a);
+				currentCouple.setAxe2(b);
+				currentCouple.setVariance(currentCluster.varianceCluster());
+				listeCluster.put(currentCouple, currentCluster);
+			}
+		}
+
+		return listeCluster;
+	}
+	
+	
 	/********************************************************************/
 	/******************      getters / setters       ********************/
 	/********************************************************************/

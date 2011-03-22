@@ -12,6 +12,7 @@ import calculsDesClusters.axe.AxeAnnee;
 import calculsDesClusters.axe.AxeListener;
 import calculsDesClusters.axe.AxePlaycount;
 import calculsDesClusters.axe.AxeSaison;
+import calculsDesClusters.axe.AxeTag;
 import calculsDesClusters.axe.CoupleAxe;
 
 
@@ -108,12 +109,14 @@ public class CalculateurDeClustersAlbums {
 		Axe axeSaison = new AxeSaison();
 		Axe axeListeners = new AxeListener();
 		Axe axePlaycount = new AxePlaycount();
+		Axe axeTag = new AxeTag();
 
 		ArrayList<Axe> listePremierAxe = new ArrayList<Axe>();
 		listePremierAxe.add(axeAnnee);	
 		listePremierAxe.add(axeSaison);
 		listePremierAxe.add(axeListeners);
 		listePremierAxe.add(axePlaycount);
+		listePremierAxe.add(axeTag);
 		ArrayList<Axe> listeDeuxiemeAxe = new ArrayList<Axe>();
 
 		for (Axe a : listePremierAxe){
