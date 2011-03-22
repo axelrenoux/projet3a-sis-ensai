@@ -16,6 +16,7 @@ import metier.Cluster;
 import metier.ComposantCluster;
 import metier.oeuvres.Album;
 import metier.oeuvres.Artiste;
+import metier.oeuvres.Oeuvre;
 
 
 
@@ -39,13 +40,17 @@ public class CalculateurDeClustersArtistes {
 	/************************      methodes      ************************/
 	/********************************************************************/
 
-	 
-	
+
+
 	public Cluster calculerClustersArtiste(Axe axe1, Axe axe2,ArrayList<Artiste> artistes){
 		Cluster clusterGeneral = new Cluster();
 		HashMap<ComposantCluster,ArrayList<Artiste>> affectationArtisteSousCluster = new HashMap<ComposantCluster,ArrayList<Artiste>>();
+		ArrayList<Oeuvre> listeOeuvre = new ArrayList<Oeuvre>();
+		listeOeuvre.addAll(artistes);
+		axe1.setOeuvres(listeOeuvre);
+		axe2.setOeuvres(listeOeuvre);
 		//affectationArtisteSousCluster va permettre l'affectation des artistes dans les sous-clusters
-		
+
 		//premier decoupage
 		//on affecte chaque artiste a un sous-cluster de cluster general
 		//et on crée au fur et a mesure les sous-clusters de cluster general
@@ -68,18 +73,18 @@ public class CalculateurDeClustersArtistes {
 				affectationArtisteSousCluster.get(c).add(a);
 			}
 		}
-		
+
 		//on cree les sous-clusters de niveau 2 pour chaque sous-cluster de niveau 1
 		for(Entry<ComposantCluster, ArrayList<Artiste>> currentEntry : affectationArtisteSousCluster.entrySet()){
 			calculerClustersArtisteNiveau2(axe2, currentEntry.getKey(),currentEntry.getValue());
 		}
-		
+
 		return clusterGeneral;
 	}
-	
-	
+
+
 	public void calculerClustersArtisteNiveau2(Axe axe, ComposantCluster sousCluster1,ArrayList<Artiste> artistes){
-		
+
 		//deuxieme decoupage
 		//on ajoute chaque artiste au contenu d'un sous-cluster de sous-cluster1
 		//et on créé on fur et a mesure les sous-clusters de sous-cluster1
@@ -97,13 +102,13 @@ public class CalculateurDeClustersArtistes {
 			sousClusterNiveau2.getContenu().put(a.getUrl(),a);
 		}
 	}
-	
+
 	public HashMap<CoupleAxe,Cluster> calculEnsembleClustersArtistes(ArrayList<Artiste> artistes){
 
 		HashMap<CoupleAxe, Cluster> listeCluster = new HashMap<CoupleAxe, Cluster>();
 		CoupleAxe currentCouple = new CoupleAxe();
 		Cluster currentCluster = new Cluster();
-		
+
 		Axe axeListeners = new AxeListener();
 		Axe axePlaycount = new AxePlaycount();
 		Axe axeTag = new AxeTag();
@@ -113,25 +118,50 @@ public class CalculateurDeClustersArtistes {
 		listePremierAxe.add(axeListeners);
 		listePremierAxe.add(axePlaycount);
 		listePremierAxe.add(axeTag);
-		
-		ArrayList<Axe> listeDeuxiemeAxe = new ArrayList<Axe>();
 
-		for (Axe a : listePremierAxe){
-			listeDeuxiemeAxe = listePremierAxe;
-			listeDeuxiemeAxe.remove(a);
+		ArrayList<Axe> listeDeuxiemeAxe = new ArrayList<Axe>();
+		listeDeuxiemeAxe = listePremierAxe;
+
+		/*for (Axe a : listePremierAxe){
+			//listeDeuxiemeAxe.remove(a);
 			for (Axe b : listeDeuxiemeAxe){
 				currentCluster = calculerClustersArtiste(a,b,artistes);
+				System.out.println("§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§");
+				currentCouple.setAxe1(a);
+				currentCouple.setAxe2(b);
+				System.out.println(currentCouple);
+				currentCouple.setVariance(currentCluster.varianceCluster());
+				System.out.println(currentCouple.getVariance());
+				listeCluster.put(currentCouple, currentCluster);
+			}
+		}*/
+		for(int i=0;i<listePremierAxe.size()-1;i++){
+			for(int j=i+1;j<listeDeuxiemeAxe.size();j++){
+				Axe a = listePremierAxe.get(i);
+				Axe b = listeDeuxiemeAxe.get(j);
+				System.out.println(a);
+				System.out.println(b);
+				currentCluster = calculerClustersArtiste(a,b,artistes);
+				System.out.println("§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§");
 				currentCouple.setAxe1(a);
 				currentCouple.setAxe2(b);
 				currentCouple.setVariance(currentCluster.varianceCluster());
-				listeCluster.put(currentCouple, currentCluster);
+				//listeCluster.put(currentCouple, currentCluster);
+				listeCluster.put(new CoupleAxe(a, b), calculerClustersArtiste(a,b,artistes));
+				
 			}
 		}
-
+		
+		for(Entry<CoupleAxe, Cluster> entry : listeCluster.entrySet()) {
+			entry.getKey().setVariance(entry.getValue().varianceCluster());
+			System.out.println(entry.getKey().getVariance());
+		}
+		
+		System.out.println(listeCluster.size());
 		return listeCluster;
 	}
-	
-	
+
+
 	/********************************************************************/
 	/******************      getters / setters       ********************/
 	/********************************************************************/
