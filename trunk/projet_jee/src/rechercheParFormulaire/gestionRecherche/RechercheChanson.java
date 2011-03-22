@@ -1,9 +1,12 @@
 package rechercheParFormulaire.gestionRecherche;
 
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
+
+import rechercheParFormulaire.CalculDesClusters.CalculateurDeClusters;
 
 
 import bdd.rechercheBDD.RechercheChansonBDD;
@@ -15,6 +18,7 @@ import exceptions.ChargementException;
 
 
 import metier.Cluster;
+import metier.Wiki;
 
 import metier.oeuvres.Chanson;
 
@@ -30,35 +34,6 @@ public class RechercheChanson{
 	/********************************************************************/
 
 	//en attendant on met un mock
-	public Cluster lancerRecherche(String motCle) {
-		/*resultats = new ArrayList<Chanson>();
-		Chanson c1 = new Chanson();
-		Chanson c2 = new Chanson();
-		Chanson c3 = new Chanson();
-		Chanson c4 = new Chanson();
-		
-		
-		c1.setName("Paint it black");
-		c1.setImageLarge("http://userserve-ak.last.fm/serve/126/8747357.jpg");
-		c1.setUrl("1");
-		c2.setName("Ready or Not");
-		c2.setImageLarge("http://userserve-ak.last.fm/serve/126/32571933.jpg");
-		c2.setUrl("2");
-		c3.setName("Paint it black333");
-		c3.setImageLarge("http://userserve-ak.last.fm/serve/126/8747357.jpg");
-		c3.setUrl("3");
-		c4.setName("Ready or Not4444");
-		c4.setImageLarge("http://userserve-ak.last.fm/serve/126/32571933.jpg");
-		c4.setUrl("4");
-		resultats.add(c1);
-		resultats.add(c2);
-		resultats.add(c3);
-		resultats.add(c4);
-		return resultats;
-		
-	}
-
-	
 	public Cluster lancerRecherche(String motCle) {
 		resultats = new ArrayList<Chanson>();
 		Chanson c1 = new Chanson();
@@ -95,7 +70,7 @@ public class RechercheChanson{
 		resultats.add(c3);
 		resultats.add(c4);
 		
-*/
+
 		/*maClasseChanson ma = new maClasseChanson();
 		try {
 			resultats = ma.rechercherChansons(motCle);
@@ -104,7 +79,8 @@ public class RechercheChanson{
 			e.printStackTrace();
 		}*/
 		
-		ArrayList<Chanson> ar=null;
+		
+		/*ArrayList<Chanson> ar=null;
 		RechercheChansonBDD mar = RechercheChansonBDD.getInstance();
 		try {
 			ar = mar.rechercherChansons(motCle);
@@ -131,6 +107,9 @@ public class RechercheChanson{
 		System.out.println("meilleur cluster : " + meilleurCluster.varianceCluster());
 		System.out.println(meilleurCluster.tailleCluster());
 		return meilleurCluster;
+		*/
+		
+		return CalculateurDeClusters.getInstanceunique().calculerClustersChanson(resultats);
 	}
 	
 	public String retournerTypeAffichage(){
