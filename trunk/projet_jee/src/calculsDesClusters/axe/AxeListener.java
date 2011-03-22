@@ -31,6 +31,14 @@ public class AxeListener implements Axe {
 			ListeLs.add(loeuvre.getListeners());
 		}
 		Collections.sort(ListeLs);
+		double i=0;
+		for (Double d : ListeLs){
+			if (d==0){
+				i++;
+			}
+		}
+		System.out.println(i/ListeLs.size());
+		System.out.println(ListeLs.size());
 		ListeQuart=Quartiles(ListeLs);
 		setMesQuarts(ListeQuart);
 		return ListeQuart;
@@ -61,7 +69,9 @@ public class AxeListener implements Axe {
 
 		ArrayList<Double> lowerHalf = GetValuesLessThan(values, median, true);
 		ArrayList<Double> upperHalf = GetValuesGreaterThan(values, median, true);
-
+		System.out.println(values);
+		System.out.println(median);
+		System.out.println(upperHalf);
 		ArrayList<Double> Sol = new ArrayList<Double>(); 
 		Sol.add(Median(lowerHalf));
 		Sol.add(median);
@@ -78,7 +88,7 @@ public class AxeListener implements Axe {
 		for (double value : values)
 			if (value > limit || (value == limit && orEqualTo))
 				modValues.add(value);
-
+		
 		return modValues;
 	}
 
@@ -93,6 +103,8 @@ public class AxeListener implements Axe {
 
 		return modValues;
 	}
+	
+	
 	@Override
 	public String CalculAxe(Oeuvre oeuvre) {
 		String classe =" ";
