@@ -146,8 +146,7 @@ public class RechercheAlbum {
 
 		HashMap<CoupleAxe,Cluster> listeClusterPossible = CalculateurDeClustersAlbums.getInstanceunique().calculEnsembleClustersAlbums(ar);
 
-		/*
-		HashMap<CoupleAxe,Cluster> listeClusterPossible = CalculateurDeClustersAlbums.getInstanceunique().calculEnsembleClustersAlbums(resultats);
+		
 
 		Cluster meilleurCluster = new Cluster();
 		
@@ -168,11 +167,8 @@ public class RechercheAlbum {
 		
 		return meilleurCluster;
 
+	
 		
-		return meilleurCluster;*/
-		
-		return CalculateurDeClustersAlbums.getInstanceunique()
-			.calculerClustersAlbum(new AxeAnnee(), new AxeSaison(), resultats);
 
 
 		
