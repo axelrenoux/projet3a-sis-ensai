@@ -1,5 +1,8 @@
 package rechercheParFormulaire.vue;
-	import javax.faces.application.FacesMessage;
+	import java.util.ArrayList;
+
+import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
@@ -26,13 +29,22 @@ import rechercheParFormulaire.gestionRecherche.GestionnaireFormulaire;
 		private GestionnaireFormulaire gestionnaireFormulaire;
 		@ManagedProperty(value="#{vueAffichageResultat}")
 		private VueAffichageResultat vueAffichageResultat;
-		
+		private String retourChoisi;
+		private ArrayList<String> retoursPossibles;  
 		private String motCle;
 		
 		/********************************************************************/
 		/************************      methodes      ************************/
 		/********************************************************************/
 
+		//methode qui s'execute à la création du javabean
+		@PostConstruct
+		public void init(){
+			retoursPossibles= new ArrayList<String>();
+			retoursPossibles.add("un fichier XML");
+			retoursPossibles.add("une interface graphique");
+			retourChoisi="";
+		}
 
 		/**
 		 * 
@@ -49,32 +61,51 @@ import rechercheParFormulaire.gestionRecherche.GestionnaireFormulaire;
 			}
 
 			if(success){
-				//on attribue les resultats à la page de resultats
-				vueAffichageResultat.setClustersAlbum(gestionnaireFormulaire.lancerRechercheAlbum(motCle));;
-				vueAffichageResultat.setClustersArtiste(gestionnaireFormulaire.lancerRechercheArtiste(motCle));;
-				vueAffichageResultat.setClustersChanson(gestionnaireFormulaire.lancerRechercheChanson(motCle));;
-				vueAffichageResultat.init();
-
-
-				return "success";
+				if(!retourChoisi.equals("")){
+					//on attribue les resultats à la page de resultats
+					vueAffichageResultat.setClustersAlbum(gestionnaireFormulaire.lancerRechercheAlbum(motCle));;
+					vueAffichageResultat.setClustersArtiste(gestionnaireFormulaire.lancerRechercheArtiste(motCle));;
+					vueAffichageResultat.setClustersChanson(gestionnaireFormulaire.lancerRechercheChanson(motCle));;
+					vueAffichageResultat.init();
+					//si l'utilisateur a choisi de consulter les résultats via "un fichier XML"...
+					if(retourChoisi.equals(retoursPossibles.get(0))){
+						return "xml";
+					}
+					//et s'il a choisi de consulter les résultats via "une interface graphique"...
+					else {
+						return "j2ee";
+					}
+				}
+				else{
+					addErrorChoix();
+					return "failure";
+				}
+				
 			}
 			else{
-				addError();
+				addErrorMotCle();
 				return "failure";
 			}
 		}
 		
 		
 		/**
-		 * methode qui ajoute un message d'erreur
+		 * methode qui ajoute un message d'erreur si l'utilisateur n'a pas saisi de mot clé
 		 */
-		public void addError() {  
+		public void addErrorMotCle() {  
 			FacesContext.getCurrentInstance().
-			addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+			addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,
 					"Erreur","Veuillez saisir un mot clé")); 
 		}
 
-
+		/**
+		 * methode qui ajoute un message d'erreur si l'utilisateur n'a pas choisi un mode d'affichage
+		 */
+		public void addErrorChoix() {  
+			FacesContext.getCurrentInstance().
+			addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,
+					"Erreur","Veuillez choisir un mode d'affichage")); 
+		}
 		
 		
 		/********************************************************************/
@@ -118,6 +149,27 @@ import rechercheParFormulaire.gestionRecherche.GestionnaireFormulaire;
 		public void setVueAffichageResultat(VueAffichageResultat vueAffichageResultat) {
 			this.vueAffichageResultat = vueAffichageResultat;
 		}
+
+
+		public String getRetourChoisi() {
+			return retourChoisi;
+		}
+
+
+		public void setRetourChoisi(String retourChoisi) {
+			this.retourChoisi = retourChoisi;
+		}
+
+
+		public ArrayList<String> getRetoursPossibles() {
+			return retoursPossibles;
+		}
+
+
+		public void setRetoursPossibles(ArrayList<String> retoursPossibles) {
+			this.retoursPossibles = retoursPossibles;
+		}
+		
 		
 		
 		
