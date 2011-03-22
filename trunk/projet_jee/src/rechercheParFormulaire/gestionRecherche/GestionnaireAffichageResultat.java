@@ -7,6 +7,11 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
+import exceptions.ChargementException;
+
+import bdd.rechercheBDD.RechercheAlbumBDD;
+import bdd.rechercheBDD.RechercheChansonBDD;
+
 import metier.Cluster;
 import metier.ComposantCluster;
 import metier.oeuvres.Album;
@@ -147,6 +152,18 @@ public class GestionnaireAffichageResultat {
 	}
 	
 
+	public ArrayList<Chanson> recupererLesChanson(Album album){
+		ArrayList<Chanson> chansons = null;
+		try {
+			chansons= RechercheChansonBDD.getInstance().rechercherChansonAlbum(album.getName());
+		} catch (ChargementException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return chansons;
+	}
+	
+	
 	/********************************************************************/
 	/******************      getters / setters       ********************/
 	/********************************************************************/
