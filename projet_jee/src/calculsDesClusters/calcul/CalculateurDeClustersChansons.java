@@ -18,6 +18,7 @@ import metier.Cluster;
 import metier.ComposantCluster;
 import metier.oeuvres.Album;
 import metier.oeuvres.Chanson;
+import metier.oeuvres.Oeuvre;
 
 
 
@@ -44,6 +45,11 @@ public class CalculateurDeClustersChansons {
 	public Cluster calculerClustersChanson(Axe axe1, Axe axe2,ArrayList<Chanson> chansons){
 		Cluster clusterGeneral = new Cluster();
 		HashMap<ComposantCluster,ArrayList<Chanson>> affectationChansonSousCluster = new HashMap<ComposantCluster,ArrayList<Chanson>>();
+		ArrayList<Oeuvre> listeOeuvre = new ArrayList<Oeuvre>();
+		listeOeuvre.addAll(chansons);
+		axe1.setOeuvres(listeOeuvre);
+		axe2.setOeuvres(listeOeuvre);
+		
 		//affectationChansonSousCluster va permettre l'affectation des Chansons dans les sous-clusters
 		//premier decoupage
 		//on affecte chaque Chanson a un sous-cluster de cluster general
