@@ -69,7 +69,6 @@ public class Cluster implements ComposantCluster {
 				listeTaille.add(entry2.getValue().getContenu().size());
 			}
 		}
-		System.out.println(listeTaille);
 		return listeTaille;
 
 	}
@@ -93,7 +92,6 @@ public class Cluster implements ComposantCluster {
 			mean += delta / n;
 			s += delta * (x - mean);
 		}
-		
 		return (s / n);
 
 
