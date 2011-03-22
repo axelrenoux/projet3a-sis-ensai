@@ -90,6 +90,11 @@ public class VueAffichageResultat {
 	private boolean selectionChanson2NonValide=false;
 	
 	
+	
+	private Chanson chansonChoisie;
+	private Album albumChoisi;
+	private Artiste artisteChoisi;
+	
 
 	private LazyDataModel lazyModelAlbums1;
 	private LazyDataModel lazyModelAlbums2;
@@ -272,8 +277,6 @@ public class VueAffichageResultat {
 	}
 
 	
-	
-	
 
 	public void reinitialisationEtapes(){
 		etape1=false;
@@ -283,6 +286,9 @@ public class VueAffichageResultat {
 		etape3album =false;
 		etape3artiste = false;
 		etape3chanson = false;
+		chansonChoisie =null;
+		artisteChoisi = null;
+		albumChoisi = null;
 	}
 	
 	public void reinitialisationSelectionsNonValides(){
@@ -1007,6 +1013,43 @@ public class VueAffichageResultat {
 
 	public void setLazyModelChansons3(LazyDataModel lazyModelChansons3) {
 		this.lazyModelChansons3 = lazyModelChansons3;
+	}
+
+
+
+
+	public Chanson getChansonChoisie() {
+		return chansonChoisie;
+	}
+
+
+
+	public void setChansonChoisie(Chanson chansonChoisie) {
+		this.chansonChoisie = chansonChoisie;
+	}
+
+
+
+	public Album getAlbumChoisi() {
+		return albumChoisi;
+	}
+
+
+
+	public void setAlbumChoisi(Album albumChoisi) {
+		this.albumChoisi = albumChoisi;
+	}
+
+
+
+	public Artiste getArtisteChoisi() {
+		return artisteChoisi;
+	}
+
+
+
+	public void setArtisteChoisi(Artiste artisteChoisi) {
+		this.artisteChoisi = artisteChoisi;
 	}
 
 
