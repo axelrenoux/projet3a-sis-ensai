@@ -189,13 +189,26 @@ public class Album extends ObjetAComparer implements Oeuvre {
 		+ "listeners "+ listeners+ "\n "
 		+ "playcount " + playcount + "\n "
 		+ "id " + ID +"\n ";
-		try{
+		
+		if(artiste!=null){
 			descrip+="nom artiste "+ artiste.getName()+ "\n ";
-				descrip+="nb chansons "+ chansons.size()+ "\n ";
-				descrip+="nb tags "+ toptags.size()+ "\n ";
-				descrip+="resume wiki "+ wiki.getResume()+ "\n ";
 		}
-		catch (NullPointerException e){
+		if(chansons!=null && chansons.size()>0){
+			descrip+="nb chansons "+ chansons.size()+ " ";
+			for(Chanson ch : chansons){
+				descrip+=ch.getName() + ", ";
+			}
+			descrip+=" \n ";
+		}
+		if(toptags!=null && toptags.size()>0){
+			descrip+="nb tags "+ toptags.size()+ " ";
+			for(Tag t : toptags){
+				descrip+=t.getName() + ", ";
+			}
+			descrip+=" \n ";
+		}
+		if(wiki!=null){
+			descrip+="resume wiki "+ wiki.getResume()+ "\n ";
 		}
 		return descrip;
 	}
