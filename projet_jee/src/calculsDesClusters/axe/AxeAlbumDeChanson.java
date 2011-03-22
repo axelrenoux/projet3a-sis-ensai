@@ -12,10 +12,12 @@ public class AxeAlbumDeChanson implements Axe {
 	@Override
 	public String CalculAxe(Oeuvre oeuvre) {
 		Chanson c = (Chanson) oeuvre;
+		String res="";
 		if (c.getAlbums() != null && c.getAlbums().size() != 0){
-			return c.getAlbums().get(0).getNom();
+			res = c.getAlbums().get(0).getNom();
 		}
-		else return "Pas d'album";
+		else res = "Pas d'album";
+		return res;
 	}
 
 	@Override
