@@ -1,28 +1,21 @@
 package rechercheParFormulaire.gestionRecherche;
 
-import java.sql.Date;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
-import com.sun.jmx.snmp.Timestamp;
 
-import bdd.rechercheBDD.RechercheAlbumBDD;
-import bdd.rechercheBDD.RechercheArtisteBDD;
 import bdd.rechercheBDD.RechercheChansonBDD;
 
-import calculsDesClusters.axe.AxeListener;
-import calculsDesClusters.axe.AxePlaycount;
+
 import calculsDesClusters.axe.CoupleAxe;
-import rechercheParFormulaire.CalculDesClusters.CalculateurDeClusters;
-import calculsDesClusters.calcul.CalculateurDeClustersArtistes;
 import calculsDesClusters.calcul.CalculateurDeClustersChansons;
 import exceptions.ChargementException;
 
 
 import metier.Cluster;
-import metier.Wiki;
-import metier.oeuvres.Artiste;
+
 import metier.oeuvres.Chanson;
 
 public class RechercheChanson{
