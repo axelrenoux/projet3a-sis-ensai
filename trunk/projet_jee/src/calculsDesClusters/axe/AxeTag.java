@@ -10,9 +10,13 @@ public class AxeTag implements Axe {
 
 	@Override
 	public String CalculAxe(Oeuvre oeuvre) {
+		String res="";
 		if (oeuvre.getToptags() != null && oeuvre.getToptags().size() != 0){
-			return oeuvre.getToptags().get(0).getName();
-		}else return "Pas de tag";
+			res = oeuvre.getToptags().get(0).getName();
+		}else res = "Pas de tag";
+		
+		System.out.println(res);
+		return res;
 	}
 
 
