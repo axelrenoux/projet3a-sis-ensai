@@ -8,6 +8,8 @@ import metier.Cluster;
 import metier.ComposantCluster;
 import metier.oeuvres.Album;
 import bdd.rechercheBDD.RechercheAlbumBDD;
+import calculsDesClusters.axe.AxeAnnee;
+import calculsDesClusters.axe.AxeSaison;
 import calculsDesClusters.axe.CoupleAxe;
 import calculsDesClusters.calcul.CalculateurDeClustersAlbums;
 import controleur.UtilitaireDate;
@@ -133,7 +135,7 @@ public class RechercheAlbum {
 			System.out.println("erreur 2 " + e2.getLocalizedMessage());
 		}
 		
-		
+		/*
 		HashMap<CoupleAxe,Cluster> listeClusterPossible = CalculateurDeClustersAlbums.getInstanceunique().calculEnsembleClustersAlbums(resultats);
 		Cluster meilleurCluster = new Cluster();
 		
@@ -142,8 +144,11 @@ public class RechercheAlbum {
 				meilleurCluster = entry.getValue();
 			}
 		}
-			
-		return meilleurCluster;
+		
+		return meilleurCluster;*/
+		
+		return CalculateurDeClustersAlbums.getInstanceunique()
+			.calculerClustersAlbum(new AxeAnnee(), new AxeSaison(), resultats);
 		
 	}
 	

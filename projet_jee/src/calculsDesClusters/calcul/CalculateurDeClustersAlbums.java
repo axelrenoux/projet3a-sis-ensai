@@ -42,6 +42,7 @@ public class CalculateurDeClustersAlbums {
 	/**************************    albums    ****************************/
 
 	public Cluster calculerClustersAlbum(Axe axe1, Axe axe2, ArrayList<Album> albums){
+		
 		Cluster clusterGeneral = new Cluster();
 		HashMap<ComposantCluster,ArrayList<Album>> affectationAlbumSousCluster = new HashMap<ComposantCluster,ArrayList<Album>>();
 		//affectationAlbumSousCluster va permettre l'affectation des albums dans les sous-clusters

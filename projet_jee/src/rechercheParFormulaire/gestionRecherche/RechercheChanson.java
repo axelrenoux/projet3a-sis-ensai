@@ -7,8 +7,10 @@ import java.util.Map.Entry;
 import bdd.rechercheBDD.RechercheAlbumBDD;
 import bdd.rechercheBDD.RechercheChansonBDD;
 
+import calculsDesClusters.axe.AxeListener;
+import calculsDesClusters.axe.AxePlaycount;
 import calculsDesClusters.axe.CoupleAxe;
-import calculsDesClusters.calcul.CalculateurDeClusters;
+import rechercheParFormulaire.CalculDesClusters.CalculateurDeClusters;
 import calculsDesClusters.calcul.CalculateurDeClustersArtistes;
 import calculsDesClusters.calcul.CalculateurDeClustersChansons;
 import exceptions.ChargementException;
@@ -99,7 +101,7 @@ public class RechercheChanson{
 			e.printStackTrace();
 		}*/
 		
-		HashMap<CoupleAxe,Cluster> listeClusterPossible = CalculateurDeClustersChansons.getInstanceunique().calculEnsembleClustersChansons(resultats);
+		/*HashMap<CoupleAxe,Cluster> listeClusterPossible = CalculateurDeClustersChansons.getInstanceunique().calculEnsembleClustersChansons(resultats);
 		Cluster meilleurCluster = new Cluster();
 		
 		for(Entry<CoupleAxe, Cluster> entry : listeClusterPossible.entrySet()) {
@@ -108,8 +110,13 @@ public class RechercheChanson{
 			}
 		}
 			
-		return meilleurCluster;
+		return meilleurCluster;*/
 		
+		//return CalculateurDeClustersChansons.getInstanceunique()
+		//.calculerClustersChanson(new AxeListener(), new AxePlaycount(), resultats);
+
+		return CalculateurDeClusters.getInstanceunique().calculerClustersChanson(resultats);
+
 	}
 	
 	public String retournerTypeAffichage(){
