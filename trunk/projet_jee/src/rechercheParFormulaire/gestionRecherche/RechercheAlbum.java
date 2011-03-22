@@ -1,23 +1,22 @@
 package rechercheParFormulaire.gestionRecherche;
 
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map.Entry;
+
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletResponse;
+
+import com.thoughtworks.xstream.XStream;
+
+import bdd.rechercheBDD.maClasseAlbum;
 
 import metier.Cluster;
-import metier.ComposantCluster;
 import metier.oeuvres.Album;
-import metier.oeuvres.Artiste;
-import bdd.rechercheBDD.RechercheAlbumBDD;
-
-import bdd.rechercheBDD.RechercheArtisteBDD;
-
+import calculsDesClusters.axe.Axe;
 import calculsDesClusters.axe.AxeAnnee;
+import calculsDesClusters.axe.AxeOeuvre;
 import calculsDesClusters.axe.AxeSaison;
-
-import calculsDesClusters.axe.CoupleAxe;
 import calculsDesClusters.calcul.CalculateurDeClustersAlbums;
-import calculsDesClusters.calcul.CalculateurDeClustersArtistes;
 import controleur.UtilitaireDate;
 import exceptions.ChargementException;
 import exceptions.ExceptionDate;
@@ -37,7 +36,7 @@ public class RechercheAlbum {
 	
 	
 	public Cluster lancerRecherche(String motCle) {
-		/*
+		
 		//traitement provisoire debut 
 		resultats = new ArrayList<Album>();
 		Album a1 = new Album();
@@ -131,44 +130,45 @@ public class RechercheAlbum {
 		
 		//traitement provisoire debut
 		
-		*/
+		
 		//il faudra ici aller cherche en base les albums repondant au mot cle
 		
-		ArrayList<Album> ar=null;
-		RechercheAlbumBDD mar = RechercheAlbumBDD.getInstance();
+		/*maClasseAlbum ma = new maClasseAlbum();
 		try {
-			ar = mar.rechercherAlbums("ar");
-		} catch (ChargementException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			resultats = ma.rechercherAlbums(motCle);
 		}
+		catch(Exception e2){
+			System.out.println("erreur 2 " + e2.getLocalizedMessage());
+		}*/
 		
-
-		HashMap<CoupleAxe,Cluster> listeClusterPossible = CalculateurDeClustersAlbums.getInstanceunique().calculEnsembleClustersAlbums(ar);
-
 		
-		Cluster meilleurCluster = new Cluster();
 		
-		for(Entry<CoupleAxe, Cluster> entry : listeClusterPossible.entrySet()) {
-			meilleurCluster = entry.getValue();
-			break;
+		Axe axe1Date = new AxeAnnee();
+		Axe axe2Saison = new AxeSaison();
+		
+		Cluster cluster = CalculateurDeClustersAlbums.getInstanceunique().
+		calculerClustersAlbum(axe1Date,axe2Saison,resultats);
+		
+		XStream stream = new XStream();		
+		
+		try {
+		    FacesContext ctx = FacesContext.getCurrentInstance();
+		    final HttpServletResponse resp = (HttpServletResponse)ctx.getExternalContext().getResponse();
+		
+		    resp.setContentType("text/xml");
+		    stream.toXML(cluster, resp.getOutputStream());
+		    resp.getOutputStream().flush();
+		    resp.getOutputStream().close();
+		
+		    ctx.responseComplete();
+		
+		} catch (IOException e) {
+		    e.printStackTrace();
 		}
-		for(Entry<CoupleAxe, Cluster> entry2 : listeClusterPossible.entrySet()) {
-			
-			if (entry2.getKey().getVariance() < meilleurCluster.varianceCluster()){
-				meilleurCluster = entry2.getValue();
-				System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
-				System.out.println(entry2.getKey().getVariance());
-			}
-		}
-		//System.out.println(meilleurCluster);
+
 		
-		return meilleurCluster;
-
-	
 		
-
-
+		return cluster;
 		
 	}
 	
