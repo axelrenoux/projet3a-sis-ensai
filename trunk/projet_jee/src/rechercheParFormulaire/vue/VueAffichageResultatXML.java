@@ -1,17 +1,21 @@
 package rechercheParFormulaire.vue;
 
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 
 import metier.Cluster;
 import rechercheParFormulaire.gestionRecherche.GestionnaireAffichageResultat;
 
 import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.DomDriver;
 
 
 /**
@@ -54,14 +58,30 @@ public class VueAffichageResultatXML {
 
 
 	public void affichage(Cluster cluster){
-		XStream stream= new XStream();
+		XStream stream= new XStream(new DomDriver("ISO-8859-15"));//XStream stream= new XStream();
+		/*stream.alias("cluster", metier.Cluster.class);
+		stream.aliasAttribute("metier.oeuvres.Album", "album");
+		stream.aliasAttribute("metier.oeuvres.Artiste", "artiste");
+		stream.aliasAttribute("metier.oeuvres.Chanson", "chanson");
+		stream.aliasAttribute("metier.Tag", "tag");
+		stream.aliasAttribute("metier.Wiki", "wiki");
+		stream.aliasAttribute("metier.Cluster", "cluster");*/
 		try {
-			FacesContext ctx = FacesContext.getCurrentInstance();
+			/*FacesContext ctx = FacesContext.getCurrentInstance();
 			final HttpServletResponse resp = (HttpServletResponse)ctx.getExternalContext().getResponse();
 			resp.setContentType("text/xml");
 			stream.toXML(cluster, resp.getOutputStream());
 			resp.getOutputStream().flush();
 			resp.getOutputStream().close();
+			ctx.responseComplete();*/
+			FacesContext ctx = FacesContext.getCurrentInstance();
+			final HttpServletResponse resp = (HttpServletResponse)ctx.getExternalContext().getResponse();
+			resp.setContentType("text/xml");
+			ServletOutputStream outputStream = resp.getOutputStream();
+			outputStream.write( "<?xml version=\"1.0\" encoding=\"ISO-8859-15\"?>".getBytes() );
+			stream.toXML(cluster,outputStream);
+			//outputStream.flush();
+			outputStream.close();
 			ctx.responseComplete();
 		}catch(IOException e){e.printStackTrace();}
 	}

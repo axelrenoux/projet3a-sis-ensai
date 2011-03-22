@@ -19,7 +19,7 @@ public abstract class ControleSauvegardeUnFormatPourLaBdd {
 	
 	public String controle(String s){
 		if(s==null){
-			return "''";
+			return "";
 		}else{
 			return s;
 		}
@@ -35,7 +35,7 @@ public abstract class ControleSauvegardeUnFormatPourLaBdd {
 	
 	public String controle(Integer i) {
 		if(i==null){
-			return "''";
+			return "";
 		}else{	
 			return i.toString();
 		}
@@ -43,7 +43,7 @@ public abstract class ControleSauvegardeUnFormatPourLaBdd {
 	
 	public String controle(Double d) {
 		if(d==null){
-			return "''";
+			return "";
 		}else{	
 			return d.toString();
 		}
@@ -51,7 +51,7 @@ public abstract class ControleSauvegardeUnFormatPourLaBdd {
 	
 	public String controle(Float f) {
 		if(f==null){
-			return "''";
+			return "";
 		}else{	
 			return f.toString();
 		}

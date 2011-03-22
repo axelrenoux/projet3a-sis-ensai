@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Date;
 
 
 public class ControleSauvegardeBddFormatOracle extends ControleSauvegardeUnFormatPourLaBdd{
@@ -28,7 +29,6 @@ public class ControleSauvegardeBddFormatOracle extends ControleSauvegardeUnForma
 		input="'"+input+"'";
 		return input;
 	}
-
 	
 	@Override
 	public int getNbObsExistantes(boolean recreerLesTables) {

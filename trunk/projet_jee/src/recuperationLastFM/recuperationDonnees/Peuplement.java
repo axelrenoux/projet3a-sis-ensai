@@ -19,32 +19,28 @@ public class Peuplement {
 		recherche.add("strapontin");
 		recherche.add("serviette");
 		recherche.add("bonhomme");
-		recherche.add("mousse");*/
+		recherche.add("mousse");
+		recherche.add("ordinateur");*/
+		recherche.add("south+park");
+		recherche.add("taupe");
+		recherche.add("zelda");
+		recherche.add("donjon");
+		recherche.add("");
+		recherche.add("mousse");
 		recherche.add("ordinateur");
-		recherche.add("hotel");
-		recherche.add("trust");
-		recherche.add("mozart");
-		recherche.add("carnaval");
-		recherche.add("dance");
-		recherche.add("Christine");
-		recherche.add("Tiny");
-		recherche.add("Ronan");
-		recherche.add("Renan");
-		recherche.add("Axel");
-		recherche.add("Axelle");
-		recherche.add("Marie");
-		recherche.add("Mary");
-		recherche.add("love");
-		recherche.add("black");
-		recherche.add("best");
-		recherche.add("free");
-		recherche.add("rock");
+		recherche.add("rennes");
+		recherche.add("sheffield");
+		recherche.add("strapontin");
+		recherche.add("serviette");
+		recherche.add("bonhomme");
+		recherche.add("mousse");
+		recherche.add("ordinateur");
 		aFaireTournerTouteLaNuit(recherche);
 	}
 	
 	public static void aFaireTournerTouteLaNuit(List<String> motsClef){
 		//On initialise les tables
-		viderControleur();
+		//viderControleur();
 		RecupDonnees recup = new RecupDonnees();
 		boolean recreerLesTables=true;
 		ControleSauvegardeUnFormatPourLaBdd formatSauvegarde=new ControleSauvegardeBddFormatOracle();
@@ -52,15 +48,15 @@ public class Peuplement {
 		
 		//On effectue successivement toutes les recherches demandées
 		for(String recherche:motsClef){
-			viderControleur();
+			//viderControleur();
 			recup = new RecupDonnees();
 			recup.rechercher(recherche);
-			recreerLesTables=false;
+			//recreerLesTables=false;
 			formatSauvegarde=new ControleSauvegardeBddFormatOracle();
 			GestionBddJavaPourSauvegarde.decomposerAvantSauvegardeGereePar(formatSauvegarde, recreerLesTables);
 			//On fait une pose de 20 minutes entre chaque mot-clé recherché
 			try {
-				Thread.sleep(20*60000);
+				Thread.sleep(2*60000);
 			} catch (InterruptedException e) {e.printStackTrace();}
 		}
 	}
