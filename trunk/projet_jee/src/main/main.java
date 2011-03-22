@@ -7,9 +7,9 @@ import exceptions.ChargementException;
 import bdd.chargement.ChargementBDDOracleDepuisTxt;
 import bdd.rechercheBDD.RechercheAlbumBDD;
 import bdd.rechercheBDD.RechercheArtisteBDD;
-import bdd.rechercheBDD.maClasseAlbum;
-import bdd.rechercheBDD.maClasseArtiste;
-import bdd.rechercheBDD.maClasseChanson;
+import bdd.rechercheBDD.RechercheChansonBDD;
+import bdd.rechercheBDDOLD.RechercheAlbumBDDOld;
+import bdd.rechercheBDDOLD.RechercheArtisteBDDOld;
 import metier.Cluster;
 import metier.oeuvres.Album;
 import metier.oeuvres.Artiste;
@@ -39,19 +39,19 @@ public class main {
 		//System.out.println(reach.getAlbums());
 		
 		
-		ArrayList<Album> c=null;
-		maClasseAlbum mc = maClasseAlbum.getInstance();
+		/*ArrayList<Album> c=null;
+		RechercheAlbumBDD mc = RechercheAlbumBDD.getInstance();
 		try {
-			c = mc.rechercherAlbums("LIVE");
+			c = mc.rechercherAlbums("Complete New English Hymnal Vol. 13");
 		} catch (ChargementException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		System.out.println(c);
-		System.out.println(c.size());
+		System.out.println(c.size());*/
 		
 		ArrayList<Artiste> ar=null;
-		maClasseArtiste mar = maClasseArtiste.getInstance();
+		RechercheArtisteBDD mar = RechercheArtisteBDD.getInstance();
 		try {
 			ar = mar.rechercherArtistes("re");
 		} catch (ChargementException e) {
@@ -61,15 +61,16 @@ public class main {
 		System.out.println(ar);
 		
 		
-		ArrayList<Chanson> ch=null;
-		maClasseChanson mcc = maClasseChanson.getInstance();
+		/*ArrayList<Chanson> ch=null;
+		RechercheChansonBDD mcc = RechercheChansonBDD.getInstance();
 		try {
-			ch = mcc.rechercherChansons("re");
+			ch = mcc.rechercherChansons("mar");
 		} catch (ChargementException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		System.out.println(ch);
+		System.out.println(ch.size());*/
 		
 		/*for (Album ch:c){
 			if (ch.getDate()!=null){
