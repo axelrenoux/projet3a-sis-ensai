@@ -78,7 +78,7 @@ public class RechercheArtiste{
 		ArrayList<Artiste> ar=null;
 		RechercheArtisteBDD mar = RechercheArtisteBDD.getInstance();
 		try {
-			ar = mar.rechercherArtistes("re");
+			ar = mar.rechercherArtistes(motCle);
 		} catch (ChargementException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -101,11 +101,10 @@ public class RechercheArtiste{
 
 			if (entry2.getKey().getVariance() < meilleurCluster.varianceCluster()){
 				meilleurCluster = entry2.getValue();
-				System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
-				System.out.println(entry2.getKey().getVariance());
 			}
 		}
-		
+		System.out.println("meilleur cluster : " + meilleurCluster.varianceCluster());
+		System.out.println(meilleurCluster.tailleCluster());
 		return meilleurCluster;
 		
 	}
