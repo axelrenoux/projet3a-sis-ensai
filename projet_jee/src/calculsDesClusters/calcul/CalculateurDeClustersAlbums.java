@@ -10,6 +10,7 @@ import metier.oeuvres.Album;
 import metier.oeuvres.Oeuvre;
 import calculsDesClusters.axe.Axe;
 import calculsDesClusters.axe.AxeAnnee;
+import calculsDesClusters.axe.AxeArtistePourAlbum;
 import calculsDesClusters.axe.AxeListener;
 import calculsDesClusters.axe.AxePlaycount;
 import calculsDesClusters.axe.AxeSaison;
@@ -113,6 +114,7 @@ public class CalculateurDeClustersAlbums {
 		Axe axeSaison = new AxeSaison();
 		Axe axeListeners = new AxeListener();
 		Axe axePlaycount = new AxePlaycount();
+		Axe axeArtiste = new AxeArtistePourAlbum();
 		//Axe axeTag = new AxeTag();
 
 		ArrayList<Axe> listePremierAxe = new ArrayList<Axe>();
@@ -120,6 +122,7 @@ public class CalculateurDeClustersAlbums {
 		listePremierAxe.add(axeSaison);
 		listePremierAxe.add(axeListeners);
 		listePremierAxe.add(axePlaycount);
+		listePremierAxe.add(axeArtiste);
 		//listePremierAxe.add(axeTag);
 		ArrayList<Axe> listeDeuxiemeAxe = new ArrayList<Axe>();
 		listeDeuxiemeAxe = listePremierAxe;
