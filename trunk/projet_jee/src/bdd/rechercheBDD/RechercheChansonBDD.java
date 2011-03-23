@@ -99,6 +99,9 @@ public class RechercheChansonBDD {
 				if(chansonCourante.getDuree()==0){
 					chansonCourante.genererDuree();
 				}
+				if(chansonCourante.getImageLarge().equals("") || chansonCourante.getImageLarge().equals("%27%27" )){
+					chansonCourante.setImageLarge("http://mylene.net/mfpics/itunes_20010_002.png");
+				}
 				chansonsrecherchees.add(chansonCourante);
 			}
 			for (Chanson ch : chansonsrecherchees){
