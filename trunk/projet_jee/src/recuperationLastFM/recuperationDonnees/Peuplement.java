@@ -24,12 +24,18 @@ public class Peuplement {
 		recherche.add("south+park");
 		recherche.add("taupe");
 		recherche.add("zelda");
+		recherche.add("super+mario");
+		recherche.add("clanadonia");
+		recherche.add("uztaglote");
+		recherche.add("kwak");
 		recherche.add("donjon");
 		recherche.add("2+Many+DJ");
 		recherche.add("ez3kiel");
 		recherche.add("les+croquants");
 		recherche.add("lady+gaga");
 		recherche.add("shakira");
+		recherche.add("vois+sur+ton+chemin");
+		recherche.add("gronibar");
 		aFaireTournerTouteLaNuit(recherche);
 	}
 	
