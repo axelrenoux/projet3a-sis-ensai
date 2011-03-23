@@ -46,21 +46,28 @@ public class AxePlaycount implements Axe{
 	} 
 
 	//fonction pour le calcul des quartiles
-	public static ArrayList<Double> Quartiles(ArrayList<Double> values) throws Exception
-	{
-		if (values.size() < 3)
-			throw new Exception("This method is not designed to handle lists with fewer than 3 elements.");
-
-		double median = Median(values);
-
-		ArrayList<Double> lowerHalf = GetValuesLessThan(values, median, true);
-		ArrayList<Double> upperHalf = GetValuesGreaterThan(values, median, true);
-
+	public static ArrayList<Double> Quartiles(ArrayList<Double> values){
 		ArrayList<Double> Sol = new ArrayList<Double>(); 
-		Sol.add(Median(lowerHalf));
-		Sol.add(median);
-		Sol.add(Median(upperHalf));
 
+		if (values.size() == 2){
+			Sol.add(values.get(0));
+			Sol.add((values.get(0) + values.get(1))/2);
+			Sol.add(values.get(1));
+		}else if (values.size() == 1){
+			Sol.add(values.get(0));
+			double a = 0;
+			Sol.add(a);
+			Sol.add(a);
+		}else{
+			double median = Median(values);
+
+			ArrayList<Double> lowerHalf = GetValuesLessThan(values, median, true);
+			ArrayList<Double> upperHalf = GetValuesGreaterThan(values, median, true);
+
+			Sol.add(Median(lowerHalf));
+			Sol.add(median);
+			Sol.add(Median(upperHalf));
+		}
 		return Sol;
 	}
 
