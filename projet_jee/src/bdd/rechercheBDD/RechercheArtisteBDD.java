@@ -87,7 +87,7 @@ public class RechercheArtisteBDD {
 			//on met a jour les listes de tags et d'artistes similaires
 			for(Artiste a: artistesrecherches){
 				a.setToptags(RechercheTagBDD.getInstance().rechercherTagsArtiste(a));
-				a.setArtistesSimilaires(rechercherArtistesSimilaires(a.getName()));
+				//a.setArtistesSimilaires(rechercherArtistesSimilaires(a.getName()));
 			}
 			
 		} catch (SQLException e) {
