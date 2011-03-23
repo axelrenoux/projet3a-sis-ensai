@@ -58,20 +58,28 @@ public class AxeListener implements Axe {
 	} 
 
 	//fonction pour le calcul des quartiles
-	public static ArrayList<Double> Quartiles(ArrayList<Double> values) throws Exception
-	{
-		if (values.size() < 3)
-			throw new Exception("This method is not designed to handle lists with fewer than 3 elements.");
-
-		double median = Median(values);
-
-		ArrayList<Double> lowerHalf = GetValuesLessThan(values, median, true);
-		ArrayList<Double> upperHalf = GetValuesGreaterThan(values, median, true);
+	public static ArrayList<Double> Quartiles(ArrayList<Double> values){
 		ArrayList<Double> Sol = new ArrayList<Double>(); 
-		Sol.add(Median(lowerHalf));
-		Sol.add(median);
-		Sol.add(Median(upperHalf));
 
+		if (values.size() == 2){
+			Sol.add(values.get(0));
+			Sol.add((values.get(0) + values.get(1))/2);
+			Sol.add(values.get(1));
+		}else if (values.size() == 1){
+			Sol.add(values.get(0));
+			double a = 0;
+			Sol.add(a);
+			Sol.add(a);
+		}else{
+			double median = Median(values);
+
+			ArrayList<Double> lowerHalf = GetValuesLessThan(values, median, true);
+			ArrayList<Double> upperHalf = GetValuesGreaterThan(values, median, true);
+
+			Sol.add(Median(lowerHalf));
+			Sol.add(median);
+			Sol.add(Median(upperHalf));
+		}
 		return Sol;
 	}
 
@@ -83,7 +91,7 @@ public class AxeListener implements Axe {
 		for (double value : values)
 			if (value > limit || (value == limit && orEqualTo))
 				modValues.add(value);
-		
+
 		return modValues;
 	}
 
@@ -98,15 +106,15 @@ public class AxeListener implements Axe {
 
 		return modValues;
 	}
-	
-	
+
+
 	@Override
 	public String CalculAxe(Oeuvre oeuvre) {
 		String classe =" ";
-		
+
 		double List=oeuvre.getListeners();
-		
-		
+
+
 		if (List<=this.mesQuarts.get(0)){
 			classe="entre 0 et " +this.mesQuarts.get(0) ;
 		}else if(this.mesQuarts.get(0)<List && List<=this.mesQuarts.get(1)){
@@ -117,7 +125,7 @@ public class AxeListener implements Axe {
 			classe = "Supérieur à " +this.mesQuarts.get(2);
 		}	
 
-		
+
 		return classe;
 	}
 
@@ -158,12 +166,12 @@ public class AxeListener implements Axe {
 		// TODO Auto-generated method stub
 		return "nombre d'auditeurs";
 	}
-	
+
 	@Override
 	public ArrayList<Oeuvre> getOeuvres() {
 		return oeuvres;
 	}
-	
+
 	@Override
 	public void setOeuvres(ArrayList<Oeuvre> oeuvres) {
 		this.oeuvres = oeuvres;	
