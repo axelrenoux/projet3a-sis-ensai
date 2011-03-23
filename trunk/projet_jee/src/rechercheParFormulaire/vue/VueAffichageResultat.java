@@ -189,16 +189,24 @@ public class VueAffichageResultat {
 			//on passe a l'étape 2:
 			reinitialisationEtapes();
 			etape2album = true;
+			addInfoAlbum1();
 		}
 		else{
 			
 			selectionAlbum1NonValide= true;
 			addErrorEtape1Album();
 		}
-		
-		
-		
 	}
+	
+	public void addInfoAlbum1() {   
+		  FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(
+				  FacesMessage.SEVERITY_INFO,"Vous recherchez un album", 
+				  "Votre 1er critère est "+intituleAxe1Album+ " = " + clusterAlbumNiveau1Choisi.getNomCluster()));   
+	}   
+
+	
+	
+	
 	/**
 	 * methode executee quand l'utilisateur clique sur "affiner sa recherche" d'artistes
 	 */
@@ -211,15 +219,19 @@ public class VueAffichageResultat {
 			reinitialisationEtapes();
 			etape2artiste = true;
 			selectionArtiste1NonValide = false;
+			addInfoArtiste1();
 		}
 		else{
 			selectionArtiste1NonValide = true;
 			addErrorEtape1Artiste();
 		}
-		
-		
-		
 	}
+	public void addInfoArtiste1() {   
+		  FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(
+				  FacesMessage.SEVERITY_INFO,"Vous recherchez un artiste", 
+				  "Votre 1er critère est "+intituleAxe1Artiste+ " = " + clusterArtisteNiveau1Choisi.getNomCluster()));   
+	}   
+
 	/**
 	 * methode executee quand l'utilisateur clique sur "affiner sa recherche" de chansons
 	 */
@@ -233,13 +245,19 @@ public class VueAffichageResultat {
 			reinitialisationEtapes();
 			etape2chanson = true;
 			selectionChanson1NonValide = false;
+			addInfoChanson1();
 		}
 		else{
 			selectionChanson1NonValide = true;
 			addErrorEtape1Chanson();
 		}
 	}
-		
+	public void addInfoChanson1() {   
+		  FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(
+				  FacesMessage.SEVERITY_INFO,"Vous recherchez une chanson", 
+				  "Votre 1er critère est "+intituleAxe1Chanson+ " = " + clusterChansonNiveau1Choisi.getNomCluster()));   
+	}   
+
 
 
 	public void affinerRechercheAlbum2(){
@@ -251,13 +269,22 @@ public class VueAffichageResultat {
 			reinitialisationEtapes();
 			etape3album = true;
 			selectionAlbum2NonValide = false;
+			addInfoAlbum2();
 		}
 		else{
 			selectionAlbum2NonValide = true;
 			addErrorEtape2Album();
 		}
-		
 	}
+	public void addInfoAlbum2() {   
+		  FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(
+				  FacesMessage.SEVERITY_INFO,"Vous recherchez un album", 
+				  "Votre 1er critère est "+intituleAxe1Album+ " = " + clusterAlbumNiveau1Choisi.getNomCluster()+ 
+				  ", votre 2ème critère est "+intituleAxe2Album+ " = " + clusterAlbumNiveau2Choisi.getNomCluster()));   
+	}   
+
+	
+	
 	public void affinerRechercheArtiste2(){
 		reinitialisationSelectionsNonValides();
 		if(clusterArtisteNiveau2Choisi!=null){
@@ -267,13 +294,21 @@ public class VueAffichageResultat {
 			reinitialisationEtapes();
 			etape3artiste = true;
 			selectionArtiste2NonValide = false;
+			 addInfoArtiste2();
 		}
 		else{
 			selectionArtiste2NonValide = true;
 			addErrorEtape2Artiste();
 		}
-		
 	}
+	public void addInfoArtiste2() {   
+		  FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(
+				  FacesMessage.SEVERITY_INFO,"Vous recherchez un artiste", 
+				  "Votre 1er critère est "+intituleAxe1Artiste+ " = " + clusterArtisteNiveau1Choisi.getNomCluster()+
+		  		  ", votre 2ème critère est "+intituleAxe2Artiste+ " = " + clusterArtisteNiveau2Choisi.getNomCluster()));   
+	}
+	
+	
 	public void affinerRechercheChanson2(){
 		reinitialisationSelectionsNonValides();
 		System.out.println("ùùùù "+clusterChansonNiveau2Choisi);
@@ -286,14 +321,18 @@ public class VueAffichageResultat {
 			reinitialisationEtapes();
 			etape3chanson = true;
 			selectionChanson2NonValide = false;
+			addInfoChanson2();
 		}
 		else{
 			selectionChanson2NonValide = true;
 			addErrorEtape2Chanson();
 		}
-		
-		System.out.println("resultatChansons " +resultatChansons);
-		
+	}
+	public void addInfoChanson2() {   
+		  FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(
+				  FacesMessage.SEVERITY_INFO,"Vous recherchez une chanson", 
+				  "Votre 1er critère est "+intituleAxe1Chanson+ " = " + clusterChansonNiveau1Choisi.getNomCluster()+ 
+				  ", votre 2ème critère est "+intituleAxe2Chanson+ " = " + clusterChansonNiveau2Choisi.getNomCluster()));   
 	}
 
 	
@@ -323,30 +362,9 @@ public class VueAffichageResultat {
 	}
 	
 	
-	public void afficherChansonsAlbum(SelectEvent event){
-		chansonsAlbumChoisi = gestionnaireAffichageResultat.recupererLesChansons(albumChoisi);
-		System.out.println("chansons????????? " + chansonsAlbumChoisi);
-	}
-	
-	public void afficherAlbumsChanson(SelectEvent event){
-		albumsChansonChoisie = gestionnaireAffichageResultat.recupererLesAlbums(chansonChoisie);
-		System.out.println("albums????????? " + albumsChansonChoisie);
-	}
 	
 	
- 
 	
-	public void onRowSelect(SelectEvent event) {   
-		chansonsAlbumChoisi = gestionnaireAffichageResultat.recupererLesChansons(((Album) event.getObject()));
-		System.out.println("chansons????????? " + chansonsAlbumChoisi);
-		System.out.println("album choisi? " + albumChoisi);
-	   }   
-	
-	public void onRowUnselect(UnselectEvent event) {   
-		//chansonsAlbumChoisi = gestionnaireAffichageResultat.recupererLesChansons(((Album) event.getObject()));
-		System.out.println("chansons????????? " + albumChoisi.getChansons());
-		
-	}   
 	
 
 	
@@ -588,6 +606,7 @@ public class VueAffichageResultat {
 	
 	public void retourEtapeArtiste2(){
 		reinitialisationEtapes();
+		addInfoArtiste1();
 		etape2artiste = true;
 	}
 	
@@ -595,11 +614,13 @@ public class VueAffichageResultat {
 	public void retourEtapeAlbum2(){
 		reinitialisationEtapes();
 		etape2album = true;
+		addInfoAlbum1();
 	}
 
 	public void retourEtapeChanson2(){
 		reinitialisationEtapes();
 		etape2chanson = true;
+		addInfoChanson1();
 	}
 
 	
@@ -641,6 +662,8 @@ public class VueAffichageResultat {
 			addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,
 					"Erreur","Veuillez sélectionner un deuxième critère pour votre recherche de chanson")); 
 	}
+	
+	
 
 	
   
@@ -1106,11 +1129,6 @@ public class VueAffichageResultat {
 
 
 	public Artiste getArtisteChoisi() {
-		System.out.println("yyyyyes "+ artisteChoisi);
-		if(artisteChoisi!=null){
-			System.out.println("ses simil " + artisteChoisi.getArtistesSimilaires());
-		}
-	
 		return artisteChoisi;
 	}
 
@@ -1118,10 +1136,6 @@ public class VueAffichageResultat {
 
 	public void setArtisteChoisi(Artiste artisteChoisi) {
 		this.artisteChoisi = artisteChoisi;
-		System.out.println("yyyyyes "+ artisteChoisi);
-		if(artisteChoisi!=null){
-			System.out.println("ses simil " + artisteChoisi.getArtistesSimilaires());
-		}
 	}
 
 
