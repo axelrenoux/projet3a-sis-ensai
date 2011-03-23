@@ -6,6 +6,7 @@ import java.util.List;
 import controleur.Controleur;
 import bdd.chargement.ChargementBDDOracleDepuisTxt;
 import metier.Cluster;
+import rechercheParFormulaire.gestionRecherche.RechercheAlbum;
 import metier.oeuvres.Album;
 import rechercheParFormulaire.gestionRecherche.RechercheArtiste;
 import recuperationLastFM.recuperationDonnees.Peuplement;
@@ -60,6 +61,8 @@ public class main {
 		System.out.println(ar.size());*/
 
 		
+		RechercheAlbum r = new RechercheAlbum();
+		Cluster c = r.lancerRecherche("yo");
 		/*RechercheArtiste r = new RechercheArtiste();
 		Cluster c = r.lancerRecherche("LIVE");*/
 
