@@ -23,14 +23,6 @@ import com.thoughtworks.xstream.io.xml.DomDriver;
  * et qu'il n'y ait qu'une seule instance tout au long de la session (sessionScoped)
  * @author sis1
  */
-/**
- * @author Administrateur
- *
- */
-/**
- * @author Administrateur
- *
- */
 @ManagedBean
 @SessionScoped
 public class VueAffichageResultatXML {
