@@ -1,7 +1,15 @@
 package main;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import controleur.Controleur;
+import bdd.chargement.ChargementBDDOracleDepuisTxt;
 import metier.Cluster;
+import metier.oeuvres.Album;
 import rechercheParFormulaire.gestionRecherche.RechercheArtiste;
+import recuperationLastFM.recuperationDonnees.Peuplement;
+import recuperationLastFM.recuperationDonnees.RecupDonnees;
 
 public class main {
 
@@ -46,10 +54,14 @@ public class main {
 			e.printStackTrace();
 		}
 		System.out.println(ar);
-		System.out.println(ar.size());*/
+
 		
-		RechercheArtiste r = new RechercheArtiste();
-		Cluster c = r.lancerRecherche("LIVE");
+
+		System.out.println(ar.size());*/
+
+		
+		/*RechercheArtiste r = new RechercheArtiste();
+		Cluster c = r.lancerRecherche("LIVE");*/
 
 		/*ArrayList<Chanson> ch=null;
 		RechercheChansonBDD mcc = RechercheChansonBDD.getInstance();
@@ -71,6 +83,22 @@ public class main {
 			}
 		}*/
 		
+		
+		
+		
+		/*******************************************************
+		 * test 
+		 *******************************************************/
+		
+		//Peuplement.aFaireTournerTouteLaNuit();
+		/*RecupDonnees reach = new RecupDonnees();
+		reach.rechercher("Chef+Aid:+The+South+Park+Album");
+		
+		System.out.println("ששששששששששששששששששששששששששששש");
+		System.out.println(Controleur.getInstanceuniquecontroleur().getListeAlbums());
+		*/
+		
+		ChargementBDDOracleDepuisTxt.charger();
 	}
 
 
