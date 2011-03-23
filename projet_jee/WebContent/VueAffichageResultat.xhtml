@@ -91,7 +91,7 @@
 
 							<p:column>
 								<f:facet name="header">  
-			                  	Name
+			                  	#{vueAffichageResultat.intituleAxe1Album}
 					          	</f:facet>
 								<h:outputText value="#{cluster.nomCluster}" />
 							</p:column>
@@ -144,7 +144,7 @@
 							
 							<p:column>
 								<f:facet name="header">  
-		                  			Name
+		                  			#{vueAffichageResultat.intituleAxe1Artiste}
 				          		</f:facet>
 								<h:outputText value="#{cluster.nomCluster}" />
 							</p:column>
@@ -188,7 +188,7 @@
 
 							<p:column>
 								<f:facet name="header">  
-		                  			Name
+		                  			#{vueAffichageResultat.intituleAxe1Chanson}
 				          		</f:facet>
 								<h:outputText value="#{cluster.nomCluster}" />
 							</p:column>	
@@ -263,7 +263,7 @@
 									
 									<p:column>
 										<f:facet name="header">  
-				                  			Name
+				                  			#{vueAffichageResultat.intituleAxe2Album}
 						          		</f:facet>
 										<h:outputText value="#{cluster.nomCluster}" />
 									</p:column>
@@ -307,7 +307,7 @@
 																
 		 							<p:column>
 										<f:facet name="header">  
-				                  			Name
+				                  			#{vueAffichageResultat.intituleAxe2Artiste}
 						          		</f:facet>
 										<h:outputText value="#{cluster.nomCluster}" />
 									</p:column>
@@ -350,7 +350,7 @@
 									
 										<p:column>
 										<f:facet name="header">  
-				                  			Name
+				                  			#{vueAffichageResultat.intituleAxe1Chanson}
 						          		</f:facet>
 										<h:outputText value="#{cluster.nomCluster}" />
 									</p:column>
@@ -373,6 +373,49 @@
 <!-- etape 3 album -->
 								<center>
 							
+								<p:panel 
+									rendered="#{!empty vueAffichageResultat.albumChoisi}"
+									header="Informations complémentaire sur #{vueAffichageResultat.albumChoisi.name}"
+									style="width:'#{vueAffichageResultat.largeurDataTables2_3}';">
+									
+									<table>
+											<tr>
+												<td width="100%">
+													<h:panelGrid columns="2" columnClasses="column" cellpadding="5">
+														<h:outputText value="résumé : " />
+														<h:outputText
+															value="#{vueAffichageResultat.albumChoisi.wiki.resume}" />
+														<h:outputText value="informations: " />
+														<h:outputText
+															value="#{vueAffichageResultat.albumChoisi.wiki.contenu}" />
+													</h:panelGrid>
+												</td>
+											</tr>
+											<tr>
+												<td width="100%">
+													<p:dataTable 
+													var="chanson" 
+													value="#{vueAffichageResultat.albumChoisi.chansons}"
+													style="width:400;">
+														<p:column>
+															<f:facet name="header">
+																	titre
+															</f:facet>
+															<h:outputText value="#{chanson.name}" />
+														</p:column>
+		
+														<p:column>
+															<f:facet name="header">
+																	duree
+															</f:facet>
+															<h:outputText value="#{chanson.duree}" />
+														</p:column>
+													</p:dataTable>
+												</td>
+											</tr>
+										</table>
+									
+								</p:panel>
 									
 								<p:dataTable var="album"
 									value="#{vueAffichageResultat.lazyModelAlbums3}"
@@ -382,14 +425,10 @@
 									selectionMode="single" 
 									selection="#{vueAffichageResultat.albumChoisi}"
 									update="monPanel"
-									onRowSelectComplete="DialogAlbum.show()"  						
 									rows="10" 
 									lazy="true"  
 									paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"  
 									rowsPerPageTemplate="5,10,15" 
-									
-									 rowSelectListener="#{vueAffichageResultat.onRowSelect}"  
-					                 onRowSelectUpdate="Dalbum"  
 					                 >  
 									
 									
@@ -466,8 +505,43 @@
 								</center>
 <!-- etape 3 artiste -->
 
+		
 								<center>
-								
+								<p:panel 
+									rendered="#{!empty vueAffichageResultat.artisteChoisi}"
+									header="Informations complémentaire sur #{vueAffichageResultat.artisteChoisi.name}"
+									style="width:'#{vueAffichageResultat.largeurDataTables2_3}';">
+									
+									<table>
+											<tr>
+												<td width="100%">
+													<h:panelGrid columns="2" columnClasses="column" cellpadding="5">
+														<h:outputText value="résumé : " />
+														<h:outputText
+															value="#{vueAffichageResultat.artisteChoisi.wiki.resume}" />
+														<h:outputText value="informations: " />
+														<h:outputText
+															value="#{vueAffichageResultat.artisteChoisi.wiki.contenu}" />
+													</h:panelGrid>
+												</td>
+											</tr>
+											<tr>
+												<td width="100%">
+													<p:dataTable var="artiste"
+													value="#{vueAffichageResultat.artisteChoisi.artistesSimilaires}"
+													style="width:400;">
+														<p:column>
+															<f:facet name="header">
+																	nom
+															</f:facet>
+															<h:outputText value="#{artiste.name}" />
+														</p:column>
+													</p:dataTable>
+												</td>
+											</tr>
+										</table>
+									
+								</p:panel>
 								<p:dataTable var="artiste"
 									value="#{vueAffichageResultat.lazyModelArtistes3}"
 									rendered="#{vueAffichageResultat.etape3artiste}"
@@ -475,14 +549,11 @@
 									paginator="true" 
 									selection="#{vueAffichageResultat.artisteChoisi}"
 									selectionMode="single" 
-									onRowSelectComplete="DialogArtiste.show()"
 									update="monPanel"
 									rows="10" 
 									lazy="true"  
 									paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"  
 									rowsPerPageTemplate="5,10,15"  
-									onRowSelectUpdate="Dartiste" 
-									
 									>
 		
 									<f:facet name="header">
@@ -516,10 +587,10 @@
 										<f:facet name="header">  
 				                  			Lien vers l'artiste sur last.fm
 						          		</f:facet>
-										<p:commandLink action="#{artiste.url}" 
-						          		style="color:#ab5ddd; margin-right:20px;" ajax="false">  
-       										<h:outputText value="vers last.fm"/>  
-  		 								</p:commandLink>
+										<a href="#{artiste.url}" target="_blank"
+						          		style="color:#ab5ddd; margin-right:20px;" ajax="false">
+						          			vers last.fm
+						          		</a> 
 									</p:column>
 									
 									
@@ -542,22 +613,18 @@
 								</center>
 <!-- etape 3 chanson -->		
 								<center>
-								
+						
 
 								<p:dataTable var="chanson"
 									value="#{vueAffichageResultat.lazyModelChansons3}"
 									rendered="#{vueAffichageResultat.etape3chanson}"
 									style="width:'#{vueAffichageResultat.largeurDataTables2_3}';"
-									paginator="true" 
-									onRowSelectComplete="DialogChanson.show()"
-									selection="#{vueAffichageResultat.chansonChoisie}"
-									selectionMode="single" 
+									paginator="true"
 									rows="10" 
 									lazy="true"  
 									paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"  
 									rowsPerPageTemplate="5,10,15"  
-									update="monPanel"
-									onRowSelectUpdate="Dchanson" 
+									
 									>
 									
 									<f:facet name="header">
@@ -569,23 +636,26 @@
 									<p:column>
 										<f:facet name="header">
 											titre
-											<h:outputText value="#{chanson.name}" />
 										</f:facet>
+										<h:outputText value="#{chanson.name}" />
+										
 									</p:column>
 									
 									<p:column>
 										<f:facet name="header">
-											duree
-											<h:outputText value="#{chanson.duree}" />
+											duree #{chanson.duree} bb
 										</f:facet>
+										<h:outputText value="#{chanson.duree}" />
+										
 									</p:column>
 									
 									
 									<p:column>
 										<f:facet name="header">
-											artiste
-											<h:outputText value="#{chanson.artiste.name}" />
+											artiste #{chanson.artiste.name} cccc
 										</f:facet>
+										<h:outputText value="#{chanson.artiste.name}" />
+										
 									</p:column>
 									
 									
@@ -608,10 +678,12 @@
 										<f:facet name="header">  
 				                  			Lien vers la chanson sur last.fm
 						          		</f:facet>
-										<p:commandLink action="#{chanson.url}" 
-						          		style="color:#ab5ddd; margin-right:20px;" ajax="false">  
-       										<h:outputText value="vers last.fm"/>  
-  		 								</p:commandLink>
+						          		
+										<a href="#{chanson.url}" target="_blank"
+						          		style="color:#ab5ddd; margin-right:20px;" ajax="false">
+						          			vers last.fm
+						          		</a> 
+  		 								
 									</p:column>
 									
 									
@@ -629,13 +701,13 @@
 													image="ui-icon ui-icon-circle-arrow-w" update="monPanel"
 													action="#{vueAffichageResultat.retourEtapeChanson2}" />
 									</f:facet>
+									
+									
+									
 								</p:dataTable>
 								</center>
 								
-								
-								
-								
-									
+					
 									<center>
 									<p:dialog id="Dalbum" header="Informations complémentaires sur #{vueAffichageResultat.albumChoisi.name}" 
 									widgetVar="DialogAlbum" width="700" height="400">
@@ -655,20 +727,20 @@
 											<tr>
 												<td width="100%">
 													<p:dataTable var="chanson" modal="true"
-													value="#{vueAffichageResultat.albumChoisi.chansons}"
+													value="#{vueAffichageResultat.chansonsAlbumChoisi}"
 													style="width:400;">
 														<p:column>
 															<f:facet name="header">
 																	titre
-																	<h:outputText value="#{chanson.name}" />
 															</f:facet>
+															<h:outputText value="#{chanson.name}" />
 														</p:column>
 		
 														<p:column>
 															<f:facet name="header">
 																	duree
-																	<h:outputText value="#{chanson.duree}" />
 															</f:facet>
+															<h:outputText value="#{chanson.duree}" />
 														</p:column>
 													</p:dataTable>
 												</td>
@@ -722,8 +794,8 @@
 														<p:column>
 															<f:facet name="header">
 																	titre
-																	<h:outputText value="#{album.name}" />
 															</f:facet>
+															<h:outputText value="#{album.name}" />
 														</p:column>
 													</p:dataTable>
 												</td>
