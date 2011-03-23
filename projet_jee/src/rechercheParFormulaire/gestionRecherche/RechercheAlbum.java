@@ -216,6 +216,7 @@ public class RechercheAlbum {
 		}
 		System.out.println("meilleur cluster : " + meilleurCluster.varianceCluster());
 		System.out.println(meilleurCluster.tailleCluster());
+		System.out.println(meilleurCluster.getNomCluster());
 		return meilleurCluster;
 	}
 	
