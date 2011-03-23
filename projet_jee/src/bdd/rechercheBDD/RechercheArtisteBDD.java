@@ -82,6 +82,9 @@ public class RechercheArtisteBDD {
 				if(artistecourant.getListeners()==0){
 					artistecourant.genererListeners();
 				}
+				if(artistecourant.getImageLarge().equals("") || artistecourant.getImageLarge().equals("%27%27" )){
+					artistecourant.setImageLarge("http://mylene.net/mfpics/itunes_20010_002.png");
+				}
 				artistesrecherches.add(artistecourant);
 			}
 			//on met a jour les listes de tags et d'artistes similaires

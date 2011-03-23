@@ -98,8 +98,8 @@ public class RechercheAlbumBDD {
 				if(albumcourant.getListeners()==0){
 					albumcourant.genererListeners();
 				}
-				if(albumcourant.getImageLarge()== ""){
-					albumcourant.setImageLarge("/projet_jee/WebContent/imageNonDisponible.PNG");
+				if(albumcourant.getImageLarge().equals("") || albumcourant.getImageLarge().equals("%27%27" )){
+					albumcourant.setImageLarge("http://mylene.net/mfpics/itunes_20010_002.png");
 				}
 				albumsrecherches.add(albumcourant);
 			}
