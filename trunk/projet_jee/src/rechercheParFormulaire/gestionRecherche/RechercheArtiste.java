@@ -95,6 +95,7 @@ public class RechercheArtiste{
 		
 		for(Entry<CoupleAxe, Cluster> entry : listeClusterPossible.entrySet()) {
 			meilleurCluster = entry.getValue();
+			meilleurCluster.setNomCluster(entry.getKey().getAxe1().getType() + ";" + entry.getKey().getAxe2().getType());
 			break;
 		}
 		for(Entry<CoupleAxe, Cluster> entry2 : listeClusterPossible.entrySet()) {
