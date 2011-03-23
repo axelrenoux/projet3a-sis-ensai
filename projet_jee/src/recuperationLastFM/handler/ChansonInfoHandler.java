@@ -280,11 +280,11 @@ public class ChansonInfoHandler extends DefaultHandler{
 		if(inID){
 			chanson.setID(lecture);
 		}else if(inListeners){
-			chanson.setListeners(Double.parseDouble(lecture));
+			chanson.setListeners(Integer.parseInt(lecture));
 		}else if(inPlaycount){
-			chanson.setPlaycount(Double.parseDouble(lecture));
+			chanson.setPlaycount(Integer.parseInt(lecture));
 		}else if(inDuration){
-			chanson.setDuree(Double.parseDouble(lecture));
+			chanson.setDuree(Integer.parseInt(lecture));
 		}else if(inURLArtisteChanson){
 			//la chanson a necessairement deja un artiste, on le met a jour ici
 			chanson.getArtiste().setUrl(lecture);
