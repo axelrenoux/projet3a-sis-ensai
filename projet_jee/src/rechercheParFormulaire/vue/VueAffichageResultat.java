@@ -292,6 +292,7 @@ public class VueAffichageResultat {
 			addErrorEtape2Chanson();
 		}
 		
+		System.out.println("resultatChansons " +resultatChansons);
 		
 	}
 
@@ -588,7 +589,7 @@ public class VueAffichageResultat {
 				return lasyCluster;
 				}
 			};
-			lazyModelChansons3.setRowCount(resultatChansons.size());  
+			lazyModelChansons3.setRowCount(resultatChansons.size()); 
 	}
 	
 	
