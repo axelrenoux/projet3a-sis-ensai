@@ -12,6 +12,10 @@
 	
 	<h:form>
 	
+	
+	
+	
+	
 	<h:outputLabel
 					style="font-size: 16; text-align:center; font-family: Segoe UI, Helvetica, Arial, sans-serif;"> 
 							Affinez vos critères et visualiser vos résultats ou 
@@ -35,12 +39,13 @@
 		
 		<p:panel id="monPanel" style="width:1225px;">
 
-
+			
+			
 			<center>
 				<h:outputLabel
 					rendered="#{vueAffichageResultat.etape1}"
 					style="font-size: 20; text-align:center; font-family: Segoe UI, Helvetica, Arial, sans-serif;"> 
-							Choisissez le type de recherche que vous  souhaitez faire, et affinez vos critères
+							Choisissez le type de recherche que vous  souhaitez faire, et affinez vos critères 
 				</h:outputLabel>
 			</center>
 			
@@ -51,6 +56,8 @@
 							Choisissez un second critère pour affiner votre recherche
 				</h:outputLabel>
 			</center>
+			
+			<p:messages id="info" showDetail="true" rendered="#{! vueAffichageResultat.etape1}"/> 
 			
 			
 			
@@ -101,8 +108,9 @@
 
 							<f:facet name="footer">
 								<p:commandButton value="Continuer"
-									image="ui-icon ui-icon-circle-arrow-e" update="monPanel"
-									action="#{vueAffichageResultat.affinerRechercheAlbum1}" />
+									image="ui-icon ui-icon-circle-arrow-e" update="monPanel" 
+									action="#{vueAffichageResultat.affinerRechercheAlbum1}" 
+								/>
 							</f:facet>
 							
 						</p:dataTable>
@@ -212,26 +220,30 @@
 			<table>
 				<tr>
 					<td width="100%">
+					
+						
+						<!--
 						<center>
 							<h:outputLabel rendered="#{vueAffichageResultat.etape2album}"
 									style="font-size: 20; text-align:center; font-family: Segoe UI, Helvetica, Arial, sans-serif;"> 
-											Vous recherche un album, 1er critère : #{vueAffichageResultat.clusterAlbumNiveau1Choisi.nomCluster}		
+											Vous recherchez un album, 1er critère : #{vueAffichageResultat.clusterAlbumNiveau1Choisi.nomCluster}		
 							</h:outputLabel>
 						</center>
 						
 						<center>
 							<h:outputLabel rendered="#{vueAffichageResultat.etape2artiste}"
 									style="font-size: 20; text-align:center; font-family: Segoe UI, Helvetica, Arial, sans-serif;"> 
-											Vous recherche un artiste, 1er critère : #{vueAffichageResultat.clusterArtisteNiveau1Choisi.nomCluster}		
+											Vous recherchez un artiste, 1er critère : #{vueAffichageResultat.clusterArtisteNiveau1Choisi.nomCluster}		
 							</h:outputLabel>
 						</center>
 						
 						<center>
 							<h:outputLabel rendered="#{vueAffichageResultat.etape2chanson}"
 									style="font-size: 20; text-align:center; font-family: Segoe UI, Helvetica, Arial, sans-serif;"> 
-											Vous recherche une chanson, 1er critère : #{vueAffichageResultat.clusterChansonNiveau1Choisi.nomCluster}		
+											Vous recherchez une chanson, 1er critère : #{vueAffichageResultat.clusterChansonNiveau1Choisi.nomCluster}		
 							</h:outputLabel>
 						</center>
+						-->
 						
 						
 						<h:form>
@@ -379,7 +391,7 @@
 									style="width:'#{vueAffichageResultat.largeurDataTables2_3}';">
 									
 									<table>
-											<tr>
+											<!-- <tr>
 												<td width="100%">
 													<h:panelGrid columns="2" columnClasses="column" cellpadding="5">
 														<h:outputText value="résumé : " />
@@ -390,13 +402,19 @@
 															value="#{vueAffichageResultat.albumChoisi.wiki.contenu}" />
 													</h:panelGrid>
 												</td>
-											</tr>
+											</tr>-->
 											<tr>
 												<td width="100%">
 													<p:dataTable 
 													var="chanson" 
 													value="#{vueAffichageResultat.albumChoisi.chansons}"
 													style="width:400;">
+													
+														<f:facet name="header">  
+														    Les chansons de l'album
+														</f:facet>  
+														
+														
 														<p:column>
 															<f:facet name="header">
 																	titre
@@ -507,49 +525,12 @@
 
 		
 								<center>
-								<p:panel 
-									rendered="#{!empty vueAffichageResultat.artisteChoisi}"
-									header="Informations complémentaire sur #{vueAffichageResultat.artisteChoisi.name}"
-									style="width:'#{vueAffichageResultat.largeurDataTables2_3}';">
-									
-									<table>
-											<tr>
-												<td width="100%">
-													<h:panelGrid columns="2" columnClasses="column" cellpadding="5">
-														<h:outputText value="résumé : " />
-														<h:outputText
-															value="#{vueAffichageResultat.artisteChoisi.wiki.resume}" />
-														<h:outputText value="informations: " />
-														<h:outputText
-															value="#{vueAffichageResultat.artisteChoisi.wiki.contenu}" />
-													</h:panelGrid>
-												</td>
-											</tr>
-											<tr>
-												<td width="100%">
-													<p:dataTable var="artiste"
-													value="#{vueAffichageResultat.artisteChoisi.artistesSimilaires}"
-													style="width:400;">
-														<p:column>
-															<f:facet name="header">
-																	nom
-															</f:facet>
-															<h:outputText value="#{artiste.name}" />
-														</p:column>
-													</p:dataTable>
-												</td>
-											</tr>
-										</table>
-									
-								</p:panel>
+								
 								<p:dataTable var="artiste"
 									value="#{vueAffichageResultat.lazyModelArtistes3}"
 									rendered="#{vueAffichageResultat.etape3artiste}"
 									style="width:'#{vueAffichageResultat.largeurDataTables2_3}';"
 									paginator="true" 
-									selection="#{vueAffichageResultat.artisteChoisi}"
-									selectionMode="single" 
-									update="monPanel"
 									rows="10" 
 									lazy="true"  
 									paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"  
@@ -624,7 +605,6 @@
 									lazy="true"  
 									paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"  
 									rowsPerPageTemplate="5,10,15"  
-									
 									>
 									
 									<f:facet name="header">
