@@ -27,7 +27,7 @@ public class AxeArtistePourAlbum implements Axe {
 	@Override
 	public String CalculAxe(Oeuvre oeuvre) {
 		Album c = (Album) oeuvre;
-		return c.getArtiste().getNom();
+		return c.getArtiste().getName();
 	}
 
 }
