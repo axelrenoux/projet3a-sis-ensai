@@ -90,6 +90,15 @@ public class RechercheChansonBDD {
 								resultat.getDouble("list"),
 								resultat.getDouble("playc"),
 								leWiki);
+				if(chansonCourante.getPlaycount()==0){
+					chansonCourante.genererPlaycount();
+				}
+				if(chansonCourante.getListeners()==0){
+					chansonCourante.genererListeners();
+				}
+				if(chansonCourante.getDuree()==0){
+					chansonCourante.genererDuree();
+				}
 				chansonsrecherchees.add(chansonCourante);
 			}
 			for (Chanson ch : chansonsrecherchees){

@@ -92,11 +92,17 @@ public class RechercheAlbumBDD {
 								resultat.getDouble("playc"),
 								leWiki,
 								artiste);
+				if(albumcourant.getPlaycount()==0){
+					albumcourant.genererPlaycount();
+				}
+				if(albumcourant.getListeners()==0){
+					albumcourant.genererListeners();
+				}
 				albumsrecherches.add(albumcourant);
 			}
 			for(Album a : albumsrecherches){
 				a.setToptags(RechercheTagBDD.getInstance().rechercherTagsAlbum(a));
-				a.setChansons(RechercheChansonBDD.getInstance().rechercherChansonAlbum(a.getName()));
+				//a.setChansons(RechercheChansonBDD.getInstance().rechercherChansonAlbum(a.getName()));
 			}
 		} catch (SQLException e) {
 			throw new ChargementException(e);
@@ -157,6 +163,12 @@ public class RechercheAlbumBDD {
 								resultat.getDouble("playc"),
 								leWiki,
 								artiste);
+				if(albumcourant.getPlaycount()==0){
+					albumcourant.genererPlaycount();
+				}
+				if(albumcourant.getListeners()==0){
+					albumcourant.genererListeners();
+				}
 				albumsChansonrecherches.add(albumcourant);
 			}
 			 
@@ -220,6 +232,12 @@ public class RechercheAlbumBDD {
 								resultat.getDouble("playc"),
 								leWiki,
 								artiste);
+				if(albumcourant.getPlaycount()==0){
+					albumcourant.genererPlaycount();
+				}
+				if(albumcourant.getListeners()==0){
+					albumcourant.genererListeners();
+				}
 				albumsChansonrecherches.add(albumcourant);
 			}
 			 
