@@ -14,6 +14,8 @@ import org.primefaces.event.SelectEvent;
 import org.primefaces.event.UnselectEvent;
 import org.primefaces.model.LazyDataModel;
 
+import exceptions.ExceptionNomCluster;
+
 import rechercheParFormulaire.gestionRecherche.GestionnaireAffichageResultat;
 
 
@@ -114,6 +116,12 @@ public class VueAffichageResultat {
 	
 	
 	
+	private String intituleAxe1Album;
+	private String intituleAxe2Album;
+	private String intituleAxe1Artiste;
+	private String intituleAxe2Artiste;
+	private String intituleAxe1Chanson;
+	private String intituleAxe2Chanson;
 	 
 
 	
@@ -131,6 +139,13 @@ public class VueAffichageResultat {
 		clustersAlbumsNiveau1 = gestionnaireAffichageResultat.retournerClustersAlbumNiveau1(clustersAlbum);
 		clustersArtistesNiveau1 = gestionnaireAffichageResultat.retournerClustersArtisteNiveau1(clustersArtiste);
 		clustersChansonsNiveau1 = gestionnaireAffichageResultat.retournerClustersChansonNiveau1(clustersChanson);
+		
+		try{
+			recupererIntitulesAxes();
+		}catch(ExceptionNomCluster e){
+			System.out.println(e.getTitre() +" "+ e.getMessage());
+		}
+	
 		
 		lazyModelAlbums1=null;
 		lazyModelAlbums2=null;
@@ -333,6 +348,41 @@ public class VueAffichageResultat {
 	}   
 	
 
+	
+	/**
+	 * on sait que le nom d'un cluster general est composé du type du premier
+	 * axe selon lequel il est découpé, suivi du type du second axe selon
+	 * lequel il est découpé, séparés par un ";"
+	 * @param clusterGeneral
+	 * @throws ExceptionNomCluster 
+	 */
+	public void recupererIntitulesAxes() throws ExceptionNomCluster{
+		String[] deuxTypes;
+		try{
+			deuxTypes = clustersAlbum.getNomCluster().split(";");
+			intituleAxe1Album = deuxTypes[0];
+			intituleAxe2Album = deuxTypes[1];
+		}catch (java.lang.ArrayIndexOutOfBoundsException e1){
+			throw new ExceptionNomCluster(clustersAlbum.getNomCluster());
+		}
+		try{
+			deuxTypes = clustersArtiste.getNomCluster().split(";");
+			intituleAxe1Artiste = deuxTypes[0];
+			intituleAxe2Artiste = deuxTypes[1];
+		}catch (java.lang.ArrayIndexOutOfBoundsException e2){
+			throw new ExceptionNomCluster(clustersArtiste.getNomCluster());
+		}	
+		try{
+			deuxTypes = clustersChanson.getNomCluster().split(";");
+			intituleAxe1Chanson = deuxTypes[0];
+			intituleAxe2Chanson = deuxTypes[1];
+		}catch (java.lang.ArrayIndexOutOfBoundsException e3){
+			throw new ExceptionNomCluster(clustersChanson.getNomCluster());
+		}	
+		System.out.println(intituleAxe1Album + ", " + intituleAxe1Artiste
+						+", " + intituleAxe1Chanson + ", " + intituleAxe2Album + 
+						", " + intituleAxe2Artiste + ", " + intituleAxe2Chanson);
+	}
 		
 		
 		
@@ -484,7 +534,6 @@ public class VueAffichageResultat {
 	
 	
 	public void creerLazyModelAlbums3(){
-		System.out.println("aaaaaaalbum3");
 		lazyModelAlbums3 = new LazyDataModel<Album>(){
 			@Override
 			public List<Album> load(int first, int pageSize, String sortField,
@@ -504,7 +553,6 @@ public class VueAffichageResultat {
 	}
 	
 	public void creerLazyModelArtistes3(){
-		System.out.println("aaaaaaaartiste3");
 		lazyModelArtistes3 = new LazyDataModel<Artiste>(){
 			@Override
 			public List<Artiste> load(int first, int pageSize, String sortField,
@@ -525,7 +573,6 @@ public class VueAffichageResultat {
 	
 	
 	public void creerLazyModelChansons3(){
-		System.out.println("ccccccccccccchanson3");
 		lazyModelChansons3 = new LazyDataModel<Chanson>(){
 			@Override
 			public List<Chanson> load(int first, int pageSize, String sortField,
@@ -1109,6 +1156,78 @@ public class VueAffichageResultat {
 
 	public void setAlbumsChansonChoisie(ArrayList<Album> albumsChansonChoisie) {
 		this.albumsChansonChoisie = albumsChansonChoisie;
+	}
+
+
+
+	public String getIntituleAxe1Album() {
+		return intituleAxe1Album;
+	}
+
+
+
+	public void setIntituleAxe1Album(String intituleAxe1Album) {
+		this.intituleAxe1Album = intituleAxe1Album;
+	}
+
+
+
+	public String getIntituleAxe2Album() {
+		return intituleAxe2Album;
+	}
+
+
+
+	public void setIntituleAxe2Album(String intituleAxe2Album) {
+		this.intituleAxe2Album = intituleAxe2Album;
+	}
+
+
+
+	public String getIntituleAxe1Artiste() {
+		return intituleAxe1Artiste;
+	}
+
+
+
+	public void setIntituleAxe1Artiste(String intituleAxe1Artiste) {
+		this.intituleAxe1Artiste = intituleAxe1Artiste;
+	}
+
+
+
+	public String getIntituleAxe2Artiste() {
+		return intituleAxe2Artiste;
+	}
+
+
+
+	public void setIntituleAxe2Artiste(String intituleAxe2Artiste) {
+		this.intituleAxe2Artiste = intituleAxe2Artiste;
+	}
+
+
+
+	public String getIntituleAxe1Chanson() {
+		return intituleAxe1Chanson;
+	}
+
+
+
+	public void setIntituleAxe1Chanson(String intituleAxe1Chanson) {
+		this.intituleAxe1Chanson = intituleAxe1Chanson;
+	}
+
+
+
+	public String getIntituleAxe2Chanson() {
+		return intituleAxe2Chanson;
+	}
+
+
+
+	public void setIntituleAxe2Chanson(String intituleAxe2Chanson) {
+		this.intituleAxe2Chanson = intituleAxe2Chanson;
 	}
 
 
