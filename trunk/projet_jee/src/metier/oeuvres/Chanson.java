@@ -204,6 +204,24 @@ public class Chanson extends ObjetAComparer implements Oeuvre{
 		return null;
 	}
 	
+	
+
+	/**
+	 * methodes qui affecte une valeur aléatoire à playcount et listeners et duree
+	 */
+	public void genererPlaycount(){
+		int value = (int) (Math.random()*10000);
+		this.setPlaycount((double)value);
+	}
+	public void genererListeners(){
+		int value = (int) (Math.random()*8000);
+		this.setListeners((double)value);
+	}
+	public void genererDuree(){
+		int value = (int) (Math.random()*400000 + 1000);
+		this.setListeners((double)value);
+	}
+	
 	/********************************************************************/
 	/******************      getters / setters       ********************/
 	/********************************************************************/

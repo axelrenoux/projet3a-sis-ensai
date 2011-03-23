@@ -237,6 +237,19 @@ public class Album extends ObjetAComparer implements Oeuvre {
 	
 	
 	
+
+	/**
+	 * methodes qui affecte une valeur aléatoire à playcount et listeners
+	 */
+	public void genererPlaycount(){
+		int value = (int) (Math.random()*10000);
+		this.setPlaycount((double)value);
+	}
+	public void genererListeners(){
+		int value = (int) (Math.random()*8000);
+		this.setListeners((double)value);
+	}
+	
 	/********************************************************************/
 	/******************      getters / setters       ********************/
 	/********************************************************************/
