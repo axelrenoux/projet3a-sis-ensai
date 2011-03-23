@@ -11,11 +11,21 @@
 	<ui:define name="contenu">
         <h:form >
         			<center>
-		        	<p:panel header="Saisie de la recherche" toggleable="true" >
+        			<table>
+        			<tr>
+        			<td>
+		        	<p:panel header="Saisie de la recherche"  style="width:900px;height:200px;">
+		        		<center>
 			        	<h:panelGrid columns="2" columnClasses="column" cellpadding="5"> 
-				        	<h:outputLabel value = "Saisir un mot clé"/>
-				        	<h:inputText value="#{vueFormulaire.motCle}"/>
-				        	<h:outputLabel value = "Choisir un mode d'affichage du résultat"/>
+				        	<h:outputLabel 
+				        		style = "font-size: 16; font-weight : bold; color:#551a7d; text-align:center; font-family: Segoe UI, Helvetica, Arial, sans-serif;"
+				        		value = "Saisir un mot clé"/>
+				        	<h:inputText 
+				        		style="width:300px;height:30px;"
+				        		value="#{vueFormulaire.motCle}"/>
+				        	<h:outputLabel 
+				        		style = "font-size: 16; font-weight : bold; color:#551a7d; text-align:center; font-family: Segoe UI, Helvetica, Arial, sans-serif;"
+				        		value = "Choisir un mode d'affichage"/>
 				        			
 							<h:selectOneRadio
 								 value="#{vueFormulaire.retourChoisi}">
@@ -24,13 +34,18 @@
 							</h:selectOneRadio>
 							
 							<p:messages id="msgs" showDetail="true"/>
-							<p:commandButton value ="C'est parti !" action="#{vueFormulaire.lancerRecherche}" 
-									update="msgs" ajax="false"/>
+							<p:commandButton value ="  C'est parti !  " action="#{vueFormulaire.lancerRecherche}" 
+									update="msgs" ajax="false"
+									style="width:300px;height:30px;"/>
 									
 						</h:panelGrid>
+						</center>
 					</p:panel>
-					</center>	
-			
+					</td>
+        			</tr>
+        			</table>
+        			</center>	
+        			
 					
  		</h:form> 
 	</ui:define>
