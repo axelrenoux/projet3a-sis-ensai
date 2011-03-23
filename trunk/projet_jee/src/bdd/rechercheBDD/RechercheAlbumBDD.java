@@ -102,7 +102,7 @@ public class RechercheAlbumBDD {
 			}
 			for(Album a : albumsrecherches){
 				a.setToptags(RechercheTagBDD.getInstance().rechercherTagsAlbum(a));
-				//a.setChansons(RechercheChansonBDD.getInstance().rechercherChansonAlbum(a.getName()));
+				a.setChansons(RechercheChansonBDD.getInstance().rechercherChansonAlbum(a.getName()));
 			}
 		} catch (SQLException e) {
 			throw new ChargementException(e);
