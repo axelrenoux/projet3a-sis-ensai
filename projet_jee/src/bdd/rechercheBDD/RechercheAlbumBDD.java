@@ -88,19 +88,11 @@ public class RechercheAlbumBDD {
 								resultat.getString("url"),
 								resultat.getDate("datesortie"),
 								resultat.getString("iL"),
-								resultat.getDouble("list"),
-								resultat.getDouble("playc"),
+								resultat.getInt("list"),
+								resultat.getInt("playc"),
 								leWiki,
 								artiste);
-				if(albumcourant.getPlaycount()==0){
-					albumcourant.genererPlaycount();
-				}
-				if(albumcourant.getListeners()==0){
-					albumcourant.genererListeners();
-				}
-				if(albumcourant.getImageLarge().equals("") || albumcourant.getImageLarge().equals("%27%27" )){
-					albumcourant.setImageLarge("http://mylene.net/mfpics/itunes_20010_002.png");
-				}
+				albumcourant.gererVides();
 				albumsrecherches.add(albumcourant);
 			}
 			for(Album a : albumsrecherches){
@@ -162,16 +154,11 @@ public class RechercheAlbumBDD {
 								resultat.getString("url"),
 								resultat.getDate("datesortie"),
 								resultat.getString("iL"),
-								resultat.getDouble("list"),
-								resultat.getDouble("playc"),
+								resultat.getInt("list"),
+								resultat.getInt("playc"),
 								leWiki,
 								artiste);
-				if(albumcourant.getPlaycount()==0){
-					albumcourant.genererPlaycount();
-				}
-				if(albumcourant.getListeners()==0){
-					albumcourant.genererListeners();
-				}
+				albumcourant.gererVides();
 				albumsChansonrecherches.add(albumcourant);
 			}
 			 
@@ -231,16 +218,11 @@ public class RechercheAlbumBDD {
 								resultat.getString("url"),
 								resultat.getDate("datesortie"),
 								resultat.getString("iL"),
-								resultat.getDouble("list"),
-								resultat.getDouble("playc"),
+								resultat.getInt("list"),
+								resultat.getInt("playc"),
 								leWiki,
 								artiste);
-				if(albumcourant.getPlaycount()==0){
-					albumcourant.genererPlaycount();
-				}
-				if(albumcourant.getListeners()==0){
-					albumcourant.genererListeners();
-				}
+				albumcourant.gererVides();
 				albumsChansonrecherches.add(albumcourant);
 			}
 			 

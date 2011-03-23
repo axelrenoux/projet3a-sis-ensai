@@ -82,8 +82,8 @@ public abstract class ControleSauvegardeUnFormatPourLaBdd {
 	}
 
 	public void sauverAudimat(int pk, 
-									double listeners,
-									double playcount){
+									int listeners,
+									int playcount){
 		sauveur.sauverAudimat(controle(pk),controle(listeners),controle(playcount));
 	}
 
@@ -108,7 +108,7 @@ public abstract class ControleSauvegardeUnFormatPourLaBdd {
 	}
 
 	public void sauverChanson(int coord_chanson,
-									Double duree, 
+									int duree, 
 									int pkImages, 
 									int pkAudimat, 
 									int pkWiki,

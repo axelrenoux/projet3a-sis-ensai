@@ -32,8 +32,8 @@ public class Artiste extends ObjetAComparer implements Oeuvre{
 	private String imageLarge;
 	private String imageExtraLarge;
 	private String imageMega;
-	private double listeners;//nb de personnes ayant écouté la chanson
-	private double playcount;//nb de fois où la chanson a été écoutée
+	private int listeners;//nb de personnes ayant écouté la chanson
+	private int playcount;//nb de fois où la chanson a été écoutée
 	private ArrayList<Artiste> artistesSimilaires;
 	private ArrayList<Tag> toptags;
 	private Wiki wiki;
@@ -63,8 +63,8 @@ public class Artiste extends ObjetAComparer implements Oeuvre{
 	
 
 	public Artiste(String name, String url,
-			String imageLarge,double listeners,
-			double playcount,Wiki wiki) {
+			String imageLarge,int listeners,
+			int playcount,Wiki wiki) {
 		this();
 		this.name = name;
 		this.url=url;
@@ -94,8 +94,8 @@ public class Artiste extends ObjetAComparer implements Oeuvre{
 	 */
 	public Artiste(String name, String url,
 			String imageSmall,String imageMedium,String imageLarge,
-			String imageExtraLarge,String imageMega,double listeners,
-			double playcount,ArrayList<Artiste> artistesSimilaires,
+			String imageExtraLarge,String imageMega,int listeners,
+			int playcount,ArrayList<Artiste> artistesSimilaires,
 			ArrayList<Tag> toptags,Wiki wiki) {
 		this.name = name;
 		this.url=url;
@@ -219,18 +219,26 @@ public class Artiste extends ObjetAComparer implements Oeuvre{
 	
 		
 
+	 
+		
 		/**
-		 * methodes qui affecte une valeur aléatoire à playcount et listeners
+		 * methode qui affecte une valeur aléatoire à playcount et listeners et image si vides
 		 */
-		public void genererPlaycount(){
-			int value = (int) (Math.random()*10000);
-			this.setPlaycount((double)value);
+		public void gererVides(){
+			if(this.getPlaycount() ==0
+					&& this.getListeners()==0){
+				int value1 = (int)(Math.random()*10000);
+				int value2 = (int)(value1*0.8);
+				this.setPlaycount(value1);
+				this.setListeners(value2);
+			}
+			if(this.getImageLarge()==null 
+					||this.getImageLarge().equals("") 
+					|| this.getImageLarge().equals("%27%27" )){
+				this.setImageLarge("http://mylene.net/mfpics/itunes_20010_002.png");
+			}
 		}
-		public void genererListeners(){
-			int value = (int) (Math.random()*8000);
-			this.setListeners((double)value);
-		}
-	
+		
 	/********************************************************************/
 	/******************      getters / setters       ********************/
 	/********************************************************************/
@@ -364,7 +372,7 @@ public class Artiste extends ObjetAComparer implements Oeuvre{
 
 
 
-	public double getListeners() {
+	public int getListeners() {
 		return listeners;
 	}
 
@@ -373,7 +381,7 @@ public class Artiste extends ObjetAComparer implements Oeuvre{
 
 
 
-	public void setListeners(double listeners) {
+	public void setListeners(int listeners) {
 		this.listeners = listeners;
 	}
 
@@ -382,7 +390,7 @@ public class Artiste extends ObjetAComparer implements Oeuvre{
 
 
 
-	public double getPlaycount() {
+	public int getPlaycount() {
 		return playcount;
 	}
 
@@ -391,7 +399,7 @@ public class Artiste extends ObjetAComparer implements Oeuvre{
 
 
 
-	public void setPlaycount(double playcount) {
+	public void setPlaycount(int playcount) {
 		this.playcount = playcount;
 	}
 

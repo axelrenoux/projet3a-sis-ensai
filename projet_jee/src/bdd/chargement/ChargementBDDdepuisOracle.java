@@ -81,8 +81,8 @@ public class ChargementBDDdepuisOracle extends ChargementBDD {
 						resultat.getString("iL"),
 						resultat.getString("iEL"),
 						resultat.getString("iMg"),
-						resultat.getDouble("list"),
-						resultat.getDouble("playc"),
+						resultat.getInt("list"),
+						resultat.getInt("playc"),
 						new ArrayList<Artiste>(),
 						new ArrayList<Tag>(),
 						leWiki);
@@ -144,8 +144,8 @@ public class ChargementBDDdepuisOracle extends ChargementBDD {
 						resultat.getString("iL"),
 						resultat.getString("iEL"),
 						resultat.getString("iMg"),
-						resultat.getDouble("list"),
-						resultat.getDouble("playc"),
+						resultat.getInt("list"),
+						resultat.getInt("playc"),
 						new ArrayList<Chanson>(),
 						new ArrayList<Tag>(),
 						leWiki);
@@ -190,11 +190,11 @@ public class ChargementBDDdepuisOracle extends ChargementBDD {
 						ArrayList<Tag> toptags,Wiki wiki) */
 				//XXX Modifier ici si le constructeur de Chanson est modifié
 				Chanson laChanson=new Chanson(resultat.getString("name"),
-						resultat.getDouble("duree"),
+						resultat.getInt("duree"),
 						resultat.getString("url"),
 						lArtiste,
-						resultat.getDouble("list"),
-						resultat.getDouble("playc"),
+						resultat.getInt("list"),
+						resultat.getInt("playc"),
 						new ArrayList<Album>(),
 						new ArrayList<Tag>(),
 						leWiki);

@@ -7,8 +7,8 @@ import metier.Tag;
 
 public interface Oeuvre extends ComposantCluster {
 
-	public double getListeners();
-	public double getPlaycount();
+	public int getListeners();
+	public int getPlaycount();
 	public ArrayList<Tag> getToptags();
 
 }
