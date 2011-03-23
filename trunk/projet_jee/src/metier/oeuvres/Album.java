@@ -32,8 +32,8 @@ public class Album extends ObjetAComparer implements Oeuvre {
 	private String imageLarge=null;
 	private String imageExtraLarge=null;
 	private String imageMega=null;
-	private double listeners;//nb de personnes ayant écouté l'album
-	private double playcount;//nb de fois où l'album a été écouté
+	private int listeners;//nb de personnes ayant écouté l'album
+	private int playcount;//nb de fois où l'album a été écouté
 	private ArrayList<Chanson> chansons = null;
 	private ArrayList<Tag> toptags=null;
 	private Wiki wiki=null;
@@ -68,8 +68,8 @@ public class Album extends ObjetAComparer implements Oeuvre {
 	 * @param artiste
 	 */
 	public Album(String name, String url,Date date,
-			String imageLarge,double listeners,
-			double playcount,Wiki wiki, Artiste artiste) {
+			String imageLarge,int listeners,
+			int playcount,Wiki wiki, Artiste artiste) {
 		this.name = name;
 		this.url=url;
 		this.date=date;
@@ -100,8 +100,8 @@ public class Album extends ObjetAComparer implements Oeuvre {
 	 */
 	public Album(String name, Artiste artiste, String ID, String url,Date date,
 			String imageSmall,String imageMedium,String imageLarge,
-			String imageExtraLarge,String imageMega,double listeners,
-			double playcount,ArrayList<Chanson> chansons,
+			String imageExtraLarge,String imageMega,int listeners,
+			int playcount,ArrayList<Chanson> chansons,
 			ArrayList<Tag> toptags,Wiki wiki) {
 		this.name = name;
 		this.artiste=artiste;
@@ -150,8 +150,8 @@ public class Album extends ObjetAComparer implements Oeuvre {
 		if(this.imageLarge==null) this.imageLarge=albumPropose.getImageLarge();
 		if(this.imageExtraLarge==null)this.imageExtraLarge=albumPropose.getImageExtraLarge();
 		if(this.imageMega==null) this.imageMega=albumPropose.getImageMega();
-		if(this.listeners==0.0)this.listeners = albumPropose.getListeners();
-		if(this.playcount==0.0)this.playcount = albumPropose.getPlaycount();
+		if(this.listeners==0)this.listeners = albumPropose.getListeners();
+		if(this.playcount==0)this.playcount = albumPropose.getPlaycount();
 		if(this.chansons==null)this.chansons = albumPropose.getChansons();
 		if(this.toptags==null)this.toptags = albumPropose.getToptags();
 		if(this.wiki==null)this.wiki = albumPropose.getWiki();
@@ -239,16 +239,28 @@ public class Album extends ObjetAComparer implements Oeuvre {
 	
 
 	/**
-	 * methodes qui affecte une valeur aléatoire à playcount et listeners
+	 * methode qui affecte une valeur aléatoire à playcount et listeners et image si vides
 	 */
-	public void genererPlaycount(){
-		int value = (int) (Math.random()*10000);
-		this.setPlaycount((double)value);
+	public void gererVides(){
+		if(this.getPlaycount() ==0
+				&& this.getListeners()==0){
+			int value1 = (int)(Math.random()*10000);
+			int value2 = (int)(value1*0.8);
+			this.setPlaycount(value1);
+			this.setListeners(value2);
+		}
+		if(this.getImageLarge()==null 
+				||this.getImageLarge().equals("") 
+				|| this.getImageLarge().equals("%27%27" )){
+			this.setImageLarge("http://mylene.net/mfpics/itunes_20010_002.png");
+		}
 	}
-	public void genererListeners(){
-		int value = (int) (Math.random()*8000);
-		this.setListeners((double)value);
-	}
+	
+	
+	
+	
+	
+	
 	
 	/********************************************************************/
 	/******************      getters / setters       ********************/
@@ -363,28 +375,22 @@ public class Album extends ObjetAComparer implements Oeuvre {
 
 
 
-	public double getListeners() {
+
+	public int getListeners() {
 		return listeners;
 	}
 
-
-
-	public void setListeners(double listeners) {
+	public void setListeners(int listeners) {
 		this.listeners = listeners;
 	}
 
-
-
-	public double getPlaycount() {
+	public int getPlaycount() {
 		return playcount;
 	}
 
-
-
-	public void setPlaycount(double playcount) {
+	public void setPlaycount(int playcount) {
 		this.playcount = playcount;
 	}
-
 
 	public ArrayList<Chanson> getChansons() {
 		return chansons;

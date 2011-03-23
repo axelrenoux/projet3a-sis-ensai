@@ -23,7 +23,7 @@ public class Chanson extends ObjetAComparer implements Oeuvre{
 	
 	private String ID;
 	private String name;
-	private Double duree;
+	private int duree;
 	private String url;
 	private Artiste artiste;
 	private String imageSmall;
@@ -31,8 +31,8 @@ public class Chanson extends ObjetAComparer implements Oeuvre{
 	private String imageLarge;
 	private String imageExtraLarge;
 	private String imageMega;
-	private double listeners;//nb de personnes ayant écouté la chanson
-	private double playcount;//nb de fois où la chanson a été écoutée
+	private int listeners;//nb de personnes ayant écouté la chanson
+	private int playcount;//nb de fois où la chanson a été écoutée
 	private ArrayList<Album> albums;
 	private ArrayList<Tag> toptags;
 	private Wiki wiki;
@@ -56,8 +56,8 @@ public class Chanson extends ObjetAComparer implements Oeuvre{
 	}
 	
 	
-	public Chanson(String inu, String name, Double duree, String url, String imageLarge, 
-			Artiste artiste,double listeners,double playcount,Wiki wiki) {
+	public Chanson(String inu, String name, int duree, String url, String imageLarge, 
+			Artiste artiste,int listeners,int playcount,Wiki wiki) {
 		this.ID = inu;
 		this.name = name;
 		this.duree = duree;
@@ -81,8 +81,8 @@ public class Chanson extends ObjetAComparer implements Oeuvre{
 	 * @param toptags
 	 * @param wiki
 	 */
-	public Chanson(String name, Double duree, String url,
-			Artiste artiste,double listeners,double playcount,
+	public Chanson(String name, int duree, String url,
+			Artiste artiste,int listeners,int playcount,
 			ArrayList<Album> albums,
 			ArrayList<Tag> toptags,Wiki wiki) {
 		this.name = name;
@@ -122,7 +122,7 @@ public class Chanson extends ObjetAComparer implements Oeuvre{
 				
 		if(this.name==null) this.name = chansonProposee.getName();
 		if(this.ID==null)this.ID = chansonProposee.getID();  
-		if(this.duree==null)this.duree = chansonProposee.getDuree();  
+		if(this.duree==0)this.duree = chansonProposee.getDuree();  
 		if(this.url==null)this.url = chansonProposee.getUrl();
 		if(this.artiste==null)this.artiste = chansonProposee.getArtiste();
 		if(this.imageSmall==null) this.imageSmall = chansonProposee.getImageSmall();
@@ -206,21 +206,31 @@ public class Chanson extends ObjetAComparer implements Oeuvre{
 	
 	
 
+	
+	
 	/**
-	 * methodes qui affecte une valeur aléatoire à playcount et listeners et duree
+	 * methode qui affecte une valeur aléatoire à playcount et listeners et image si vides
 	 */
-	public void genererPlaycount(){
-		int value = (int) (Math.random()*10000);
-		this.setPlaycount((double)value);
+	public void gererVides(){
+		if(this.getPlaycount() ==0
+				&& this.getListeners()==0){
+			int value1 = (int)(Math.random()*10000);
+			int value2 = (int)(value1*0.8);
+			this.setPlaycount(value1);
+			this.setListeners(value2);
+		}
+		if(this.getImageLarge()==null 
+				||this.getImageLarge().equals("") 
+				|| this.getImageLarge().equals("%27%27" )){
+			this.setImageLarge("http://mylene.net/mfpics/itunes_20010_002.png");
+		}
+		if(this.duree==0){
+			int value = (int) (Math.random()*400000 + 1000);
+			this.setDuree(value);
+		}
 	}
-	public void genererListeners(){
-		int value = (int) (Math.random()*8000);
-		this.setListeners((double)value);
-	}
-	public void genererDuree(){
-		int value = (int) (Math.random()*400000 + 1000);
-		this.setListeners((double)value);
-	}
+	
+	
 	
 	/********************************************************************/
 	/******************      getters / setters       ********************/
@@ -248,7 +258,7 @@ public class Chanson extends ObjetAComparer implements Oeuvre{
 
 
 
-	public Double getDuree() {
+	public int getDuree() {
 		return duree;
 	}
 
@@ -257,7 +267,7 @@ public class Chanson extends ObjetAComparer implements Oeuvre{
 
 
 
-	public void setDuree(Double duree) {
+	public void setDuree(int duree) {
 		this.duree = duree;
 	}
 
@@ -302,7 +312,7 @@ public class Chanson extends ObjetAComparer implements Oeuvre{
 
 
 
-	public double getListeners() {
+	public int getListeners() {
 		return listeners;
 	}
 
@@ -311,7 +321,7 @@ public class Chanson extends ObjetAComparer implements Oeuvre{
 
 
 
-	public void setListeners(double listeners) {
+	public void setListeners(int listeners) {
 		this.listeners = listeners;
 	}
 
@@ -320,7 +330,7 @@ public class Chanson extends ObjetAComparer implements Oeuvre{
 
 
 
-	public double getPlaycount() {
+	public int getPlaycount() {
 		return playcount;
 	}
 
@@ -329,7 +339,7 @@ public class Chanson extends ObjetAComparer implements Oeuvre{
 
 
 
-	public void setPlaycount(double playcount) {
+	public void setPlaycount(int playcount) {
 		this.playcount = playcount;
 	}
 

@@ -83,25 +83,14 @@ public class RechercheChansonBDD {
 				Chanson chansonCourante = new Chanson(
 								resultat.getString("inuChanson"),
 								resultat.getString("nameChanson"),
-								resultat.getDouble("duree"),
+								resultat.getInt("duree"),
 								resultat.getString("url"),
 								resultat.getString("iL"),
 								artiste,
-								resultat.getDouble("list"),
-								resultat.getDouble("playc"),
+								resultat.getInt("list"),
+								resultat.getInt("playc"),
 								leWiki);
-				if(chansonCourante.getPlaycount()==0){
-					chansonCourante.genererPlaycount();
-				}
-				if(chansonCourante.getListeners()==0){
-					chansonCourante.genererListeners();
-				}
-				if(chansonCourante.getDuree()==0){
-					chansonCourante.genererDuree();
-				}
-				if(chansonCourante.getImageLarge().equals("") || chansonCourante.getImageLarge().equals("%27%27" )){
-					chansonCourante.setImageLarge("http://mylene.net/mfpics/itunes_20010_002.png");
-				}
+				chansonCourante.gererVides();
 				chansonsrecherchees.add(chansonCourante);
 			}
 			for (Chanson ch : chansonsrecherchees){
@@ -168,14 +157,14 @@ public class RechercheChansonBDD {
 				Chanson chansonCourante = new Chanson(
 								resultat.getString("inuChanson"),
 								resultat.getString("nameChanson"),
-								resultat.getDouble("duree"),
-								//Double.parseDouble(resultat.getFloat("duree")+""),
+								resultat.getInt("duree"),
 								resultat.getString("url"),
 								resultat.getString("iL"),
 								artiste,
-								resultat.getDouble("list"),
-								resultat.getDouble("playc"),
+								resultat.getInt("list"),
+								resultat.getInt("playc"),
 								leWiki);
+				chansonCourante.gererVides();
 				chansonsAlbumrecherchees.add(chansonCourante);
 			}
 		} catch (SQLException e) {

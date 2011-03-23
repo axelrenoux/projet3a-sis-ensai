@@ -73,18 +73,10 @@ public class RechercheArtisteBDD {
 								resultat.getString("nameArtiste"),
 								resultat.getString("url"),
 								resultat.getString("iL"),
-								resultat.getDouble("list"),
-								resultat.getDouble("playc"),
+								resultat.getInt("list"),
+								resultat.getInt("playc"),
 								leWiki);
-				if(artistecourant.getPlaycount()==0){
-					artistecourant.genererPlaycount();
-				}
-				if(artistecourant.getListeners()==0){
-					artistecourant.genererListeners();
-				}
-				if(artistecourant.getImageLarge().equals("") || artistecourant.getImageLarge().equals("%27%27" )){
-					artistecourant.setImageLarge("http://mylene.net/mfpics/itunes_20010_002.png");
-				}
+				artistecourant.gererVides();
 				artistesrecherches.add(artistecourant);
 			}
 			//on met a jour les listes de tags et d'artistes similaires
@@ -143,15 +135,10 @@ public class RechercheArtisteBDD {
 								resultat.getString("nameArtiste2"),
 								resultat.getString("url"),
 								resultat.getString("iL"),
-								resultat.getDouble("list"),
-								resultat.getDouble("playc"),
+								resultat.getInt("list"),
+								resultat.getInt("playc"),
 								leWiki);
-				if(artisteSimcourant.getPlaycount()==0){
-					artisteSimcourant.genererPlaycount();
-				}
-				if(artisteSimcourant.getListeners()==0){
-					artisteSimcourant.genererListeners();
-				}
+				artisteSimcourant.gererVides();
 				artistesSimilairesRecherches.add(artisteSimcourant);
 				
 			}
