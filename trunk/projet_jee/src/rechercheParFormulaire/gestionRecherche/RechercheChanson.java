@@ -35,7 +35,7 @@ public class RechercheChanson{
 
 	//en attendant on met un mock
 	public Cluster lancerRecherche(String motCle) {
-		resultats = new ArrayList<Chanson>();
+		/*resultats = new ArrayList<Chanson>();
 		Chanson c1 = new Chanson();
 		Chanson c2 = new Chanson();
 		Chanson c3 = new Chanson();
@@ -70,7 +70,7 @@ public class RechercheChanson{
 		resultats.add(c3);
 		resultats.add(c4);
 		
-
+*/
 		/*maClasseChanson ma = new maClasseChanson();
 		try {
 			resultats = ma.rechercherChansons(motCle);
