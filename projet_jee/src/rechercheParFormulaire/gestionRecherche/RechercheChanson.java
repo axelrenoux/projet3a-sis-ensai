@@ -80,7 +80,7 @@ public class RechercheChanson{
 		}*/
 		
 		
-		/*ArrayList<Chanson> ar=null;
+		ArrayList<Chanson> ar=null;
 		RechercheChansonBDD mar = RechercheChansonBDD.getInstance();
 		try {
 			ar = mar.rechercherChansons(motCle);
@@ -109,9 +109,9 @@ public class RechercheChanson{
 		System.out.println("meilleur cluster : " + meilleurCluster.varianceCluster());
 		System.out.println(meilleurCluster.tailleCluster());
 		return meilleurCluster;
-		*/
 		
-		return CalculateurDeClusters.getInstanceunique().calculerClustersChanson(resultats);
+		
+		
 	}
 	
 	public String retournerTypeAffichage(){
