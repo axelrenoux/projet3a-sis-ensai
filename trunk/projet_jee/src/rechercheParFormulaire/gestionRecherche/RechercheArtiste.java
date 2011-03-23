@@ -101,6 +101,7 @@ public class RechercheArtiste{
 
 			if (entry2.getKey().getVariance() < meilleurCluster.varianceCluster()){
 				meilleurCluster = entry2.getValue();
+				meilleurCluster.setNomCluster(entry2.getKey().getAxe1().getType() + ";" + entry2.getKey().getAxe2().getType());
 			}
 		}
 		System.out.println("meilleur cluster : " + meilleurCluster.varianceCluster());
