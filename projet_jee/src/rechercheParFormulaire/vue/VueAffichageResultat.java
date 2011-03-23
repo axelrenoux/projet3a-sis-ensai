@@ -337,8 +337,8 @@ public class VueAffichageResultat {
  
 	
 	public void onRowSelect(SelectEvent event) {   
-		//chansonsAlbumChoisi = gestionnaireAffichageResultat.recupererLesChansons(((Album) event.getObject()));
-		System.out.println("chansons????????? " + albumChoisi.getChansons());
+		chansonsAlbumChoisi = gestionnaireAffichageResultat.recupererLesChansons(((Album) event.getObject()));
+		System.out.println("chansons????????? " + chansonsAlbumChoisi);
 		System.out.println("album choisi? " + albumChoisi);
 	   }   
 	
@@ -512,26 +512,6 @@ public class VueAffichageResultat {
 	
 	
 	
-	/*public void creerLazyModel(final ArrayList<Cluster> clusters, LazyDataModel lazyModel){
-		lazyModel = new LazyDataModel<Cluster>(){
-			@Override
-			public List<Cluster> load(int first, int pageSize, String sortField,
-				boolean sortOrder, Map<String, String> filters) {
-				//logger.log(Level.INFO, "Loading the lazy car data between {0} and {1}", new Object[]{first, (first+pageSize)});
-				List<Cluster> lasyCluster = new ArrayList<Cluster>();
-				//on determine le nombre max de resultats par page:
-				
-				int size=clusters.size();
-				System.out.println("size " + size);
-				if(clusters.subList(first,size).size()<pageSize){
-					pageSize=clusters.subList(first,size).size();
-				}
-				lasyCluster = clusters.subList(first, first+pageSize);
-				return lasyCluster;
-				}
-			};
-			lazyModel.setRowCount(clusters.size());  
-	}*/
 	
 	
 	public void creerLazyModelAlbums3(){
@@ -1126,6 +1106,11 @@ public class VueAffichageResultat {
 
 
 	public Artiste getArtisteChoisi() {
+		System.out.println("yyyyyes "+ artisteChoisi);
+		if(artisteChoisi!=null){
+			System.out.println("ses simil " + artisteChoisi.getArtistesSimilaires());
+		}
+	
 		return artisteChoisi;
 	}
 
@@ -1133,6 +1118,10 @@ public class VueAffichageResultat {
 
 	public void setArtisteChoisi(Artiste artisteChoisi) {
 		this.artisteChoisi = artisteChoisi;
+		System.out.println("yyyyyes "+ artisteChoisi);
+		if(artisteChoisi!=null){
+			System.out.println("ses simil " + artisteChoisi.getArtistesSimilaires());
+		}
 	}
 
 
