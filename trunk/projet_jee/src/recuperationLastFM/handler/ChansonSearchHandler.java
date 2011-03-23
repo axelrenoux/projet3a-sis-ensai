@@ -156,7 +156,7 @@ public class ChansonSearchHandler extends DefaultHandler{
 		}else if(inURL){
 			currentChanson.setUrl(lecture);
 		}else if(inListeners){
-			currentChanson.setListeners(Double.parseDouble(lecture));
+			currentChanson.setListeners(Integer.parseInt(lecture));
 		}else if(inImageSmall){
 			currentChanson.setImageSmall(lecture);
 		}else if(inImageMedium){

@@ -249,9 +249,9 @@ public class ArtisteInfoHandler extends DefaultHandler{
 	throws SAXException{
 		String lecture = new String(ch,start,length);
 		if(inListeners){
-			artiste.setListeners(Double.parseDouble(lecture));
+			artiste.setListeners(Integer.parseInt(lecture));
 		}else if(inPlaycount){
-			artiste.setPlaycount(Double.parseDouble(lecture));
+			artiste.setPlaycount(Integer.parseInt(lecture));
 		}else if(inNameArtisteSimilaire){
 			currentArtistSimilaire.setName(lecture);
 		}else if(inURLArtisteSimilaire){

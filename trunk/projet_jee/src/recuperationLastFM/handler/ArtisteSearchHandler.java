@@ -140,7 +140,7 @@ public class ArtisteSearchHandler extends DefaultHandler{
 		if(inName){
 			currentArtist.setName(lecture);
 		}else if(inListeners){
-			currentArtist.setListeners(Double.parseDouble(lecture));
+			currentArtist.setListeners(Integer.parseInt(lecture));
 		}else if(inURL){
 			currentArtist.setUrl(lecture);
 		}else if(inImageSmall){

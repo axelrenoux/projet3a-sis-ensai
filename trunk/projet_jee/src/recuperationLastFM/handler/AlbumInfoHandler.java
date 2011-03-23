@@ -266,9 +266,9 @@ public class AlbumInfoHandler extends DefaultHandler{
 	throws SAXException{
 		String lecture = new String(ch,start,length);
 		if(inListeners){
-			album.setListeners(Double.parseDouble(lecture));
+			album.setListeners(Integer.parseInt(lecture));
 		}else if(inPlaycount){
-			album.setPlaycount(Double.parseDouble(lecture)); 
+			album.setPlaycount(Integer.parseInt(lecture)); 
 		}else if(inReleasedate){
 			Date d;
 			try {
@@ -283,7 +283,7 @@ public class AlbumInfoHandler extends DefaultHandler{
 		}else if(inNameChanson){
 			currentChanson.setName(lecture);
 		}else if(inDuration){
-			currentChanson.setDuree(Double.parseDouble(lecture));
+			currentChanson.setDuree(Integer.parseInt(lecture));
 		}else if(inUrlChanson){
 			currentChanson.setUrl(lecture);
 		}else if(inNameArtisteChanson){
