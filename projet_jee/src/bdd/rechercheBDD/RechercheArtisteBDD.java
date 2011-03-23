@@ -76,8 +76,12 @@ public class RechercheArtisteBDD {
 								resultat.getDouble("list"),
 								resultat.getDouble("playc"),
 								leWiki);
-				System.out.println("#");
-				System.out.println("artistecourant avant la fin" + artistecourant);
+				if(artistecourant.getPlaycount()==0){
+					artistecourant.genererPlaycount();
+				}
+				if(artistecourant.getListeners()==0){
+					artistecourant.genererListeners();
+				}
 				artistesrecherches.add(artistecourant);
 			}
 			//on met a jour les listes de tags et d'artistes similaires
@@ -139,6 +143,12 @@ public class RechercheArtisteBDD {
 								resultat.getDouble("list"),
 								resultat.getDouble("playc"),
 								leWiki);
+				if(artisteSimcourant.getPlaycount()==0){
+					artisteSimcourant.genererPlaycount();
+				}
+				if(artisteSimcourant.getListeners()==0){
+					artisteSimcourant.genererListeners();
+				}
 				artistesSimilairesRecherches.add(artisteSimcourant);
 				
 			}
