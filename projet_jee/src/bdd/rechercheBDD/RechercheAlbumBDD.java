@@ -98,6 +98,9 @@ public class RechercheAlbumBDD {
 				if(albumcourant.getListeners()==0){
 					albumcourant.genererListeners();
 				}
+				if(albumcourant.getImageLarge()== ""){
+					albumcourant.setImageLarge("/projet_jee/WebContent/imageNonDisponible.PNG");
+				}
 				albumsrecherches.add(albumcourant);
 			}
 			for(Album a : albumsrecherches){
