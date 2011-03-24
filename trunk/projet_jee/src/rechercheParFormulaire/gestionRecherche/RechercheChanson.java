@@ -94,7 +94,6 @@ public class RechercheChanson{
 				meilleurCluster.setNomCluster(entry2.getKey().getAxe1().getType() + ";" + entry2.getKey().getAxe2().getType());
 			}
 		}
-		System.out.println("%%%%%%%%% this is the meilleur cluster 1%%" + meilleurCluster.getNom());
 		
 		top3clusters.add(meilleurCluster);
 		
@@ -119,7 +118,6 @@ public class RechercheChanson{
 				meilleurCluster2.setNomCluster(entry2.getKey().getAxe1().getType() + ";" + entry2.getKey().getAxe2().getType());
 			}
 		}
-		System.out.println("%%%%%%%%% this is the meilleur cluster 2%%" + meilleurCluster2.getNom());
 		
 		top3clusters.add(meilleurCluster2);
 		
@@ -144,7 +142,6 @@ public class RechercheChanson{
 				meilleurCluster3.setNomCluster(entry2.getKey().getAxe1().getType() + ";" + entry2.getKey().getAxe2().getType());
 			}
 		}
-		System.out.println("%%%%%%%%% this is the meilleur cluster 3 %%" + meilleurCluster3.getNom());
 		
 		top3clusters.add(meilleurCluster3);
  		
