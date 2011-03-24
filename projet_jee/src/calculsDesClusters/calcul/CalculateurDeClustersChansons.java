@@ -111,7 +111,7 @@ public class CalculateurDeClustersChansons {
 		//Axe axeAlbumDeChanson = new AxeAlbumDeChanson();
 		Axe axeDuree = new AxeDuree();
 		Axe axeArtiste = new AxeArtistePourChanson();
-		Axe axeTag = new AxeTag();
+		//Axe axeTag = new AxeTag();
 
 		ArrayList<Axe> listePremierAxe = new ArrayList<Axe>();
 		listePremierAxe.add(axeListeners);
@@ -119,7 +119,7 @@ public class CalculateurDeClustersChansons {
 		//listePremierAxe.add(axeAlbumDeChanson);
 		listePremierAxe.add(axeDuree);
 		listePremierAxe.add(axeArtiste);
-		listePremierAxe.add(axeTag);
+		//listePremierAxe.add(axeTag);
 		ArrayList<Axe> listeDeuxiemeAxe = new ArrayList<Axe>();
 		listeDeuxiemeAxe = listePremierAxe;
 
@@ -134,10 +134,6 @@ public class CalculateurDeClustersChansons {
 		
 		for(Entry<CoupleAxe, Cluster> entry : listeCluster.entrySet()) {
 			entry.getKey().setVariance(entry.getValue().varianceCluster());
-			System.out.println("§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§");
-			System.out.println(entry.getKey().getAxe1());
-			System.out.println(entry.getKey().getAxe2());
-			System.out.println(entry.getKey().getVariance());
 		}
 		return listeCluster;
 	}
