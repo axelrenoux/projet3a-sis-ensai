@@ -82,6 +82,7 @@ public class RechercheChanson{
 		//on attribue par défaut la meilleure place au premier element de la hashmap
 		for(Entry<CoupleAxe, Cluster> entry : listeClustersPossibles.entrySet()) {			
 			meilleurCluster = entry.getValue();
+			ca = entry.getKey();//on recupere la cle du meilleur clusteur mis par defaut
 			meilleurCluster.setNomCluster(entry.getKey().getAxe1().getType() + ";" + entry.getKey().getAxe2().getType());
 			break;
 		}
@@ -106,6 +107,7 @@ public class RechercheChanson{
 		//on attribue par défaut la meilleure place au premier element de la hashmap
 		for(Entry<CoupleAxe, Cluster> entry : listeClustersPossibles.entrySet()) {			
 			meilleurCluster2 = entry.getValue();
+			ca = entry.getKey();//on recupere la cle du meilleur clusteur mis par defaut
 			meilleurCluster2.setNomCluster(entry.getKey().getAxe1().getType() + ";" + entry.getKey().getAxe2().getType());
 			break;
 		}
