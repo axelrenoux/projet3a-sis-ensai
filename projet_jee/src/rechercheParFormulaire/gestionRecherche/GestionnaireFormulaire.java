@@ -26,9 +26,7 @@ public class GestionnaireFormulaire {
 	private RechercheAlbum rechercheAlbum = new RechercheAlbum();
 	private RechercheArtiste rechercheArtiste = new RechercheArtiste();
 	private RechercheChanson rechercheChanson = new RechercheChanson();
-	private Cluster resultatsAlbum;
-	private Cluster resultatsArtiste;
-	private Cluster resultatsChanson;
+
 
 
 	/********************************************************************/
@@ -38,17 +36,21 @@ public class GestionnaireFormulaire {
 	
 	
 	
-	public Cluster lancerRechercheAlbum(String motCle) {
+	public ArrayList<Cluster> lancerRechercheAlbum(String motCle) {
 		return rechercheAlbum.lancerRecherche(motCle);
 	}
 	
-	public Cluster lancerRechercheArtiste(String motCle) {
+	public ArrayList<Cluster> lancerRechercheArtiste(String motCle) {
 		return rechercheArtiste.lancerRecherche(motCle);
 	}
 	
-	public Cluster lancerRechercheChanson(String motCle) {
+	public ArrayList<Cluster> lancerRechercheChanson(String motCle) {
 		return rechercheChanson.lancerRecherche(motCle);
 	}
+	
+	
+
+ 
 	
 	
 
