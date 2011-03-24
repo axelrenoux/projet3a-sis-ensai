@@ -27,15 +27,13 @@ public class ComparaisonUtilisee extends FonctionDeRapprochement {
 	
 	protected float appliquer(String chaine1, String chaine2){
           int[][] ar = calculateMatrix(chaine1.toCharArray(), chaine2.toCharArray());
-          /*System.out.println("Matrice de correspondances entre '"+chaine1+"' et '"+chaine2+"' :");
+          /*
           for (int y = 0; y < ar.length; y++){
-              System.out.println("");
               for (int x = 0; x < ar[y].length; x++) System.out.print(ar[y][x] +"\t ");
           }
-          System.out.println("");*/
+          */
           float similitude=((float) ar[chaine1.length()][chaine2.length()])/(12*Math.min(chaine1.length(),chaine2.length()));
-          //System.out.println("Taux proximité "+chaine1+" % "+chaine2+" : "+similitude);
-	      return similitude;
+          return similitude;
 	  }
 	  
 	  public static int[][] calculateMatrix(char[] source, char[] dest){
