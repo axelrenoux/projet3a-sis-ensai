@@ -66,19 +66,24 @@ import rechercheParFormulaire.gestionRecherche.GestionnaireFormulaire;
 				if(!retourChoisi.equals("")){
 					//si l'utilisateur a choisi de consulter les résultats via "un fichier XML"...
 					if(retourChoisi.equals(retoursPossibles.get(0))){
-						//on attribue les resultats à la page de resultats
-						vueAffichageResultatXML.setClustersAlbum(gestionnaireFormulaire.lancerRechercheAlbum(motCle));;
-						vueAffichageResultatXML.setClustersArtiste(gestionnaireFormulaire.lancerRechercheArtiste(motCle));;
-						vueAffichageResultatXML.setClustersChanson(gestionnaireFormulaire.lancerRechercheChanson(motCle));;
+						//on attribue les resultats à la page de resultats XML
+						//pour chaque type d'oeuvre, on récupere le top 3 des clusters à partir du mot clé
+						vueAffichageResultatXML.setClustersAlbumTop3(gestionnaireFormulaire.lancerRechercheAlbum(motCle));
+						vueAffichageResultatXML.setClustersArtisteTop3(gestionnaireFormulaire.lancerRechercheArtiste(motCle));
+						vueAffichageResultatXML.setClustersChansonTop3(gestionnaireFormulaire.lancerRechercheChanson(motCle));
+					
+						
 						vueAffichageResultatXML.init();
 						return "xml";
 					}
 					//et s'il a choisi de consulter les résultats via "une interface graphique"...
 					else {
-						//on attribue les resultats à la page de resultats
-						vueAffichageResultat.setClustersAlbum(gestionnaireFormulaire.lancerRechercheAlbum(motCle));;
-						vueAffichageResultat.setClustersArtiste(gestionnaireFormulaire.lancerRechercheArtiste(motCle));;
-						vueAffichageResultat.setClustersChanson(gestionnaireFormulaire.lancerRechercheChanson(motCle));;
+						//on attribue les resultats à la page de resultats j2ee
+						//pour chaque type d'oeuvre, on récupere le top 3 des clusters à partir du mot clé
+						vueAffichageResultat.setClustersAlbumTop3(gestionnaireFormulaire.lancerRechercheAlbum(motCle));
+						vueAffichageResultat.setClustersArtisteTop3(gestionnaireFormulaire.lancerRechercheArtiste(motCle));
+						vueAffichageResultat.setClustersChansonTop3(gestionnaireFormulaire.lancerRechercheChanson(motCle));
+						
 						vueAffichageResultat.init();
 						return "j2ee";
 					}
