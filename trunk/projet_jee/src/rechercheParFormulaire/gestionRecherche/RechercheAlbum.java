@@ -42,106 +42,109 @@ public class RechercheAlbum {
 	 
 	
 	
-	public Cluster lancerRechercheMeilleurCluster(String motCle) {
-		
-		ArrayList<Album> ar=null;
-		RechercheAlbumBDD mar = RechercheAlbumBDD.getInstance();
+	/**
+	 * methode qui renvoie la liste totale des albums repondant au mot clé
+	 * @param motCle
+	 * @return
+	 */
+	public ArrayList<Cluster> lancerRecherche(String motCle) {
+		ArrayList<Album> listeAlbums=null;
+		RechercheAlbumBDD recherche = RechercheAlbumBDD.getInstance();
 		try {
-			ar = mar.rechercherAlbums(motCle);
+			listeAlbums = recherche.rechercherAlbums(motCle);
 		} catch (ChargementException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return rechercherMeilleursClusters(listeAlbums);	
+	}
+	
+	/**
+	 * methode qui renvoie le meilleur cluster, le 2ème meilleur et le 3ème...
+	 * 
+	 * @param listeAlbums
+	 * @param niveau
+	 * @return
+	 */
+	private ArrayList<Cluster> rechercherMeilleursClusters(ArrayList<Album> listeAlbums){
+		ArrayList<Cluster> top3clusters = new ArrayList<Cluster>();
+		CoupleAxe ca = null;
 
-		HashMap<CoupleAxe,Cluster> listeClusterPossible = CalculateurDeClustersAlbums.getInstanceunique().calculEnsembleClustersAlbums(ar);
+		HashMap<CoupleAxe,Cluster> listeClustersPossibles = CalculateurDeClustersAlbums.
+									getInstanceunique().calculEnsembleClustersAlbums(listeAlbums);
 
-
-		Cluster meilleurCluster = new Cluster();
+		//1) on récupère le meilleur
 		
-		for(Entry<CoupleAxe, Cluster> entry : listeClusterPossible.entrySet()) {
+		Cluster meilleurCluster = new Cluster();
+		//on attribue par défaut la meilleure place au premier element de la hashmap
+		for(Entry<CoupleAxe, Cluster> entry : listeClustersPossibles.entrySet()) {			
 			meilleurCluster = entry.getValue();
 			meilleurCluster.setNomCluster(entry.getKey().getAxe1().getType() + ";" + entry.getKey().getAxe2().getType());
 			break;
 		}
-		for(Entry<CoupleAxe, Cluster> entry2 : listeClusterPossible.entrySet()) {
-
+		
+		//on parcourt la hashmap pour trouver le cluster qui a la plus petite variance
+		for(Entry<CoupleAxe, Cluster> entry2 : listeClustersPossibles.entrySet()) {
 			if (entry2.getKey().getVariance() < meilleurCluster.varianceCluster()){
 				meilleurCluster = entry2.getValue();
+				ca = entry2.getKey();
 				meilleurCluster.setNomCluster(entry2.getKey().getAxe1().getType() + ";" + entry2.getKey().getAxe2().getType());
 			}
 		}
-		System.out.println("meilleur cluster : " + meilleurCluster.varianceCluster());
-		System.out.println(meilleurCluster.tailleCluster());
-		System.out.println(meilleurCluster.getNomCluster());
-		return meilleurCluster;
-	}
-	
-	public Cluster lancerRechercheDeuxièmeMeilleurCluster(String motCle){
 		
-		ArrayList<Album> ar=null;
-		RechercheAlbumBDD mar = RechercheAlbumBDD.getInstance();
-		try {
-			ar = mar.rechercherAlbums(motCle);
-		} catch (ChargementException e) {
-			e.printStackTrace();
-		}
-
-		HashMap<CoupleAxe,Cluster> listeClusterPossible = CalculateurDeClustersAlbums.getInstanceunique().calculEnsembleClustersAlbums(ar);
-		listeClusterPossible.remove(lancerRechercheMeilleurCluster(motCle));
-
-		Cluster deuxièmeMeilleurCluster = new Cluster();
 		
-		for(Entry<CoupleAxe, Cluster> entry : listeClusterPossible.entrySet()) {
-			deuxièmeMeilleurCluster = entry.getValue();
-			deuxièmeMeilleurCluster.setNomCluster(entry.getKey().getAxe1().getType() + ";" + entry.getKey().getAxe2().getType());
+		top3clusters.add(meilleurCluster);
+		
+		//2) on recupère le deuxième meilleur cluster
+		
+		//on supprime le "1er meilleur" a partir de la cle
+		listeClustersPossibles.remove(ca);
+		
+		Cluster meilleurCluster2 = new Cluster();
+		//on attribue par défaut la meilleure place au premier element de la hashmap
+		for(Entry<CoupleAxe, Cluster> entry : listeClustersPossibles.entrySet()) {			
+			meilleurCluster2 = entry.getValue();
+			meilleurCluster2.setNomCluster(entry.getKey().getAxe1().getType() + ";" + entry.getKey().getAxe2().getType());
 			break;
 		}
 		
-		for(Entry<CoupleAxe, Cluster> entry2 : listeClusterPossible.entrySet()) {
-
-			if (entry2.getKey().getVariance() < deuxièmeMeilleurCluster.varianceCluster()){
-				deuxièmeMeilleurCluster = entry2.getValue();
-				deuxièmeMeilleurCluster.setNomCluster(entry2.getKey().getAxe1().getType() + ";" + entry2.getKey().getAxe2().getType());
+		//on parcourt la hashmap pour trouver le cluster qui a la plus petite variance
+		for(Entry<CoupleAxe, Cluster> entry2 : listeClustersPossibles.entrySet()) {
+			if (entry2.getKey().getVariance() < meilleurCluster2.varianceCluster()){
+				meilleurCluster2 = entry2.getValue();
+				ca = entry2.getKey();
+				meilleurCluster2.setNomCluster(entry2.getKey().getAxe1().getType() + ";" + entry2.getKey().getAxe2().getType());
 			}
 		}
-		System.out.println(" Deuxième meilleur cluster : " + deuxièmeMeilleurCluster.varianceCluster());
-		System.out.println(deuxièmeMeilleurCluster.tailleCluster());
-		System.out.println(deuxièmeMeilleurCluster.getNomCluster());
-		return deuxièmeMeilleurCluster;
-	}
-	
-	public Cluster lancerRechercheTroisièmeMeilleurCluster(String motCle){
+		 
+		top3clusters.add(meilleurCluster2);
 		
-		ArrayList<Album> ar=null;
-		RechercheAlbumBDD mar = RechercheAlbumBDD.getInstance();
-		try {
-			ar = mar.rechercherAlbums(motCle);
-		} catch (ChargementException e) {
-			e.printStackTrace();
-		}
-
-		HashMap<CoupleAxe,Cluster> listeClusterPossible = CalculateurDeClustersAlbums.getInstanceunique().calculEnsembleClustersAlbums(ar);
-		listeClusterPossible.remove(lancerRechercheMeilleurCluster(motCle));
-		listeClusterPossible.remove(lancerRechercheMeilleurCluster(motCle));
-
-		Cluster troisièmeMeilleurCluster = new Cluster();
 		
-		for(Entry<CoupleAxe, Cluster> entry : listeClusterPossible.entrySet()) {
-			troisièmeMeilleurCluster = entry.getValue();
-			troisièmeMeilleurCluster.setNomCluster(entry.getKey().getAxe1().getType() + ";" + entry.getKey().getAxe2().getType());
+		//3) on recupère le troisieme meilleur cluster
+		
+		//on supprime le "2eme meilleur"
+		listeClustersPossibles.remove(ca);
+		
+		Cluster meilleurCluster3 = new Cluster();
+		//on attribue par défaut la meilleure place au premier element de la hashmap
+		for(Entry<CoupleAxe, Cluster> entry : listeClustersPossibles.entrySet()) {			
+			meilleurCluster3 = entry.getValue();
+			meilleurCluster3.setNomCluster(entry.getKey().getAxe1().getType() + ";" + entry.getKey().getAxe2().getType());
 			break;
 		}
 		
-		for(Entry<CoupleAxe, Cluster> entry2 : listeClusterPossible.entrySet()) {
-
-			if (entry2.getKey().getVariance() < troisièmeMeilleurCluster.varianceCluster()){
-				troisièmeMeilleurCluster = entry2.getValue();
-				troisièmeMeilleurCluster.setNomCluster(entry2.getKey().getAxe1().getType() + ";" + entry2.getKey().getAxe2().getType());
+		//on parcourt la hashmap pour trouver le cluster qui a la plus petite variance
+		for(Entry<CoupleAxe, Cluster> entry2 : listeClustersPossibles.entrySet()) {
+			if (entry2.getKey().getVariance() < meilleurCluster3.varianceCluster()){
+				meilleurCluster3 = entry2.getValue();
+				meilleurCluster3.setNomCluster(entry2.getKey().getAxe1().getType() + ";" + entry2.getKey().getAxe2().getType());
 			}
 		}
-		System.out.println(" Deuxième meilleur cluster : " + troisièmeMeilleurCluster.varianceCluster());
-		System.out.println(troisièmeMeilleurCluster.tailleCluster());
-		System.out.println(troisièmeMeilleurCluster.getNomCluster());
-		return troisièmeMeilleurCluster;
+		top3clusters.add(meilleurCluster3);
+		
+		
+ 		
+		return top3clusters;
 	}
 	
 	
