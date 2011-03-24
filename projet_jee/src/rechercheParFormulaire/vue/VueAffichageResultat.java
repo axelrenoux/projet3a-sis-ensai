@@ -186,39 +186,8 @@ public class VueAffichageResultat {
 		//on initialise les valeurs des choix de clustering
 		initialisationChoixClustering();
 		
-		System.out.println(" nom de chaque cluster general effectif");
-		System.out.println(clustersAlbumCourant.getNomCluster());
-		System.out.println(clustersArtisteCourant.getNomCluster());
-		System.out.println(clustersChansonCourant.getNomCluster());
 		
-		System.out.println("          ");
 		
-		System.out.println("le choix : "+ choixClustering + " ce qui devrait ");
-		System.out.println(clustersAlbumTop3.get(choixClustering-1).getNomCluster());
-		System.out.println(clustersArtisteTop3.get(choixClustering-1).getNomCluster());
-		System.out.println(clustersChansonTop3.get(choixClustering-1).getNomCluster());
-		
-		System.out.println("          ");
-		
-		System.out.println("les noms des clusters top album");
-		for(Cluster c : clustersAlbumTop3){
-			System.out.println(c.getNomCluster());
-		}
-		
-		System.out.println("          ");
-		
-		System.out.println("les noms des clusters top chanson");
-		for(Cluster c : clustersChansonTop3){
-			System.out.println(c.getNomCluster());
-		}
-
-		System.out.println("          ");
-		
-		System.out.println("les noms des clusters top artiste");
-		for(Cluster c : clustersArtisteTop3){
-			System.out.println(c.getNomCluster());
-		}
-
 		
 		
 	}
@@ -390,7 +359,6 @@ public class VueAffichageResultat {
 		//clustersAlbumCourant = clustersAlbumTop3.get(choixClustering-1);
 		//clustersArtisteCourant = clustersArtisteTop3.get(choixClustering-1);
 		//clustersChansonCourant = clustersChansonTop3.get(choixClustering-1);
-		System.out.println("changer clustering " + choixClustering);
 		init();
 	}
 	

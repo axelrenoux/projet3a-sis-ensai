@@ -76,7 +76,6 @@ public class RechercheArtisteBDD {
 								resultat.getInt("list"),
 								resultat.getInt("playc"),
 								leWiki);
-				artistecourant.gererVides();
 				artistesrecherches.add(artistecourant);
 			}
 			//on met a jour les listes de tags et d'artistes similaires
@@ -137,7 +136,6 @@ public class RechercheArtisteBDD {
 								resultat.getInt("list"),
 								resultat.getInt("playc"),
 								leWiki);
-				artisteSimcourant.gererVides();
 				artistesSimilairesRecherches.add(artisteSimcourant);
 				
 			}

@@ -90,7 +90,6 @@ public class RechercheChansonBDD {
 								resultat.getInt("list"),
 								resultat.getInt("playc"),
 								leWiki);
-				chansonCourante.gererVides();
 				chansonsrecherchees.add(chansonCourante);
 			}
 			for (Chanson ch : chansonsrecherchees){
@@ -164,7 +163,6 @@ public class RechercheChansonBDD {
 								resultat.getInt("list"),
 								resultat.getInt("playc"),
 								leWiki);
-				chansonCourante.gererVides();
 				chansonsAlbumrecherchees.add(chansonCourante);
 			}
 		} catch (SQLException e) {

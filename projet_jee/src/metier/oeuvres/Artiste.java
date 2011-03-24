@@ -221,23 +221,7 @@ public class Artiste extends ObjetAComparer implements Oeuvre{
 
 	 
 		
-		/**
-		 * methode qui affecte une valeur aléatoire à playcount et listeners et image si vides
-		 */
-		public void gererVides(){
-			if(this.getPlaycount() ==0
-					&& this.getListeners()==0){
-				int value1 = (int)(Math.random()*10000);
-				int value2 = (int)(value1*0.8);
-				this.setPlaycount(value1);
-				this.setListeners(value2);
-			}
-			if(this.getImageLarge()==null 
-					||this.getImageLarge().equals("") 
-					|| this.getImageLarge().equals("%27%27" )){
-				this.setImageLarge("http://mylene.net/mfpics/itunes_20010_002.png");
-			}
-		}
+	
 		
 		
 		
