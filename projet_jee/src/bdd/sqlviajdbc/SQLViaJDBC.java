@@ -52,7 +52,6 @@ class SQLViaJDBC{
 	 * @throws ConnectionException
 	 */
 	protected static void connecter() throws ConnectionException{
-		System.out.println("connecter()");
 		userIDAcessBDD = "id2853";
 		passWordAccess = "id2853";
 		connecter(userIDAcessBDD,passWordAccess);
@@ -107,7 +106,6 @@ class SQLViaJDBC{
 	 * @see executerRequeteSansRetour(final String requeteSQL, String canal)
 	 */
 	protected static void executerRequeteSansRetour(final String requeteSQL) throws UpdateException{
-		System.out.println(requeteSQL);
 		try {
 			instruction.executeUpdate(requeteSQL);
 		} catch (SQLException e) {
@@ -124,7 +122,6 @@ class SQLViaJDBC{
 	 */
 	protected static ResultSet executerRequeteAvecRetour(final String requeteSQL) throws QueryException {
 		ResultSet resultat = null;
-		System.out.println(requeteSQL);
 		try {
 			resultat = instruction.executeQuery(requeteSQL);
 		} catch (SQLException e) {
@@ -170,7 +167,6 @@ class SQLViaJDBC{
 	 * @deprecated
 	 */
 	protected static void executerRequeteSansRetour(final String requeteSQL, String canal) throws UpdateException {
-		System.out.println(requeteSQL);
 		try {
 			listeCanaux.get(canal).executeUpdate(requeteSQL);
 		} catch (SQLException e) {
@@ -189,7 +185,6 @@ class SQLViaJDBC{
 	 * @deprecated
 	 */
 	protected static ResultSet executerRequeteAvecRetour(final String requeteSQL, String canal) throws QueryException {
-		System.out.println(requeteSQL);
 		ResultSet resultat = null;
 		try {
 			resultat = listeCanaux.get(canal).executeQuery(requeteSQL);

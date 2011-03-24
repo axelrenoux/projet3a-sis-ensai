@@ -196,11 +196,6 @@ public class GestionBddJavaPourSauvegarde {
 				}//endTry
 				catch(UrlReserveeException e){
 					//Normalement le controle est déjà fait dans le if, mais on ne sait jamais
-					System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-					System.out.println(e.getMessage());
-					System.out.println("! Pour les chansons le controle effectué par le if ne marche pas !");
-					System.out.println("! Revoir ChargementEtControleUrlExistantes.verifierDispoUrl()	 !");
-					System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 				}
 			}//endIf	
 		}//endIf
@@ -316,11 +311,6 @@ public class GestionBddJavaPourSauvegarde {
 				}//endTry
 				catch(UrlReserveeException e){
 					//Normalement le controle est déjà fait dans le if, mais on ne sait jamais
-					System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-					System.out.println(e.getMessage());
-					System.out.println("! Pour les artistes le controle effectué par le if ne marche pas !");
-					System.out.println("! Revoir ChargementEtControleUrlExistantes.verifierDispoUrl()	 !");
-					System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 				}
 			}//endIf
 		}//endIf
@@ -388,11 +378,6 @@ public class GestionBddJavaPourSauvegarde {
 				}//endTry
 				catch(UrlReserveeException e){
 					//Normalement le controle est déjà fait dans le if, mais on ne sait jamais
-					System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-					System.out.println(e.getMessage());
-					System.out.println("! Pour les tags le controle effectué par le if ne marche pas	 !");
-					System.out.println("! Revoir ChargementEtControleUrlExistantes.verifierDispoUrl()	 !");
-					System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 				}
 			}//finIf
 		}//finIf
@@ -506,11 +491,6 @@ public class GestionBddJavaPourSauvegarde {
 				}//endTry
 				catch(UrlReserveeException e){
 					//Normalement le controle est déjà fait dans le if, mais on ne sait jamais
-					System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-					System.out.println(e.getMessage());
-					System.out.println("! Pour les albums le controle effectué par le if ne marche pas !");
-					System.out.println("! Revoir ChargementEtControleUrlExistantes.verifierDispoUrl()	 !");
-					System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 				}
 			}//endIf
 		}//endIf	
