@@ -49,11 +49,16 @@ public class VueAffichageResultat {
 	private GestionnaireAffichageResultat gestionnaireAffichageResultat;
 
 
-	private Cluster clustersAlbum;
-	private Cluster clustersArtiste;
-	private Cluster clustersChanson;
+	private ArrayList<Cluster> clustersAlbumTop3;
+	private ArrayList<Cluster> clustersArtisteTop3;
+	private ArrayList<Cluster> clustersChansonTop3;
 
+	
+	private Cluster clustersAlbumCourant;
+	private Cluster clustersArtisteCourant;
+	private Cluster clustersChansonCourant;
 
+	 
 
 	private ArrayList<Cluster> clustersAlbumsNiveau1;
 	private ArrayList<Cluster> clustersArtistesNiveau1;
@@ -124,6 +129,9 @@ public class VueAffichageResultat {
 	private String intituleAxe2Chanson;
 	 
 
+
+	private int choixClustering=1;
+	private ArrayList<Integer> listeChoixClustering;
 	
 	
 
@@ -135,9 +143,14 @@ public class VueAffichageResultat {
 
 
 	public void init() {
-		clustersAlbumsNiveau1 = gestionnaireAffichageResultat.retournerClustersAlbumNiveau1(clustersAlbum);
-		clustersArtistesNiveau1 = gestionnaireAffichageResultat.retournerClustersArtisteNiveau1(clustersArtiste);
-		clustersChansonsNiveau1 = gestionnaireAffichageResultat.retournerClustersChansonNiveau1(clustersChanson);
+		//on affecte les clusters courant
+		clustersAlbumCourant = clustersAlbumTop3.get(choixClustering-1);
+		clustersArtisteCourant = clustersArtisteTop3.get(choixClustering-1);
+		clustersChansonCourant = clustersChansonTop3.get(choixClustering-1);
+		
+		clustersAlbumsNiveau1 = gestionnaireAffichageResultat.retournerClustersAlbumNiveau1(clustersAlbumCourant);
+		clustersArtistesNiveau1 = gestionnaireAffichageResultat.retournerClustersArtisteNiveau1(clustersArtisteCourant);
+		clustersChansonsNiveau1 = gestionnaireAffichageResultat.retournerClustersChansonNiveau1(clustersChansonCourant);
 		
 		try{
 			recupererIntitulesAxes();
@@ -166,8 +179,15 @@ public class VueAffichageResultat {
 		  
 		reinitialisationSelectionsNonValides();
 
+		//on initialise les valeurs des boolean etapes
 		reinitialisationEtapes();
 		etape1 = true;
+		
+		//on initialise les valeurs des choix de clustering
+		initialisationChoixClustering();
+		
+		
+		
 	}
 
 
@@ -331,6 +351,21 @@ public class VueAffichageResultat {
 	}
 
 	
+	
+	/**
+	 * methode exécutee quand l'utilisateur choisit un autre niveau de clustering et relance la recherche
+	 * on change de clustersAlbum/artiste/chanson courant pour recalculer ensuite les sous clusters
+	 * de niveau 1 et 2
+	 */
+	public void changerClustering(){
+		//clustersAlbumCourant = clustersAlbumTop3.get(choixClustering-1);
+		//clustersArtisteCourant = clustersArtisteTop3.get(choixClustering-1);
+		//clustersChansonCourant = clustersChansonTop3.get(choixClustering-1);
+		init();
+	}
+	
+	
+	
 
 	public void reinitialisationEtapes(){
 		etape1=false;
@@ -358,7 +393,13 @@ public class VueAffichageResultat {
 	
 	
 	
-	
+	public void initialisationChoixClustering(){
+		listeChoixClustering = new ArrayList<Integer>();
+		listeChoixClustering.add(1);
+		listeChoixClustering.add(2);
+		listeChoixClustering.add(3);
+		
+	}
 	
 	
 
@@ -372,26 +413,30 @@ public class VueAffichageResultat {
 	 */
 	public void recupererIntitulesAxes() throws ExceptionNomCluster{
 		String[] deuxTypes;
+		System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
+		System.out.println(clustersAlbumCourant.getNomCluster());
+		System.out.println(clustersArtisteCourant.getNomCluster());
+		System.out.println(clustersChansonCourant.getNomCluster());
 		try{
-			deuxTypes = clustersAlbum.getNomCluster().split(";");
+			deuxTypes = clustersAlbumCourant.getNomCluster().split(";");
 			intituleAxe1Album = deuxTypes[0];
 			intituleAxe2Album = deuxTypes[1];
 		}catch (java.lang.ArrayIndexOutOfBoundsException e1){
-			throw new ExceptionNomCluster(clustersAlbum.getNomCluster());
+			throw new ExceptionNomCluster(clustersAlbumCourant.getNomCluster());
 		}
 		try{
-			deuxTypes = clustersArtiste.getNomCluster().split(";");
+			deuxTypes = clustersArtisteCourant.getNomCluster().split(";");
 			intituleAxe1Artiste = deuxTypes[0];
 			intituleAxe2Artiste = deuxTypes[1];
 		}catch (java.lang.ArrayIndexOutOfBoundsException e2){
-			throw new ExceptionNomCluster(clustersArtiste.getNomCluster());
+			throw new ExceptionNomCluster(clustersArtisteCourant.getNomCluster());
 		}	
 		try{
-			deuxTypes = clustersChanson.getNomCluster().split(";");
+			deuxTypes = clustersChansonCourant.getNomCluster().split(";");
 			intituleAxe1Chanson = deuxTypes[0];
 			intituleAxe2Chanson = deuxTypes[1];
 		}catch (java.lang.ArrayIndexOutOfBoundsException e3){
-			throw new ExceptionNomCluster(clustersChanson.getNomCluster());
+			throw new ExceptionNomCluster(clustersChansonCourant.getNomCluster());
 		}	
 	}
 		
@@ -710,29 +755,82 @@ public class VueAffichageResultat {
 		this.clustersChansonsNiveau1 = clustersChansonsNiveau1;
 	}
 
-	public Cluster getClustersAlbum() {
-		return clustersAlbum;
+	  
+	
+	
+	
+
+	public ArrayList<Cluster> getClustersAlbumTop3() {
+		return clustersAlbumTop3;
 	}
 
-	public void setClustersAlbum(Cluster clustersAlbum) {
-		this.clustersAlbum = clustersAlbum;
+
+
+	public void setClustersAlbumTop3(ArrayList<Cluster> clustersAlbumTop3) {
+		this.clustersAlbumTop3 = clustersAlbumTop3;
 	}
 
-	public Cluster getClustersArtiste() {
-		return clustersArtiste;
+
+
+	public ArrayList<Cluster> getClustersArtisteTop3() {
+		return clustersArtisteTop3;
 	}
 
-	public void setClustersArtiste(Cluster clustersArtiste) {
-		this.clustersArtiste = clustersArtiste;
+
+
+	public void setClustersArtisteTop3(ArrayList<Cluster> clustersArtisteTop3) {
+		this.clustersArtisteTop3 = clustersArtisteTop3;
 	}
 
-	public Cluster getClustersChanson() {
-		return clustersChanson;
+
+
+	public ArrayList<Cluster> getClustersChansonTop3() {
+		return clustersChansonTop3;
 	}
 
-	public void setClustersChanson(Cluster clustersChanson) {
-		this.clustersChanson = clustersChanson;
+
+
+	public void setClustersChansonTop3(ArrayList<Cluster> clustersChansonTop3) {
+		this.clustersChansonTop3 = clustersChansonTop3;
 	}
+
+
+
+	public Cluster getClustersAlbumCourant() {
+		return clustersAlbumCourant;
+	}
+
+
+
+	public void setClustersAlbumCourant(Cluster clustersAlbumCourant) {
+		this.clustersAlbumCourant = clustersAlbumCourant;
+	}
+
+
+
+	public Cluster getClustersArtisteCourant() {
+		return clustersArtisteCourant;
+	}
+
+
+
+	public void setClustersArtisteCourant(Cluster clustersArtisteCourant) {
+		this.clustersArtisteCourant = clustersArtisteCourant;
+	}
+
+
+
+	public Cluster getClustersChansonCourant() {
+		return clustersChansonCourant;
+	}
+
+
+
+	public void setClustersChansonCourant(Cluster clustersChansonCourant) {
+		this.clustersChansonCourant = clustersChansonCourant;
+	}
+
+
 
 	public Cluster getClusterAlbumNiveau1Choisi() {
 		return clusterAlbumNiveau1Choisi;
@@ -1237,8 +1335,34 @@ public class VueAffichageResultat {
 			return "Choisissez un second critère pour affiner votre recherche ";
 		}else return "";
 	}
+
+
+
+	 
+
+	public int getChoixClustering() {
+		return choixClustering;
+	}
+
+
+
+	public void setChoixClustering(int choixClustering) {
+		this.choixClustering = choixClustering;
+	}
+
+
+
+	public ArrayList<Integer> getListeChoixClustering() {
+		return listeChoixClustering;
+	}
+
+
+
+	public void setListeChoixClustering(ArrayList<Integer> listeChoixClustering) {
+		this.listeChoixClustering = listeChoixClustering;
+	}
+
  
-	
 
 
 }
