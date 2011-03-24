@@ -231,6 +231,10 @@ public class Chanson extends ObjetAComparer implements Oeuvre{
 	}
 	
 	
+	@Override
+	public int getEffectif() {
+		return 1;
+	}
 	
 	/********************************************************************/
 	/******************      getters / setters       ********************/

@@ -99,11 +99,9 @@
 
 							<p:column>
 								<f:facet name="header">  
-			                  	#{vueAffichageResultat.intituleAxe1Album}   
+			                  	#{vueAffichageResultat.intituleAxe1Album}
 					          	</f:facet>
-								<h:outputText value="#{cluster.nomCluster}"/>
-								<p:spacer width="100" height="10" />  
-								<h:outputText value="(#{cluster.effectif} résultats)"/>
+								<h:outputText value="#{cluster.nomCluster}" />
 							</p:column>
 							
 							
@@ -153,9 +151,7 @@
 								<f:facet name="header">  
 		                  			#{vueAffichageResultat.intituleAxe1Artiste}
 				          		</f:facet>
-								<h:outputText value="#{cluster.nomCluster}"/>
-								<p:spacer width="100" height="10" />  
-								<h:outputText value="(#{cluster.effectif} résultats)"/>
+								<h:outputText value="#{cluster.nomCluster}" />
 							</p:column>
 							
 							
@@ -199,9 +195,7 @@
 								<f:facet name="header">  
 		                  			#{vueAffichageResultat.intituleAxe1Chanson}
 				          		</f:facet>
-								<h:outputText value="#{cluster.nomCluster}"/>
-								<p:spacer width="100" height="10" />  
-								<h:outputText value="(#{cluster.effectif} résultats)"/>
+								<h:outputText value="#{cluster.nomCluster}" />
 							</p:column>	
 							
 							<f:facet name="footer">
@@ -220,11 +214,11 @@
 			
 <!-- affichage de l'étape 2 -->
 			
-			 
-			<center>
-						<table>
-						<tr>
-						<td>
+			<table>
+				<tr>
+					<td width="100%">
+					
+						
 						<!--
 						<center>
 							<h:outputLabel rendered="#{vueAffichageResultat.etape2album}"
@@ -250,10 +244,10 @@
 						
 						
 						<h:form>
-							
+							<center>
 							
 <!-- etape2 album -->
-								
+								<center>
 								<p:messages showDetail="true" rendered="#{vueAffichageResultat.selectionAlbum2NonValide}"/>
 								<p:dataTable var="cluster"
 									value="#{vueAffichageResultat.lazyModelAlbums2}"
@@ -279,9 +273,7 @@
 										<f:facet name="header">  
 				                  			#{vueAffichageResultat.intituleAxe2Album}
 						          		</f:facet>
-										<h:outputText value="#{cluster.nomCluster}"/>
-										<p:spacer width="100" height="10" />  
-										<h:outputText value="(#{cluster.effectif} résultats)"/>
+										<h:outputText value="#{cluster.nomCluster}" />
 									</p:column>
 		
 									
@@ -297,10 +289,10 @@
 									</f:facet>
 									
 								</p:dataTable>
-								
+								</center>
 						
 <!-- etape 2 artiste -->
-								
+								<center>
 								<p:messages showDetail="true" rendered="#{vueAffichageResultat.selectionArtiste2NonValide}"/>
 								<p:dataTable var="cluster"
 									value="#{vueAffichageResultat.lazyModelArtistes2}"
@@ -325,9 +317,7 @@
 										<f:facet name="header">  
 				                  			#{vueAffichageResultat.intituleAxe2Artiste}
 						          		</f:facet>
-										<h:outputText value="#{cluster.nomCluster}"/>
-										<p:spacer width="100" height="10" />  
-										<h:outputText value="(#{cluster.effectif} résultats)"/>
+										<h:outputText value="#{cluster.nomCluster}" />
 									</p:column>
 									
 									<f:facet name="footer">
@@ -343,9 +333,9 @@
 									
 		
 								</p:dataTable>
-								
+								</center>
 <!-- etape 2 chanson -->
-							
+								<center>
 								<p:messages showDetail="true" rendered="#{vueAffichageResultat.selectionChanson2NonValide}"/>
 								<p:dataTable var="cluster"
 									value="#{vueAffichageResultat.lazyModelChansons2}"
@@ -370,9 +360,7 @@
 										<f:facet name="header">  
 				                  			#{vueAffichageResultat.intituleAxe2Chanson}
 						          		</f:facet>
-										<h:outputText value="#{cluster.nomCluster}"/>
-										<p:spacer width="100" height="10" />  
-										<h:outputText value="(#{cluster.effectif} résultats)"/>
+										<h:outputText value="#{cluster.nomCluster}" />
 									</p:column>
 									
 										<f:facet name="footer">
@@ -387,17 +375,17 @@
 									</f:facet>
 									
 								</p:dataTable>
-								
+								</center>
 <!-- affichage de l'étape 3 -->
 
 <!-- etape 3 album -->
-								
-								
+								<center>
+							
 								<p:panel 
 									rendered="#{!empty vueAffichageResultat.albumChoisi}"
 									header="Informations complémentaire sur #{vueAffichageResultat.albumChoisi.name}"
 									style="width:'#{vueAffichageResultat.largeurDataTables2_3}';">
-									<center>
+									
 									<table>
 											<!--<tr>
 												<td width="100%">
@@ -448,7 +436,7 @@
 												</td>
 											</tr>
 										</table>
-									</center>
+									
 								</p:panel>
 									
 								<p:dataTable var="album"
@@ -536,11 +524,11 @@
 									</f:facet>
 
 								</p:dataTable>
-								
+								</center>
 <!-- etape 3 artiste -->
 
 		
-								
+								<center>
 								
 								<p:dataTable var="artiste"
 									value="#{vueAffichageResultat.lazyModelArtistes3}"
@@ -607,9 +595,9 @@
 									</f:facet>
 									
 								</p:dataTable>
-							
+								</center>
 <!-- etape 3 chanson -->		
-								
+								<center>
 						
 
 								<p:dataTable var="chanson"
@@ -701,18 +689,18 @@
 									
 									
 								</p:dataTable>
-								
+								</center>
 								
 					
 							
 							
-							</h:form>
-						</td>
-						</tr>
-						</table>
 							
-					</center>	
-				
+							</center>
+						</h:form>
+					
+					</td>
+				</tr>
+			</table>
 		</p:panel>
 	</ui:define>
 </ui:composition>

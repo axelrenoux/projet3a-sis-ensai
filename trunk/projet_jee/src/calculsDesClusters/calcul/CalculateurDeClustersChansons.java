@@ -78,13 +78,16 @@ public class CalculateurDeClustersChansons {
 	}
 	
 	
-	public void calculerClustersChansonNiveau2(Axe axe, ComposantCluster sousCluster1,ArrayList<Chanson> chansons){
+	public void calculerClustersChansonNiveau2(Axe axe2, ComposantCluster sousCluster1,ArrayList<Chanson> chansons){
+		ArrayList<Oeuvre> listeOeuvre = new ArrayList<Oeuvre>();
+		listeOeuvre.addAll(chansons);
+		axe2.setOeuvres(listeOeuvre);
 		//deuxieme decoupage
 		//on ajoute chaque chanson au contenu d'un sous-cluster de sous-cluster1
 		//et on créé on fur et a mesure les sous-clusters de sous-cluster1
 		for(Chanson ch : chansons){
 			//selon le 2eme axe: exemple saison
-			String valeurAxe = axe.CalculAxe(ch);
+			String valeurAxe = axe2.CalculAxe(ch);
 			//si le clusterGeneral ne contient aucun cluster pour cette valeur
 			if(!sousCluster1.getContenu().containsKey(valeurAxe)){
 				//on cree le sous-cluster de niveau 2

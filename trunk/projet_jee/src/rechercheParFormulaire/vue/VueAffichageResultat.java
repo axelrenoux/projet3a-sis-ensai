@@ -135,7 +135,6 @@ public class VueAffichageResultat {
 
 
 	public void init() {
-		 
 		clustersAlbumsNiveau1 = gestionnaireAffichageResultat.retournerClustersAlbumNiveau1(clustersAlbum);
 		clustersArtistesNiveau1 = gestionnaireAffichageResultat.retournerClustersArtisteNiveau1(clustersArtiste);
 		clustersChansonsNiveau1 = gestionnaireAffichageResultat.retournerClustersChansonNiveau1(clustersChanson);
@@ -164,15 +163,11 @@ public class VueAffichageResultat {
 		creerLazyModelAlbums1();
 		creerLazyModelArtistes1();
 		creerLazyModelChansons1();
-
- 
-		  
 		  
 		reinitialisationSelectionsNonValides();
 
 		reinitialisationEtapes();
 		etape1 = true;
-
 	}
 
 
@@ -398,9 +393,6 @@ public class VueAffichageResultat {
 		}catch (java.lang.ArrayIndexOutOfBoundsException e3){
 			throw new ExceptionNomCluster(clustersChanson.getNomCluster());
 		}	
-		System.out.println(intituleAxe1Album + ", " + intituleAxe1Artiste
-						+", " + intituleAxe1Chanson + ", " + intituleAxe2Album + 
-						", " + intituleAxe2Artiste + ", " + intituleAxe2Chanson);
 	}
 		
 		
@@ -1117,6 +1109,9 @@ public class VueAffichageResultat {
 
 
 	public Album getAlbumChoisi() {
+		if(albumChoisi!=null){
+			System.out.println("wiki "+albumChoisi.getWiki());
+		}
 		return albumChoisi;
 	}
 
@@ -1235,8 +1230,15 @@ public class VueAffichageResultat {
 	}
 
 
-
-	 
+	public String getTitrePanel(){
+		if(etape1){
+			return "Choisissez le type de recherche que vous souhaitez faire, et affinez vos critères";
+		}else if(etape2album || etape2artiste || etape2chanson){
+			return "Choisissez un second critère pour affiner votre recherche ";
+		}else return "";
+	}
+ 
+	
 
 
 }

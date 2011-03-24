@@ -149,9 +149,9 @@ public class TagInfoHandler extends DefaultHandler{
 	throws SAXException{
 		String lecture = new String(ch,start,length);
 		if(inReach){
-			tag.setReach(Double.parseDouble(lecture));
+			tag.setReach(Integer.parseInt(lecture));
 		}else if(inTaggings){
-			tag.setTagging(Double.parseDouble(lecture));
+			tag.setTagging(Integer.parseInt(lecture));
 		}else if(inPublished){
 			Date d;
 			try {

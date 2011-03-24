@@ -48,7 +48,7 @@ public class CalculateurDeClustersArtistes {
 		ArrayList<Oeuvre> listeOeuvre = new ArrayList<Oeuvre>();
 		listeOeuvre.addAll(artistes);
 		axe1.setOeuvres(listeOeuvre);
-		axe2.setOeuvres(listeOeuvre);
+		
 		//affectationArtisteSousCluster va permettre l'affectation des artistes dans les sous-clusters
 
 		//premier decoupage
@@ -83,14 +83,16 @@ public class CalculateurDeClustersArtistes {
 	}
 
 
-	public void calculerClustersArtisteNiveau2(Axe axe, ComposantCluster sousCluster1,ArrayList<Artiste> artistes){
-
+	public void calculerClustersArtisteNiveau2(Axe axe2, ComposantCluster sousCluster1,ArrayList<Artiste> artistes){
+		ArrayList<Oeuvre> listeOeuvre = new ArrayList<Oeuvre>();
+		listeOeuvre.addAll(artistes);
+		axe2.setOeuvres(listeOeuvre);
 		//deuxieme decoupage
 		//on ajoute chaque artiste au contenu d'un sous-cluster de sous-cluster1
 		//et on créé on fur et a mesure les sous-clusters de sous-cluster1
 		for(Artiste a : artistes){
 			//selon le 2eme axe: exemple  
-			String valeurAxe = axe.CalculAxe(a);
+			String valeurAxe = axe2.CalculAxe(a);
 			//si le clusterGeneral ne contient aucun cluster pour cette valeur
 			if(!sousCluster1.getContenu().containsKey(valeurAxe)){
 				//on cree le sous-cluster de niveau 2

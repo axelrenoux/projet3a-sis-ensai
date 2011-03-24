@@ -97,6 +97,22 @@ public class Cluster implements ComposantCluster {
 
 	}
 
+	/**
+	 * methode qui calcule l'effectif du cluster
+	 * pour chaque composant du contenu, on appelle calculerEffectif
+	 * et on retourne la somme
+	 */
+	@Override
+	public int getEffectif() {
+		int effectif=0;
+		//pour chaque sous-cluster, on calcule l'effectif
+		for(Entry<String,ComposantCluster> cc : contenu.entrySet()){
+			effectif+=cc.getValue().getEffectif();
+		}
+		return effectif;
+	}
+	
+	
 	/********************************************************************/
 	/******************      getters / setters       ********************/
 	/********************************************************************/

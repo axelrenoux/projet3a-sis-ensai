@@ -6,5 +6,6 @@ public interface ComposantCluster {
 	
 	public HashMap<String,ComposantCluster> getContenu();
 	public String getNom();
+	public int getEffectif();
 
 }

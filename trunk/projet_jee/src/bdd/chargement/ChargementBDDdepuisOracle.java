@@ -234,8 +234,8 @@ public class ChargementBDDdepuisOracle extends ChargementBDD {
 				//XXX Modifier ici si le constructeur de Tag est modifié
 				Tag leTag=new Tag(resultat.getString("name"),
 									resultat.getString("url"),
-									resultat.getDouble("reach"),
-									resultat.getDouble("taggings"),
+									resultat.getInt("reach"),
+									resultat.getInt("taggings"),
 									leWiki);
 				tags.put(resultat.getInt("clef"),leTag);//pour les correspondances
 			}

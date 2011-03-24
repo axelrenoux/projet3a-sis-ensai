@@ -50,7 +50,7 @@ public class CalculateurDeClustersAlbums {
 		ArrayList<Oeuvre> listeOeuvre = new ArrayList<Oeuvre>();
 		listeOeuvre.addAll(albums);
 		axe1.setOeuvres(listeOeuvre);
-		axe2.setOeuvres(listeOeuvre);
+		
 		//affectationAlbumSousCluster va permettre l'affectation des albums dans les sous-clusters
 
 		//premier decoupage
@@ -85,14 +85,17 @@ public class CalculateurDeClustersAlbums {
 	}
 
 
-	public void calculerClustersAlbumNiveau2(Axe axe, ComposantCluster sousCluster1,ArrayList<Album> albums){
-
+	public void calculerClustersAlbumNiveau2(Axe axe2, ComposantCluster sousCluster1,ArrayList<Album> albums){
+		ArrayList<Oeuvre> listeOeuvre = new ArrayList<Oeuvre>();
+		listeOeuvre.addAll(albums);
+		axe2.setOeuvres(listeOeuvre);
+		
 		//deuxieme decoupage
 		//on ajoute chaque album au contenu d'un sous-cluster de sous-cluster1
 		//et on crée au fur et a mesure les sous-clusters de sous-cluster1
 		for(Album a : albums){
 			//selon le 2eme axe: exemple saison
-			String valeurAxe = axe.CalculAxe(a);
+			String valeurAxe = axe2.CalculAxe(a);
 			//si le clusterGeneral ne contient aucun cluster pour cette valeur
 			if(!sousCluster1.getContenu().containsKey(valeurAxe)){
 				//on cree le sous-cluster de niveau 2
