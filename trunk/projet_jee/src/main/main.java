@@ -62,7 +62,7 @@ public class main {
 
 		
 		RechercheAlbum r = new RechercheAlbum();
-		Cluster c = r.lancerRecherche("yo");
+		//Cluster c = r.lancerRecherche("yo");
 		/*RechercheArtiste r = new RechercheArtiste();
 		Cluster c = r.lancerRecherche("LIVE");*/
 
