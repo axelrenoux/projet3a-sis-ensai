@@ -125,12 +125,10 @@ public class RechercheTagBDD {
 								resultat.getInt("taggings"),
 								leWiki);
 				tagrecherches.add(tagcourant);
-				System.out.println("ooooooooooooon ajoute un tag");
 			}
 		} catch (SQLException e) {
 			throw new ChargementException(e);
 		}
-		System.out.println("oooooooooooooon retourne "+ tagrecherches);
 		return tagrecherches;
 	}
 	

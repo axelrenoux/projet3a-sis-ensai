@@ -102,7 +102,6 @@ public class RechercheArtisteBDD {
 	 * @throws ChargementException
 	 */
 	public ArrayList<Artiste> rechercherArtistesSimilaires(String artiste1) throws ChargementException{
-		System.out.println("rechrcher des arts sim de "+artiste1);
 		ArrayList<Artiste> artistesSimilairesRecherches = new ArrayList<Artiste>();
 		ResultSet resultat;
 		String recherche="SELECT DISTINCT inu2.name as nameArtiste2,    " +
