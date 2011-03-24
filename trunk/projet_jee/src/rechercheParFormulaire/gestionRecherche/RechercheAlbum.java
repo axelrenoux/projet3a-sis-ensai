@@ -144,11 +144,7 @@ public class RechercheAlbum {
 		}
 		top3clusters.add(meilleurCluster3);
 		
-		System.out.println("------------------------------");
-		System.out.println(meilleurCluster.getNomCluster());
-		System.out.println(meilleurCluster2.getNomCluster());
-		System.out.println(meilleurCluster3.getNomCluster());
- 		System.out.println("------------------------------");
+		
 		return top3clusters;
 	}
 	
