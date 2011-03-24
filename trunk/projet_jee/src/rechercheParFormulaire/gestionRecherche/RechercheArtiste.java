@@ -92,8 +92,7 @@ public class RechercheArtiste{
 				meilleurCluster.setNomCluster(entry2.getKey().getAxe1().getType() + ";" + entry2.getKey().getAxe2().getType());
 			}
 		}
-		System.out.println("%%%%%%%%% this is the meilleur cluster 1%%" + meilleurCluster.getNom());
-		
+		 
 		top3clusters.add(meilleurCluster);
 		
 		//2) on recupère le deuxième meilleur cluster
@@ -117,8 +116,7 @@ public class RechercheArtiste{
 				meilleurCluster2.setNomCluster(entry2.getKey().getAxe1().getType() + ";" + entry2.getKey().getAxe2().getType());
 			}
 		}
-		System.out.println("%%%%%%%%% this is the meilleur cluster 2%%" + meilleurCluster2.getNom());
-		
+		 
 		top3clusters.add(meilleurCluster2);
 		
 		
@@ -142,8 +140,7 @@ public class RechercheArtiste{
 				meilleurCluster3.setNomCluster(entry2.getKey().getAxe1().getType() + ";" + entry2.getKey().getAxe2().getType());
 			}
 		}
-		System.out.println("%%%%%%%%% this is the meilleur cluster 3 %%" + meilleurCluster3.getNom());
-		
+		 
 		top3clusters.add(meilleurCluster3);
  		
 		return top3clusters;
