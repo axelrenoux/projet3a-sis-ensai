@@ -3,20 +3,17 @@ package rechercheParFormulaire.gestionRecherche;
 import java.util.ArrayList;
 import java.util.Map.Entry;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-
-import exceptions.ChargementException;
-
-import bdd.rechercheBDD.RechercheAlbumBDD;
-import bdd.rechercheBDD.RechercheChansonBDD;
 
 import metier.Cluster;
 import metier.ComposantCluster;
 import metier.oeuvres.Album;
 import metier.oeuvres.Artiste;
 import metier.oeuvres.Chanson;
+import bdd.rechercheBDD.RechercheAlbumBDD;
+import bdd.rechercheBDD.RechercheChansonBDD;
+import exceptions.ChargementException;
 
 /**
  * on ajoute ces 2 lignes afin que la classe soit instanciee automatiquement (managedBean)
@@ -32,15 +29,10 @@ public class GestionnaireAffichageResultat {
 	/*************************      attributs       *********************/
 	/********************************************************************/
 	 
-	
-	/*private ArrayList<String> titresClustersNiveau1Album = new ArrayList<String>();
-	private ArrayList<String> titresClustersNiveau1Artiste = new ArrayList<String>();
-	private ArrayList<String> titresClustersNiveau1Chanson = new ArrayList<String>();
-	private ArrayList<String> titresClustersNiveau2Album = new ArrayList<String>();
-	private ArrayList<String> titresClustersNiveau2Artiste = new ArrayList<String>();
-	private ArrayList<String> titresClustersNiveau2Chanson = new ArrayList<String>();
-*/
-	 
+	private RechercheAlbum rechercheAlbum = new RechercheAlbum();
+	private RechercheArtiste rechercheArtiste = new RechercheArtiste();
+	private RechercheChanson rechercheChanson = new RechercheChanson();
+
 	
 	/********************************************************************/
 	/************************      methodes      ************************/
@@ -176,9 +168,40 @@ public class GestionnaireAffichageResultat {
 	
 	
 	
+	 
 	/********************************************************************/
 	/******************      getters / setters       ********************/
 	/********************************************************************/
+
+	
+	
+	public RechercheAlbum getRechercheAlbum() {
+		return rechercheAlbum;
+	}
+
+	public void setRechercheAlbum(RechercheAlbum rechercheAlbum) {
+		this.rechercheAlbum = rechercheAlbum;
+	}
+
+	public RechercheArtiste getRechercheArtiste() {
+		return rechercheArtiste;
+	}
+
+	public void setRechercheArtiste(RechercheArtiste rechercheArtiste) {
+		this.rechercheArtiste = rechercheArtiste;
+	}
+
+	public RechercheChanson getRechercheChanson() {
+		return rechercheChanson;
+	}
+
+	public void setRechercheChanson(RechercheChanson rechercheChanson) {
+		this.rechercheChanson = rechercheChanson;
+	}
+	
+	
+	
+	
 
 	 
 
