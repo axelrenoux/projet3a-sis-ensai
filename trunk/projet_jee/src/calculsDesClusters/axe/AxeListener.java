@@ -164,7 +164,7 @@ public class AxeListener implements Axe {
 	@Override
 	public String getType() {
 		// TODO Auto-generated method stub
-		return "nombre d'auditeurs";
+		return "Nombre d'auditeurs";
 	}
 
 	@Override

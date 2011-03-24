@@ -113,20 +113,20 @@ public class CalculateurDeClustersAlbums {
 
 		HashMap<CoupleAxe, Cluster> listeCluster = new HashMap<CoupleAxe, Cluster>();
 		
-		//Axe axeAnnee = new AxeAnnee();
-		//Axe axeSaison = new AxeSaison();
-		//Axe axeListeners = new AxeListener();
+		Axe axeAnnee = new AxeAnnee();
+		Axe axeSaison = new AxeSaison();
+		Axe axeListeners = new AxeListener();
 		Axe axePlaycount = new AxePlaycount();
 		Axe axeArtiste = new AxeArtistePourAlbum();
-		//Axe axeTag = new AxeTag();
+		Axe axeTag = new AxeTag();
 
 		ArrayList<Axe> listePremierAxe = new ArrayList<Axe>();
-	//	listePremierAxe.add(axeAnnee);	
-		//listePremierAxe.add(axeSaison);
-		//listePremierAxe.add(axeListeners);
+		listePremierAxe.add(axeAnnee);	
+		listePremierAxe.add(axeSaison);
+		listePremierAxe.add(axeListeners);
 		listePremierAxe.add(axePlaycount);
 		listePremierAxe.add(axeArtiste);
-		//listePremierAxe.add(axeTag);
+		listePremierAxe.add(axeTag);
 		ArrayList<Axe> listeDeuxiemeAxe = new ArrayList<Axe>();
 		listeDeuxiemeAxe = listePremierAxe;
 

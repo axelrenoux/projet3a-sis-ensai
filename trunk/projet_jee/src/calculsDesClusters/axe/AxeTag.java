@@ -14,8 +14,6 @@ public class AxeTag implements Axe {
 		if (oeuvre.getToptags() != null && oeuvre.getToptags().size() != 0){
 			res = oeuvre.getToptags().get(0).getName();
 		}else res = "Pas de tag";
-		
-		System.out.println(res);
 		return res;
 	}
 

@@ -110,13 +110,13 @@ public class CalculateurDeClustersArtistes {
 		HashMap<CoupleAxe, Cluster> listeCluster = new HashMap<CoupleAxe, Cluster>();
 		Axe axeListeners = new AxeListener();
 		Axe axePlaycount = new AxePlaycount();
-		//Axe axeTag = new AxeTag();
+		Axe axeTag = new AxeTag();
 
 		ArrayList<Axe> listePremierAxe = new ArrayList<Axe>();
 
 		listePremierAxe.add(axeListeners);
 		listePremierAxe.add(axePlaycount);
-		//listePremierAxe.add(axeTag);
+		listePremierAxe.add(axeTag);
 
 		ArrayList<Axe> listeDeuxiemeAxe = new ArrayList<Axe>();
 		listeDeuxiemeAxe = listePremierAxe;

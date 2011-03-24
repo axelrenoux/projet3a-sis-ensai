@@ -9,10 +9,12 @@ import metier.ComposantCluster;
 import metier.oeuvres.Chanson;
 import metier.oeuvres.Oeuvre;
 import calculsDesClusters.axe.Axe;
+import calculsDesClusters.axe.AxeAlbumDeChanson;
 import calculsDesClusters.axe.AxeArtistePourChanson;
 import calculsDesClusters.axe.AxeDuree;
 import calculsDesClusters.axe.AxeListener;
 import calculsDesClusters.axe.AxePlaycount;
+import calculsDesClusters.axe.AxeTag;
 import calculsDesClusters.axe.CoupleAxe;
 
 
@@ -104,20 +106,20 @@ public class CalculateurDeClustersChansons {
 
 		HashMap<CoupleAxe, Cluster> listeCluster = new HashMap<CoupleAxe, Cluster>();
 		
-		//Axe axeListeners = new AxeListener();
-		//Axe axePlaycount = new AxePlaycount();
+		Axe axeListeners = new AxeListener();
+		Axe axePlaycount = new AxePlaycount();
 		//Axe axeAlbumDeChanson = new AxeAlbumDeChanson();
 		Axe axeDuree = new AxeDuree();
 		Axe axeArtiste = new AxeArtistePourChanson();
-		//Axe axeTag = new AxeTag();
+		Axe axeTag = new AxeTag();
 
 		ArrayList<Axe> listePremierAxe = new ArrayList<Axe>();
-		//listePremierAxe.add(axeListeners);
-		//listePremierAxe.add(axePlaycount);
+		listePremierAxe.add(axeListeners);
+		listePremierAxe.add(axePlaycount);
 		//listePremierAxe.add(axeAlbumDeChanson);
 		listePremierAxe.add(axeDuree);
 		listePremierAxe.add(axeArtiste);
-		//listePremierAxe.add(axeTag);
+		listePremierAxe.add(axeTag);
 		ArrayList<Axe> listeDeuxiemeAxe = new ArrayList<Axe>();
 		listeDeuxiemeAxe = listePremierAxe;
 
