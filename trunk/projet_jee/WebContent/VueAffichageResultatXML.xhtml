@@ -51,12 +51,7 @@
 		
 
 
-			<center>
-				<h:outputLabel
-					style = "font-size: 16; font-weight : bold; color:#551a7d; text-align:center; font-family: Segoe UI, Helvetica, Arial, sans-serif;"> 
-							Choisissez le type de résultats que vous  souhaitez obtenir au format xml
-				</h:outputLabel>
-			</center>
+			
 			
 			
 			<p:spacer height="20"/>
@@ -66,8 +61,8 @@
 					  
 					   
 						   
-						   <p:menu style="width:700px;" > 
-								<p:submenu > 
+						   <p:menu style="width:700px;"> 
+								<p:submenu  label="Choisissez le type de résultats que vous  souhaitez obtenir au format xml"> 
 						        	<p:menuitem value = "Obtenir le fichier XML pour les albums" action="#{vueAffichageResultatXML.affichageAlbums}" ajax="false"/>
 						        	<p:menuitem value = "Obtenir le fichier XML pour les artistes" action="#{vueAffichageResultatXML.affichageArtistes}" ajax="false"/>   
 								    <p:menuitem value = "Obtenir le fichier XML pour les chansons" action="#{vueAffichageResultatXML.affichageChansons}" ajax="false"/>
