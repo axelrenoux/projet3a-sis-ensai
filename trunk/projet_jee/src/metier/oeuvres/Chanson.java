@@ -501,4 +501,10 @@ public class Chanson extends ObjetAComparer implements Oeuvre{
 
 	@Override
 	protected String getNomTableBDD(){return "CHANSON";}
+	
+	public int getDureeSeconde(){
+		return duree/1000;
+	}
+	
+	
 }
