@@ -12,39 +12,61 @@
 	
 	<h:form>
 	
-	<h:outputLabel
-					style="font-size: 16; text-align:center; font-family: Segoe UI, Helvetica, Arial, sans-serif;"> 
-							Visualiser vos résultats ou 
-	</h:outputLabel>
-	
-
-	
-	<p:commandButton value="Nouvelle recherche"
-									image="ui-icon ui-icon-circle-arrow-w" 
-									action="retourDebut" ajax="false"/>
-						
-									
-	</h:form>						
 	
 		
+	<center>
+		<p:commandButton value="Nouvelle recherche"
+										image="ui-icon ui-icon-circle-arrow-w" 
+										action="retourDebut" ajax="false"/>
+										
+		<p:spacer height="10" width="100"/> 
+			
+										
+		<h:outputLabel style = "font-size: 16; font-weight : bold; color:#551a7d; text-align:center; font-family: Segoe UI, Helvetica, Arial, sans-serif;">
+								Choisir un nouveau mode de clustering 
+		</h:outputLabel>
+		
+		<p:spacer height="10" width="5"/> 
+							
+		<h:selectOneMenu style="with: 155px; " 
+							value="#{vueAffichageResultatXML.choixClustering}">
+							<f:selectItems value="#{vueAffichageResultatXML.listeChoixClustering}"/>
+		</h:selectOneMenu>	
+		
+		<p:spacer height="10" width="5"/> 						
+										
+		<p:commandButton value="Rechercher selon ce niveau"
+										action="#{vueAffichageResultatXML.changerClustering}"/>								
+		
+	</center>
+	
+	</h:form>	
+	
+	
+	
+	
+	 					
+	
+		<p:spacer height="20"/> 
 		
 
 
 			<center>
 				<h:outputLabel
-					style="font-size: 20; text-align:center; font-family: Segoe UI, Helvetica, Arial, sans-serif;"> 
+					style = "font-size: 16; font-weight : bold; color:#551a7d; text-align:center; font-family: Segoe UI, Helvetica, Arial, sans-serif;"> 
 							Choisissez le type de résultats que vous  souhaitez obtenir au format xml
 				</h:outputLabel>
 			</center>
 			
 			
+			<p:spacer height="20"/>
 				
 			<center>
-						<h:form>
+						<h:form >
 					  
 					   
 						   
-						   <p:menu style="width:700px;"> 
+						   <p:menu style="width:700px;" > 
 								<p:submenu > 
 						        	<p:menuitem value = "Obtenir le fichier XML pour les albums" action="#{vueAffichageResultatXML.affichageAlbums}" ajax="false"/>
 						        	<p:menuitem value = "Obtenir le fichier XML pour les artistes" action="#{vueAffichageResultatXML.affichageArtistes}" ajax="false"/>   

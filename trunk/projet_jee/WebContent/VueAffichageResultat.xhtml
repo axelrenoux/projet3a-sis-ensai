@@ -14,7 +14,7 @@
 	
 	
 	
-	
+	<!--
 	
 	<h:outputLabel
 					style="font-size: 16; text-align:center; font-family: Segoe UI, Helvetica, Arial, sans-serif;"> 
@@ -27,16 +27,35 @@
         value="faites une nouvelle recherche" />  
    </p:commandLink>
 
-
-	<p:commandButton value="Nouvelle recherche"
-									image="ui-icon ui-icon-circle-arrow-w" 
-									action="retourDebut" ajax="false"/>
-									
-									
-									
-	</h:form>						
+	-->
 	
+	<center>
+		<p:commandButton value="Nouvelle recherche"
+										image="ui-icon ui-icon-circle-arrow-w" 
+										action="retourDebut" ajax="false"/>
+										
+		<p:spacer height="10" width="100"/> 
+			
+										
+		<h:outputLabel style = "font-size: 16; font-weight : bold; color:#551a7d; text-align:center; font-family: Segoe UI, Helvetica, Arial, sans-serif;">
+								Choisir un nouveau mode de clustering 
+		</h:outputLabel>
 		
+		<p:spacer height="10" width="5"/> 
+							
+		<h:selectOneMenu style="with: 155px; " 
+							value="#{vueAffichageResultat.choixClustering}">
+							<f:selectItems value="#{vueAffichageResultat.listeChoixClustering}"/>
+		</h:selectOneMenu>	
+		
+		<p:spacer height="10" width="5"/> 						
+										
+		<p:commandButton value="Rechercher selon ce niveau"
+										action="#{vueAffichageResultat.changerClustering}" update="monPanel"/>								
+		
+	</center>
+	
+	</h:form>							
 		<p:panel id="monPanel" style="width:1225px;" header="#{vueAffichageResultat.titrePanel}">
 
 			
