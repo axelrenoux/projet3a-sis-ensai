@@ -20,8 +20,8 @@ public class Tag extends ObjetAComparer{
 	
 	private String name;
 	private String url;
-	private Double reach;//nombre de recherche de ce tag effectuees
-	private Double tagging;//nombre d'objets ayant ce tag
+	private int reach;//nombre de recherche de ce tag effectuees
+	private int tagging;//nombre d'objets ayant ce tag
 	private Wiki wiki;
 	private ArrayList<Artiste> listeArtistes;
 	private ArrayList<Album> listeAlbums;
@@ -63,7 +63,7 @@ public class Tag extends ObjetAComparer{
 	 * @param wiki
 	 */
 	public Tag(String name, String url,
-			double reach,double tagging,Wiki wiki) {
+			int reach,int tagging,Wiki wiki) {
 		this();
 		this.name = name;
 		this.url=url;
@@ -135,28 +135,28 @@ public class Tag extends ObjetAComparer{
 
 
 
-	public Double getReach() {
+	public int getReach() {
 		return reach;
 	}
 
 
 
 
-	public void setReach(Double reach) {
+	public void setReach(int reach) {
 		this.reach = reach;
 	}
 
 
 
 
-	public Double getTagging() {
+	public int getTagging() {
 		return tagging;
 	}
 
 
 
 
-	public void setTagging(Double tagging) {
+	public void setTagging(int tagging) {
 		this.tagging = tagging;
 	}
 

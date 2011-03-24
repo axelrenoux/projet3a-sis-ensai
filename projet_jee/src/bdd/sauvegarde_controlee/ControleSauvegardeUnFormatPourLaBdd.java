@@ -125,8 +125,8 @@ public abstract class ControleSauvegardeUnFormatPourLaBdd {
 	}
 
 	public void sauverTag(int coord_tag,
-									Double reach,
-									Double tagging,
+									int reach,
+									int tagging,
 									int pkWiki){
 		sauveur.sauverTag(controle(coord_tag),controle(reach),controle(tagging),controle(pkWiki));
 	}

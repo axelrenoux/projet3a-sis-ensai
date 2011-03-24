@@ -259,6 +259,12 @@ public class Album extends ObjetAComparer implements Oeuvre {
 	
 	
 	
+	@Override
+	public int getEffectif() {
+		return 1;
+	}
+	
+	
 	
 	/********************************************************************/
 	/******************      getters / setters       ********************/
