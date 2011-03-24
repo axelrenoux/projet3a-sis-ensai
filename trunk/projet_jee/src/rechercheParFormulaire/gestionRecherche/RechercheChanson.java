@@ -1,18 +1,20 @@
 package rechercheParFormulaire.gestionRecherche;
 
 
-import java.sql.Date;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
-import rechercheParFormulaire.CalculDesClusters.CalculateurDeClusters;
 
 
+
+import bdd.rechercheBDD.RechercheArtisteBDD;
 import bdd.rechercheBDD.RechercheChansonBDD;
 
 
 import calculsDesClusters.axe.CoupleAxe;
+import calculsDesClusters.calcul.CalculateurDeClustersArtistes;
 import calculsDesClusters.calcul.CalculateurDeClustersChansons;
 import exceptions.ChargementException;
 
@@ -20,6 +22,7 @@ import exceptions.ChargementException;
 import metier.Cluster;
 import metier.Wiki;
 
+import metier.oeuvres.Artiste;
 import metier.oeuvres.Chanson;
 
 public class RechercheChanson{
@@ -33,86 +36,124 @@ public class RechercheChanson{
 	/************************      methodes      ************************/
 	/********************************************************************/
 
-	//en attendant on met un mock
-	public Cluster lancerRecherche(String motCle) {
-		/*resultats = new ArrayList<Chanson>();
-		Chanson c1 = new Chanson();
-		Chanson c2 = new Chanson();
-		Chanson c3 = new Chanson();
-		Chanson c4 = new Chanson();
-		
-		c1.setName("Paint it black");
-		c1.setImageLarge("http://userserve-ak.last.fm/serve/126/8747357.jpg");
-		c1.setUrl("1");
-		c1.setDuree(5.0);
-		c1.setListeners(10);
-		c1.setWiki(new Wiki(new Date(11111111),"aaa","bbbbb"));
-		c2.setName("Ready or Not");
-		c2.setImageLarge("http://userserve-ak.last.fm/serve/126/32571933.jpg");
-		c2.setUrl("2");
-		c2.setDuree(5.0);
-		c2.setListeners(10);
-		c2.setWiki(new Wiki(new Date(11111111),"aaa","bbbbb"));
-		c3.setName("Paint it black333");
-		c3.setImageLarge("http://userserve-ak.last.fm/serve/126/8747357.jpg");
-		c3.setUrl("3");
-		c3.setDuree(5.0);
-		c3.setListeners(12);
-		c3.setWiki(new Wiki(new Date(11111111),"aaa","bbbbb"));
-		c4.setName("Ready or Not4444");
-		c4.setImageLarge("http://userserve-ak.last.fm/serve/126/32571933.jpg");
-		c4.setUrl("4");
-		c4.setDuree(15.0);
-		c4.setListeners(10);
-		c4.setWiki(new Wiki(new Date(11111111),"aaa","bbbbb"));
-		resultats.add(c1);
-		resultats.add(c2);
-		resultats.add(c3);
-		resultats.add(c4);
-		
-*/
-		/*maClasseChanson ma = new maClasseChanson();
+
+	/**
+	 * methode qui renvoie la liste totale des chansons repondant au mot clé
+	 * @param motCle
+	 * @return
+	 */
+	public ArrayList<Cluster> lancerRecherche(String motCle) {
+	
+		ArrayList<Chanson> listeChansons=null;
+		RechercheChansonBDD recherche = RechercheChansonBDD.getInstance();
 		try {
-			resultats = ma.rechercherChansons(motCle);
-		} catch (ChargementException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
-		
-		
-		ArrayList<Chanson> ar=null;
-		RechercheChansonBDD mar = RechercheChansonBDD.getInstance();
-		try {
-			ar = mar.rechercherChansons(motCle);
+			listeChansons = recherche.rechercherChansons(motCle);
 		} catch (ChargementException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		 
+		return rechercherMeilleursClusters(listeChansons);
 		
-		HashMap<CoupleAxe,Cluster> listeClusterPossible = CalculateurDeClustersChansons.getInstanceunique().calculEnsembleClustersChansons(ar);
+	}
+	
 
+	
+	
+	
+	
+	/**
+	 * methode qui renvoie le meilleur cluster, le 2ème meilleur et le 3ème...
+	 * 
+	 * @param listeChansons
+	 * @param niveau
+	 * @return
+	 */
+	private ArrayList<Cluster> rechercherMeilleursClusters(ArrayList<Chanson> listeChansons){
+		ArrayList<Cluster> top3clusters = new ArrayList<Cluster>();
+		CoupleAxe ca = null;
 
+		HashMap<CoupleAxe,Cluster> listeClustersPossibles = CalculateurDeClustersChansons.
+									getInstanceunique().calculEnsembleClustersChansons(listeChansons);
+
+		//1) on récupère le meilleur
+		
 		Cluster meilleurCluster = new Cluster();
-		
-		for(Entry<CoupleAxe, Cluster> entry : listeClusterPossible.entrySet()) {
+		//on attribue par défaut la meilleure place au premier element de la hashmap
+		for(Entry<CoupleAxe, Cluster> entry : listeClustersPossibles.entrySet()) {			
 			meilleurCluster = entry.getValue();
 			meilleurCluster.setNomCluster(entry.getKey().getAxe1().getType() + ";" + entry.getKey().getAxe2().getType());
 			break;
 		}
-		for(Entry<CoupleAxe, Cluster> entry2 : listeClusterPossible.entrySet()) {
-
+		
+		//on parcourt la hashmap pour trouver le cluster qui a la plus petite variance
+		for(Entry<CoupleAxe, Cluster> entry2 : listeClustersPossibles.entrySet()) {
 			if (entry2.getKey().getVariance() < meilleurCluster.varianceCluster()){
 				meilleurCluster = entry2.getValue();
+				ca = entry2.getKey();
 				meilleurCluster.setNomCluster(entry2.getKey().getAxe1().getType() + ";" + entry2.getKey().getAxe2().getType());
 			}
 		}
-		System.out.println("meilleur cluster : " + meilleurCluster.varianceCluster());
-		System.out.println(meilleurCluster.tailleCluster());
-		return meilleurCluster;
+		System.out.println("%%%%%%%%% this is the meilleur cluster 1%%" + meilleurCluster.getNom());
+		
+		top3clusters.add(meilleurCluster);
+		
+		//2) on recupère le deuxième meilleur cluster
+		
+		//on supprime le "1er meilleur"
+		listeClustersPossibles.remove(ca);
+		
+		Cluster meilleurCluster2 = new Cluster();
+		//on attribue par défaut la meilleure place au premier element de la hashmap
+		for(Entry<CoupleAxe, Cluster> entry : listeClustersPossibles.entrySet()) {			
+			meilleurCluster2 = entry.getValue();
+			meilleurCluster2.setNomCluster(entry.getKey().getAxe1().getType() + ";" + entry.getKey().getAxe2().getType());
+			break;
+		}
+		
+		//on parcourt la hashmap pour trouver le cluster qui a la plus petite variance
+		for(Entry<CoupleAxe, Cluster> entry2 : listeClustersPossibles.entrySet()) {
+			if (entry2.getKey().getVariance() < meilleurCluster2.varianceCluster()){
+				meilleurCluster2 = entry2.getValue();
+				ca = entry2.getKey();
+				meilleurCluster2.setNomCluster(entry2.getKey().getAxe1().getType() + ";" + entry2.getKey().getAxe2().getType());
+			}
+		}
+		System.out.println("%%%%%%%%% this is the meilleur cluster 2%%" + meilleurCluster2.getNom());
+		
+		top3clusters.add(meilleurCluster2);
 		
 		
+		//3) on recupère le troisieme meilleur cluster
 		
+		//on supprime le "2eme meilleur"
+		listeClustersPossibles.remove(ca);
+		
+		Cluster meilleurCluster3 = new Cluster();
+		//on attribue par défaut la meilleure place au premier element de la hashmap
+		for(Entry<CoupleAxe, Cluster> entry : listeClustersPossibles.entrySet()) {			
+			meilleurCluster3 = entry.getValue();
+			meilleurCluster3.setNomCluster(entry.getKey().getAxe1().getType() + ";" + entry.getKey().getAxe2().getType());
+			break;
+		}
+		
+		//on parcourt la hashmap pour trouver le cluster qui a la plus petite variance
+		for(Entry<CoupleAxe, Cluster> entry2 : listeClustersPossibles.entrySet()) {
+			if (entry2.getKey().getVariance() < meilleurCluster3.varianceCluster()){
+				meilleurCluster3 = entry2.getValue();
+				meilleurCluster3.setNomCluster(entry2.getKey().getAxe1().getType() + ";" + entry2.getKey().getAxe2().getType());
+			}
+		}
+		System.out.println("%%%%%%%%% this is the meilleur cluster 3 %%" + meilleurCluster3.getNom());
+		
+		top3clusters.add(meilleurCluster3);
+ 		
+		return top3clusters;
 	}
+	
+	
+	
+	
 	
 	public String retournerTypeAffichage(){
 		return "chanson";
