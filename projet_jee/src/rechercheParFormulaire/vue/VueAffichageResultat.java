@@ -254,7 +254,6 @@ public class VueAffichageResultat {
 		reinitialisationSelectionsNonValides();
 		if(clusterChansonNiveau1Choisi!=null){
 			clustersChansonsNiveau2 = gestionnaireAffichageResultat.retournerClustersChansonNiveau2(clusterChansonNiveau1Choisi);
-			System.out.println("clustersChansonsNiveau2 vue"+clustersChansonsNiveau2);
 			creerLazyModelChansons2();
 			//on passe a l'étape 2:
 			reinitialisationEtapes();
@@ -326,11 +325,8 @@ public class VueAffichageResultat {
 	
 	public void affinerRechercheChanson2(){
 		reinitialisationSelectionsNonValides();
-		System.out.println("ùùùù "+clusterChansonNiveau2Choisi);
 		if(clusterChansonNiveau2Choisi!=null){
-			System.out.println("aa");
 			resultatChansons = gestionnaireAffichageResultat.retournerChansons(clusterChansonNiveau2Choisi);
-			System.out.println("bb");
 			creerLazyModelChansons3();
 			//on passe a l'étape 3:
 			reinitialisationEtapes();
@@ -413,10 +409,6 @@ public class VueAffichageResultat {
 	 */
 	public void recupererIntitulesAxes() throws ExceptionNomCluster{
 		String[] deuxTypes;
-		System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
-		System.out.println(clustersAlbumCourant.getNomCluster());
-		System.out.println(clustersArtisteCourant.getNomCluster());
-		System.out.println(clustersChansonCourant.getNomCluster());
 		try{
 			deuxTypes = clustersAlbumCourant.getNomCluster().split(";");
 			intituleAxe1Album = deuxTypes[0];
@@ -1207,9 +1199,6 @@ public class VueAffichageResultat {
 
 
 	public Album getAlbumChoisi() {
-		if(albumChoisi!=null){
-			System.out.println("wiki "+albumChoisi.getWiki());
-		}
 		return albumChoisi;
 	}
 
