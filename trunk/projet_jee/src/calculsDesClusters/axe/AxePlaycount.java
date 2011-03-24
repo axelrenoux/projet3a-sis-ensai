@@ -135,8 +135,7 @@ public class AxePlaycount implements Axe{
 		AxePlaycount axe = new AxePlaycount();
 		ArrayList<Integer>  my= axe.QuartClusterOeuvrePl(monoeuvre);
 
-		System.out.println(my);
-		System.out.println(axe.CalculAxe(f));
+		
 
 	}*/
 	

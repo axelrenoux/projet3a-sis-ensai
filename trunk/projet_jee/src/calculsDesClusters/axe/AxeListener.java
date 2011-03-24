@@ -155,8 +155,7 @@ public class AxeListener implements Axe {
 			AxeListener axe = new AxeListener();
 			ArrayList<Integer>  my= axe.QuartClusterOeuvreLs(monoeuvre);
 
-			System.out.println(my);
-			System.out.println(axe.CalculAxe(f));
+			 
 
 		}*/
 

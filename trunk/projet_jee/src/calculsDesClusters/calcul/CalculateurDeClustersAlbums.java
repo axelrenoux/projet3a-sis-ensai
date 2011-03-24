@@ -142,10 +142,6 @@ public class CalculateurDeClustersAlbums {
 		
 		for(Entry<CoupleAxe, Cluster> entry : listeCluster.entrySet()) {
 			entry.getKey().setVariance(entry.getValue().varianceCluster());
-			System.out.println("§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§");
-			System.out.println(entry.getKey().getAxe1());
-			System.out.println(entry.getKey().getAxe2());
-			System.out.println(entry.getKey().getVariance());
 		}
 
 		return listeCluster;
