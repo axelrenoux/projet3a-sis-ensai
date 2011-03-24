@@ -1,16 +1,12 @@
 package rechercheParFormulaire.vue;
 
-import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.Reader;
-import java.io.StringReader;
-import java.io.Writer;
+import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -18,16 +14,6 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
-import org.jdom.Document;
-import org.jdom.Element;
-import org.jdom.JDOMException;
-import org.jdom.input.SAXBuilder;
-import org.jdom.output.Format;
-import org.jdom.output.XMLOutputter;
-import org.xml.sax.InputSource;
 
 import metier.Cluster;
 import metier.Tag;
@@ -35,6 +21,15 @@ import metier.Wiki;
 import metier.oeuvres.Album;
 import metier.oeuvres.Artiste;
 import metier.oeuvres.Chanson;
+
+import org.jdom.Attribute;
+import org.jdom.Document;
+import org.jdom.Element;
+import org.jdom.JDOMException;
+import org.jdom.input.SAXBuilder;
+import org.jdom.output.Format;
+import org.jdom.output.XMLOutputter;
+
 import rechercheParFormulaire.gestionRecherche.GestionnaireAffichageResultat;
 
 import com.thoughtworks.xstream.XStream;
@@ -44,7 +39,6 @@ import com.thoughtworks.xstream.io.xml.DomDriver;
 /**
  * on ajoute ces 2 lignes afin que la classe soit instanciee automatiquement (managedBean)
  * et qu'il n'y ait qu'une seule instance tout au long de la session (sessionScoped)
- * @author sis1
  */
 @ManagedBean
 @SessionScoped
@@ -57,9 +51,18 @@ public class VueAffichageResultatXML {
 	private GestionnaireAffichageResultat gestionnaireAffichageResultat;
 
 
-	private Cluster clustersAlbum;
-	private Cluster clustersArtiste;
-	private Cluster clustersChanson;
+	private ArrayList<Cluster> clustersAlbumTop3;
+	private ArrayList<Cluster> clustersArtisteTop3;
+	private ArrayList<Cluster> clustersChansonTop3;
+
+	
+	private Cluster clustersAlbumCourant;
+	private Cluster clustersArtisteCourant;
+	private Cluster clustersChansonCourant;
+	
+	
+	private int choixClustering=1;
+	private ArrayList<Integer> listeChoixClustering;
 	
 
 
@@ -69,19 +72,50 @@ public class VueAffichageResultatXML {
 	/********************************************************************/
 
 
-	public void init() {}
+	public void init() {
+		//on affecte les clusters courant
+		clustersAlbumCourant = clustersAlbumTop3.get(choixClustering-1);
+		clustersArtisteCourant = clustersArtisteTop3.get(choixClustering-1);
+		clustersChansonCourant = clustersChansonTop3.get(choixClustering-1);
+		
+		//on initialise les valeurs des choix de clustering
+		initialisationChoixClustering();
+	}
+	
+	
+	
 
+	public void initialisationChoixClustering(){
+		listeChoixClustering = new ArrayList<Integer>();
+		listeChoixClustering.add(1);
+		listeChoixClustering.add(2);
+		listeChoixClustering.add(3);
+		
+	}
+	
+	/**
+	 * methode exécutee quand l'utilisateur choisit un autre niveau de clustering et relance la recherche
+	 * on change de clustersAlbum/artiste/chanson courant
+	 */
+	public void changerClustering(){
+		//clustersAlbumCourant = clustersAlbumTop3.get(choixClustering-1);
+		//clustersArtisteCourant = clustersArtisteTop3.get(choixClustering-1);
+		//clustersChansonCourant = clustersChansonTop3.get(choixClustering-1);
+		init();
+	}
+	
+	
 
 	public void affichageAlbums(){
-		affichage(clustersAlbum,"album");
+		affichage(clustersAlbumCourant,"album");
 	}
 	
 	public void affichageArtistes(){
-		affichage(clustersArtiste,"artiste");
+		affichage(clustersArtisteCourant,"artiste");
 	}
 
 	public void affichageChansons(){
-		affichage(clustersChanson,"chanson");
+		affichage(clustersChansonCourant,"chanson");
 	}
 
 	public void affichage(Cluster cluster, String typeObjetAComparer){
@@ -93,84 +127,104 @@ public class VueAffichageResultatXML {
 		stream.alias("tag",Tag.class);
 		stream.alias("wiki",Wiki.class);
 		try {
+			//On transforme l'arborescence de nos clusters en XML
+			String stringXMLbrut=stream.toXML(cluster);
+			//On altère certains caractères spéciaux non-gérés par XML
+			stringXMLbrut.replaceAll("%19","_");
+			//on enregistre le XML sous XMLbrut.xml
+			PrintWriter fluxSortie = new PrintWriter(new FileWriter("XMLbrut.xml"));
+			fluxSortie.println( "<?xml version=\"1.0\" encoding=\"ISO-8859-15\"?>");
+			fluxSortie.println(stringXMLbrut);
+			fluxSortie.close();
+			
+			//On récupère le XML de XMLbrut.xml 
+			SAXBuilder sax=new SAXBuilder();
+			Document document = sax.build(new File("XMLbrut.xml"));
+			
+			//on réorganise le XML
+			document=reorganiserXML(document,typeObjetAComparer);
+			//On l'enregistre sous sortieXML.xml
+			enregistre(document,"sortieXML.xml");
+			
+			//On récupère le OutputStream de J2E
 			FacesContext ctx = FacesContext.getCurrentInstance();
 			final HttpServletResponse resp = (HttpServletResponse)ctx.getExternalContext().getResponse();
 			resp.setContentType("text/xml");
 			ServletOutputStream outputStream = resp.getOutputStream();
-			//outputStream.write( "<?xml version=\"1.0\" encoding=\"ISO-8859-15\"?>".getBytes() );//Seule ligne en plus
-			/*String xml=*/stream.toXML(cluster,outputStream);
 			
-			/*SAXBuilder builder=new SAXBuilder();
-			Document document=builder.build(xml);
-			
-			
-			SAXBuilder sxb = new SAXBuilder();
-			try{
-				document = sxb.build(new File("sortieXML.xml"));
-			}catch(Exception e){}
-
-			System.out.println(reorganiserXML(document,typeObjetAComparer).toString());
-			
-			//stream.toXML(document, outputStream);
-			
+			//On crée un XMLOutputter
+			//OutputStreamWriter writer = new OutputStreamWriter(outputStream);
+			//writer.write(document.toString());
 			Format format = Format.getPrettyFormat();
 			format.setEncoding("ISO-8859-15");
 			XMLOutputter sortie = new XMLOutputter(format);
 
-			//outputter.output(document, outputStream);
-			sortie.output(reorganiserXML(document,typeObjetAComparer),outputStream); */
+			//Le XMLOutputter écrit notre document dans le OutputStream
+			sortie.output(document,outputStream);
 			
+			//on ferme
 			outputStream.flush();
 			outputStream.close();
 			ctx.responseComplete();
 		}catch(IOException e){e.printStackTrace();} 
-		//catch (JDOMException e) {e.printStackTrace();}
+		catch (JDOMException e) {e.printStackTrace();}
 	}
-
 	
+	
+	public void enregistre(Document document,String fichier){
+		try{
+			XMLOutputter sortie=new XMLOutputter(Format.getPrettyFormat());
+			sortie.output(document,new FileOutputStream(fichier));
+		}catch(IOException e){}
+	}
+	
+	@SuppressWarnings("rawtypes")
 	public Document reorganiserXML(Document document,String typeObjetAComparer){
-		Element clusterNiv0 = document.getRootElement();  
-		Element contenuNiv0=clusterNiv0.getChild("contenu");
-		List listEntryNiv1 = contenuNiv0.getChildren("entry");
-		Iterator iEntry1 = listEntryNiv1.iterator();
+		Element clusterNiv0 = document.getRootElement();
+		Element newclusterNiv0=new Element("cluster");
+		Iterator iEntry1 = clusterNiv0.getChild("contenu").getChildren("entry").iterator();
 		while(iEntry1.hasNext()){
-			Element entryNiv1 = (Element)iEntry1.next();
-			//On supprime le string : on l'a déjà dans nomCluster
-			entryNiv1.removeChild("string");
-			Element clusterNiv1 = entryNiv1.getChild("cluster");
-			Element contenuNiv1 = clusterNiv1.getChild("contenu");
-			List listEntryNiv2 = contenuNiv1.getChildren("entry");
-			Iterator iEntry2 = listEntryNiv2.iterator();
+			Element clusterNiv1 = ((Element)iEntry1.next()).getChild("cluster");
+			//On reconstruit une arborescence similaire
+			Element newclusterNiv1=new Element("cluster");
+			newclusterNiv0.addContent(newclusterNiv1);
+			//On continue à parcourir l'arborescence
+			Iterator iEntry2 = clusterNiv1.getChild("contenu").getChildren("entry").iterator();
 			while(iEntry2.hasNext()){
-				Element entryNiv2 = (Element)iEntry2.next();
-				//On supprime le string : on l'a déjà dans nomCluster
-				entryNiv2.removeChild("string");
-				Element clusterNiv2 = entryNiv2.getChild("cluster");
-				Element contenuNiv2 = clusterNiv2.getChild("contenu");
-				List listEntryNiv3 = contenuNiv2.getChildren("entry");
-				Iterator iEntry3 = listEntryNiv3.iterator();
+				Element clusterNiv2 = ((Element)iEntry2.next()).getChild("cluster");
+				//On reconstruit une arborescence similaire
+				Element newclusterNiv2=new Element("cluster");
+				newclusterNiv1.addContent(newclusterNiv2);
+				//On continue à parcourir l'arborescence
+				Iterator iEntry3 = clusterNiv2.getChild("contenu").getChildren("entry").iterator();
 				while(iEntry3.hasNext()){
-					Element entryNiv3 = (Element)iEntry3.next();
-					//On ne conserve pas le string : on l'a déjà dans nomCluster
-					//entryNiv3.removeChild("string");
-					Element artisteAlbumChanson=entryNiv3.getChild(typeObjetAComparer);
+					//On duplique l'objet qui nous intéresse
+					Element artisteAlbumChanson=(Element) ((Element)iEntry3.next()).getChild(typeObjetAComparer).clone();
 					//On supprime la fonction de rapprochement
 					artisteAlbumChanson.removeChild("fonctionDeRapprochement");
-					clusterNiv2.addContent(artisteAlbumChanson);
+					newclusterNiv2.addContent(artisteAlbumChanson);
 				}
-				//Element nomClusterNiv2=clusterNiv2.getChild("nomCluster");
-				clusterNiv2.removeChild("contenu");
-				clusterNiv1.addContent(clusterNiv2);
+				//On duplique le nom du cluster, et on l'ajoute
+				String nomClusterNiv2=clusterNiv2.getChild("nomCluster").getText();
+				Attribute nomCluster=new Attribute("nomCluster", nomClusterNiv2);
+				newclusterNiv2.setAttribute(nomCluster);
 			}
-			//Element nomClusterNiv1=clusterNiv1.getChild("nomCluster");
-			clusterNiv1.removeChild("contenu");
-			clusterNiv0.addContent(clusterNiv1);
+			//On duplique le nom du cluster, et on l'ajoute
+			String nomClusterNiv1=clusterNiv1.getChild("nomCluster").getText();
+			Attribute nomCluster=new Attribute("nomCluster", nomClusterNiv1);
+			newclusterNiv1.setAttribute(nomCluster);
 		}
-		//Element nomClusterNiv0=clusterNiv0.getChild("nomCluster");
-		clusterNiv0.removeChild("contenu");
-		document.setRootElement(clusterNiv0);
+		String nomClusterNiv0=clusterNiv0.getChild("nomCluster").getText();
+		Attribute nomCluster=new Attribute("nomCluster", nomClusterNiv0);
+		newclusterNiv0.setAttribute(nomCluster);
+		document=new Document(newclusterNiv0);
 		return document;
 	}
+	
+	
+	
+	
+	
 	
 	/**
 	 *  methodes de navigation
@@ -195,27 +249,105 @@ public class VueAffichageResultatXML {
 		this.gestionnaireAffichageResultat = gestionnaireAffichageResultat;
 	}
 
-	public Cluster getClustersAlbum() {
-		return clustersAlbum;
+
+	public Cluster getClustersAlbumCourant() {
+		return clustersAlbumCourant;
 	}
 
-	public void setClustersAlbum(Cluster clustersAlbum) {
-		this.clustersAlbum = clustersAlbum;
+
+	public void setClustersAlbumCourant(Cluster clustersAlbumCourant) {
+		this.clustersAlbumCourant = clustersAlbumCourant;
 	}
 
-	public Cluster getClustersArtiste() {
-		return clustersArtiste;
+
+	public Cluster getClustersArtisteCourant() {
+		return clustersArtisteCourant;
 	}
 
-	public void setClustersArtiste(Cluster clustersArtiste) {
-		this.clustersArtiste = clustersArtiste;
+
+	public void setClustersArtisteCourant(Cluster clustersArtisteCourant) {
+		this.clustersArtisteCourant = clustersArtisteCourant;
 	}
 
-	public Cluster getClustersChanson() {
-		return clustersChanson;
+
+	public Cluster getClustersChansonCourant() {
+		return clustersChansonCourant;
 	}
 
-	public void setClustersChanson(Cluster clustersChanson) {
-		this.clustersChanson = clustersChanson;
+
+	public void setClustersChansonCourant(Cluster clustersChansonCourant) {
+		this.clustersChansonCourant = clustersChansonCourant;
 	}
+
+
+
+
+	public ArrayList<Cluster> getClustersAlbumTop3() {
+		return clustersAlbumTop3;
+	}
+
+
+
+
+	public void setClustersAlbumTop3(ArrayList<Cluster> clustersAlbumTop3) {
+		this.clustersAlbumTop3 = clustersAlbumTop3;
+	}
+
+
+
+
+	public ArrayList<Cluster> getClustersArtisteTop3() {
+		return clustersArtisteTop3;
+	}
+
+
+
+
+	public void setClustersArtisteTop3(ArrayList<Cluster> clustersArtisteTop3) {
+		this.clustersArtisteTop3 = clustersArtisteTop3;
+	}
+
+
+
+
+	public ArrayList<Cluster> getClustersChansonTop3() {
+		return clustersChansonTop3;
+	}
+
+
+
+
+	public void setClustersChansonTop3(ArrayList<Cluster> clustersChansonTop3) {
+		this.clustersChansonTop3 = clustersChansonTop3;
+	}
+
+
+
+
+	public int getChoixClustering() {
+		return choixClustering;
+	}
+
+
+
+
+	public void setChoixClustering(int choixClustering) {
+		this.choixClustering = choixClustering;
+	}
+
+
+
+
+	public ArrayList<Integer> getListeChoixClustering() {
+		return listeChoixClustering;
+	}
+
+
+
+
+	public void setListeChoixClustering(ArrayList<Integer> listeChoixClustering) {
+		this.listeChoixClustering = listeChoixClustering;
+	}
+
+ 
 }
