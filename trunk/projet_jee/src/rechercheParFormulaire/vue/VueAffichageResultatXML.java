@@ -203,6 +203,17 @@ public class VueAffichageResultatXML {
 					//On supprime la fonction de rapprochement
 					artisteAlbumChanson.removeChild("fonctionDeRapprochement");
 					newclusterNiv2.addContent(artisteAlbumChanson);
+					if(typeObjetAComparer!="artiste"){
+						artisteAlbumChanson.getChild("artiste").removeChild("fonctionDeRapprochement");
+					}
+					if(typeObjetAComparer=="album"){
+						Iterator iChanson=artisteAlbumChanson.getChild("chansons").getChildren("chanson").iterator();
+						while(iChanson.hasNext()){
+							Element chanson=(Element)iChanson.next();
+							chanson.removeChild("fonctionDeRapprochement");
+							chanson.getChild("artiste").removeChild("fonctionDeRapprochement");
+						}
+					}
 				}
 				//On duplique le nom du cluster, et on l'ajoute
 				String nomClusterNiv2=clusterNiv2.getChild("nomCluster").getText();
