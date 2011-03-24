@@ -605,7 +605,7 @@
 						          		</f:facet>
 										<a href="#{artiste.url}" target="_blank"
 						          		style="color:#ab5ddd; margin-right:20px;" ajax="false">
-						          			vers last.fm
+						          			<h:outputLabel rendered ="#{artiste.url} != ''" >vers last.fm </h:outputLabel>
 						          		</a> 
 									</p:column>
 									
@@ -658,7 +658,7 @@
 									
 									<p:column>
 										<f:facet name="header">
-											duree #{chanson.duree} bb
+											duree 
 										</f:facet>
 										<h:outputText value="#{chanson.duree}" />
 										
@@ -667,7 +667,7 @@
 									
 									<p:column>
 										<f:facet name="header">
-											artiste #{chanson.artiste.name} cccc
+											artiste 
 										</f:facet>
 										<h:outputText value="#{chanson.artiste.name}" />
 										

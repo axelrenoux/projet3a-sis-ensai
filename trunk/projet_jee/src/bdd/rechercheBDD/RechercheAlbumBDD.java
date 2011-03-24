@@ -92,7 +92,6 @@ public class RechercheAlbumBDD {
 								resultat.getInt("playc"),
 								leWiki,
 								artiste);
-				albumcourant.gererVides();
 				albumsrecherches.add(albumcourant);
 			}
 			for(Album a : albumsrecherches){
@@ -159,7 +158,6 @@ public class RechercheAlbumBDD {
 								resultat.getInt("playc"),
 								leWiki,
 								artiste);
-				albumcourant.gererVides();
 				albumsChansonrecherches.add(albumcourant);
 			}
 			 
@@ -223,7 +221,6 @@ public class RechercheAlbumBDD {
 								resultat.getInt("playc"),
 								leWiki,
 								artiste);
-				albumcourant.gererVides();
 				albumsChansonrecherches.add(albumcourant);
 			}
 			 
