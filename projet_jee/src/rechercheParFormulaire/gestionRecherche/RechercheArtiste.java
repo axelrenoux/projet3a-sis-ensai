@@ -4,19 +4,20 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
-import bdd.rechercheBDD.RechercheAlbumBDD;
+
 import bdd.rechercheBDD.RechercheArtisteBDD;
 
-import calculsDesClusters.axe.AxeListener;
-import calculsDesClusters.axe.AxePlaycount;
+
 import calculsDesClusters.axe.CoupleAxe;
-import rechercheParFormulaire.CalculDesClusters.CalculateurDeClusters;
+
+
 import calculsDesClusters.calcul.CalculateurDeClustersAlbums;
 import calculsDesClusters.calcul.CalculateurDeClustersArtistes;
 import exceptions.ChargementException;
 
 
 import metier.Cluster;
+
 import metier.oeuvres.Album;
 import metier.oeuvres.Artiste;
 
@@ -33,83 +34,123 @@ public class RechercheArtiste{
 
 	
 	
-	public Cluster lancerRecherche(String motCle) {
-		/*resultats = new ArrayList<Artiste>();
-		Artiste a1 = new Artiste();
-		Artiste a2 = new Artiste();
-		Artiste a3 = new Artiste();
-		Artiste a4 = new Artiste();
-		
-		a1.setName("The Rolling Stones");
-		a1.setImageLarge("http://userserve-ak.last.fm/serve/126/207811.jpg");
-		a1.setUrl("1");
-		a1.setListeners(10);
-		a1.setPlaycount(20);
-		a2.setName("The fugees");
-		a2.setImageLarge("http://userserve-ak.last.fm/serve/126/32571933.jpg");	
-		a2.setUrl("2");
-		a2.setListeners(11);
-		a2.setPlaycount(22);
-		a3.setName("The fugeesqqqqq");
-		a3.setImageLarge("http://userserve-ak.last.fm/serve/126/32571933.jpg");	
-		a3.setUrl("3");
-		a3.setListeners(10);
-		a3.setPlaycount(20);
-		a4.setName("The fugeesdddff");
-		a4.setImageLarge("http://userserve-ak.last.fm/serve/126/32571933.jpg");	
-		a4.setUrl("4");
-		a4.setListeners(10);
-		a4.setPlaycount(23);
-		
-		
-		resultats.add(a1);
-		resultats.add(a2);
-		resultats.add(a3);
-		resultats.add(a4);*/
-		
-		/*maClasseArtiste ma = new maClasseArtiste();
+	
+	/**
+	 * methode qui renvoie la liste totale des artistes repondant au mot clé
+	 * @param motCle
+	 * @return
+	 */
+	public ArrayList<Cluster> lancerRecherche(String motCle) {
+	
+		ArrayList<Artiste> listeArtistes=null;
+		RechercheArtisteBDD recherche = RechercheArtisteBDD.getInstance();
 		try {
-			resultats = ma.rechercherArtistes(motCle);
-		} catch (ChargementException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
-
-		ArrayList<Artiste> ar=null;
-		RechercheArtisteBDD mar = RechercheArtisteBDD.getInstance();
-		try {
-			ar = mar.rechercherArtistes(motCle);
+			listeArtistes = recherche.rechercherArtistes(motCle);
 		} catch (ChargementException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		//System.out.println(ar);
-		//System.out.println(ar.size());
 		
+		
+		return rechercherMeilleursClusters(listeArtistes);
+		
+	}
+	
+	
+	
+	
+	
+	/**
+	 * methode qui renvoie le meilleur cluster, le 2ème meilleur et le 3ème...
+	 * 
+	 * @param listeArtistes
+	 * @param niveau
+	 * @return
+	 */
+	private ArrayList<Cluster> rechercherMeilleursClusters(ArrayList<Artiste> listeArtistes){
+		ArrayList<Cluster> top3clusters = new ArrayList<Cluster>();
+		CoupleAxe ca =null;
 
+		HashMap<CoupleAxe,Cluster> listeClustersPossibles = CalculateurDeClustersArtistes.
+									getInstanceunique().calculEnsembleClustersArtistes(listeArtistes);
 
-		HashMap<CoupleAxe,Cluster> listeClusterPossible = CalculateurDeClustersArtistes.getInstanceunique().calculEnsembleClustersArtistes(ar);
-
-
+		//1) on récupère le meilleur
+		
 		Cluster meilleurCluster = new Cluster();
-		
-		for(Entry<CoupleAxe, Cluster> entry : listeClusterPossible.entrySet()) {
+		//on attribue par défaut la meilleure place au premier element de la hashmap
+		for(Entry<CoupleAxe, Cluster> entry : listeClustersPossibles.entrySet()) {			
 			meilleurCluster = entry.getValue();
 			meilleurCluster.setNomCluster(entry.getKey().getAxe1().getType() + ";" + entry.getKey().getAxe2().getType());
 			break;
 		}
-		for(Entry<CoupleAxe, Cluster> entry2 : listeClusterPossible.entrySet()) {
-
+		
+		//on parcourt la hashmap pour trouver le cluster qui a la plus petite variance
+		for(Entry<CoupleAxe, Cluster> entry2 : listeClustersPossibles.entrySet()) {
 			if (entry2.getKey().getVariance() < meilleurCluster.varianceCluster()){
 				meilleurCluster = entry2.getValue();
+				ca= entry2.getKey();
 				meilleurCluster.setNomCluster(entry2.getKey().getAxe1().getType() + ";" + entry2.getKey().getAxe2().getType());
 			}
 		}
-		System.out.println("meilleur cluster : " + meilleurCluster.varianceCluster());
-		System.out.println(meilleurCluster.tailleCluster());
-		return meilleurCluster;
+		System.out.println("%%%%%%%%% this is the meilleur cluster 1%%" + meilleurCluster.getNom());
 		
+		top3clusters.add(meilleurCluster);
+		
+		//2) on recupère le deuxième meilleur cluster
+		
+		//on supprime le "1er meilleur"
+		listeClustersPossibles.remove(ca);
+		
+		Cluster meilleurCluster2 = new Cluster();
+		//on attribue par défaut la meilleure place au premier element de la hashmap
+		for(Entry<CoupleAxe, Cluster> entry : listeClustersPossibles.entrySet()) {			
+			meilleurCluster2 = entry.getValue();
+			meilleurCluster2.setNomCluster(entry.getKey().getAxe1().getType() + ";" + entry.getKey().getAxe2().getType());
+			break;
+		}
+		
+		//on parcourt la hashmap pour trouver le cluster qui a la plus petite variance
+		for(Entry<CoupleAxe, Cluster> entry2 : listeClustersPossibles.entrySet()) {
+			if (entry2.getKey().getVariance() < meilleurCluster2.varianceCluster()){
+				meilleurCluster2 = entry2.getValue();
+				ca=entry2.getKey();
+				meilleurCluster2.setNomCluster(entry2.getKey().getAxe1().getType() + ";" + entry2.getKey().getAxe2().getType());
+			}
+		}
+		System.out.println("%%%%%%%%% this is the meilleur cluster 2%%" + meilleurCluster2.getNom());
+		
+		top3clusters.add(meilleurCluster2);
+		
+		
+		//3) on recupère le troisieme meilleur cluster
+		
+		//on supprime le "2eme meilleur"
+		listeClustersPossibles.remove(ca);
+		
+		Cluster meilleurCluster3 = new Cluster();
+		//on attribue par défaut la meilleure place au premier element de la hashmap
+		for(Entry<CoupleAxe, Cluster> entry : listeClustersPossibles.entrySet()) {			
+			meilleurCluster3 = entry.getValue();
+			meilleurCluster3.setNomCluster(entry.getKey().getAxe1().getType() + ";" + entry.getKey().getAxe2().getType());
+			break;
+		}
+		
+		//on parcourt la hashmap pour trouver le cluster qui a la plus petite variance
+		for(Entry<CoupleAxe, Cluster> entry2 : listeClustersPossibles.entrySet()) {
+			if (entry2.getKey().getVariance() < meilleurCluster3.varianceCluster()){
+				meilleurCluster3 = entry2.getValue();
+				meilleurCluster3.setNomCluster(entry2.getKey().getAxe1().getType() + ";" + entry2.getKey().getAxe2().getType());
+			}
+		}
+		System.out.println("%%%%%%%%% this is the meilleur cluster 3 %%" + meilleurCluster3.getNom());
+		
+		top3clusters.add(meilleurCluster3);
+ 		
+		return top3clusters;
 	}
+	
+	
+	
 	
 	public String retournerTypeAffichage(){
 		return "artiste";
