@@ -98,7 +98,6 @@ public class RechercheAlbumBDD {
 			for(Album a : albumsrecherches){
 				a.setToptags(RechercheTagBDD.getInstance().rechercherTagsAlbum(a));
 				a.setChansons(RechercheChansonBDD.getInstance().rechercherChansonAlbum(a.getName()));
-				System.out.println("mon alb "+ a.getArtiste() +" a des tags? " + a.getToptags());
 			}
 			
 		} catch (SQLException e) {
