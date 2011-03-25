@@ -7,14 +7,18 @@ import metier.oeuvres.Oeuvre;
 
 public class AxeDuree implements Axe{
 	
+	/********************************************************************/
+	/*************************      attributs       *********************/
+	/********************************************************************/
+	
+	
 	private ArrayList<Oeuvre> oeuvres;
 	//la duree est exprimee en millisecondes
 
-	@Override
-	public String getType() {
-		return "Durée";
-	}
-
+	/********************************************************************/
+	/************************      methodes      ************************/
+	/********************************************************************/
+	
 	@Override
 	public String CalculAxe(Oeuvre oeuvre) {
 		Chanson c = (Chanson) oeuvre;
@@ -39,6 +43,17 @@ public class AxeDuree implements Axe{
 		
 		return classe;
 	}
+	
+	
+	/********************************************************************/
+	/******************      getters / setters       ********************/
+	/********************************************************************/
+
+	@Override
+	public String getType() {
+		return "Durée";
+	}
+
 	
 	@Override
 	public ArrayList<Oeuvre> getOeuvres() {

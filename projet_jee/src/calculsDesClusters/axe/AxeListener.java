@@ -8,17 +8,18 @@ import metier.oeuvres.Oeuvre;
 
 public class AxeListener implements Axe {
 
+	/********************************************************************/
+	/*************************      attributs       *********************/
+	/********************************************************************/
+	
+	
 	private ArrayList<Integer> mesQuarts = new ArrayList<Integer>();
 	private ArrayList<Oeuvre> oeuvres;
 
-	public ArrayList<Integer> getMesQuarts() {
-		return mesQuarts;
-	}
-
-	public void setMesQuarts(ArrayList<Integer> mesQuarts) {
-		this.mesQuarts = mesQuarts;
-	}
-
+	/********************************************************************/
+	/************************      methodes      ************************/
+	/********************************************************************/
+	
 	/**
 	 * Méthodes pour calculer les quartiles des oeuvres
 	 */
@@ -129,35 +130,13 @@ public class AxeListener implements Axe {
 		return classe;
 	}
 
-	/*public static void main(String[] args) throws Exception {
 
-			Album a = new Album();
-			a.setListeners(10);
-			Album b = new Album();
-			b.setListeners(10);
-			Album c = new Album();
-			c.setListeners(20);
-			Album d = new Album();
-			d.setListeners(15);
-			Album e = new Album();
-			e.setListeners(20);
-			Album f = new Album();
-			f.setListeners(7);
 
-			ArrayList<Oeuvre> monoeuvre = new ArrayList<Oeuvre>();
-			monoeuvre.add(a);
-			monoeuvre.add(b);
-			monoeuvre.add(c);
-			monoeuvre.add(d);
-			monoeuvre.add(e);
-			monoeuvre.add(f);
+	
+	/********************************************************************/
+	/******************      getters / setters       ********************/
+	/********************************************************************/
 
-			AxeListener axe = new AxeListener();
-			ArrayList<Integer>  my= axe.QuartClusterOeuvreLs(monoeuvre);
-
-			 
-
-		}*/
 
 
 	@Override
@@ -181,4 +160,14 @@ public class AxeListener implements Axe {
 			e.printStackTrace();
 		}
 	}
+	
+	
+	public ArrayList<Integer> getMesQuarts() {
+		return mesQuarts;
+	}
+
+	public void setMesQuarts(ArrayList<Integer> mesQuarts) {
+		this.mesQuarts = mesQuarts;
+	}
+
 }
