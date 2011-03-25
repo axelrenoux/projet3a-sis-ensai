@@ -83,7 +83,7 @@ import rechercheParFormulaire.gestionRecherche.GestionnaireFormulaire;
 						vueAffichageResultat.setClustersAlbumTop3(gestionnaireFormulaire.lancerRechercheAlbum(motCle));
 						vueAffichageResultat.setClustersArtisteTop3(gestionnaireFormulaire.lancerRechercheArtiste(motCle));
 						vueAffichageResultat.setClustersChansonTop3(gestionnaireFormulaire.lancerRechercheChanson(motCle));
-						
+						vueAffichageResultat.setChoixClustering(1);//par defaut
 						vueAffichageResultat.init();
 						return "j2ee";
 					}
