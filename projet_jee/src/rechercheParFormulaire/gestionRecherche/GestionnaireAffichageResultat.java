@@ -127,7 +127,6 @@ public class GestionnaireAffichageResultat {
 
 
 	public ArrayList<Chanson> retournerChansons(Cluster clusterChansonNiveau2Choisi){
-		System.out.println("clusterChansonNiveau2Choisi "+clusterChansonNiveau2Choisi);
 		ArrayList<Chanson> resultatChansons= new ArrayList<Chanson>();
 		for(Entry<String,ComposantCluster> currentEntry : 
 			clusterChansonNiveau2Choisi.getContenu().entrySet()){
