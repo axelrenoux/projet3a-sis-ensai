@@ -7,8 +7,17 @@ import metier.oeuvres.Oeuvre;
 
 public class AxeAlbumDeChanson implements Axe {
 	
+	/********************************************************************/
+	/*************************      attributs       *********************/
+	/********************************************************************/
+	
+	
 	private ArrayList<Oeuvre> oeuvres;
 
+	/********************************************************************/
+	/************************      methodes      ************************/
+	/********************************************************************/
+	
 	@Override
 	public String CalculAxe(Oeuvre oeuvre) {
 		Chanson c = (Chanson) oeuvre;
@@ -19,6 +28,10 @@ public class AxeAlbumDeChanson implements Axe {
 		else res = "Pas d'album";
 		return res;
 	}
+
+	/********************************************************************/
+	/******************      getters / setters       ********************/
+	/********************************************************************/
 
 	@Override
 	public String getType() {

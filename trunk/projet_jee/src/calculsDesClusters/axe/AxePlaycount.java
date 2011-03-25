@@ -8,15 +8,20 @@ import metier.oeuvres.Oeuvre;
 
 public class AxePlaycount implements Axe{
 
+	/********************************************************************/
+	/*************************      attributs       *********************/
+	/********************************************************************/
+	
+	
 	private ArrayList<Integer> mesQuarts = new ArrayList<Integer>();
 	private ArrayList<Oeuvre> oeuvres;
-
-	public ArrayList<Integer> getMesQuarts() {
-		return mesQuarts;
-	}
-	public void setMesQuarts(ArrayList<Integer> mesQuarts) {
-		this.mesQuarts = mesQuarts;
-	}
+	
+	
+	
+	/********************************************************************/
+	/************************      methodes      ************************/
+	/********************************************************************/
+	
 	//La méthode retourne les quartiles à 0,25 ; 0,5 ; 0,75 pour les Playcount de chansons
 	public ArrayList<Integer> QuartClusterOeuvrePl (ArrayList<Oeuvre> ClOeuvre){
 		ArrayList<Integer> ListeQuart = null;
@@ -109,36 +114,20 @@ public class AxePlaycount implements Axe{
 		}	
 		return classe;
 	}
-	/*public static void main(String[] args) throws Exception {
 
-		Album a = new Album();
-		a.setPlaycount(10);
-		Album b = new Album();
-		b.setPlaycount(10);
-		Album c = new Album();
-		c.setPlaycount(20);
-		Album d = new Album();
-		d.setPlaycount(15);
-		Album e = new Album();
-		e.setPlaycount(20);
-		Album f = new Album();
-		f.setPlaycount(17);
-
-		ArrayList<Oeuvre> monoeuvre = new ArrayList<Oeuvre>();
-		monoeuvre.add(a);
-		monoeuvre.add(b);
-		monoeuvre.add(c);
-		monoeuvre.add(d);
-		monoeuvre.add(e);
-		monoeuvre.add(f);
-
-		AxePlaycount axe = new AxePlaycount();
-		ArrayList<Integer>  my= axe.QuartClusterOeuvrePl(monoeuvre);
-
-		
-
-	}*/
 	
+	
+	
+	/********************************************************************/
+	/******************      getters / setters       ********************/
+	/********************************************************************/
+
+	public ArrayList<Integer> getMesQuarts() {
+		return mesQuarts;
+	}
+	public void setMesQuarts(ArrayList<Integer> mesQuarts) {
+		this.mesQuarts = mesQuarts;
+	}
 	
 	@Override
 	public String getType() {
